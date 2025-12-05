@@ -1,116 +1,61 @@
-# ============================================
-# Core Data Processing (cross-platform)
-# ============================================
-pandas>=2.0.0,<3.0.0
-numpy>=1.24.0,<2.0.0
+# Core Data Processing
+pandas>=2.0.0
+numpy>=1.24.0
+scipy>=1.10.0
 
-# ============================================
 # Machine Learning & Forecasting
-# ============================================
-scikit-learn>=1.3.0,<1.6.0
+scikit-learn>=1.3.0
+prophet>=1.1.4
+statsmodels>=0.14.0
 
-# Note: Prophet is OPTIONAL (see "Optional Dependencies" section below)
-# The system supports multiple forecasting methods including:
-# - Analogy-based forecasting (no additional packages needed)
-# - Regression-based forecasting (uses scikit-learn above)
-# - Time-series forecasting (requires prophet - see optional section)
+# Optimization
+pulp>=2.7.0
+cvxpy>=1.3.0
 
-# ============================================
-# Optimization (cross-platform)
-# ============================================
-pulp>=2.7.0,<3.0.0
-cvxpy>=1.4.0,<2.0.0
+# Vector Database & Embeddings
+chromadb>=0.4.0
+sentence-transformers>=2.2.0
+faiss-cpu>=1.7.4
 
-# Optimization solvers (optional, platform-dependent)
-# ECOS solver (included with cvxpy)
-# SCS solver (included with cvxpy)
-# For more solvers, install separately based on your platform
-
-# ============================================
 # LLM Integration
-# ============================================
-ollama>=0.1.0,<1.0.0
+ollama>=0.1.7
+openai>=1.3.0
+langchain>=0.1.0
+langchain-community>=0.0.20
 
-# Alternative LLM clients (optional)
-# langchain>=0.1.0
-# llama-cpp-python>=0.2.0
+# Configuration & Environment
+python-dotenv>=1.0.0
+pydantic>=2.5.0
+pydantic-settings>=2.0.0
+pyyaml>=6.0
 
-# ============================================
-# Vector Database & Embeddings (OPTIONAL - NOT USED YET)
-# ============================================
-# chromadb>=0.4.0,<0.6.0
-# sentence-transformers>=2.2.0,<3.0.0
-#
-# Note: These dependencies are commented out because:
-# - shared_knowledge_base.py is currently a skeleton
-# - Saves ~1.5GB and ~4-5 minutes of Docker build time
-# - Uncomment when implementing vector database functionality
-#
-# Vector DB alternatives (choose based on your needs):
-# faiss-cpu>=1.7.4; platform_system != "Darwin" or platform_machine != "arm64"
-# hnswlib>=0.7.0
+# Web Framework
+streamlit>=1.28.0
+streamlit-aggrid>=0.3.4
+streamlit-option-menu>=0.3.6
+plotly>=5.17.0
 
-# ============================================
-# Utilities (cross-platform)
-# ============================================
-python-dotenv>=1.0.0,<2.0.0
+# Visualization & Plotting
+matplotlib>=3.7.0
+seaborn>=0.12.0
 
-# ============================================
-# OPTIONAL DEPENDENCIES
-# ============================================
-# Install these separately based on your needs:
-#
-# For Vector Database & Embeddings (when implementing shared_knowledge_base.py):
-#   pip install chromadb>=0.4.0,<0.6.0 sentence-transformers>=2.2.0,<3.0.0
-#   Warning: Adds ~1.5GB and ~5 minutes build time (includes PyTorch)
-#
-# For Time-Series Forecasting (Prophet):
-#   pip install prophet>=1.1.4,<2.0.0  # macOS/Linux
-#   conda install -c conda-forge prophet  # Windows (recommended)
-#
-# For Advanced Optimization (OR-Tools):
-#   pip install ortools>=9.7.0,<10.0.0
-#
-# For Alternative Forecasting (Statsmodels):
-#   pip install statsmodels>=0.14.0,<1.0.0
-#
-# For Development & Testing:
-#   pip install pytest pytest-cov black flake8 mypy isort
-#
-# For Jupyter & Notebooks:
-#   pip install jupyter matplotlib seaborn
-#
-# Or install using pyproject.toml extras:
-#   pip install -e .[dev]            # Installs dev tools
-#   pip install -e .[jupyter]        # Installs jupyter + visualization
-#   pip install -e .[forecasting]    # Installs prophet + statsmodels
-#   pip install -e .[optimization]   # Installs ortools
-#   pip install -e .[all]            # Installs all optional dependencies
+# Utilities
+tqdm>=4.65.0
+requests>=2.31.0
+jsonschema>=4.17.0
+loguru>=0.7.0
 
-# ============================================
-# Installation Instructions
-# ============================================
-# 
-# Core runtime dependencies only (this file):
-#   pip install -r requirements.txt
-#
-# With development tools:
-#   pip install -e .[dev]
-#
-# With Jupyter and visualization:
-#   pip install -e .[jupyter]
-#
-# With all optional dependencies:
-#   pip install -e .[all]
-#
-# ============================================
-# Platform-Specific Notes
-# ============================================
-# Windows:
-#   - All core dependencies work out of the box
-#   - For Prophet (optional): Use conda (conda install -c conda-forge prophet)
-#
-# macOS/Linux:
-#   - All core dependencies have native builds
-#   - Prophet can be installed via pip (pip install prophet)
+# Development & Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+black>=23.0.0
+flake8>=6.0.0
 
+# Jupyter Support
+jupyter>=1.0.0
+ipykernel>=6.25.0
+ipywidgets>=8.1.0
+
+# Additional utilities
+psutil>=5.9.0
+rich>=13.0.0
