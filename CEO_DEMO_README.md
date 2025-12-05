@@ -1,4 +1,4 @@
-# 🎯 Intelli-ODM CEO Demo
+# 🎯 Intelli-ODMDemo
 
 **Quick 5-minute setup for executive presentations**
 

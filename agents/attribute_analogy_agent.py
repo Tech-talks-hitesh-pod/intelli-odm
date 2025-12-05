@@ -38,6 +38,9 @@ class AttributeAnalogyAgent:
         # Verify LLM availability
         if not self.llm_client.is_available():
             logger.warning("LLM client is not available - some features may not work")
+            
+        # ODM cleaning prompt (same as data ingestion agent)
+        self.odm_cleaning_prompt = self._build_odm_cleaning_prompt()
     
     def extract_attributes(self, product_description: str) -> Dict[str, Any]:
         """
@@ -436,3 +439,200 @@ class AttributeAnalogyAgent:
         except Exception as e:
             logger.error(f"Attribute analysis workflow failed: {e}")
             raise
+    
+    def _build_odm_cleaning_prompt(self) -> str:
+        """Build the ODM data cleaning and normalization prompt."""
+        return """You are a Data Cleaning & Normalization Agent for an ODM (Own Design Manufacturing) retail system.
+
+Your ONLY job:
+- Take MESSY / UNSTRUCTURED product descriptions for NEW ODM ITEMS.
+- Clean and normalize them.
+- Output them in a STRICT, CONSISTENT, STRUCTURED FORMAT that matches the historical data schema.
+
+For EVERY input product, you MUST output **exactly one JSON object** with the following fields:
+
+Required core fields:
+
+- StyleCode       (string)
+- StyleName       (string)
+- Colour          (string)
+- Fit             (one of: "Slim", "Regular", "Relaxed", "Comfort", "Oversized" or "" if unknown)
+- Fabric          (short descriptive string, e.g. "Poly Knit", "Cotton-Linen", "Silk Blend")
+- Segment         (one of: "Mens", "Womens", "Kids", "Girls", "Boys" or "" if unknown)
+- Family          (one of: "Formal", "Casual", "Active", "Lounge", "Ethnic", "Other")
+- Class           (one of: "Top", "Bottom", "Sets")
+- Brick           (canonical brick: "Jacket", "Shirt", "T-Shirt", "Kurta", "Kurta Set", "Dress", "Jeans", 
+                   "Shorts", "Jogger", "Cargo", "Hoodie", "Thermal", "Leggings", "Dungaree", 
+                   "Pyjama Set", "Lehenga Set", "Tracksuit", "Shoes", "Other")
+- ProductGroup    (one of: "Knit", "Woven", "Denim", "Other")
+- SeasonTag       (one of: "Winter", "Summer", "Festive", "Rain", "All", or "" if unknown)
+- BasePrice       (integer in rupees, e.g. 1799; 0 if truly impossible to infer)
+- PriceBand       (derived from BasePrice: "Low", "Mid", "Premium", or "" if BasePrice is 0)
+
+Additional helpful fields:
+
+- Pattern         (e.g. "Solid", "Floral", "Printed", "Check", "Stripe", "Embroidered", or "" if unknown)
+- Sleeve          ("Full", "Half", "Sleeveless", "NA")
+- Neck            ("Crew", "V-Neck", "Mandarin", "Spread Collar", "Stand Collar", "Collared", "NA")
+- Occasion        (e.g. "Everyday", "Work", "Festive", "Wedding", "Lounge", "Gym", "Travel", "Brunch", or "")
+- MaterialWeight  ("Light", "Medium", "Heavy", or "")
+- Stretch         ("No", "Low", "Medium", "High", or "")
+- Notes           (short free-text string for any extra info or ambiguity)
+
+Always output VALID JSON only. No explanations or extra text."""
+
+    def extract_odm_attributes(self, product_description: str) -> Dict[str, Any]:
+        """
+        Extract ODM-specific structured attributes from product description.
+        
+        Args:
+            product_description: Natural language product description (potentially messy)
+            
+        Returns:
+            Dictionary of normalized ODM attributes
+        """
+        logger.info(f"Extracting ODM attributes from: {product_description[:100]}...")
+        
+        try:
+            # Create full prompt
+            full_prompt = f"""{self.odm_cleaning_prompt}
+
+------------------------------------------------------------
+INPUT PRODUCT DESCRIPTION:
+------------------------------------------------------------
+
+{product_description}
+
+------------------------------------------------------------
+OUTPUT (JSON OBJECT ONLY):
+------------------------------------------------------------"""
+
+            # Call LLM with low temperature for consistent output
+            response = self.llm_client.generate(
+                prompt=full_prompt,
+                max_tokens=1000,
+                temperature=0.1
+            )
+            
+            # Parse JSON response
+            import json
+            try:
+                attributes = json.loads(response)
+                
+                if not isinstance(attributes, dict):
+                    logger.error("LLM response is not a JSON object")
+                    return self._get_fallback_odm_attributes()
+                
+                # Validate required fields
+                required_fields = [
+                    'StyleCode', 'StyleName', 'Colour', 'Fit', 'Fabric', 'Segment',
+                    'Family', 'Class', 'Brick', 'ProductGroup', 'SeasonTag', 
+                    'BasePrice', 'PriceBand'
+                ]
+                
+                # Fill missing required fields with defaults
+                for field in required_fields:
+                    if field not in attributes:
+                        if field == 'BasePrice':
+                            attributes[field] = 0
+                        else:
+                            attributes[field] = ""
+                
+                # Ensure BasePrice is integer
+                try:
+                    attributes['BasePrice'] = int(attributes['BasePrice'])
+                except (ValueError, TypeError):
+                    attributes['BasePrice'] = 0
+                
+                # Auto-derive PriceBand if missing or incorrect
+                if attributes['BasePrice'] == 0:
+                    attributes['PriceBand'] = ""
+                elif attributes['BasePrice'] < 1000:
+                    attributes['PriceBand'] = "Low"
+                elif attributes['BasePrice'] < 2000:
+                    attributes['PriceBand'] = "Mid"
+                else:
+                    attributes['PriceBand'] = "Premium"
+                
+                logger.info(f"Successfully extracted ODM attributes: {attributes.get('StyleName', 'Unknown')}")
+                return attributes
+                
+            except json.JSONDecodeError as e:
+                logger.error(f"Failed to parse LLM JSON response: {e}")
+                logger.debug(f"Raw response: {response}")
+                return self._get_fallback_odm_attributes()
+                
+        except Exception as e:
+            logger.error(f"ODM attribute extraction failed: {e}")
+            return self._get_fallback_odm_attributes()
+    
+    def _get_fallback_odm_attributes(self) -> Dict[str, Any]:
+        """Get fallback ODM attributes when extraction fails."""
+        return {
+            'StyleCode': '',
+            'StyleName': 'Unknown Product',
+            'Colour': '',
+            'Fit': '',
+            'Fabric': '',
+            'Segment': '',
+            'Family': 'Other',
+            'Class': '',
+            'Brick': 'Other',
+            'ProductGroup': 'Other',
+            'SeasonTag': '',
+            'BasePrice': 0,
+            'PriceBand': '',
+            'Pattern': '',
+            'Sleeve': 'NA',
+            'Neck': 'NA',
+            'Occasion': '',
+            'MaterialWeight': '',
+            'Stretch': '',
+            'Notes': 'Extraction failed - manual review needed'
+        }
+    
+    def find_similar_odm_products(self, odm_attributes: Dict[str, Any], limit: int = 5) -> List[Dict[str, Any]]:
+        """
+        Find similar products using ODM attributes for vector search.
+        
+        Args:
+            odm_attributes: Normalized ODM attributes dictionary
+            limit: Maximum number of similar products to return
+            
+        Returns:
+            List of similar products with performance data
+        """
+        logger.info(f"Finding similar ODM products for: {odm_attributes.get('StyleName', 'Unknown')}")
+        
+        try:
+            # Convert ODM attributes to search query
+            search_text_parts = []
+            
+            # Build descriptive text from ODM attributes
+            if odm_attributes.get('StyleName'):
+                search_text_parts.append(odm_attributes['StyleName'])
+            if odm_attributes.get('Brick'):
+                search_text_parts.append(odm_attributes['Brick'])
+            if odm_attributes.get('Fabric'):
+                search_text_parts.append(odm_attributes['Fabric'])
+            if odm_attributes.get('Colour'):
+                search_text_parts.append(odm_attributes['Colour'])
+            if odm_attributes.get('Pattern'):
+                search_text_parts.append(odm_attributes['Pattern'])
+            if odm_attributes.get('Fit'):
+                search_text_parts.append(odm_attributes['Fit'])
+            
+            search_text = ' '.join(search_text_parts)
+            
+            # Use the existing similarity search
+            similar_products = self.knowledge_base.find_similar_products(
+                query_attributes=odm_attributes,
+                limit=limit
+            )
+            
+            logger.info(f"Found {len(similar_products)} similar ODM products")
+            return similar_products
+            
+        except Exception as e:
+            logger.error(f"Failed to find similar ODM products: {e}")
+            return []

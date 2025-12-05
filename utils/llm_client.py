@@ -14,21 +14,58 @@ _langsmith_initialized = False
 _langsmith_callbacks = None
 
 def setup_langsmith_tracking(api_key: Optional[str] = None, 
-                            project: str = "intelli-odm",
-                            endpoint: str = "https://api.smith.langchain.com",
-                            enabled: bool = False):
+                            project: Optional[str] = None,
+                            endpoint: Optional[str] = None,
+                            enabled: Optional[bool] = None):
     """
     Setup LangSmith tracking for agent call monitoring using LangChain callbacks.
+    Reads from .env file via settings if parameters are not provided.
     
     Args:
-        api_key: LangSmith API key
-        project: Project name for tracking
-        endpoint: LangSmith API endpoint
-        enabled: Whether to enable tracking
+        api_key: LangSmith API key (if None, reads from settings)
+        project: Project name for tracking (if None, reads from settings)
+        endpoint: LangSmith API endpoint (if None, reads from settings)
+        enabled: Whether to enable tracking (if None, reads from settings)
     """
     global _langsmith_initialized, _langsmith_callbacks
     
-    if not enabled or not api_key:
+    # Try to import settings to read from .env
+    try:
+        from config.settings import settings
+        
+        # Use settings values if parameters not provided
+        if enabled is None:
+            enabled = settings.langchain_tracing_v2
+        if api_key is None:
+            api_key = settings.langchain_api_key
+        if project is None:
+            project = settings.langchain_project
+        if endpoint is None:
+            endpoint = settings.langchain_endpoint
+    except ImportError:
+        # If settings not available, use defaults
+        if enabled is None:
+            enabled = os.getenv("LANGCHAIN_TRACING_V2", "false").lower() == "true"
+        if api_key is None:
+            # Support both LANGCHAIN_API_KEY and LANGSMITH_API_KEY
+            api_key = os.getenv("LANGCHAIN_API_KEY") or os.getenv("LANGSMITH_API_KEY")
+        if project is None:
+            project = os.getenv("LANGCHAIN_PROJECT", "intelli-odm")
+        if endpoint is None:
+            endpoint = os.getenv("LANGCHAIN_ENDPOINT", "https://api.smith.langchain.com")
+    
+    if not enabled:
+        logger.info("LangSmith tracing is disabled (LANGCHAIN_TRACING_V2=false or not set)")
+        os.environ.pop("LANGCHAIN_TRACING_V2", None)
+        os.environ.pop("LANGCHAIN_API_KEY", None)
+        os.environ.pop("LANGCHAIN_PROJECT", None)
+        os.environ.pop("LANGCHAIN_ENDPOINT", None)
+        _langsmith_initialized = False
+        _langsmith_callbacks = None
+        return None
+    
+    if not api_key:
+        logger.warning("LangSmith API key not found. Set LANGCHAIN_API_KEY or LANGSMITH_API_KEY in .env file")
         os.environ.pop("LANGCHAIN_TRACING_V2", None)
         os.environ.pop("LANGCHAIN_API_KEY", None)
         os.environ.pop("LANGCHAIN_PROJECT", None)
@@ -46,7 +83,8 @@ def setup_langsmith_tracking(api_key: Optional[str] = None,
         
         # Try to import and setup LangChain callbacks
         try:
-            from langchain.callbacks import LangChainTracer
+            # Import LangChainTracer from langchain_core.tracers (correct path for langchain >= 0.1.0)
+            from langchain_core.tracers import LangChainTracer
             from langsmith import Client
             
             # Create LangSmith client
@@ -56,7 +94,9 @@ def setup_langsmith_tracking(api_key: Optional[str] = None,
             _langsmith_callbacks = LangChainTracer(project_name=project, client=client)
             _langsmith_initialized = True
             
-            logger.info(f"LangSmith tracking enabled for project: {project}")
+            logger.info(f"✅ LangSmith tracking enabled for project: {project}")
+            logger.info(f"   API Key: {api_key[:10]}...{api_key[-4:] if len(api_key) > 14 else '***'}")
+            logger.info(f"   Endpoint: {endpoint}")
             return _langsmith_callbacks
             
         except ImportError:
@@ -131,17 +171,16 @@ class OllamaClient(LLMClient):
             if callbacks:
                 try:
                     from langchain_community.llms import Ollama
-                    from langchain.callbacks.manager import CallbackManager
                     
                     llm = Ollama(
                         model=self.model,
                         base_url=self.base_url,
                         temperature=temperature,
-                        num_predict=max_tokens,
-                        callback_manager=CallbackManager([callbacks])
+                        num_predict=max_tokens
                     )
                     
-                    response_text = llm.invoke(prompt)
+                    # Invoke with callbacks
+                    response_text = llm.invoke(prompt, config={"callbacks": [callbacks]})
                     
                     return {
                         'response': response_text.strip(),
@@ -150,8 +189,10 @@ class OllamaClient(LLMClient):
                     }
                 except Exception as e:
                     logger.warning(f"LangChain Ollama wrapper failed, using direct call: {e}")
+                    logger.info("Note: Direct Ollama calls may not be tracked in LangSmith. Ensure LANGCHAIN_TRACING_V2=true and LANGCHAIN_API_KEY are set for SDK-level tracking.")
             
             # Fallback to direct Ollama API call
+            # Note: Direct API calls will be tracked by LangSmith SDK if environment variables are set
             response = self.client.generate(
                 model=self.model,
                 prompt=prompt,
@@ -175,9 +216,27 @@ class OllamaClient(LLMClient):
         """Check if Ollama service is available."""
         try:
             # Try to list models to test connection
-            models = self.client.list()
-            return any(model['name'] == self.model for model in models.get('models', []))
-        except Exception:
+            response = self.client.list()
+            # Ollama returns a ListResponse object with a 'models' attribute
+            # Each model is a Model object with a 'model' attribute (not 'name')
+            if hasattr(response, 'models'):
+                available_models = [model.model for model in response.models]
+            else:
+                # Fallback for dictionary-like response
+                available_models = [model.get('model', model.get('name', '')) for model in response.get('models', [])]
+            
+            # Check if exact model name exists
+            if self.model in available_models:
+                return True
+            
+            # Also check if base model name matches (e.g., "llama3" in "llama3:latest")
+            model_base = self.model.split(':')[0]
+            if any(model_base in model for model in available_models):
+                logger.info(f"Model {self.model} not found, but similar model available. Using available model.")
+                return True
+            return False
+        except Exception as e:
+            logger.debug(f"Ollama availability check failed: {e}")
             return False
 
 class OpenAIClient(LLMClient):
@@ -212,19 +271,18 @@ class OpenAIClient(LLMClient):
             if callbacks:
                 try:
                     from langchain_openai import ChatOpenAI
-                    from langchain.callbacks.manager import CallbackManager
-                    from langchain.schema import HumanMessage
+                    from langchain_core.messages import HumanMessage
                     
                     llm = ChatOpenAI(
                         model=self.model,
                         temperature=temperature,
                         max_tokens=max_tokens,
-                        openai_api_key=self.client.api_key,
-                        callback_manager=CallbackManager([callbacks])
+                        openai_api_key=self.client.api_key
                     )
                     
                     messages = [HumanMessage(content=prompt)]
-                    response = llm.invoke(messages)
+                    # Invoke with callbacks
+                    response = llm.invoke(messages, config={"callbacks": [callbacks]})
                     
                     return {
                         'response': response.content.strip(),
@@ -233,8 +291,10 @@ class OpenAIClient(LLMClient):
                     }
                 except Exception as e:
                     logger.warning(f"LangChain OpenAI wrapper failed, using direct call: {e}")
+                    logger.info("Note: Direct OpenAI calls may not be tracked in LangSmith. Ensure LANGCHAIN_TRACING_V2=true and LANGCHAIN_API_KEY are set for SDK-level tracking.")
             
             # Fallback to direct OpenAI API call
+            # Note: Direct API calls will be tracked by LangSmith SDK if environment variables are set
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[
@@ -282,7 +342,8 @@ class LLMClientFactory:
         
         Args:
             config: LLM configuration dictionary
-            langsmith_config: Optional LangSmith configuration for tracking
+            langsmith_config: Optional LangSmith configuration for tracking.
+                If None, will read from .env file via settings.
                 {
                     'enabled': bool,
                     'api_key': str,
@@ -296,14 +357,17 @@ class LLMClientFactory:
         Raises:
             LLMError: If client creation fails
         """
-        # Setup LangSmith tracking if configured
+        # Setup LangSmith tracking - will read from .env if langsmith_config is None
         if langsmith_config:
             setup_langsmith_tracking(
                 api_key=langsmith_config.get('api_key'),
-                project=langsmith_config.get('project', 'intelli-odm'),
-                endpoint=langsmith_config.get('endpoint', 'https://api.smith.langchain.com'),
-                enabled=langsmith_config.get('enabled', False)
+                project=langsmith_config.get('project'),
+                endpoint=langsmith_config.get('endpoint'),
+                enabled=langsmith_config.get('enabled')
             )
+        else:
+            # Read from .env file via settings
+            setup_langsmith_tracking()
         
         provider = config.get('provider', 'ollama')
         

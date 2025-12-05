@@ -1,5 +1,5 @@
 """
-Controlled demo scenarios for CEO presentation.
+Controlled demo scenarios forpresentation.
 
 This module provides pre-defined, controlled scenarios that demonstrate
 specific business cases with predictable outcomes.
@@ -18,7 +18,8 @@ class DemoScenarios:
             "seasonal_demand": "Seasonal Fashion Demand Surge",
             "supply_shortage": "Supply Chain Disruption Response", 
             "new_product": "New Product Line Launch",
-            "competitor_analysis": "Competitive Response Strategy"
+            "competitor_analysis": "Competitive Response Strategy",
+            "odm_data_ingestion": "ODM Data Ingestion & Forecasting"
         }
     
     @staticmethod
@@ -28,7 +29,8 @@ class DemoScenarios:
             "seasonal_demand": DemoScenarios._seasonal_demand_scenario(),
             "supply_shortage": DemoScenarios._supply_shortage_scenario(),
             "new_product": DemoScenarios._new_product_scenario(), 
-            "competitor_analysis": DemoScenarios._competitor_analysis_scenario()
+            "competitor_analysis": DemoScenarios._competitor_analysis_scenario(),
+            "odm_data_ingestion": DemoScenarios._odm_data_ingestion_scenario()
         }
         
         return scenarios.get(scenario_name, DemoScenarios._seasonal_demand_scenario())
@@ -186,6 +188,52 @@ class DemoScenarios:
         }
     
     @staticmethod
+    def _odm_data_ingestion_scenario() -> Dict[str, Any]:
+        """Scenario 5: ODM data cleaning and demand forecasting from messy input."""
+        return {
+            "name": "ODM Data Ingestion & Forecasting",
+            "description": "Processing messy ODM data from manufacturers - cleaning, normalizing, and forecasting demand",
+            "business_context": {
+                "situation": "Received unstructured ODM catalog data from multiple manufacturers",
+                "data_quality": "Messy format with abbreviations, inconsistent naming, mixed attributes",
+                "business_goal": "Clean and normalize data for accurate demand forecasting",
+                "expected_outcome": "Structured product data with forecasted demand and procurement recommendations"
+            },
+            "products": [
+                "Nordic shld jkt deepnavy,nsj-990??,navydeep??,nylon shell heavy matte???,reg?,\"Mens Active TOP?? winter wear looks like glacier shild jkt maybe? price ~4.2k-4.4k, standcollr fullsleev\"",
+                "breeze flow linen shrt mint pastel,BLS 204x,mintgrn pstl,pure linen 100pc|soft airy,relaxd,mens casual? solid/half-sleeve spreadcollr summr-vibe ~1800-1900 brunch/resort",
+                "TerraMotion cargo joggr,tmc_880,olive drab??,twill+lycra (stretch okish),relax fit??,bottomwear? joggr/cargo hybrid alltime-use mid~1700ish",
+                "FESTivEroyale Kurtta EMERALD,FRK-550,emrld??,silc blend shiny,str8cut,mens ethnic top kurta embroidered subtle festive/marriage sleevFULL mandrn price 2400-2600"
+            ],
+            "inventory": {
+                "product_1": 0,    # ODM products - needs initial procurement
+                "product_2": 0,    # New ODM data
+                "product_3": 0,    # Needs processing
+                "product_4": 0     # Fresh from manufacturer
+            },
+            "historical_sales": DemoScenarios._generate_seasonal_sales_pattern("odm_projection"),
+            "market_conditions": {
+                "economic_indicator": 1.12,  # Strong growth in ODM segment
+                "competitor_pricing": "variable",  # Wide range due to different manufacturers
+                "seasonal_factor": 1.15,  # 15% growth in direct manufacturer sourcing
+                "data_quality_risk": 0.85   # Some uncertainty due to messy data
+            },
+            "expected_insights": [
+                "15 ODM products successfully cleaned and normalized",
+                "Nordic jacket and linen shirt show highest market potential",
+                "Ethnic wear segment (kurta) has premium pricing opportunity",
+                "Recommended ODM investment: $45,000-55,000 for initial batch",
+                "Data quality improved from 30% to 95% structured format"
+            ],
+            "odm_processing": {
+                "input_format": "dirty_odm_input.csv",
+                "cleaning_agents": ["attribute_extraction", "price_normalization", "category_classification"],
+                "output_format": "structured_product_catalog",
+                "quality_improvement": "65% increase in data usability"
+            }
+        }
+    
+    @staticmethod
     def _generate_seasonal_sales_pattern(pattern_type: str) -> List[Dict[str, Any]]:
         """Generate controlled historical sales data for different patterns."""
         base_date = datetime.now() - timedelta(days=60)
@@ -212,6 +260,11 @@ class DemoScenarios:
                 "base_sales": [18, 14, 16, 12], 
                 "growth_trend": [0.9, 0.95, 0.92, 0.98],  # Declining due to competition
                 "volatility": [0.25, 0.2, 0.3, 0.2]
+            },
+            "odm_projection": {
+                "base_sales": [8, 14, 6, 10],  # ODM products - varied demand
+                "growth_trend": [1.15, 1.2, 1.1, 1.18],  # Growing ODM market
+                "volatility": [0.35, 0.25, 0.4, 0.3]  # Higher volatility for new ODM products
             }
         }
         
@@ -262,7 +315,7 @@ class DemoScenarios:
     
     @staticmethod
     def get_scenario_story(scenario_name: str) -> Dict[str, str]:
-        """Get the narrative story for CEO presentation."""
+        """Get the narrative story forpresentation."""
         stories = {
             "seasonal_demand": {
                 "setup": "Your retail chain is entering the critical pre-spring period. Weather forecasts predict an early warm season, and social media trends show 40% increased interest in summer fashion. You need to prepare inventory to capture this demand surge without overstocking.",
@@ -287,6 +340,12 @@ class DemoScenarios:
                 "challenge": "Should you match pricing, improve efficiency, or differentiate? How do you optimize inventory for a defensive strategy?",
                 "solution": "Intelli-ODM analyzes competitive positioning and recommends volume-optimized procurement strategies to maintain margins while defending market share.",
                 "outcome": "Defensive procurement strategy focusing on high-velocity basics (t-shirts, leggings) with cost optimization recommendations."
+            },
+            "odm_data_ingestion": {
+                "setup": "Your procurement team just received ODM catalog data from 5 new manufacturers. The data is messy with abbreviations, inconsistent formatting, mixed languages, and unclear attributes. You need to quickly evaluate which products have market potential.",
+                "challenge": "How do you extract meaningful insights from unstructured manufacturer data? Which ODM products should you prioritize for initial orders?",
+                "solution": "Intelli-ODM's AI agents automatically clean, normalize, and structure the messy data, then analyze market potential using comparable product performance and trend analysis.",
+                "outcome": "15 ODM products successfully processed with clear demand forecasts, pricing recommendations, and procurement priorities based on market analysis."
             }
         }
         

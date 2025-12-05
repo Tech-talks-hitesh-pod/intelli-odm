@@ -49,10 +49,14 @@ class OrchestratorAgent:
         
         # Initialize all agents
         try:
-            self.data_agent = DataIngestionAgent(llm_client, knowledge_base)
             self.attribute_agent = AttributeAnalogyAgent(llm_client, knowledge_base)
+            # Data ingestion agent needs attribute agent for attribute extraction
+            self.data_agent = DataIngestionAgent(llm_client, knowledge_base, self.attribute_agent)
             self.demand_agent = DemandForecastingAgent(llm_client, knowledge_base)
             self.procurement_agent = ProcurementAllocationAgent(llm_client, knowledge_base)
+            
+            # Processed data cache
+            self.processed_data = None
             
             logger.info("Orchestrator initialized successfully with all agents")
             
@@ -63,6 +67,114 @@ class OrchestratorAgent:
         # Execution tracking
         self.execution_history = []
         self.current_session = None
+        self.processed_data = None  # Cache for processed demo data
+    
+    def load_demo_data(self, data_dir: str = "data/sample") -> Dict[str, Any]:
+        """
+        Load and process demo data using DataIngestionAgent.
+        This runs on demo load and prepares all data for forecasting/procurement.
+        
+        Args:
+            data_dir: Directory containing demo data CSV files
+            
+        Returns:
+            Processed data dictionary with validation summary
+        """
+        logger.info(f"Loading and processing demo data from {data_dir}")
+        
+        try:
+            # Use data ingestion agent to load and process
+            processed_data = self.data_agent.load_and_process_demo_data(data_dir)
+            
+            # Cache processed data
+            self.processed_data = processed_data
+            
+            # Update agents with processed data
+            self.procurement_agent.processed_data = processed_data
+            
+            logger.info("Demo data loaded and processed successfully")
+            logger.info(f"  - Products: {len(processed_data.get('products', []))}")
+            logger.info(f"  - Sales records: {len(processed_data.get('sales', []))}")
+            logger.info(f"  - Inventory records: {len(processed_data.get('inventory', []))}")
+            logger.info(f"  - Stores: {len(processed_data.get('stores', []))}")
+            logger.info(f"  - Product attributes extracted: {len(processed_data.get('product_attributes', {}))}")
+            
+            return processed_data
+            
+        except Exception as e:
+            logger.error(f"Failed to load demo data: {e}")
+            raise OrchestratorError(f"Demo data loading failed: {e}")
+    
+    def load_dirty_odm_data(self, dirty_input_file: str, historical_file: str) -> Dict[str, Any]:
+        """
+        Load dirty ODM data directly without cleaning/validation.
+        Stores raw data in vector DB for new product evaluation.
+        
+        Args:
+            dirty_input_file: Path to dirty_odm_input.csv (new products to evaluate)
+            historical_file: Path to odm_historical_dataset_5000.csv (historical data)
+            
+        Returns:
+            Dictionary with loaded dirty data
+        """
+        logger.info(f"Loading dirty ODM data from {dirty_input_file} and {historical_file}")
+        
+        try:
+            # Use data ingestion agent to load dirty ODM data
+            processed_data = self.data_agent.load_dirty_odm_data(dirty_input_file, historical_file)
+            
+            # Cache processed data
+            self.processed_data = processed_data
+            
+            # Update agents with processed data
+            self.procurement_agent.processed_data = processed_data
+            
+            logger.info("✅ Dirty ODM data loaded and stored in vector DB")
+            logger.info(f"  - Dirty Input Products: {processed_data.get('summary', {}).get('dirty_input_count', 0)}")
+            logger.info(f"  - Historical Products: {processed_data.get('summary', {}).get('historical_products_count', 0)}")
+            logger.info(f"  - Historical Records: {processed_data.get('summary', {}).get('historical_records_count', 0)}")
+            logger.info(f"  - Cleaning Applied: {processed_data.get('summary', {}).get('cleaning_applied', False)}")
+            
+            return processed_data
+            
+        except Exception as e:
+            logger.error(f"Failed to load dirty ODM data: {e}")
+            raise OrchestratorError(f"Dirty ODM data loading failed: {e}")
+    
+    def load_odm_data(self, odm_file_path: str) -> Dict[str, Any]:
+        """
+        Load and process ODM data using DataIngestionAgent.
+        This specifically handles dirty ODM input data cleaning and normalization.
+        
+        Args:
+            odm_file_path: Path to dirty_odm_input.csv file
+            
+        Returns:
+            Processed ODM data dictionary with cleaned products and forecasts
+        """
+        logger.info(f"Loading and processing ODM data from {odm_file_path}")
+        
+        try:
+            # Use data ingestion agent to load and process ODM data
+            processed_data = self.data_agent.load_and_process_odm_data(odm_file_path)
+            
+            # Cache processed data
+            self.processed_data = processed_data
+            
+            # Update agents with processed data
+            self.procurement_agent.processed_data = processed_data
+            
+            logger.info("ODM data loaded and processed successfully")
+            logger.info(f"  - ODM Products: {len(processed_data.get('products', []))}")
+            logger.info(f"  - Generated sales records: {len(processed_data.get('sales', []))}")
+            logger.info(f"  - Inventory records: {len(processed_data.get('inventory', []))}")
+            logger.info(f"  - Processing summary: {processed_data.get('processing_summary', {})}")
+            
+            return processed_data
+            
+        except Exception as e:
+            logger.error(f"Failed to load ODM data: {e}")
+            raise OrchestratorError(f"ODM data loading failed: {e}")
     
     def start_session(self, session_id: Optional[str] = None) -> str:
         """

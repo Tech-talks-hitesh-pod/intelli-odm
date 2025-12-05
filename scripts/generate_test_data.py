@@ -134,11 +134,81 @@ class TestDataGenerator:
             }
         }
         
-        # Store information - increased for more data
+        # Store information - 50 stores across India
         self.store_tiers = {
-            'Tier_1': {'count': 20, 'performance_factor': 1.3},
-            'Tier_2': {'count': 30, 'performance_factor': 1.0},
-            'Tier_3': {'count': 25, 'performance_factor': 0.7}
+            'Tier_1': {'count': 15, 'performance_factor': 1.3},
+            'Tier_2': {'count': 20, 'performance_factor': 1.0},
+            'Tier_3': {'count': 15, 'performance_factor': 0.7}
+        }
+        
+        # Indian cities with location data
+        self.indian_cities = [
+            {'city': 'Mumbai', 'state': 'Maharashtra', 'region': 'West', 'climate': 'Tropical', 'locality': 'Metro', 'lat': 19.0760, 'lon': 72.8777},
+            {'city': 'Delhi', 'state': 'Delhi', 'region': 'North', 'climate': 'Semi-arid', 'locality': 'Metro', 'lat': 28.6139, 'lon': 77.2090},
+            {'city': 'Bangalore', 'state': 'Karnataka', 'region': 'South', 'climate': 'Tropical', 'locality': 'Metro', 'lat': 12.9716, 'lon': 77.5946},
+            {'city': 'Hyderabad', 'state': 'Telangana', 'region': 'South', 'climate': 'Tropical', 'locality': 'Metro', 'lat': 17.3850, 'lon': 78.4867},
+            {'city': 'Chennai', 'state': 'Tamil Nadu', 'region': 'South', 'climate': 'Tropical', 'locality': 'Metro', 'lat': 13.0827, 'lon': 80.2707},
+            {'city': 'Kolkata', 'state': 'West Bengal', 'region': 'East', 'climate': 'Tropical', 'locality': 'Metro', 'lat': 22.5726, 'lon': 88.3639},
+            {'city': 'Pune', 'state': 'Maharashtra', 'region': 'West', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 18.5204, 'lon': 73.8567},
+            {'city': 'Ahmedabad', 'state': 'Gujarat', 'region': 'West', 'climate': 'Arid', 'locality': 'Tier-2', 'lat': 23.0225, 'lon': 72.5714},
+            {'city': 'Jaipur', 'state': 'Rajasthan', 'region': 'North', 'climate': 'Arid', 'locality': 'Tier-2', 'lat': 26.9124, 'lon': 75.7873},
+            {'city': 'Surat', 'state': 'Gujarat', 'region': 'West', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 21.1702, 'lon': 72.8311},
+            {'city': 'Lucknow', 'state': 'Uttar Pradesh', 'region': 'North', 'climate': 'Humid Subtropical', 'locality': 'Tier-2', 'lat': 26.8467, 'lon': 80.9462},
+            {'city': 'Kanpur', 'state': 'Uttar Pradesh', 'region': 'North', 'climate': 'Humid Subtropical', 'locality': 'Tier-2', 'lat': 26.4499, 'lon': 80.3319},
+            {'city': 'Nagpur', 'state': 'Maharashtra', 'region': 'Central', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 21.1458, 'lon': 79.0882},
+            {'city': 'Indore', 'state': 'Madhya Pradesh', 'region': 'Central', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 22.7196, 'lon': 75.8577},
+            {'city': 'Thane', 'state': 'Maharashtra', 'region': 'West', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 19.2183, 'lon': 72.9781},
+            {'city': 'Bhopal', 'state': 'Madhya Pradesh', 'region': 'Central', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 23.2599, 'lon': 77.4126},
+            {'city': 'Visakhapatnam', 'state': 'Andhra Pradesh', 'region': 'South', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 17.6868, 'lon': 83.2185},
+            {'city': 'Patna', 'state': 'Bihar', 'region': 'East', 'climate': 'Humid Subtropical', 'locality': 'Tier-2', 'lat': 25.5941, 'lon': 85.1376},
+            {'city': 'Vadodara', 'state': 'Gujarat', 'region': 'West', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 22.3072, 'lon': 73.1812},
+            {'city': 'Ghaziabad', 'state': 'Uttar Pradesh', 'region': 'North', 'climate': 'Humid Subtropical', 'locality': 'Tier-2', 'lat': 28.6692, 'lon': 77.4538},
+            {'city': 'Ludhiana', 'state': 'Punjab', 'region': 'North', 'climate': 'Semi-arid', 'locality': 'Tier-2', 'lat': 30.9010, 'lon': 75.8573},
+            {'city': 'Agra', 'state': 'Uttar Pradesh', 'region': 'North', 'climate': 'Semi-arid', 'locality': 'Tier-3', 'lat': 27.1767, 'lon': 78.0081},
+            {'city': 'Nashik', 'state': 'Maharashtra', 'region': 'West', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 19.9975, 'lon': 73.7898},
+            {'city': 'Faridabad', 'state': 'Haryana', 'region': 'North', 'climate': 'Semi-arid', 'locality': 'Tier-2', 'lat': 28.4089, 'lon': 77.3178},
+            {'city': 'Meerut', 'state': 'Uttar Pradesh', 'region': 'North', 'climate': 'Humid Subtropical', 'locality': 'Tier-2', 'lat': 28.9845, 'lon': 77.7064},
+            {'city': 'Rajkot', 'state': 'Gujarat', 'region': 'West', 'climate': 'Arid', 'locality': 'Tier-2', 'lat': 22.3039, 'lon': 70.8022},
+            {'city': 'Varanasi', 'state': 'Uttar Pradesh', 'region': 'North', 'climate': 'Humid Subtropical', 'locality': 'Tier-2', 'lat': 25.3176, 'lon': 82.9739},
+            {'city': 'Srinagar', 'state': 'Jammu and Kashmir', 'region': 'North', 'climate': 'Temperate', 'locality': 'Tier-3', 'lat': 34.0837, 'lon': 74.7973},
+            {'city': 'Amritsar', 'state': 'Punjab', 'region': 'North', 'climate': 'Semi-arid', 'locality': 'Tier-2', 'lat': 31.6340, 'lon': 74.8723},
+            {'city': 'Chandigarh', 'state': 'Chandigarh', 'region': 'North', 'climate': 'Semi-arid', 'locality': 'Tier-2', 'lat': 30.7333, 'lon': 76.7794},
+            {'city': 'Coimbatore', 'state': 'Tamil Nadu', 'region': 'South', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 11.0168, 'lon': 76.9558},
+            {'city': 'Kochi', 'state': 'Kerala', 'region': 'South', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 9.9312, 'lon': 76.2673},
+            {'city': 'Mysore', 'state': 'Karnataka', 'region': 'South', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 12.2958, 'lon': 76.6394},
+            {'city': 'Vijayawada', 'state': 'Andhra Pradesh', 'region': 'South', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 16.5062, 'lon': 80.6480},
+            {'city': 'Jodhpur', 'state': 'Rajasthan', 'region': 'North', 'climate': 'Arid', 'locality': 'Tier-3', 'lat': 26.2389, 'lon': 73.0243},
+            {'city': 'Madurai', 'state': 'Tamil Nadu', 'region': 'South', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 9.9252, 'lon': 78.1198},
+            {'city': 'Raipur', 'state': 'Chhattisgarh', 'region': 'Central', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 21.2514, 'lon': 81.6296},
+            {'city': 'Kota', 'state': 'Rajasthan', 'region': 'North', 'climate': 'Arid', 'locality': 'Tier-2', 'lat': 25.2138, 'lon': 75.8648},
+            {'city': 'Guwahati', 'state': 'Assam', 'region': 'East', 'climate': 'Humid Subtropical', 'locality': 'Tier-2', 'lat': 26.1445, 'lon': 91.7362},
+            {'city': 'Bhubaneswar', 'state': 'Odisha', 'region': 'East', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 20.2961, 'lon': 85.8245},
+            {'city': 'Dehradun', 'state': 'Uttarakhand', 'region': 'North', 'climate': 'Temperate', 'locality': 'Tier-2', 'lat': 30.3165, 'lon': 78.0322},
+            {'city': 'Mangalore', 'state': 'Karnataka', 'region': 'South', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 12.9141, 'lon': 74.8560},
+            {'city': 'Belgaum', 'state': 'Karnataka', 'region': 'South', 'climate': 'Tropical', 'locality': 'Tier-3', 'lat': 15.8497, 'lon': 74.4977},
+            {'city': 'Tiruchirappalli', 'state': 'Tamil Nadu', 'region': 'South', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 10.7905, 'lon': 78.7047},
+            {'city': 'Kozhikode', 'state': 'Kerala', 'region': 'South', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 11.2588, 'lon': 75.7804},
+            {'city': 'Jamshedpur', 'state': 'Jharkhand', 'region': 'East', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 22.8046, 'lon': 86.2029},
+            {'city': 'Jabalpur', 'state': 'Madhya Pradesh', 'region': 'Central', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 23.1815, 'lon': 79.9864},
+            {'city': 'Gwalior', 'state': 'Madhya Pradesh', 'region': 'Central', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 26.2183, 'lon': 78.1828},
+            {'city': 'Dhanbad', 'state': 'Jharkhand', 'region': 'East', 'climate': 'Tropical', 'locality': 'Tier-2', 'lat': 23.7957, 'lon': 86.4304},
+            {'city': 'Warangal', 'state': 'Telangana', 'region': 'South', 'climate': 'Tropical', 'locality': 'Tier-3', 'lat': 18.0000, 'lon': 79.5833}
+        ]
+        
+        # Location-based factors for procurement decisions
+        self.location_factors = {
+            'climate': {
+                'Tropical': {'summer_demand': 1.3, 'winter_demand': 0.8, 'monsoon_impact': 0.9},
+                'Arid': {'summer_demand': 1.5, 'winter_demand': 0.7, 'monsoon_impact': 1.0},
+                'Semi-arid': {'summer_demand': 1.4, 'winter_demand': 0.8, 'monsoon_impact': 0.95},
+                'Humid Subtropical': {'summer_demand': 1.2, 'winter_demand': 1.1, 'monsoon_impact': 0.85},
+                'Temperate': {'summer_demand': 1.0, 'winter_demand': 1.3, 'monsoon_impact': 1.0}
+            },
+            'locality': {
+                'Metro': {'purchasing_power': 1.4, 'fashion_consciousness': 1.3, 'competition': 1.2},
+                'Tier-2': {'purchasing_power': 1.0, 'fashion_consciousness': 1.0, 'competition': 1.0},
+                'Tier-3': {'purchasing_power': 0.7, 'fashion_consciousness': 0.8, 'competition': 0.8}
+            }
         }
         
         # Seasonal patterns
@@ -161,7 +231,7 @@ class TestDataGenerator:
                    7: 1.2, 8: 1.1, 9: 1.0, 10: 0.9, 11: 0.8, 12: 0.9}
         }
     
-    def generate_products(self, num_products=500):
+    def generate_products(self, num_products=1000):
         """Generate product catalog with realistic fashion product names."""
         products = []
         
@@ -220,21 +290,48 @@ class TestDataGenerator:
         
         return pd.DataFrame(products)
     
-    def generate_stores(self):
-        """Generate store information."""
+    def generate_stores(self, num_stores=50):
+        """Generate store information with location data."""
         stores = []
         store_id = 1
         
-        for tier, info in self.store_tiers.items():
-            for i in range(info['count']):
-                stores.append({
-                    'store_id': f'store_{store_id:03d}',
-                    'tier': tier,
-                    'performance_factor': info['performance_factor'],
-                    'city': random.choice(['Mumbai', 'Delhi', 'Bangalore', 'Chennai', 'Hyderabad', 'Pune', 'Kolkata']),
-                    'size': random.choice(['Small', 'Medium', 'Large'])
-                })
-                store_id += 1
+        # Select cities for stores (ensure we have 50 stores)
+        selected_cities = random.sample(self.indian_cities, min(num_stores, len(self.indian_cities)))
+        
+        # If we need more stores than cities, repeat some cities
+        while len(selected_cities) < num_stores:
+            selected_cities.extend(random.sample(self.indian_cities, min(num_stores - len(selected_cities), len(self.indian_cities))))
+        
+        selected_cities = selected_cities[:num_stores]
+        
+        for i, city_data in enumerate(selected_cities):
+            # Assign tier based on locality
+            if city_data['locality'] == 'Metro':
+                tier = random.choices(['Tier_1', 'Tier_2'], weights=[0.6, 0.4])[0]
+            elif city_data['locality'] == 'Tier-2':
+                tier = random.choices(['Tier_2', 'Tier_3'], weights=[0.7, 0.3])[0]
+            else:
+                tier = 'Tier_3'
+            
+            tier_info = self.store_tiers[tier]
+            
+            stores.append({
+                'store_id': f'store_{store_id:03d}',
+                'tier': tier,
+                'performance_factor': tier_info['performance_factor'],
+                'city': city_data['city'],
+                'state': city_data['state'],
+                'region': city_data['region'],
+                'climate': city_data['climate'],
+                'locality': city_data['locality'],
+                'latitude': city_data['lat'],
+                'longitude': city_data['lon'],
+                'size': random.choice(['Small', 'Medium', 'Large']),
+                'purchasing_power': self.location_factors['locality'][city_data['locality']]['purchasing_power'],
+                'fashion_consciousness': self.location_factors['locality'][city_data['locality']]['fashion_consciousness'],
+                'competition_level': self.location_factors['locality'][city_data['locality']]['competition']
+            })
+            store_id += 1
         
         return pd.DataFrame(stores)
     
@@ -297,20 +394,50 @@ class TestDataGenerator:
         return pd.DataFrame(sales_records)
     
     def generate_inventory_data(self, products_df, stores_df):
-        """Generate current inventory data."""
+        """Generate current inventory data per store with location-based factors."""
         inventory_records = []
         
         for _, product in products_df.iterrows():
             product_id = product['product_id']
+            category = product['category']
             
             for _, store in stores_df.iterrows():
                 store_id = store['store_id']
+                climate = store['climate']
+                locality = store['locality']
+                purchasing_power = store['purchasing_power']
+                tier = store['tier']
+                
+                # Location-based inventory factors
+                climate_factors = self.location_factors['climate'][climate]
+                locality_factors = self.location_factors['locality'][locality]
+                
+                # Base stock varies by tier and location
+                base_stock = random.randint(10, 200) * purchasing_power
+                
+                # Category-specific adjustments based on climate
+                if category in ['TSHIRT', 'POLO', 'TOP']:
+                    # Summer items - higher in tropical/arid climates
+                    if climate in ['Tropical', 'Arid', 'Semi-arid']:
+                        base_stock *= 1.2
+                    else:
+                        base_stock *= 0.9
+                elif category in ['JEANS', 'SHIRT']:
+                    # All-season items - stable across climates
+                    base_stock *= 1.0
+                elif category in ['DRESS', 'KURTA', 'SALWAR']:
+                    # Fashion items - higher in metro areas
+                    if locality == 'Metro':
+                        base_stock *= 1.3
+                    else:
+                        base_stock *= 0.8
                 
                 # Not all products have inventory in all stores
-                if random.random() < 0.8:  # 80% chance of having inventory
-                    
+                # Higher probability in metro areas
+                availability_prob = 0.9 if locality == 'Metro' else 0.7 if locality == 'Tier-2' else 0.5
+                
+                if random.random() < availability_prob:
                     # Generate realistic inventory levels
-                    base_stock = random.randint(10, 200)
                     on_hand = max(0, int(base_stock * random.uniform(0.3, 1.2)))
                     in_transit = random.randint(0, 50) if random.random() < 0.3 else 0
                     
@@ -318,7 +445,9 @@ class TestDataGenerator:
                         'store_id': store_id,
                         'sku': product_id,
                         'on_hand': on_hand,
-                        'in_transit': in_transit
+                        'in_transit': in_transit,
+                        'reorder_point': int(on_hand * 0.3),  # 30% of current stock
+                        'safety_stock': int(on_hand * 0.2)  # 20% safety stock
                     })
         
         return pd.DataFrame(inventory_records)
@@ -360,8 +489,8 @@ class TestDataGenerator:
         
         return pd.DataFrame(pricing_records)
     
-    def generate_all_data(self, output_dir='data/sample', num_products=500, 
-                         start_date='2023-01-01', days=730):
+    def generate_all_data(self, output_dir='data/sample', num_products=1000, 
+                         start_date='2023-01-01', days=730, num_stores=50):
         """Generate complete dataset."""
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
@@ -369,8 +498,8 @@ class TestDataGenerator:
         print("Generating products data...")
         products_df = self.generate_products(num_products)
         
-        print("Generating stores data...")
-        stores_df = self.generate_stores()
+        print(f"Generating {num_stores} stores data with location information...")
+        stores_df = self.generate_stores(num_stores)
         
         print(f"Generating sales data for {days} days...")
         sales_df = self.generate_sales_data(products_df, stores_df, start_date, days)
@@ -426,7 +555,8 @@ class TestDataGenerator:
 def main():
     """Main function for command line usage."""
     parser = argparse.ArgumentParser(description='Generate test data for Intelli-ODM')
-    parser.add_argument('--products', type=int, default=500, help='Number of products to generate')
+    parser.add_argument('--products', type=int, default=1000, help='Number of products to generate')
+    parser.add_argument('--stores', type=int, default=50, help='Number of stores to generate')
     parser.add_argument('--days', type=int, default=730, help='Number of days of sales data (default: 2 years)')
     parser.add_argument('--start-date', default='2023-01-01', help='Start date for sales data (YYYY-MM-DD)')
     parser.add_argument('--output-dir', default='data/sample', help='Output directory')
@@ -439,6 +569,7 @@ def main():
     generator.generate_all_data(
         output_dir=args.output_dir,
         num_products=args.products,
+        num_stores=args.stores,
         start_date=args.start_date,
         days=args.days
     )

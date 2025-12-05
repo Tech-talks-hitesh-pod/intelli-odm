@@ -119,12 +119,23 @@ class SharedKnowledgeBase:
         """
         try:
             # Combine description and attributes for embedding
-            text_for_embedding = description
-            if not text_for_embedding:
-                text_for_embedding = self._attributes_to_text(attributes)
+            # Include both for better semantic matching
+            text_parts = []
+            if description:
+                text_parts.append(description)
             
-            # Generate embedding
+            # Add attributes text for better similarity matching
+            attributes_text = self._attributes_to_text(attributes)
+            if attributes_text:
+                text_parts.append(attributes_text)
+            
+            text_for_embedding = " | ".join(text_parts) if text_parts else self._attributes_to_text(attributes)
+            
+            # Generate embedding from combined text
+            logger.info(f"🧠 Generating embedding for product {product_id}")
+            logger.debug(f"Embedding text: {text_for_embedding[:100]}...")
             embedding = self._generate_embedding(text_for_embedding)
+            logger.info(f"✅ Generated {len(embedding)}-dimensional embedding for product {product_id}")
             
             # Prepare metadata
             store_metadata = {
@@ -136,6 +147,7 @@ class SharedKnowledgeBase:
             }
             
             # Store in ChromaDB
+            logger.info(f"💾 Storing product {product_id} in ChromaDB vector database")
             self._products_collection.add(
                 ids=[product_id],
                 embeddings=[embedding.tolist()],
@@ -143,7 +155,7 @@ class SharedKnowledgeBase:
                 documents=[text_for_embedding]
             )
             
-            logger.info(f"Stored product {product_id} in knowledge base")
+            logger.info(f"✅ Successfully stored product {product_id} in vector database")
             return True
             
         except Exception as e:
@@ -165,55 +177,85 @@ class SharedKnowledgeBase:
             List of similar products with similarity scores
         """
         try:
+            # First try real vector search from the database
+            logger.info("Attempting real vector search for similar products")
+            
             # Create query text
-            query_text = query_description
-            if not query_text:
-                query_text = self._attributes_to_text(query_attributes)
+            search_query = query_description
+            if not search_query:
+                search_query = self._attributes_to_text(query_attributes)
             
-            # Generate query embedding
-            query_embedding = self._generate_embedding(query_text)
+            logger.info(f"Searching for products similar to: {search_query}")
             
-            # Search for similar products
-            results = self._products_collection.query(
-                query_embeddings=[query_embedding.tolist()],
-                n_results=top_k,
-                include=["metadatas", "documents", "distances"]
-            )
+            # Check if collection has any data
+            try:
+                collection_count = self._products_collection.count()
+                logger.info(f"Vector database has {collection_count} products")
+                
+                if collection_count > 0:
+                    # Generate query embedding
+                    query_embedding = self._generate_embedding(search_query)
+                    
+                    # Search for similar products with distance threshold
+                    # Use larger n_results to filter by similarity threshold later
+                    results = self._products_collection.query(
+                        query_embeddings=[query_embedding.tolist()],
+                        n_results=min(top_k * 3, collection_count),  # Get more candidates to filter
+                        include=["metadatas", "documents", "distances"]
+                    )
+                    
+                    # Process real results
+                    similar_products = []
+                    if results["ids"] and len(results["ids"]) > 0:
+                        for i, product_id in enumerate(results["ids"][0]):
+                            metadata = results["metadatas"][0][i] if results["metadatas"] else {}
+                            description = results["documents"][0][i] if results["documents"] else ""
+                            distance = results["distances"][0][i] if results["distances"] else 1.0
+                            
+                            # Convert distance to similarity (lower distance = higher similarity)
+                            # ChromaDB uses cosine distance (0-2 range), normalize to 0-1 similarity
+                            # Distance 0 = perfect match (similarity 1.0)
+                            # Distance 1 = orthogonal (similarity 0.5)
+                            # Distance 2 = opposite (similarity 0.0)
+                            similarity_score = max(0.0, 1.0 - (distance / 2.0))
+                            
+                            # Apply threshold - only include products with similarity > 0.3
+                            if similarity_score < 0.3:
+                                continue
+                            
+                            # Parse attributes
+                            import json
+                            attributes = json.loads(metadata.get("attributes", "{}"))
+                            
+                            product_data = {
+                                'product_id': product_id,
+                                'name': metadata.get('product_name', description.split('.')[0] if description else 'Unknown'),
+                                'description': description,
+                                'attributes': attributes,
+                                'similarity_score': similarity_score,
+                                'sales': {
+                                    'total_units': int(metadata.get('sales_total_units', 0)),
+                                    'total_revenue': float(metadata.get('sales_total_revenue', 0)),
+                                    'avg_monthly_units': float(metadata.get('sales_avg_monthly', 0))
+                                }
+                            }
+                            
+                            similar_products.append(product_data)
+                        
+                        if similar_products:
+                            logger.info(f"Found {len(similar_products)} real similar products from vector database")
+                            return similar_products
+                    
+                logger.info("No products found in vector database")
+                return []
+                
+            except Exception as e:
+                logger.warning(f"Vector search failed: {e}")
+                return []
             
-            # Process results
-            similar_products = []
-            if results["ids"] and results["ids"][0]:
-                for i, product_id in enumerate(results["ids"][0]):
-                    metadata = results["metadatas"][0][i]
-                    distance = results["distances"][0][i]
-                    
-                    # Convert distance to similarity score (0-1)
-                    similarity_score = max(0.0, 1.0 - distance)
-                    
-                    # Parse stored attributes
-                    stored_attributes = json.loads(metadata.get("attributes", "{}"))
-                    
-                    # Get product name from metadata if available
-                    product_name = metadata.get("product_name", metadata.get("description", ""))
-                    if not product_name:
-                        # Try to extract from description
-                        description = metadata.get("description", "")
-                        if description:
-                            # Take first part as name
-                            product_name = description.split('.')[0] if '.' in description else description.split('\n')[0]
-                    
-                    similar_products.append({
-                        "product_id": product_id,
-                        "name": product_name,  # Add name field
-                        "similarity_score": similarity_score,
-                        "attributes": stored_attributes,
-                        "description": metadata.get("description", ""),
-                        "metadata": {k: v for k, v in metadata.items() 
-                                   if k not in ["product_id", "attributes", "description"]}
-                    })
-            
-            logger.info(f"Found {len(similar_products)} similar products")
-            return similar_products
+            # NO FALLBACK: Return empty list if vector search fails
+            logger.info("Vector database is empty or search failed - returning empty results")
+            return []
             
         except Exception as e:
             logger.error(f"Failed to find similar products: {e}")
@@ -289,6 +331,127 @@ class SharedKnowledgeBase:
             logger.error(f"Failed to retrieve performance data for {product_id}: {e}")
             return []
     
+    def store_product_with_sales_data(self, product_id: str, attributes: Dict[str, Any],
+                                     description: str, sales_data: Dict[str, Any],
+                                     inventory_data: Optional[Dict[str, Any]] = None,
+                                     pricing_data: Optional[Dict[str, Any]] = None) -> bool:
+        """
+        Store product with complete sales, inventory, and pricing data.
+        This is called after data ingestion and attribute extraction.
+        
+        Args:
+            product_id: Product identifier
+            attributes: Extracted attributes from AttributeAnalogyAgent
+            description: Product description
+            sales_data: Aggregated sales data (total_units, total_revenue, avg_monthly, etc.)
+            inventory_data: Current inventory data (on_hand, by_store, etc.)
+            pricing_data: Pricing data (avg_price, price_range, etc.)
+            
+        Returns:
+            bool: Success status
+        """
+        try:
+            # Prepare comprehensive metadata
+            metadata = {
+                "product_name": description.split('.')[0] if '.' in description else description[:50],
+                "sales_total_units": int(sales_data.get("total_units", 0)),
+                "sales_total_revenue": float(sales_data.get("total_revenue", 0)),
+                "sales_avg_monthly": float(sales_data.get("avg_monthly_units", 0)),
+                "sales_date_range": json.dumps(sales_data.get("date_range", {})),
+            }
+            
+            # Log sales data being stored
+            logger.debug(f"Storing sales metadata for {product_id}: units={metadata['sales_total_units']}, revenue={metadata['sales_total_revenue']}")
+            
+            if inventory_data:
+                metadata.update({
+                    "inventory_total": inventory_data.get("total_on_hand", 0),
+                    "inventory_by_store": json.dumps(inventory_data.get("by_store", {}))
+                })
+            
+            if pricing_data:
+                metadata.update({
+                    "price_avg": pricing_data.get("avg_price", 0),
+                    "price_min": pricing_data.get("min_price", 0),
+                    "price_max": pricing_data.get("max_price", 0)
+                })
+            
+            # Store product with all data
+            return self.store_product(
+                product_id=product_id,
+                attributes=attributes,
+                description=description,
+                metadata=metadata
+            )
+            
+        except Exception as e:
+            logger.error(f"Failed to store product with sales data {product_id}: {e}")
+            return False
+    
+    def get_all_products_with_performance(self) -> List[Dict[str, Any]]:
+        """
+        Retrieve all products with their performance data from the knowledge base.
+        Used for comprehensive analysis before procurement evaluation.
+        
+        Returns:
+            List of products with attributes and performance data
+        """
+        try:
+            logger.info("Retrieving all products from vector database")
+            
+            # Get all products from vector database
+            results = self._products_collection.get(
+                include=["metadatas", "documents"]
+            )
+            
+            products = []
+            if results["ids"]:
+                logger.info(f"Found {len(results['ids'])} products in vector database")
+                
+                for i, product_id in enumerate(results["ids"]):
+                    metadata = results["metadatas"][i]
+                    description = results["documents"][i] if results["documents"] else ""
+                    
+                    # Parse attributes
+                    attributes = json.loads(metadata.get("attributes", "{}"))
+                    
+                    # Extract performance data from metadata
+                    product_data = {
+                        "product_id": product_id,
+                        "name": metadata.get("product_name", description.split('.')[0] if description else product_id),
+                        "description": description,
+                        "attributes": attributes,
+                        "sales": {
+                            "total_units": int(metadata.get("sales_total_units", 0)),
+                            "total_revenue": float(metadata.get("sales_total_revenue", 0)),
+                            "avg_monthly_units": float(metadata.get("sales_avg_monthly", 0))
+                        }
+                    }
+                    
+                    # Add inventory if available
+                    if metadata.get("inventory_total"):
+                        product_data["inventory"] = {
+                            "total": int(metadata.get("inventory_total", 0)),
+                            "by_store": json.loads(metadata.get("inventory_by_store", "{}"))
+                        }
+                    
+                    # Add pricing if available
+                    if metadata.get("price_avg"):
+                        product_data["pricing"] = {
+                            "avg_price": float(metadata.get("price_avg", 0)),
+                            "min_price": float(metadata.get("price_min", 0)),
+                            "max_price": float(metadata.get("price_max", 0))
+                        }
+                    
+                    products.append(product_data)
+            
+            logger.info(f"Retrieved {len(products)} products with performance data from vector DB")
+            return products
+            
+        except Exception as e:
+            logger.error(f"Failed to retrieve all products: {e}")
+            return []
+    
     def get_collection_stats(self) -> Dict[str, Any]:
         """Get statistics about the knowledge base collections."""
         try:
@@ -304,6 +467,14 @@ class SharedKnowledgeBase:
         except Exception as e:
             logger.error(f"Failed to get collection stats: {e}")
             return {"status": "error", "error": str(e)}
+    
+    def get_collection_size(self) -> int:
+        """Get the number of products in the knowledge base."""
+        try:
+            return self._products_collection.count()
+        except Exception as e:
+            logger.error(f"Failed to get collection size: {e}")
+            return 0
     
     def reset_collections(self):
         """Reset all collections (use with caution)."""

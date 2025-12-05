@@ -1,0 +1,19 @@
+{
+  "generation_date": "2025-12-05T16:35:39.506625",
+  "products_count": 1000,
+  "stores_count": 50,
+  "sales_records": 26800225,
+  "inventory_records": 35104,
+  "pricing_records": 50000,
+  "date_range": "2023-01-01 to 2024-12-30",
+  "categories": [
+    "SHIRT",
+    "SALWAR",
+    "TOP",
+    "DRESS",
+    "JEANS",
+    "POLO",
+    "KURTA",
+    "TSHIRT"
+  ]
+}

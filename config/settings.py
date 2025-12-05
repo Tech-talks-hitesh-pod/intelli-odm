@@ -50,9 +50,11 @@ class Settings(BaseSettings):
     enable_profiling: bool = Field(default=False, description="Enable performance profiling")
     
     # LangSmith / LangChain Observability
+    # These fields automatically map to LANGCHAIN_TRACING_V2, LANGCHAIN_API_KEY, etc. in .env
+    # Also supports LANGSMITH_API_KEY as an alias for clarity
     langchain_tracing_v2: bool = Field(default=False, description="Enable LangSmith tracing")
     langchain_project: str = Field(default="intelli-odm", description="LangSmith project name")
-    langchain_api_key: Optional[str] = Field(default=None, description="LangSmith API key")
+    langchain_api_key: Optional[str] = Field(default=None, description="LangSmith API key (set LANGCHAIN_API_KEY or LANGSMITH_API_KEY in .env)", alias="LANGSMITH_API_KEY")
     langchain_endpoint: str = Field(default="https://api.smith.langchain.com", description="LangSmith API endpoint")
     
     # Streamlit UI

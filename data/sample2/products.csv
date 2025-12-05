@@ -1,0 +1,1001 @@
+product_id,vendor_sku,name,description,category,color,material,pattern,price_min,price_max
+P0001,V-POL-0001,Classic Polo Shirt,Gray Stripes Cotton Blend Classic Polo Shirt with short sleeves,POLO,Gray,Cotton Blend,Stripes,299,999
+P0002,V-POL-0002,Color Block Polo,White Performance Fabric Color Block Polo with short sleeves,POLO,White,Performance Fabric,Solid,299,999
+P0003,V-JEA-0003,Stretch Comfort Jeans,Blue Faded Raw Denim Stretch Comfort Jeans regular fit,JEANS,Blue,Raw Denim,Faded,799,2499
+P0004,V-TOP-0004,Knot Front Top,Printed Linen Knot Front Top with sleeveless sleeves halter neck,TOP,Printed,Linen,Solid,299,899
+P0005,V-KUR-0005,Anarkali Kurta,Pink Embroidered Linen Anarkali Kurta with short sleeves round neck,KURTA,Pink,Linen,Embroidered,499,1999
+P0006,V-SAL-0006,Churidar Salwar,Beige Embroidered Chiffon Churidar Salwar regular fit,SALWAR,Beige,Chiffon,Embroidered,399,1299
+P0007,V-TOP-0007,Blouse Style Top,Red Cotton Blouse Style Top with three-quarter sleeves off-shoulder neck,TOP,Red,Cotton,Solid,299,899
+P0008,V-JEA-0008,Wide Leg Jeans,Blue Faded Denim Wide Leg Jeans slim fit,JEANS,Blue,Denim,Faded,799,2499
+P0009,V-JEA-0009,Regular Fit Jeans,Gray Vintage Wash Stretch Denim Regular Fit Jeans regular fit,JEANS,Gray,Stretch Denim,Vintage Wash,799,2499
+P0010,V-KUR-0010,Straight Cut Kurta,Green Linen Straight Cut Kurta with three-quarter sleeves v-neck neck,KURTA,Green,Linen,Solid,499,1999
+P0011,V-JEA-0011,Skinny Fit Jeans,White Distressed Stretch Denim Skinny Fit Jeans bootcut fit,JEANS,White,Stretch Denim,Distressed,799,2499
+P0012,V-KUR-0012,Cotton Kurta,White Embroidered Linen Cotton Kurta with long sleeves mandarin neck,KURTA,White,Linen,Embroidered,499,1999
+P0013,V-POL-0013,Long Sleeve Polo,Gray Color Block Cotton Blend Long Sleeve Polo with long sleeves,POLO,Gray,Cotton Blend,Color Block,299,999
+P0014,V-DRE-0014,Bodycon Party Dress,Blue Polka Dots Polyester Bodycon Party Dress with sleeveless sleeves halter neck,DRESS,Blue,Polyester,Polka Dots,599,1999
+P0015,V-SAL-0015,Wide Leg Salwar,Beige Printed Georgette Wide Leg Salwar churidar fit,SALWAR,Beige,Georgette,Printed,399,1299
+P0016,V-TOP-0016,Peplum Top,Printed Cotton Peplum Top with sleeveless sleeves v-neck neck,TOP,Printed,Cotton,Solid,299,899
+P0017,V-SAL-0017,Wide Leg Salwar,White Striped Cotton Wide Leg Salwar wide leg fit,SALWAR,White,Cotton,Striped,399,1299
+P0018,V-SHI-0018,Flannel Shirt,Checked Cotton Flannel Shirt with long sleeves button-down neck,SHIRT,Checked,Cotton,Solid,399,1499
+P0019,V-KUR-0019,Linen Kurta,Yellow Printed Chiffon Linen Kurta with long sleeves round neck,KURTA,Yellow,Chiffon,Printed,499,1999
+P0020,V-SHI-0020,Flannel Shirt,Striped Linen Flannel Shirt with long sleeves button-down neck,SHIRT,Striped,Linen,Solid,399,1499
+P0021,V-JEA-0021,Skinny Fit Jeans,Black Stretch Denim Skinny Fit Jeans skinny fit,JEANS,Black,Stretch Denim,Solid,799,2499
+P0022,V-TSH-0022,Premium Cotton Tee,Red Stripes Cotton Blend Premium Cotton Tee with short sleeves v-neck neck,TSHIRT,Red,Cotton Blend,Stripes,199,799
+P0023,V-POL-0023,Pique Polo T-Shirt,Navy Stripes Performance Fabric Pique Polo T-Shirt with short sleeves,POLO,Navy,Performance Fabric,Stripes,299,999
+P0024,V-DRE-0024,Bodycon Party Dress,Pink Floral Linen Bodycon Party Dress with long sleeves square neck,DRESS,Pink,Linen,Floral,599,1999
+P0025,V-SAL-0025,Trouser Style Salwar,White Striped Chiffon Trouser Style Salwar regular fit,SALWAR,White,Chiffon,Striped,399,1299
+P0026,V-JEA-0026,Relaxed Fit Jeans,Gray Denim Relaxed Fit Jeans straight fit,JEANS,Gray,Denim,Solid,799,2499
+P0027,V-JEA-0027,Slim Fit Denim Jeans,Dark Blue Denim Slim Fit Denim Jeans slim fit,JEANS,Dark Blue,Denim,Solid,799,2499
+P0028,V-TSH-0028,Oversized Comfort T-Shirt,Pink Stripes Cotton Oversized Comfort T-Shirt with long sleeves henley neck,TSHIRT,Pink,Cotton,Stripes,199,799
+P0029,V-JEA-0029,Stretch Comfort Jeans,Dark Blue Vintage Wash Denim Stretch Comfort Jeans skinny fit,JEANS,Dark Blue,Denim,Vintage Wash,799,2499
+P0030,V-SAL-0030,Printed Salwar,Black Striped Cotton Printed Salwar palazzo fit,SALWAR,Black,Cotton,Striped,399,1299
+P0031,V-SAL-0031,Comfort Fit Salwar,Solid Georgette Comfort Fit Salwar regular fit,SALWAR,Solid,Georgette,Solid,399,1299
+P0032,V-TSH-0032,Graphic Print T-Shirt,Black Stripes Cotton Blend Graphic Print T-Shirt with short sleeves v-neck neck,TSHIRT,Black,Cotton Blend,Stripes,199,799
+P0033,V-TOP-0033,Off-Shoulder Top,Black Striped Chiffon Off-Shoulder Top with bell sleeves sleeves v-neck neck,TOP,Black,Chiffon,Striped,299,899
+P0034,V-POL-0034,Athletic Fit Polo,White Cotton Athletic Fit Polo with short sleeves,POLO,White,Cotton,Solid,299,999
+P0035,V-DRE-0035,Sundress with Pockets,Green Floral Crepe Sundress with Pockets with cap sleeves sleeves round neck,DRESS,Green,Crepe,Floral,599,1999
+P0036,V-DRE-0036,Sundress with Pockets,Pink Printed Cotton Sundress with Pockets with cap sleeves sleeves square neck,DRESS,Pink,Cotton,Printed,599,1999
+P0037,V-SAL-0037,Traditional Salwar,Navy Printed Georgette Traditional Salwar palazzo fit,SALWAR,Navy,Georgette,Printed,399,1299
+P0038,V-JEA-0038,Slim Fit Denim Jeans,Dark Blue Raw Denim Slim Fit Denim Jeans slim fit,JEANS,Dark Blue,Raw Denim,Solid,799,2499
+P0039,V-TSH-0039,Henley Style T-Shirt,Pink Graphic Organic Cotton Henley Style T-Shirt with short sleeves crew neck,TSHIRT,Pink,Organic Cotton,Graphic,199,799
+P0040,V-POL-0040,Performance Polo,Navy Stripes Cotton Performance Polo with long sleeves,POLO,Navy,Cotton,Stripes,299,999
+P0041,V-JEA-0041,Vintage Wash Jeans,Blue Raw Denim Vintage Wash Jeans bootcut fit,JEANS,Blue,Raw Denim,Solid,799,2499
+P0042,V-KUR-0042,Anarkali Kurta,Red Printed Linen Anarkali Kurta with long sleeves boat neck neck,KURTA,Red,Linen,Printed,499,1999
+P0043,V-DRE-0043,Linen Blend Dress,Floral Abstract Georgette Linen Blend Dress with sleeveless sleeves round neck,DRESS,Floral,Georgette,Abstract,599,1999
+P0044,V-TSH-0044,Striped Casual Tee,Black Modal Striped Casual Tee with sleeveless sleeves v-neck neck,TSHIRT,Black,Modal,Solid,199,799
+P0045,V-SHI-0045,Oxford Button-Down Shirt,White Checks Cotton Blend Oxford Button-Down Shirt with long sleeves band collar neck,SHIRT,White,Cotton Blend,Checks,399,1499
+P0046,V-DRE-0046,Cocktail Dress,Floral Geometric Linen Cocktail Dress with short sleeves halter neck,DRESS,Floral,Linen,Geometric,599,1999
+P0047,V-SHI-0047,Poplin Dress Shirt,Blue Stripes Cotton Poplin Dress Shirt with short sleeves,SHIRT,Blue,Cotton,Stripes,399,1499
+P0048,V-DRE-0048,Bodycon Party Dress,Blue Polka Dots Chiffon Bodycon Party Dress with sleeveless sleeves v-neck neck,DRESS,Blue,Chiffon,Polka Dots,599,1999
+P0049,V-SHI-0049,Flannel Shirt,Black Poplin Flannel Shirt with short sleeves button-down neck,SHIRT,Black,Poplin,Solid,399,1499
+P0050,V-SAL-0050,Solid Color Salwar,Black Embroidered Cotton Solid Color Salwar churidar fit,SALWAR,Black,Cotton,Embroidered,399,1299
+P0051,V-SHI-0051,Oxford Button-Down Shirt,Striped Printed Poplin Oxford Button-Down Shirt with short sleeves,SHIRT,Striped,Poplin,Printed,399,1499
+P0052,V-POL-0052,Golf Polo Shirt,White Embroidered Pique Cotton Golf Polo Shirt with short sleeves,POLO,White,Pique Cotton,Embroidered,299,999
+P0053,V-DRE-0053,A-Line Summer Dress,White Chiffon A-Line Summer Dress with sleeveless sleeves v-neck neck,DRESS,White,Chiffon,Solid,599,1999
+P0054,V-JEA-0054,Black Denim Jeans,Gray Vintage Wash Denim Black Denim Jeans regular fit,JEANS,Gray,Denim,Vintage Wash,799,2499
+P0055,V-DRE-0055,Casual Midi Dress,Black Floral Crepe Casual Midi Dress with sleeveless sleeves off-shoulder neck,DRESS,Black,Crepe,Floral,599,1999
+P0056,V-JEA-0056,Straight Leg Jeans,Dark Blue Denim Straight Leg Jeans slim fit,JEANS,Dark Blue,Denim,Solid,799,2499
+P0057,V-TOP-0057,Cold Shoulder Top,Printed Floral Polyester Cold Shoulder Top with three-quarter sleeves off-shoulder neck,TOP,Printed,Polyester,Floral,299,899
+P0058,V-JEA-0058,Relaxed Fit Jeans,Dark Blue Faded Denim Relaxed Fit Jeans relaxed fit,JEANS,Dark Blue,Denim,Faded,799,2499
+P0059,V-SHI-0059,Casual Linen Shirt,Black Denim Cotton Blend Casual Linen Shirt with long sleeves button-down neck,SHIRT,Black,Cotton Blend,Denim,399,1499
+P0060,V-KUR-0060,Cotton Kurta,Green Printed Cotton Cotton Kurta with three-quarter sleeves mandarin neck,KURTA,Green,Cotton,Printed,499,1999
+P0061,V-TSH-0061,Premium Cotton Tee,Green Printed Modal Premium Cotton Tee with sleeveless sleeves scoop neck,TSHIRT,Green,Modal,Printed,199,799
+P0062,V-SAL-0062,Wide Leg Salwar,White Printed Cotton Wide Leg Salwar palazzo fit,SALWAR,White,Cotton,Printed,399,1299
+P0063,V-TSH-0063,Organic Cotton T-Shirt,White Graphic Organic Cotton Organic Cotton T-Shirt with sleeveless sleeves v-neck neck,TSHIRT,White,Organic Cotton,Graphic,199,799
+P0064,V-KUR-0064,A-Line Kurta,Red Geometric Cotton A-Line Kurta with long sleeves round neck,KURTA,Red,Cotton,Geometric,499,1999
+P0065,V-SHI-0065,Flannel Shirt,Checked Printed Cotton Blend Flannel Shirt with long sleeves band collar neck,SHIRT,Checked,Cotton Blend,Printed,399,1499
+P0066,V-SHI-0066,Flannel Shirt,Blue Printed Linen Flannel Shirt with long sleeves button-down neck,SHIRT,Blue,Linen,Printed,399,1499
+P0067,V-DRE-0067,Boho Chic Dress,Floral Abstract Linen Boho Chic Dress with short sleeves square neck,DRESS,Floral,Linen,Abstract,599,1999
+P0068,V-SHI-0068,Checked Pattern Shirt,Striped Denim Poplin Checked Pattern Shirt with long sleeves band collar neck,SHIRT,Striped,Poplin,Denim,399,1499
+P0069,V-TOP-0069,Tunic Top,Pink Floral Polyester Tunic Top with sleeveless sleeves round neck,TOP,Pink,Polyester,Floral,299,899
+P0070,V-SHI-0070,Flannel Shirt,Black Chambray Flannel Shirt with short sleeves button-down neck,SHIRT,Black,Chambray,Solid,399,1499
+P0071,V-SHI-0071,Checked Pattern Shirt,Blue Linen Checked Pattern Shirt with short sleeves,SHIRT,Blue,Linen,Solid,399,1499
+P0072,V-TOP-0072,Knot Front Top,Red Floral Cotton Knot Front Top with sleeveless sleeves halter neck,TOP,Red,Cotton,Floral,299,899
+P0073,V-TOP-0073,Wrap Top,Black Polyester Wrap Top with short sleeves halter neck,TOP,Black,Polyester,Solid,299,899
+P0074,V-JEA-0074,Skinny Fit Jeans,Light Blue Vintage Wash Raw Denim Skinny Fit Jeans straight fit,JEANS,Light Blue,Raw Denim,Vintage Wash,799,2499
+P0075,V-JEA-0075,Regular Fit Jeans,Black Vintage Wash Stretch Denim Regular Fit Jeans skinny fit,JEANS,Black,Stretch Denim,Vintage Wash,799,2499
+P0076,V-SAL-0076,Ankle Length Salwar,Navy Striped Georgette Ankle Length Salwar wide leg fit,SALWAR,Navy,Georgette,Striped,399,1299
+P0077,V-SHI-0077,Checked Pattern Shirt,Striped Printed Cotton Blend Checked Pattern Shirt with short sleeves band collar neck,SHIRT,Striped,Cotton Blend,Printed,399,1499
+P0078,V-TOP-0078,Peplum Top,Black Striped Linen Peplum Top with three-quarter sleeves off-shoulder neck,TOP,Black,Linen,Striped,299,899
+P0079,V-POL-0079,Performance Polo,Gray Color Block Pique Cotton Performance Polo with short sleeves,POLO,Gray,Pique Cotton,Color Block,299,999
+P0080,V-POL-0080,Premium Cotton Polo,Blue Color Block Performance Fabric Premium Cotton Polo with long sleeves,POLO,Blue,Performance Fabric,Color Block,299,999
+P0081,V-JEA-0081,High Waist Jeans,Light Blue Stretch Denim High Waist Jeans skinny fit,JEANS,Light Blue,Stretch Denim,Solid,799,2499
+P0082,V-TSH-0082,Oversized Comfort T-Shirt,Green Logo Cotton Blend Oversized Comfort T-Shirt with sleeveless sleeves v-neck neck,TSHIRT,Green,Cotton Blend,Logo,199,799
+P0083,V-TOP-0083,Cold Shoulder Top,Red Floral Linen Cold Shoulder Top with short sleeves halter neck,TOP,Red,Linen,Floral,299,899
+P0084,V-KUR-0084,Festive Kurta,Blue Floral Silk Festive Kurta with short sleeves round neck,KURTA,Blue,Silk,Floral,499,1999
+P0085,V-SAL-0085,Wide Leg Salwar,Black Striped Cotton Wide Leg Salwar churidar fit,SALWAR,Black,Cotton,Striped,399,1299
+P0086,V-TOP-0086,Off-Shoulder Top,Navy Floral Cotton Off-Shoulder Top with three-quarter sleeves v-neck neck,TOP,Navy,Cotton,Floral,299,899
+P0087,V-TOP-0087,Tie-Up Top,Printed Floral Linen Tie-Up Top with three-quarter sleeves halter neck,TOP,Printed,Linen,Floral,299,899
+P0088,V-SHI-0088,Casual Linen Shirt,White Denim Poplin Casual Linen Shirt with short sleeves band collar neck,SHIRT,White,Poplin,Denim,399,1499
+P0089,V-JEA-0089,Black Denim Jeans,Dark Blue Denim Black Denim Jeans regular fit,JEANS,Dark Blue,Denim,Solid,799,2499
+P0090,V-JEA-0090,Slim Fit Denim Jeans,Black Faded Raw Denim Slim Fit Denim Jeans skinny fit,JEANS,Black,Raw Denim,Faded,799,2499
+P0091,V-POL-0091,Color Block Polo,Maroon Embroidered Pique Cotton Color Block Polo with long sleeves,POLO,Maroon,Pique Cotton,Embroidered,299,999
+P0092,V-POL-0092,Performance Polo,Navy Cotton Blend Performance Polo with long sleeves,POLO,Navy,Cotton Blend,Solid,299,999
+P0093,V-SAL-0093,Traditional Salwar,Black Printed Linen Traditional Salwar regular fit,SALWAR,Black,Linen,Printed,399,1299
+P0094,V-SHI-0094,Poplin Dress Shirt,White Denim Chambray Poplin Dress Shirt with short sleeves band collar neck,SHIRT,White,Chambray,Denim,399,1499
+P0095,V-SAL-0095,Trouser Style Salwar,Black Embroidered Chiffon Trouser Style Salwar regular fit,SALWAR,Black,Chiffon,Embroidered,399,1299
+P0096,V-SAL-0096,Elastic Waist Salwar,White Embroidered Cotton Elastic Waist Salwar wide leg fit,SALWAR,White,Cotton,Embroidered,399,1299
+P0097,V-DRE-0097,Sundress with Pockets,Yellow Polka Dots Polyester Sundress with Pockets with sleeveless sleeves halter neck,DRESS,Yellow,Polyester,Polka Dots,599,1999
+P0098,V-TOP-0098,Tunic Top,Printed Striped Chiffon Tunic Top with three-quarter sleeves v-neck neck,TOP,Printed,Chiffon,Striped,299,899
+P0099,V-POL-0099,Striped Polo Shirt,Gray Color Block Performance Fabric Striped Polo Shirt with long sleeves,POLO,Gray,Performance Fabric,Color Block,299,999
+P0100,V-TSH-0100,Striped Casual Tee,Navy Logo Cotton Blend Striped Casual Tee with short sleeves scoop neck,TSHIRT,Navy,Cotton Blend,Logo,199,799
+P0101,V-SHI-0101,Short Sleeve Shirt,Striped Stripes Cotton Blend Short Sleeve Shirt with short sleeves button-down neck,SHIRT,Striped,Cotton Blend,Stripes,399,1499
+P0102,V-JEA-0102,Regular Fit Jeans,Dark Blue Vintage Wash Denim Regular Fit Jeans straight fit,JEANS,Dark Blue,Denim,Vintage Wash,799,2499
+P0103,V-JEA-0103,Wide Leg Jeans,Dark Blue Vintage Wash Stretch Denim Wide Leg Jeans slim fit,JEANS,Dark Blue,Stretch Denim,Vintage Wash,799,2499
+P0104,V-POL-0104,Striped Polo Shirt,Red Stripes Pique Cotton Striped Polo Shirt with long sleeves,POLO,Red,Pique Cotton,Stripes,299,999
+P0105,V-TOP-0105,Blouse Style Top,Red Striped Linen Blouse Style Top with three-quarter sleeves halter neck,TOP,Red,Linen,Striped,299,899
+P0106,V-SHI-0106,Striped Business Shirt,Blue Cotton Blend Striped Business Shirt with short sleeves band collar neck,SHIRT,Blue,Cotton Blend,Solid,399,1499
+P0107,V-POL-0107,Golf Polo Shirt,Gray Stripes Pique Cotton Golf Polo Shirt with long sleeves,POLO,Gray,Pique Cotton,Stripes,299,999
+P0108,V-SHI-0108,Casual Linen Shirt,Black Checks Linen Casual Linen Shirt with long sleeves,SHIRT,Black,Linen,Checks,399,1499
+P0109,V-SHI-0109,Formal Cotton Shirt,Blue Stripes Chambray Formal Cotton Shirt with short sleeves,SHIRT,Blue,Chambray,Stripes,399,1499
+P0110,V-SHI-0110,Relaxed Fit Shirt,Checked Printed Linen Relaxed Fit Shirt with short sleeves,SHIRT,Checked,Linen,Printed,399,1499
+P0111,V-SHI-0111,Denim Shirt,Gray Stripes Poplin Denim Shirt with short sleeves,SHIRT,Gray,Poplin,Stripes,399,1499
+P0112,V-SHI-0112,Denim Shirt,White Printed Cotton Denim Shirt with long sleeves,SHIRT,White,Cotton,Printed,399,1499
+P0113,V-TSH-0113,V-Neck Casual T-Shirt,Red Polyester V-Neck Casual T-Shirt with short sleeves crew neck,TSHIRT,Red,Polyester,Solid,199,799
+P0114,V-SAL-0114,Wide Leg Salwar,Printed Striped Linen Wide Leg Salwar wide leg fit,SALWAR,Printed,Linen,Striped,399,1299
+P0115,V-TOP-0115,Ruffle Sleeve Top,Navy Chiffon Ruffle Sleeve Top with short sleeves v-neck neck,TOP,Navy,Chiffon,Solid,299,899
+P0116,V-JEA-0116,Straight Leg Jeans,Blue Faded Raw Denim Straight Leg Jeans regular fit,JEANS,Blue,Raw Denim,Faded,799,2499
+P0117,V-POL-0117,Performance Polo,Red Color Block Cotton Performance Polo with long sleeves,POLO,Red,Cotton,Color Block,299,999
+P0118,V-TSH-0118,Relaxed Fit T-Shirt,Red Abstract Cotton Blend Relaxed Fit T-Shirt with long sleeves crew neck,TSHIRT,Red,Cotton Blend,Abstract,199,799
+P0119,V-JEA-0119,Straight Leg Jeans,Light Blue Faded Raw Denim Straight Leg Jeans slim fit,JEANS,Light Blue,Raw Denim,Faded,799,2499
+P0120,V-JEA-0120,Black Denim Jeans,Gray Faded Denim Black Denim Jeans slim fit,JEANS,Gray,Denim,Faded,799,2499
+P0121,V-DRE-0121,Bodycon Party Dress,Floral Abstract Linen Bodycon Party Dress with short sleeves off-shoulder neck,DRESS,Floral,Linen,Abstract,599,1999
+P0122,V-SHI-0122,Relaxed Fit Shirt,Black Denim Poplin Relaxed Fit Shirt with long sleeves band collar neck,SHIRT,Black,Poplin,Denim,399,1499
+P0123,V-POL-0123,Color Block Polo,Red Embroidered Cotton Color Block Polo with long sleeves,POLO,Red,Cotton,Embroidered,299,999
+P0124,V-POL-0124,Long Sleeve Polo,Green Cotton Long Sleeve Polo with short sleeves,POLO,Green,Cotton,Solid,299,999
+P0125,V-TOP-0125,Ruffle Sleeve Top,Pink Floral Polyester Ruffle Sleeve Top with bell sleeves sleeves round neck,TOP,Pink,Polyester,Floral,299,899
+P0126,V-TOP-0126,Tie-Up Top,Navy Striped Chiffon Tie-Up Top with short sleeves v-neck neck,TOP,Navy,Chiffon,Striped,299,899
+P0127,V-KUR-0127,A-Line Kurta,Green Floral Silk A-Line Kurta with three-quarter sleeves round neck,KURTA,Green,Silk,Floral,499,1999
+P0128,V-TOP-0128,Peplum Top,Navy Striped Linen Peplum Top with short sleeves halter neck,TOP,Navy,Linen,Striped,299,899
+P0129,V-TSH-0129,Ribbed Knit Tee,Yellow Logo Modal Ribbed Knit Tee with short sleeves v-neck neck,TSHIRT,Yellow,Modal,Logo,199,799
+P0130,V-KUR-0130,Casual Kurta,Printed Silk Casual Kurta with short sleeves mandarin neck,KURTA,Printed,Silk,Solid,499,1999
+P0131,V-DRE-0131,Bodycon Party Dress,Green Crepe Bodycon Party Dress with short sleeves halter neck,DRESS,Green,Crepe,Solid,599,1999
+P0132,V-JEA-0132,Wide Leg Jeans,Gray Denim Wide Leg Jeans slim fit,JEANS,Gray,Denim,Solid,799,2499
+P0133,V-JEA-0133,Regular Fit Jeans,Blue Faded Stretch Denim Regular Fit Jeans bootcut fit,JEANS,Blue,Stretch Denim,Faded,799,2499
+P0134,V-SHI-0134,Flannel Shirt,Gray Printed Cotton Blend Flannel Shirt with long sleeves,SHIRT,Gray,Cotton Blend,Printed,399,1499
+P0135,V-TOP-0135,Blouse Style Top,Red Printed Polyester Blouse Style Top with sleeveless sleeves round neck,TOP,Red,Polyester,Printed,299,899
+P0136,V-SHI-0136,Long Sleeve Casual Shirt,Striped Stripes Cotton Blend Long Sleeve Casual Shirt with short sleeves band collar neck,SHIRT,Striped,Cotton Blend,Stripes,399,1499
+P0137,V-SHI-0137,Chambray Shirt,Checked Printed Chambray Chambray Shirt with short sleeves band collar neck,SHIRT,Checked,Chambray,Printed,399,1499
+P0138,V-TOP-0138,Tie-Up Top,Pink Floral Linen Tie-Up Top with bell sleeves sleeves off-shoulder neck,TOP,Pink,Linen,Floral,299,899
+P0139,V-JEA-0139,Wide Leg Jeans,Light Blue Vintage Wash Denim Wide Leg Jeans skinny fit,JEANS,Light Blue,Denim,Vintage Wash,799,2499
+P0140,V-TSH-0140,Oversized Comfort T-Shirt,Green Logo Organic Cotton Oversized Comfort T-Shirt with sleeveless sleeves v-neck neck,TSHIRT,Green,Organic Cotton,Logo,199,799
+P0141,V-TOP-0141,Crop Top,Pink Striped Polyester Crop Top with short sleeves halter neck,TOP,Pink,Polyester,Striped,299,899
+P0142,V-POL-0142,Business Casual Polo,White Stripes Performance Fabric Business Casual Polo with long sleeves,POLO,White,Performance Fabric,Stripes,299,999
+P0143,V-POL-0143,Athletic Fit Polo,Blue Color Block Cotton Blend Athletic Fit Polo with short sleeves,POLO,Blue,Cotton Blend,Color Block,299,999
+P0144,V-SAL-0144,Designer Salwar,Printed Georgette Designer Salwar regular fit,SALWAR,Printed,Georgette,Solid,399,1299
+P0145,V-JEA-0145,Black Denim Jeans,Gray Faded Raw Denim Black Denim Jeans skinny fit,JEANS,Gray,Raw Denim,Faded,799,2499
+P0146,V-POL-0146,Mesh Polo Shirt,Maroon Stripes Cotton Mesh Polo Shirt with long sleeves,POLO,Maroon,Cotton,Stripes,299,999
+P0147,V-TSH-0147,Oversized Comfort T-Shirt,Red Printed Cotton Oversized Comfort T-Shirt with long sleeves henley neck,TSHIRT,Red,Cotton,Printed,199,799
+P0148,V-DRE-0148,Wrap Style Dress,Pink Geometric Linen Wrap Style Dress with long sleeves v-neck neck,DRESS,Pink,Linen,Geometric,599,1999
+P0149,V-DRE-0149,Floral Print Maxi Dress,Pink Geometric Linen Floral Print Maxi Dress with long sleeves off-shoulder neck,DRESS,Pink,Linen,Geometric,599,1999
+P0150,V-DRE-0150,Wrap Style Dress,Floral Abstract Crepe Wrap Style Dress with sleeveless sleeves round neck,DRESS,Floral,Crepe,Abstract,599,1999
+P0151,V-TOP-0151,Ruffle Sleeve Top,White Floral Polyester Ruffle Sleeve Top with three-quarter sleeves off-shoulder neck,TOP,White,Polyester,Floral,299,899
+P0152,V-SAL-0152,Traditional Salwar,White Embroidered Chiffon Traditional Salwar churidar fit,SALWAR,White,Chiffon,Embroidered,399,1299
+P0153,V-SAL-0153,Elastic Waist Salwar,Navy Striped Cotton Elastic Waist Salwar palazzo fit,SALWAR,Navy,Cotton,Striped,399,1299
+P0154,V-SHI-0154,Relaxed Fit Shirt,White Printed Cotton Blend Relaxed Fit Shirt with long sleeves,SHIRT,White,Cotton Blend,Printed,399,1499
+P0155,V-TSH-0155,Henley Style T-Shirt,Red Stripes Organic Cotton Henley Style T-Shirt with sleeveless sleeves scoop neck,TSHIRT,Red,Organic Cotton,Stripes,199,799
+P0156,V-JEA-0156,Black Denim Jeans,Light Blue Distressed Denim Black Denim Jeans bootcut fit,JEANS,Light Blue,Denim,Distressed,799,2499
+P0157,V-POL-0157,Mesh Polo Shirt,Green Color Block Cotton Mesh Polo Shirt with short sleeves,POLO,Green,Cotton,Color Block,299,999
+P0158,V-DRE-0158,Floral Print Maxi Dress,White Polka Dots Chiffon Floral Print Maxi Dress with cap sleeves sleeves v-neck neck,DRESS,White,Chiffon,Polka Dots,599,1999
+P0159,V-JEA-0159,Skinny Fit Jeans,Gray Distressed Raw Denim Skinny Fit Jeans relaxed fit,JEANS,Gray,Raw Denim,Distressed,799,2499
+P0160,V-TOP-0160,Ruffle Sleeve Top,Printed Linen Ruffle Sleeve Top with bell sleeves sleeves round neck,TOP,Printed,Linen,Solid,299,899
+P0161,V-DRE-0161,Wrap Style Dress,Pink Geometric Georgette Wrap Style Dress with sleeveless sleeves round neck,DRESS,Pink,Georgette,Geometric,599,1999
+P0162,V-SAL-0162,Cotton Salwar,Printed Chiffon Cotton Salwar wide leg fit,SALWAR,Printed,Chiffon,Solid,399,1299
+P0163,V-KUR-0163,Festive Kurta,Yellow Embroidered Chiffon Festive Kurta with short sleeves v-neck neck,KURTA,Yellow,Chiffon,Embroidered,499,1999
+P0164,V-TOP-0164,Crop Top,Pink Printed Linen Crop Top with short sleeves halter neck,TOP,Pink,Linen,Printed,299,899
+P0165,V-SHI-0165,Poplin Dress Shirt,White Checks Poplin Poplin Dress Shirt with short sleeves,SHIRT,White,Poplin,Checks,399,1499
+P0166,V-SHI-0166,Denim Shirt,White Checks Cotton Denim Shirt with short sleeves band collar neck,SHIRT,White,Cotton,Checks,399,1499
+P0167,V-TOP-0167,Tie-Up Top,Pink Printed Chiffon Tie-Up Top with bell sleeves sleeves round neck,TOP,Pink,Chiffon,Printed,299,899
+P0168,V-TOP-0168,Knot Front Top,Navy Chiffon Knot Front Top with three-quarter sleeves v-neck neck,TOP,Navy,Chiffon,Solid,299,899
+P0169,V-TOP-0169,Tunic Top,Printed Striped Polyester Tunic Top with short sleeves off-shoulder neck,TOP,Printed,Polyester,Striped,299,899
+P0170,V-KUR-0170,Cotton Kurta,Green Printed Silk Cotton Kurta with short sleeves boat neck neck,KURTA,Green,Silk,Printed,499,1999
+P0171,V-POL-0171,Mesh Polo Shirt,White Pique Cotton Mesh Polo Shirt with long sleeves,POLO,White,Pique Cotton,Solid,299,999
+P0172,V-DRE-0172,Boho Chic Dress,Navy Geometric Polyester Boho Chic Dress with long sleeves halter neck,DRESS,Navy,Polyester,Geometric,599,1999
+P0173,V-JEA-0173,Relaxed Fit Jeans,Black Stretch Denim Relaxed Fit Jeans regular fit,JEANS,Black,Stretch Denim,Solid,799,2499
+P0174,V-DRE-0174,Office Formal Dress,Red Chiffon Office Formal Dress with short sleeves v-neck neck,DRESS,Red,Chiffon,Solid,599,1999
+P0175,V-TSH-0175,Oversized Comfort T-Shirt,Blue Polyester Oversized Comfort T-Shirt with short sleeves scoop neck,TSHIRT,Blue,Polyester,Solid,199,799
+P0176,V-TSH-0176,V-Neck Casual T-Shirt,Pink Organic Cotton V-Neck Casual T-Shirt with sleeveless sleeves crew neck,TSHIRT,Pink,Organic Cotton,Solid,199,799
+P0177,V-TOP-0177,Tunic Top,Pink Linen Tunic Top with bell sleeves sleeves v-neck neck,TOP,Pink,Linen,Solid,299,899
+P0178,V-TSH-0178,Organic Cotton T-Shirt,Red Logo Modal Organic Cotton T-Shirt with sleeveless sleeves crew neck,TSHIRT,Red,Modal,Logo,199,799
+P0179,V-TSH-0179,Striped Casual Tee,Green Abstract Organic Cotton Striped Casual Tee with short sleeves henley neck,TSHIRT,Green,Organic Cotton,Abstract,199,799
+P0180,V-TOP-0180,Peplum Top,Navy Printed Cotton Peplum Top with short sleeves v-neck neck,TOP,Navy,Cotton,Printed,299,899
+P0181,V-SHI-0181,Chambray Shirt,Striped Stripes Chambray Chambray Shirt with long sleeves button-down neck,SHIRT,Striped,Chambray,Stripes,399,1499
+P0182,V-SHI-0182,Denim Shirt,Striped Printed Chambray Denim Shirt with short sleeves button-down neck,SHIRT,Striped,Chambray,Printed,399,1499
+P0183,V-POL-0183,Mesh Polo Shirt,Red Color Block Pique Cotton Mesh Polo Shirt with short sleeves,POLO,Red,Pique Cotton,Color Block,299,999
+P0184,V-KUR-0184,Designer Kurta,Yellow Silk Designer Kurta with long sleeves boat neck neck,KURTA,Yellow,Silk,Solid,499,1999
+P0185,V-KUR-0185,Festive Kurta,Red Printed Chiffon Festive Kurta with three-quarter sleeves boat neck neck,KURTA,Red,Chiffon,Printed,499,1999
+P0186,V-POL-0186,Pique Polo T-Shirt,Navy Color Block Cotton Pique Polo T-Shirt with short sleeves,POLO,Navy,Cotton,Color Block,299,999
+P0187,V-DRE-0187,Office Formal Dress,Yellow Geometric Cotton Office Formal Dress with sleeveless sleeves round neck,DRESS,Yellow,Cotton,Geometric,599,1999
+P0188,V-SAL-0188,Designer Salwar,Solid Georgette Designer Salwar palazzo fit,SALWAR,Solid,Georgette,Solid,399,1299
+P0189,V-SHI-0189,Short Sleeve Shirt,Striped Denim Cotton Short Sleeve Shirt with short sleeves,SHIRT,Striped,Cotton,Denim,399,1499
+P0190,V-TOP-0190,Cold Shoulder Top,Navy Striped Cotton Cold Shoulder Top with short sleeves off-shoulder neck,TOP,Navy,Cotton,Striped,299,899
+P0191,V-JEA-0191,High Waist Jeans,Light Blue Raw Denim High Waist Jeans slim fit,JEANS,Light Blue,Raw Denim,Solid,799,2499
+P0192,V-DRE-0192,Bodycon Party Dress,Floral Printed Georgette Bodycon Party Dress with sleeveless sleeves round neck,DRESS,Floral,Georgette,Printed,599,1999
+P0193,V-DRE-0193,Casual Midi Dress,Pink Linen Casual Midi Dress with long sleeves round neck,DRESS,Pink,Linen,Solid,599,1999
+P0194,V-POL-0194,Golf Polo Shirt,Red Color Block Pique Cotton Golf Polo Shirt with long sleeves,POLO,Red,Pique Cotton,Color Block,299,999
+P0195,V-DRE-0195,Shift Dress,White Geometric Chiffon Shift Dress with short sleeves round neck,DRESS,White,Chiffon,Geometric,599,1999
+P0196,V-DRE-0196,Casual Midi Dress,Black Polka Dots Linen Casual Midi Dress with short sleeves square neck,DRESS,Black,Linen,Polka Dots,599,1999
+P0197,V-TOP-0197,Asymmetric Top,Red Floral Chiffon Asymmetric Top with bell sleeves sleeves off-shoulder neck,TOP,Red,Chiffon,Floral,299,899
+P0198,V-JEA-0198,Stretch Comfort Jeans,Gray Vintage Wash Denim Stretch Comfort Jeans relaxed fit,JEANS,Gray,Denim,Vintage Wash,799,2499
+P0199,V-TOP-0199,Blouse Style Top,White Printed Linen Blouse Style Top with bell sleeves sleeves round neck,TOP,White,Linen,Printed,299,899
+P0200,V-TSH-0200,Relaxed Fit T-Shirt,Gray Stripes Cotton Blend Relaxed Fit T-Shirt with long sleeves scoop neck,TSHIRT,Gray,Cotton Blend,Stripes,199,799
+P0201,V-KUR-0201,Linen Kurta,Printed Floral Cotton Linen Kurta with short sleeves v-neck neck,KURTA,Printed,Cotton,Floral,499,1999
+P0202,V-SAL-0202,Ankle Length Salwar,Printed Embroidered Linen Ankle Length Salwar regular fit,SALWAR,Printed,Linen,Embroidered,399,1299
+P0203,V-SAL-0203,Traditional Salwar,White Cotton Traditional Salwar wide leg fit,SALWAR,White,Cotton,Solid,399,1299
+P0204,V-POL-0204,Embroidered Polo,Red Color Block Performance Fabric Embroidered Polo with long sleeves,POLO,Red,Performance Fabric,Color Block,299,999
+P0205,V-SAL-0205,Cotton Salwar,Navy Striped Chiffon Cotton Salwar palazzo fit,SALWAR,Navy,Chiffon,Striped,399,1299
+P0206,V-POL-0206,Premium Cotton Polo,Gray Color Block Cotton Premium Cotton Polo with long sleeves,POLO,Gray,Cotton,Color Block,299,999
+P0207,V-SAL-0207,Solid Color Salwar,Navy Embroidered Chiffon Solid Color Salwar churidar fit,SALWAR,Navy,Chiffon,Embroidered,399,1299
+P0208,V-POL-0208,Business Casual Polo,Gray Embroidered Cotton Business Casual Polo with long sleeves,POLO,Gray,Cotton,Embroidered,299,999
+P0209,V-JEA-0209,Regular Fit Jeans,Gray Faded Denim Regular Fit Jeans straight fit,JEANS,Gray,Denim,Faded,799,2499
+P0210,V-DRE-0210,Linen Blend Dress,Red Polka Dots Cotton Linen Blend Dress with cap sleeves sleeves off-shoulder neck,DRESS,Red,Cotton,Polka Dots,599,1999
+P0211,V-TOP-0211,Asymmetric Top,Printed Striped Linen Asymmetric Top with sleeveless sleeves halter neck,TOP,Printed,Linen,Striped,299,899
+P0212,V-POL-0212,Athletic Fit Polo,Green Embroidered Performance Fabric Athletic Fit Polo with short sleeves,POLO,Green,Performance Fabric,Embroidered,299,999
+P0213,V-POL-0213,Striped Polo Shirt,Maroon Performance Fabric Striped Polo Shirt with short sleeves,POLO,Maroon,Performance Fabric,Solid,299,999
+P0214,V-SHI-0214,Casual Linen Shirt,Striped Denim Cotton Casual Linen Shirt with long sleeves band collar neck,SHIRT,Striped,Cotton,Denim,399,1499
+P0215,V-TSH-0215,Striped Casual Tee,Gray Printed Modal Striped Casual Tee with sleeveless sleeves henley neck,TSHIRT,Gray,Modal,Printed,199,799
+P0216,V-DRE-0216,A-Line Summer Dress,Navy Printed Crepe A-Line Summer Dress with short sleeves halter neck,DRESS,Navy,Crepe,Printed,599,1999
+P0217,V-DRE-0217,A-Line Summer Dress,Green Abstract Polyester A-Line Summer Dress with long sleeves square neck,DRESS,Green,Polyester,Abstract,599,1999
+P0218,V-KUR-0218,Anarkali Kurta,Yellow Embroidered Silk Anarkali Kurta with three-quarter sleeves round neck,KURTA,Yellow,Silk,Embroidered,499,1999
+P0219,V-KUR-0219,Linen Kurta,Beige Geometric Chiffon Linen Kurta with three-quarter sleeves boat neck neck,KURTA,Beige,Chiffon,Geometric,499,1999
+P0220,V-SHI-0220,Striped Business Shirt,Blue Stripes Chambray Striped Business Shirt with short sleeves button-down neck,SHIRT,Blue,Chambray,Stripes,399,1499
+P0221,V-DRE-0221,Shift Dress,Pink Floral Chiffon Shift Dress with short sleeves square neck,DRESS,Pink,Chiffon,Floral,599,1999
+P0222,V-SAL-0222,Trouser Style Salwar,Navy Chiffon Trouser Style Salwar wide leg fit,SALWAR,Navy,Chiffon,Solid,399,1299
+P0223,V-KUR-0223,Cotton Kurta,Green Printed Chiffon Cotton Kurta with short sleeves mandarin neck,KURTA,Green,Chiffon,Printed,499,1999
+P0224,V-TOP-0224,Cold Shoulder Top,Black Printed Polyester Cold Shoulder Top with short sleeves off-shoulder neck,TOP,Black,Polyester,Printed,299,899
+P0225,V-POL-0225,Business Casual Polo,Blue Stripes Cotton Business Casual Polo with long sleeves,POLO,Blue,Cotton,Stripes,299,999
+P0226,V-DRE-0226,Casual Midi Dress,Red Polka Dots Georgette Casual Midi Dress with cap sleeves sleeves round neck,DRESS,Red,Georgette,Polka Dots,599,1999
+P0227,V-SAL-0227,Designer Salwar,White Embroidered Linen Designer Salwar wide leg fit,SALWAR,White,Linen,Embroidered,399,1299
+P0228,V-JEA-0228,Stretch Comfort Jeans,Gray Vintage Wash Denim Stretch Comfort Jeans relaxed fit,JEANS,Gray,Denim,Vintage Wash,799,2499
+P0229,V-TOP-0229,Tunic Top,Printed Floral Linen Tunic Top with bell sleeves sleeves v-neck neck,TOP,Printed,Linen,Floral,299,899
+P0230,V-JEA-0230,Vintage Wash Jeans,Gray Denim Vintage Wash Jeans relaxed fit,JEANS,Gray,Denim,Solid,799,2499
+P0231,V-POL-0231,Golf Polo Shirt,Green Cotton Golf Polo Shirt with short sleeves,POLO,Green,Cotton,Solid,299,999
+P0232,V-TOP-0232,Blouse Style Top,Printed Floral Polyester Blouse Style Top with short sleeves v-neck neck,TOP,Printed,Polyester,Floral,299,899
+P0233,V-TOP-0233,Tie-Up Top,Red Cotton Tie-Up Top with bell sleeves sleeves off-shoulder neck,TOP,Red,Cotton,Solid,299,899
+P0234,V-JEA-0234,High Waist Jeans,Gray Faded Denim High Waist Jeans relaxed fit,JEANS,Gray,Denim,Faded,799,2499
+P0235,V-POL-0235,Golf Polo Shirt,Black Stripes Cotton Blend Golf Polo Shirt with short sleeves,POLO,Black,Cotton Blend,Stripes,299,999
+P0236,V-TOP-0236,Bardot Top,Printed Floral Polyester Bardot Top with bell sleeves sleeves round neck,TOP,Printed,Polyester,Floral,299,899
+P0237,V-POL-0237,Classic Polo Shirt,Gray Stripes Cotton Blend Classic Polo Shirt with long sleeves,POLO,Gray,Cotton Blend,Stripes,299,999
+P0238,V-SHI-0238,Checked Pattern Shirt,White Cotton Blend Checked Pattern Shirt with short sleeves band collar neck,SHIRT,White,Cotton Blend,Solid,399,1499
+P0239,V-TOP-0239,Peplum Top,Printed Floral Cotton Peplum Top with short sleeves v-neck neck,TOP,Printed,Cotton,Floral,299,899
+P0240,V-DRE-0240,Bodycon Party Dress,Black Geometric Crepe Bodycon Party Dress with sleeveless sleeves v-neck neck,DRESS,Black,Crepe,Geometric,599,1999
+P0241,V-SAL-0241,Palazzo Salwar,Printed Embroidered Cotton Palazzo Salwar regular fit,SALWAR,Printed,Cotton,Embroidered,399,1299
+P0242,V-TSH-0242,Graphic Print T-Shirt,White Abstract Organic Cotton Graphic Print T-Shirt with long sleeves scoop neck,TSHIRT,White,Organic Cotton,Abstract,199,799
+P0243,V-SHI-0243,Relaxed Fit Shirt,Black Cotton Relaxed Fit Shirt with long sleeves,SHIRT,Black,Cotton,Solid,399,1499
+P0244,V-POL-0244,Color Block Polo,Black Cotton Blend Color Block Polo with long sleeves,POLO,Black,Cotton Blend,Solid,299,999
+P0245,V-DRE-0245,Linen Blend Dress,Green Polka Dots Crepe Linen Blend Dress with long sleeves v-neck neck,DRESS,Green,Crepe,Polka Dots,599,1999
+P0246,V-POL-0246,Golf Polo Shirt,White Embroidered Performance Fabric Golf Polo Shirt with short sleeves,POLO,White,Performance Fabric,Embroidered,299,999
+P0247,V-JEA-0247,Slim Fit Denim Jeans,Gray Vintage Wash Stretch Denim Slim Fit Denim Jeans relaxed fit,JEANS,Gray,Stretch Denim,Vintage Wash,799,2499
+P0248,V-TSH-0248,Ribbed Knit Tee,Red Printed Polyester Ribbed Knit Tee with short sleeves scoop neck,TSHIRT,Red,Polyester,Printed,199,799
+P0249,V-SHI-0249,Casual Linen Shirt,Gray Printed Cotton Blend Casual Linen Shirt with long sleeves band collar neck,SHIRT,Gray,Cotton Blend,Printed,399,1499
+P0250,V-KUR-0250,Printed Kurta,Printed Embroidered Silk Printed Kurta with three-quarter sleeves mandarin neck,KURTA,Printed,Silk,Embroidered,499,1999
+P0251,V-POL-0251,Golf Polo Shirt,Navy Color Block Performance Fabric Golf Polo Shirt with short sleeves,POLO,Navy,Performance Fabric,Color Block,299,999
+P0252,V-KUR-0252,Linen Kurta,Red Embroidered Cotton Linen Kurta with long sleeves boat neck neck,KURTA,Red,Cotton,Embroidered,499,1999
+P0253,V-SAL-0253,Palazzo Salwar,Beige Striped Georgette Palazzo Salwar regular fit,SALWAR,Beige,Georgette,Striped,399,1299
+P0254,V-KUR-0254,Casual Kurta,Green Silk Casual Kurta with short sleeves boat neck neck,KURTA,Green,Silk,Solid,499,1999
+P0255,V-KUR-0255,Party Wear Kurta,White Printed Linen Party Wear Kurta with three-quarter sleeves boat neck neck,KURTA,White,Linen,Printed,499,1999
+P0256,V-TSH-0256,V-Neck Casual T-Shirt,Gray Abstract Cotton V-Neck Casual T-Shirt with long sleeves scoop neck,TSHIRT,Gray,Cotton,Abstract,199,799
+P0257,V-SAL-0257,Wide Leg Salwar,Printed Printed Cotton Wide Leg Salwar wide leg fit,SALWAR,Printed,Cotton,Printed,399,1299
+P0258,V-KUR-0258,Straight Cut Kurta,Beige Geometric Silk Straight Cut Kurta with short sleeves mandarin neck,KURTA,Beige,Silk,Geometric,499,1999
+P0259,V-SAL-0259,Designer Salwar,Navy Chiffon Designer Salwar regular fit,SALWAR,Navy,Chiffon,Solid,399,1299
+P0260,V-DRE-0260,Cocktail Dress,Pink Geometric Linen Cocktail Dress with short sleeves square neck,DRESS,Pink,Linen,Geometric,599,1999
+P0261,V-SHI-0261,Relaxed Fit Shirt,Blue Denim Poplin Relaxed Fit Shirt with long sleeves button-down neck,SHIRT,Blue,Poplin,Denim,399,1499
+P0262,V-TOP-0262,Cold Shoulder Top,Black Cotton Cold Shoulder Top with bell sleeves sleeves v-neck neck,TOP,Black,Cotton,Solid,299,899
+P0263,V-TOP-0263,Peplum Top,Yellow Striped Linen Peplum Top with short sleeves off-shoulder neck,TOP,Yellow,Linen,Striped,299,899
+P0264,V-SHI-0264,Oxford Button-Down Shirt,Black Denim Linen Oxford Button-Down Shirt with short sleeves,SHIRT,Black,Linen,Denim,399,1499
+P0265,V-JEA-0265,Skinny Fit Jeans,White Denim Skinny Fit Jeans straight fit,JEANS,White,Denim,Solid,799,2499
+P0266,V-KUR-0266,Designer Kurta,Blue Geometric Georgette Designer Kurta with short sleeves round neck,KURTA,Blue,Georgette,Geometric,499,1999
+P0267,V-SHI-0267,Long Sleeve Casual Shirt,Striped Printed Poplin Long Sleeve Casual Shirt with long sleeves button-down neck,SHIRT,Striped,Poplin,Printed,399,1499
+P0268,V-POL-0268,Performance Polo,Navy Color Block Cotton Blend Performance Polo with long sleeves,POLO,Navy,Cotton Blend,Color Block,299,999
+P0269,V-DRE-0269,Office Formal Dress,Red Floral Georgette Office Formal Dress with cap sleeves sleeves halter neck,DRESS,Red,Georgette,Floral,599,1999
+P0270,V-TSH-0270,Premium Cotton Tee,Navy Printed Modal Premium Cotton Tee with short sleeves v-neck neck,TSHIRT,Navy,Modal,Printed,199,799
+P0271,V-KUR-0271,Chikankari Kurta,Red Geometric Linen Chikankari Kurta with long sleeves round neck,KURTA,Red,Linen,Geometric,499,1999
+P0272,V-SHI-0272,Checked Pattern Shirt,Black Checks Chambray Checked Pattern Shirt with long sleeves button-down neck,SHIRT,Black,Chambray,Checks,399,1499
+P0273,V-POL-0273,Business Casual Polo,Black Stripes Pique Cotton Business Casual Polo with long sleeves,POLO,Black,Pique Cotton,Stripes,299,999
+P0274,V-TSH-0274,Premium Cotton Tee,Red Abstract Cotton Premium Cotton Tee with short sleeves henley neck,TSHIRT,Red,Cotton,Abstract,199,799
+P0275,V-TSH-0275,Striped Casual Tee,Red Abstract Modal Striped Casual Tee with long sleeves henley neck,TSHIRT,Red,Modal,Abstract,199,799
+P0276,V-JEA-0276,Black Denim Jeans,Gray Vintage Wash Stretch Denim Black Denim Jeans bootcut fit,JEANS,Gray,Stretch Denim,Vintage Wash,799,2499
+P0277,V-TSH-0277,V-Neck Casual T-Shirt,Green Logo Organic Cotton V-Neck Casual T-Shirt with long sleeves v-neck neck,TSHIRT,Green,Organic Cotton,Logo,199,799
+P0278,V-KUR-0278,Casual Kurta,Red Embroidered Linen Casual Kurta with three-quarter sleeves mandarin neck,KURTA,Red,Linen,Embroidered,499,1999
+P0279,V-SAL-0279,Palazzo Salwar,Printed Chiffon Palazzo Salwar palazzo fit,SALWAR,Printed,Chiffon,Solid,399,1299
+P0280,V-JEA-0280,Distressed Denim Jeans,Gray Vintage Wash Denim Distressed Denim Jeans regular fit,JEANS,Gray,Denim,Vintage Wash,799,2499
+P0281,V-POL-0281,Classic Polo Shirt,Red Color Block Cotton Blend Classic Polo Shirt with short sleeves,POLO,Red,Cotton Blend,Color Block,299,999
+P0282,V-KUR-0282,Casual Kurta,Pink Printed Chiffon Casual Kurta with long sleeves boat neck neck,KURTA,Pink,Chiffon,Printed,499,1999
+P0283,V-TOP-0283,Ruffle Sleeve Top,White Chiffon Ruffle Sleeve Top with bell sleeves sleeves halter neck,TOP,White,Chiffon,Solid,299,899
+P0284,V-JEA-0284,Relaxed Fit Jeans,Gray Raw Denim Relaxed Fit Jeans relaxed fit,JEANS,Gray,Raw Denim,Solid,799,2499
+P0285,V-TOP-0285,Knot Front Top,Navy Chiffon Knot Front Top with short sleeves halter neck,TOP,Navy,Chiffon,Solid,299,899
+P0286,V-DRE-0286,Bodycon Party Dress,White Abstract Georgette Bodycon Party Dress with sleeveless sleeves round neck,DRESS,White,Georgette,Abstract,599,1999
+P0287,V-SAL-0287,Cotton Salwar,Beige Embroidered Linen Cotton Salwar regular fit,SALWAR,Beige,Linen,Embroidered,399,1299
+P0288,V-SAL-0288,Ankle Length Salwar,Printed Embroidered Georgette Ankle Length Salwar regular fit,SALWAR,Printed,Georgette,Embroidered,399,1299
+P0289,V-DRE-0289,Floral Print Maxi Dress,White Printed Crepe Floral Print Maxi Dress with sleeveless sleeves v-neck neck,DRESS,White,Crepe,Printed,599,1999
+P0290,V-JEA-0290,Vintage Wash Jeans,White Raw Denim Vintage Wash Jeans slim fit,JEANS,White,Raw Denim,Solid,799,2499
+P0291,V-DRE-0291,Chiffon Evening Dress,Green Geometric Chiffon Chiffon Evening Dress with cap sleeves sleeves v-neck neck,DRESS,Green,Chiffon,Geometric,599,1999
+P0292,V-DRE-0292,Shift Dress,White Floral Linen Shift Dress with cap sleeves sleeves halter neck,DRESS,White,Linen,Floral,599,1999
+P0293,V-SHI-0293,Chambray Shirt,Striped Denim Cotton Blend Chambray Shirt with long sleeves button-down neck,SHIRT,Striped,Cotton Blend,Denim,399,1499
+P0294,V-SHI-0294,Denim Shirt,Black Stripes Cotton Denim Shirt with short sleeves band collar neck,SHIRT,Black,Cotton,Stripes,399,1499
+P0295,V-SHI-0295,Relaxed Fit Shirt,Striped Printed Cotton Relaxed Fit Shirt with long sleeves button-down neck,SHIRT,Striped,Cotton,Printed,399,1499
+P0296,V-JEA-0296,Wide Leg Jeans,Light Blue Vintage Wash Denim Wide Leg Jeans straight fit,JEANS,Light Blue,Denim,Vintage Wash,799,2499
+P0297,V-SAL-0297,Palazzo Salwar,Black Linen Palazzo Salwar churidar fit,SALWAR,Black,Linen,Solid,399,1299
+P0298,V-TSH-0298,Striped Casual Tee,Green Stripes Cotton Blend Striped Casual Tee with long sleeves v-neck neck,TSHIRT,Green,Cotton Blend,Stripes,199,799
+P0299,V-SAL-0299,Ankle Length Salwar,Solid Georgette Ankle Length Salwar churidar fit,SALWAR,Solid,Georgette,Solid,399,1299
+P0300,V-JEA-0300,Stretch Comfort Jeans,Dark Blue Vintage Wash Stretch Denim Stretch Comfort Jeans relaxed fit,JEANS,Dark Blue,Stretch Denim,Vintage Wash,799,2499
+P0301,V-DRE-0301,Cocktail Dress,White Geometric Linen Cocktail Dress with sleeveless sleeves square neck,DRESS,White,Linen,Geometric,599,1999
+P0302,V-TOP-0302,Cold Shoulder Top,Navy Striped Polyester Cold Shoulder Top with sleeveless sleeves off-shoulder neck,TOP,Navy,Polyester,Striped,299,899
+P0303,V-SHI-0303,Relaxed Fit Shirt,Checked Printed Linen Relaxed Fit Shirt with long sleeves band collar neck,SHIRT,Checked,Linen,Printed,399,1499
+P0304,V-KUR-0304,Party Wear Kurta,Green Chiffon Party Wear Kurta with three-quarter sleeves boat neck neck,KURTA,Green,Chiffon,Solid,499,1999
+P0305,V-SAL-0305,Designer Salwar,Beige Linen Designer Salwar palazzo fit,SALWAR,Beige,Linen,Solid,399,1299
+P0306,V-POL-0306,Embroidered Polo,Green Color Block Performance Fabric Embroidered Polo with short sleeves,POLO,Green,Performance Fabric,Color Block,299,999
+P0307,V-SHI-0307,Flannel Shirt,Blue Cotton Blend Flannel Shirt with short sleeves,SHIRT,Blue,Cotton Blend,Solid,399,1499
+P0308,V-TSH-0308,Ribbed Knit Tee,Gray Abstract Modal Ribbed Knit Tee with short sleeves crew neck,TSHIRT,Gray,Modal,Abstract,199,799
+P0309,V-POL-0309,Premium Cotton Polo,Maroon Cotton Blend Premium Cotton Polo with short sleeves,POLO,Maroon,Cotton Blend,Solid,299,999
+P0310,V-DRE-0310,Sundress with Pockets,Green Abstract Georgette Sundress with Pockets with long sleeves square neck,DRESS,Green,Georgette,Abstract,599,1999
+P0311,V-KUR-0311,Anarkali Kurta,Beige Geometric Cotton Anarkali Kurta with short sleeves round neck,KURTA,Beige,Cotton,Geometric,499,1999
+P0312,V-DRE-0312,Sundress with Pockets,Black Abstract Polyester Sundress with Pockets with cap sleeves sleeves v-neck neck,DRESS,Black,Polyester,Abstract,599,1999
+P0313,V-SHI-0313,Formal Cotton Shirt,Black Denim Cotton Formal Cotton Shirt with short sleeves band collar neck,SHIRT,Black,Cotton,Denim,399,1499
+P0314,V-SHI-0314,Denim Shirt,Striped Printed Chambray Denim Shirt with short sleeves button-down neck,SHIRT,Striped,Chambray,Printed,399,1499
+P0315,V-TOP-0315,Ruffle Sleeve Top,Printed Polyester Ruffle Sleeve Top with three-quarter sleeves v-neck neck,TOP,Printed,Polyester,Solid,299,899
+P0316,V-TOP-0316,Asymmetric Top,Yellow Printed Linen Asymmetric Top with short sleeves off-shoulder neck,TOP,Yellow,Linen,Printed,299,899
+P0317,V-SHI-0317,Chambray Shirt,Blue Denim Linen Chambray Shirt with long sleeves band collar neck,SHIRT,Blue,Linen,Denim,399,1499
+P0318,V-KUR-0318,Linen Kurta,Beige Printed Silk Linen Kurta with short sleeves boat neck neck,KURTA,Beige,Silk,Printed,499,1999
+P0319,V-KUR-0319,Embroidered Kurta,Green Floral Cotton Embroidered Kurta with short sleeves boat neck neck,KURTA,Green,Cotton,Floral,499,1999
+P0320,V-SHI-0320,Short Sleeve Shirt,Striped Denim Cotton Blend Short Sleeve Shirt with short sleeves band collar neck,SHIRT,Striped,Cotton Blend,Denim,399,1499
+P0321,V-KUR-0321,Chikankari Kurta,White Linen Chikankari Kurta with long sleeves mandarin neck,KURTA,White,Linen,Solid,499,1999
+P0322,V-DRE-0322,Sundress with Pockets,Yellow Polka Dots Georgette Sundress with Pockets with sleeveless sleeves round neck,DRESS,Yellow,Georgette,Polka Dots,599,1999
+P0323,V-SHI-0323,Short Sleeve Shirt,Blue Checks Chambray Short Sleeve Shirt with short sleeves band collar neck,SHIRT,Blue,Chambray,Checks,399,1499
+P0324,V-DRE-0324,Cocktail Dress,White Abstract Georgette Cocktail Dress with cap sleeves sleeves halter neck,DRESS,White,Georgette,Abstract,599,1999
+P0325,V-JEA-0325,Relaxed Fit Jeans,Light Blue Raw Denim Relaxed Fit Jeans straight fit,JEANS,Light Blue,Raw Denim,Solid,799,2499
+P0326,V-KUR-0326,Linen Kurta,Beige Georgette Linen Kurta with three-quarter sleeves v-neck neck,KURTA,Beige,Georgette,Solid,499,1999
+P0327,V-DRE-0327,Casual Midi Dress,Yellow Abstract Chiffon Casual Midi Dress with short sleeves v-neck neck,DRESS,Yellow,Chiffon,Abstract,599,1999
+P0328,V-TOP-0328,Peplum Top,Printed Chiffon Peplum Top with bell sleeves sleeves v-neck neck,TOP,Printed,Chiffon,Solid,299,899
+P0329,V-SAL-0329,Elastic Waist Salwar,Printed Striped Cotton Elastic Waist Salwar palazzo fit,SALWAR,Printed,Cotton,Striped,399,1299
+P0330,V-TSH-0330,Graphic Print T-Shirt,White Abstract Cotton Blend Graphic Print T-Shirt with short sleeves crew neck,TSHIRT,White,Cotton Blend,Abstract,199,799
+P0331,V-TSH-0331,Graphic Print T-Shirt,Black Graphic Cotton Blend Graphic Print T-Shirt with short sleeves crew neck,TSHIRT,Black,Cotton Blend,Graphic,199,799
+P0332,V-TOP-0332,Crop Top,Red Printed Linen Crop Top with sleeveless sleeves halter neck,TOP,Red,Linen,Printed,299,899
+P0333,V-KUR-0333,A-Line Kurta,Yellow Floral Silk A-Line Kurta with short sleeves v-neck neck,KURTA,Yellow,Silk,Floral,499,1999
+P0334,V-KUR-0334,Linen Kurta,Yellow Geometric Linen Linen Kurta with short sleeves v-neck neck,KURTA,Yellow,Linen,Geometric,499,1999
+P0335,V-TSH-0335,Classic Crew Neck T-Shirt,Yellow Abstract Cotton Blend Classic Crew Neck T-Shirt with sleeveless sleeves henley neck,TSHIRT,Yellow,Cotton Blend,Abstract,199,799
+P0336,V-SAL-0336,Printed Salwar,White Embroidered Linen Printed Salwar churidar fit,SALWAR,White,Linen,Embroidered,399,1299
+P0337,V-SHI-0337,Checked Pattern Shirt,White Printed Cotton Checked Pattern Shirt with short sleeves,SHIRT,White,Cotton,Printed,399,1499
+P0338,V-JEA-0338,Regular Fit Jeans,Light Blue Denim Regular Fit Jeans straight fit,JEANS,Light Blue,Denim,Solid,799,2499
+P0339,V-TSH-0339,Relaxed Fit T-Shirt,Green Logo Cotton Relaxed Fit T-Shirt with short sleeves v-neck neck,TSHIRT,Green,Cotton,Logo,199,799
+P0340,V-TSH-0340,V-Neck Casual T-Shirt,Red Stripes Modal V-Neck Casual T-Shirt with sleeveless sleeves scoop neck,TSHIRT,Red,Modal,Stripes,199,799
+P0341,V-KUR-0341,Embroidered Kurta,Blue Geometric Chiffon Embroidered Kurta with short sleeves boat neck neck,KURTA,Blue,Chiffon,Geometric,499,1999
+P0342,V-SHI-0342,Striped Business Shirt,Striped Denim Cotton Striped Business Shirt with short sleeves button-down neck,SHIRT,Striped,Cotton,Denim,399,1499
+P0343,V-SAL-0343,Ankle Length Salwar,Black Embroidered Georgette Ankle Length Salwar wide leg fit,SALWAR,Black,Georgette,Embroidered,399,1299
+P0344,V-KUR-0344,Chikankari Kurta,Yellow Printed Silk Chikankari Kurta with long sleeves boat neck neck,KURTA,Yellow,Silk,Printed,499,1999
+P0345,V-DRE-0345,Office Formal Dress,Blue Floral Crepe Office Formal Dress with sleeveless sleeves v-neck neck,DRESS,Blue,Crepe,Floral,599,1999
+P0346,V-TOP-0346,Crop Top,Red Printed Chiffon Crop Top with bell sleeves sleeves v-neck neck,TOP,Red,Chiffon,Printed,299,899
+P0347,V-SHI-0347,Checked Pattern Shirt,Checked Cotton Blend Checked Pattern Shirt with long sleeves band collar neck,SHIRT,Checked,Cotton Blend,Solid,399,1499
+P0348,V-POL-0348,Business Casual Polo,White Embroidered Pique Cotton Business Casual Polo with long sleeves,POLO,White,Pique Cotton,Embroidered,299,999
+P0349,V-POL-0349,Long Sleeve Polo,Maroon Stripes Pique Cotton Long Sleeve Polo with long sleeves,POLO,Maroon,Pique Cotton,Stripes,299,999
+P0350,V-TSH-0350,Relaxed Fit T-Shirt,Black Abstract Polyester Relaxed Fit T-Shirt with long sleeves v-neck neck,TSHIRT,Black,Polyester,Abstract,199,799
+P0351,V-JEA-0351,High Waist Jeans,Light Blue Distressed Denim High Waist Jeans skinny fit,JEANS,Light Blue,Denim,Distressed,799,2499
+P0352,V-TOP-0352,Blouse Style Top,Navy Striped Linen Blouse Style Top with three-quarter sleeves halter neck,TOP,Navy,Linen,Striped,299,899
+P0353,V-TOP-0353,Peplum Top,Printed Striped Chiffon Peplum Top with sleeveless sleeves off-shoulder neck,TOP,Printed,Chiffon,Striped,299,899
+P0354,V-KUR-0354,A-Line Kurta,Pink Printed Cotton A-Line Kurta with short sleeves mandarin neck,KURTA,Pink,Cotton,Printed,499,1999
+P0355,V-SAL-0355,Solid Color Salwar,Navy Embroidered Linen Solid Color Salwar churidar fit,SALWAR,Navy,Linen,Embroidered,399,1299
+P0356,V-SAL-0356,Wide Leg Salwar,White Embroidered Linen Wide Leg Salwar palazzo fit,SALWAR,White,Linen,Embroidered,399,1299
+P0357,V-TOP-0357,Bardot Top,Red Printed Chiffon Bardot Top with three-quarter sleeves v-neck neck,TOP,Red,Chiffon,Printed,299,899
+P0358,V-DRE-0358,Chiffon Evening Dress,Green Floral Linen Chiffon Evening Dress with short sleeves halter neck,DRESS,Green,Linen,Floral,599,1999
+P0359,V-TSH-0359,Premium Cotton Tee,White Logo Cotton Premium Cotton Tee with short sleeves v-neck neck,TSHIRT,White,Cotton,Logo,199,799
+P0360,V-POL-0360,Golf Polo Shirt,White Stripes Pique Cotton Golf Polo Shirt with long sleeves,POLO,White,Pique Cotton,Stripes,299,999
+P0361,V-TSH-0361,Henley Style T-Shirt,Yellow Abstract Modal Henley Style T-Shirt with long sleeves crew neck,TSHIRT,Yellow,Modal,Abstract,199,799
+P0362,V-TSH-0362,Pocket T-Shirt,Green Modal Pocket T-Shirt with short sleeves scoop neck,TSHIRT,Green,Modal,Solid,199,799
+P0363,V-SHI-0363,Formal Cotton Shirt,Checked Printed Chambray Formal Cotton Shirt with short sleeves,SHIRT,Checked,Chambray,Printed,399,1499
+P0364,V-POL-0364,Business Casual Polo,Gray Stripes Pique Cotton Business Casual Polo with long sleeves,POLO,Gray,Pique Cotton,Stripes,299,999
+P0365,V-SHI-0365,Long Sleeve Casual Shirt,Black Printed Cotton Long Sleeve Casual Shirt with long sleeves button-down neck,SHIRT,Black,Cotton,Printed,399,1499
+P0366,V-JEA-0366,Wide Leg Jeans,Gray Denim Wide Leg Jeans slim fit,JEANS,Gray,Denim,Solid,799,2499
+P0367,V-SAL-0367,Comfort Fit Salwar,Printed Striped Georgette Comfort Fit Salwar regular fit,SALWAR,Printed,Georgette,Striped,399,1299
+P0368,V-TSH-0368,Organic Cotton T-Shirt,Black Logo Polyester Organic Cotton T-Shirt with long sleeves scoop neck,TSHIRT,Black,Polyester,Logo,199,799
+P0369,V-POL-0369,Business Casual Polo,Gray Stripes Cotton Business Casual Polo with long sleeves,POLO,Gray,Cotton,Stripes,299,999
+P0370,V-TSH-0370,Premium Cotton Tee,Pink Graphic Cotton Blend Premium Cotton Tee with sleeveless sleeves crew neck,TSHIRT,Pink,Cotton Blend,Graphic,199,799
+P0371,V-DRE-0371,Shift Dress,Blue Geometric Cotton Shift Dress with long sleeves off-shoulder neck,DRESS,Blue,Cotton,Geometric,599,1999
+P0372,V-POL-0372,Striped Polo Shirt,Gray Color Block Pique Cotton Striped Polo Shirt with long sleeves,POLO,Gray,Pique Cotton,Color Block,299,999
+P0373,V-DRE-0373,Chiffon Evening Dress,Navy Geometric Georgette Chiffon Evening Dress with sleeveless sleeves round neck,DRESS,Navy,Georgette,Geometric,599,1999
+P0374,V-POL-0374,Premium Cotton Polo,Navy Embroidered Pique Cotton Premium Cotton Polo with long sleeves,POLO,Navy,Pique Cotton,Embroidered,299,999
+P0375,V-TSH-0375,Ribbed Knit Tee,Yellow Logo Cotton Blend Ribbed Knit Tee with short sleeves scoop neck,TSHIRT,Yellow,Cotton Blend,Logo,199,799
+P0376,V-SAL-0376,Comfort Fit Salwar,Solid Striped Linen Comfort Fit Salwar regular fit,SALWAR,Solid,Linen,Striped,399,1299
+P0377,V-SHI-0377,Checked Pattern Shirt,White Stripes Cotton Checked Pattern Shirt with short sleeves band collar neck,SHIRT,White,Cotton,Stripes,399,1499
+P0378,V-DRE-0378,Chiffon Evening Dress,White Printed Crepe Chiffon Evening Dress with short sleeves round neck,DRESS,White,Crepe,Printed,599,1999
+P0379,V-TSH-0379,Slim Fit Basic Tee,Blue Printed Organic Cotton Slim Fit Basic Tee with short sleeves v-neck neck,TSHIRT,Blue,Organic Cotton,Printed,199,799
+P0380,V-POL-0380,Performance Polo,Maroon Color Block Performance Fabric Performance Polo with short sleeves,POLO,Maroon,Performance Fabric,Color Block,299,999
+P0381,V-POL-0381,Embroidered Polo,Blue Color Block Cotton Embroidered Polo with short sleeves,POLO,Blue,Cotton,Color Block,299,999
+P0382,V-SAL-0382,Comfort Fit Salwar,Solid Printed Cotton Comfort Fit Salwar churidar fit,SALWAR,Solid,Cotton,Printed,399,1299
+P0383,V-SAL-0383,Palazzo Salwar,Beige Embroidered Linen Palazzo Salwar palazzo fit,SALWAR,Beige,Linen,Embroidered,399,1299
+P0384,V-TOP-0384,Off-Shoulder Top,Black Floral Cotton Off-Shoulder Top with three-quarter sleeves halter neck,TOP,Black,Cotton,Floral,299,899
+P0385,V-SHI-0385,Denim Shirt,Black Stripes Cotton Denim Shirt with short sleeves button-down neck,SHIRT,Black,Cotton,Stripes,399,1499
+P0386,V-TOP-0386,Knot Front Top,Red Polyester Knot Front Top with sleeveless sleeves off-shoulder neck,TOP,Red,Polyester,Solid,299,899
+P0387,V-TSH-0387,Graphic Print T-Shirt,Green Printed Cotton Blend Graphic Print T-Shirt with long sleeves scoop neck,TSHIRT,Green,Cotton Blend,Printed,199,799
+P0388,V-SAL-0388,Trouser Style Salwar,Beige Embroidered Linen Trouser Style Salwar churidar fit,SALWAR,Beige,Linen,Embroidered,399,1299
+P0389,V-TOP-0389,Tie-Up Top,Red Striped Polyester Tie-Up Top with three-quarter sleeves halter neck,TOP,Red,Polyester,Striped,299,899
+P0390,V-JEA-0390,Bootcut Jeans,Gray Vintage Wash Stretch Denim Bootcut Jeans slim fit,JEANS,Gray,Stretch Denim,Vintage Wash,799,2499
+P0391,V-JEA-0391,Vintage Wash Jeans,Black Raw Denim Vintage Wash Jeans bootcut fit,JEANS,Black,Raw Denim,Solid,799,2499
+P0392,V-JEA-0392,Distressed Denim Jeans,Dark Blue Stretch Denim Distressed Denim Jeans bootcut fit,JEANS,Dark Blue,Stretch Denim,Solid,799,2499
+P0393,V-TOP-0393,Off-Shoulder Top,Black Striped Linen Off-Shoulder Top with sleeveless sleeves halter neck,TOP,Black,Linen,Striped,299,899
+P0394,V-SAL-0394,Churidar Salwar,Printed Striped Georgette Churidar Salwar wide leg fit,SALWAR,Printed,Georgette,Striped,399,1299
+P0395,V-SAL-0395,Ankle Length Salwar,Beige Cotton Ankle Length Salwar regular fit,SALWAR,Beige,Cotton,Solid,399,1299
+P0396,V-JEA-0396,Black Denim Jeans,Gray Faded Raw Denim Black Denim Jeans straight fit,JEANS,Gray,Raw Denim,Faded,799,2499
+P0397,V-SAL-0397,Designer Salwar,Black Georgette Designer Salwar regular fit,SALWAR,Black,Georgette,Solid,399,1299
+P0398,V-SHI-0398,Checked Pattern Shirt,Checked Denim Chambray Checked Pattern Shirt with short sleeves band collar neck,SHIRT,Checked,Chambray,Denim,399,1499
+P0399,V-KUR-0399,A-Line Kurta,Blue Embroidered Silk A-Line Kurta with short sleeves boat neck neck,KURTA,Blue,Silk,Embroidered,499,1999
+P0400,V-POL-0400,Striped Polo Shirt,Navy Performance Fabric Striped Polo Shirt with short sleeves,POLO,Navy,Performance Fabric,Solid,299,999
+P0401,V-SHI-0401,Short Sleeve Shirt,Blue Denim Poplin Short Sleeve Shirt with long sleeves band collar neck,SHIRT,Blue,Poplin,Denim,399,1499
+P0402,V-TOP-0402,Peplum Top,Yellow Floral Chiffon Peplum Top with three-quarter sleeves round neck,TOP,Yellow,Chiffon,Floral,299,899
+P0403,V-SHI-0403,Formal Cotton Shirt,White Stripes Cotton Formal Cotton Shirt with short sleeves button-down neck,SHIRT,White,Cotton,Stripes,399,1499
+P0404,V-DRE-0404,Chiffon Evening Dress,Yellow Floral Polyester Chiffon Evening Dress with long sleeves square neck,DRESS,Yellow,Polyester,Floral,599,1999
+P0405,V-SAL-0405,Elastic Waist Salwar,White Printed Linen Elastic Waist Salwar churidar fit,SALWAR,White,Linen,Printed,399,1299
+P0406,V-SAL-0406,Comfort Fit Salwar,Solid Printed Cotton Comfort Fit Salwar wide leg fit,SALWAR,Solid,Cotton,Printed,399,1299
+P0407,V-SAL-0407,Comfort Fit Salwar,Solid Printed Cotton Comfort Fit Salwar churidar fit,SALWAR,Solid,Cotton,Printed,399,1299
+P0408,V-SHI-0408,Relaxed Fit Shirt,Striped Cotton Relaxed Fit Shirt with short sleeves band collar neck,SHIRT,Striped,Cotton,Solid,399,1499
+P0409,V-KUR-0409,Embroidered Kurta,Beige Embroidered Silk Embroidered Kurta with three-quarter sleeves boat neck neck,KURTA,Beige,Silk,Embroidered,499,1999
+P0410,V-KUR-0410,Casual Kurta,Yellow Geometric Silk Casual Kurta with short sleeves mandarin neck,KURTA,Yellow,Silk,Geometric,499,1999
+P0411,V-KUR-0411,Designer Kurta,Blue Embroidered Georgette Designer Kurta with three-quarter sleeves round neck,KURTA,Blue,Georgette,Embroidered,499,1999
+P0412,V-DRE-0412,Shift Dress,Blue Printed Cotton Shift Dress with short sleeves v-neck neck,DRESS,Blue,Cotton,Printed,599,1999
+P0413,V-KUR-0413,Chikankari Kurta,Yellow Floral Linen Chikankari Kurta with three-quarter sleeves v-neck neck,KURTA,Yellow,Linen,Floral,499,1999
+P0414,V-SAL-0414,Comfort Fit Salwar,White Printed Linen Comfort Fit Salwar churidar fit,SALWAR,White,Linen,Printed,399,1299
+P0415,V-TOP-0415,Ruffle Sleeve Top,Black Striped Polyester Ruffle Sleeve Top with bell sleeves sleeves round neck,TOP,Black,Polyester,Striped,299,899
+P0416,V-KUR-0416,Cotton Kurta,Blue Printed Silk Cotton Kurta with long sleeves boat neck neck,KURTA,Blue,Silk,Printed,499,1999
+P0417,V-SAL-0417,Trouser Style Salwar,White Striped Georgette Trouser Style Salwar wide leg fit,SALWAR,White,Georgette,Striped,399,1299
+P0418,V-DRE-0418,Floral Print Maxi Dress,Black Floral Linen Floral Print Maxi Dress with sleeveless sleeves round neck,DRESS,Black,Linen,Floral,599,1999
+P0419,V-SHI-0419,Checked Pattern Shirt,Black Checks Chambray Checked Pattern Shirt with long sleeves button-down neck,SHIRT,Black,Chambray,Checks,399,1499
+P0420,V-TOP-0420,Blouse Style Top,Pink Cotton Blouse Style Top with three-quarter sleeves off-shoulder neck,TOP,Pink,Cotton,Solid,299,899
+P0421,V-TSH-0421,Organic Cotton T-Shirt,Pink Stripes Organic Cotton Organic Cotton T-Shirt with long sleeves crew neck,TSHIRT,Pink,Organic Cotton,Stripes,199,799
+P0422,V-JEA-0422,Straight Leg Jeans,White Distressed Denim Straight Leg Jeans slim fit,JEANS,White,Denim,Distressed,799,2499
+P0423,V-TOP-0423,Peplum Top,Black Striped Polyester Peplum Top with bell sleeves sleeves v-neck neck,TOP,Black,Polyester,Striped,299,899
+P0424,V-DRE-0424,Wrap Style Dress,Black Geometric Polyester Wrap Style Dress with sleeveless sleeves halter neck,DRESS,Black,Polyester,Geometric,599,1999
+P0425,V-SHI-0425,Chambray Shirt,Blue Stripes Chambray Chambray Shirt with long sleeves band collar neck,SHIRT,Blue,Chambray,Stripes,399,1499
+P0426,V-SHI-0426,Flannel Shirt,Blue Printed Cotton Flannel Shirt with short sleeves band collar neck,SHIRT,Blue,Cotton,Printed,399,1499
+P0427,V-DRE-0427,Chiffon Evening Dress,Blue Floral Polyester Chiffon Evening Dress with sleeveless sleeves v-neck neck,DRESS,Blue,Polyester,Floral,599,1999
+P0428,V-SAL-0428,Elastic Waist Salwar,Printed Embroidered Linen Elastic Waist Salwar wide leg fit,SALWAR,Printed,Linen,Embroidered,399,1299
+P0429,V-SAL-0429,Elastic Waist Salwar,Solid Cotton Elastic Waist Salwar wide leg fit,SALWAR,Solid,Cotton,Solid,399,1299
+P0430,V-SHI-0430,Relaxed Fit Shirt,Gray Printed Cotton Blend Relaxed Fit Shirt with long sleeves button-down neck,SHIRT,Gray,Cotton Blend,Printed,399,1499
+P0431,V-TSH-0431,Organic Cotton T-Shirt,Yellow Abstract Cotton Organic Cotton T-Shirt with sleeveless sleeves scoop neck,TSHIRT,Yellow,Cotton,Abstract,199,799
+P0432,V-POL-0432,Business Casual Polo,Gray Color Block Performance Fabric Business Casual Polo with short sleeves,POLO,Gray,Performance Fabric,Color Block,299,999
+P0433,V-SHI-0433,Short Sleeve Shirt,Black Denim Cotton Blend Short Sleeve Shirt with short sleeves button-down neck,SHIRT,Black,Cotton Blend,Denim,399,1499
+P0434,V-TOP-0434,Tie-Up Top,White Cotton Tie-Up Top with bell sleeves sleeves round neck,TOP,White,Cotton,Solid,299,899
+P0435,V-POL-0435,Performance Polo,Maroon Performance Fabric Performance Polo with long sleeves,POLO,Maroon,Performance Fabric,Solid,299,999
+P0436,V-DRE-0436,Linen Blend Dress,Red Printed Chiffon Linen Blend Dress with short sleeves square neck,DRESS,Red,Chiffon,Printed,599,1999
+P0437,V-SHI-0437,Casual Linen Shirt,Checked Checks Cotton Blend Casual Linen Shirt with short sleeves band collar neck,SHIRT,Checked,Cotton Blend,Checks,399,1499
+P0438,V-SHI-0438,Relaxed Fit Shirt,Gray Linen Relaxed Fit Shirt with short sleeves,SHIRT,Gray,Linen,Solid,399,1499
+P0439,V-JEA-0439,Distressed Denim Jeans,Black Faded Denim Distressed Denim Jeans slim fit,JEANS,Black,Denim,Faded,799,2499
+P0440,V-TSH-0440,Organic Cotton T-Shirt,Black Logo Cotton Blend Organic Cotton T-Shirt with sleeveless sleeves v-neck neck,TSHIRT,Black,Cotton Blend,Logo,199,799
+P0441,V-TOP-0441,Peplum Top,Red Polyester Peplum Top with short sleeves round neck,TOP,Red,Polyester,Solid,299,899
+P0442,V-KUR-0442,Straight Cut Kurta,Blue Floral Chiffon Straight Cut Kurta with short sleeves v-neck neck,KURTA,Blue,Chiffon,Floral,499,1999
+P0443,V-POL-0443,Business Casual Polo,Black Color Block Cotton Business Casual Polo with long sleeves,POLO,Black,Cotton,Color Block,299,999
+P0444,V-DRE-0444,Sundress with Pockets,Green Floral Linen Sundress with Pockets with short sleeves round neck,DRESS,Green,Linen,Floral,599,1999
+P0445,V-DRE-0445,Floral Print Maxi Dress,Pink Printed Linen Floral Print Maxi Dress with cap sleeves sleeves square neck,DRESS,Pink,Linen,Printed,599,1999
+P0446,V-DRE-0446,Wrap Style Dress,Navy Floral Chiffon Wrap Style Dress with sleeveless sleeves round neck,DRESS,Navy,Chiffon,Floral,599,1999
+P0447,V-SHI-0447,Checked Pattern Shirt,Striped Denim Chambray Checked Pattern Shirt with short sleeves button-down neck,SHIRT,Striped,Chambray,Denim,399,1499
+P0448,V-SAL-0448,Solid Color Salwar,Navy Striped Cotton Solid Color Salwar wide leg fit,SALWAR,Navy,Cotton,Striped,399,1299
+P0449,V-POL-0449,Long Sleeve Polo,Navy Performance Fabric Long Sleeve Polo with long sleeves,POLO,Navy,Performance Fabric,Solid,299,999
+P0450,V-DRE-0450,Sundress with Pockets,Pink Printed Linen Sundress with Pockets with long sleeves off-shoulder neck,DRESS,Pink,Linen,Printed,599,1999
+P0451,V-POL-0451,Classic Polo Shirt,White Embroidered Cotton Classic Polo Shirt with short sleeves,POLO,White,Cotton,Embroidered,299,999
+P0452,V-TSH-0452,Graphic Print T-Shirt,Red Abstract Modal Graphic Print T-Shirt with sleeveless sleeves henley neck,TSHIRT,Red,Modal,Abstract,199,799
+P0453,V-SAL-0453,Traditional Salwar,Black Printed Georgette Traditional Salwar palazzo fit,SALWAR,Black,Georgette,Printed,399,1299
+P0454,V-POL-0454,Striped Polo Shirt,Gray Stripes Cotton Striped Polo Shirt with long sleeves,POLO,Gray,Cotton,Stripes,299,999
+P0455,V-POL-0455,Striped Polo Shirt,Gray Performance Fabric Striped Polo Shirt with short sleeves,POLO,Gray,Performance Fabric,Solid,299,999
+P0456,V-SAL-0456,Churidar Salwar,Printed Georgette Churidar Salwar palazzo fit,SALWAR,Printed,Georgette,Solid,399,1299
+P0457,V-DRE-0457,Floral Print Maxi Dress,Red Polka Dots Cotton Floral Print Maxi Dress with short sleeves v-neck neck,DRESS,Red,Cotton,Polka Dots,599,1999
+P0458,V-TOP-0458,Tie-Up Top,Black Striped Linen Tie-Up Top with sleeveless sleeves off-shoulder neck,TOP,Black,Linen,Striped,299,899
+P0459,V-POL-0459,Classic Polo Shirt,Red Embroidered Cotton Blend Classic Polo Shirt with short sleeves,POLO,Red,Cotton Blend,Embroidered,299,999
+P0460,V-POL-0460,Athletic Fit Polo,Blue Performance Fabric Athletic Fit Polo with long sleeves,POLO,Blue,Performance Fabric,Solid,299,999
+P0461,V-KUR-0461,Printed Kurta,Beige Geometric Chiffon Printed Kurta with three-quarter sleeves round neck,KURTA,Beige,Chiffon,Geometric,499,1999
+P0462,V-JEA-0462,Wide Leg Jeans,Blue Raw Denim Wide Leg Jeans regular fit,JEANS,Blue,Raw Denim,Solid,799,2499
+P0463,V-TSH-0463,Striped Casual Tee,Green Stripes Cotton Blend Striped Casual Tee with short sleeves crew neck,TSHIRT,Green,Cotton Blend,Stripes,199,799
+P0464,V-SAL-0464,Printed Salwar,Navy Striped Chiffon Printed Salwar palazzo fit,SALWAR,Navy,Chiffon,Striped,399,1299
+P0465,V-SHI-0465,Casual Linen Shirt,Black Chambray Casual Linen Shirt with short sleeves,SHIRT,Black,Chambray,Solid,399,1499
+P0466,V-JEA-0466,Stretch Comfort Jeans,White Denim Stretch Comfort Jeans relaxed fit,JEANS,White,Denim,Solid,799,2499
+P0467,V-SHI-0467,Short Sleeve Shirt,Striped Printed Cotton Short Sleeve Shirt with short sleeves band collar neck,SHIRT,Striped,Cotton,Printed,399,1499
+P0468,V-JEA-0468,Straight Leg Jeans,Gray Faded Raw Denim Straight Leg Jeans relaxed fit,JEANS,Gray,Raw Denim,Faded,799,2499
+P0469,V-TOP-0469,Cold Shoulder Top,Black Polyester Cold Shoulder Top with bell sleeves sleeves round neck,TOP,Black,Polyester,Solid,299,899
+P0470,V-JEA-0470,Stretch Comfort Jeans,Dark Blue Stretch Denim Stretch Comfort Jeans slim fit,JEANS,Dark Blue,Stretch Denim,Solid,799,2499
+P0471,V-SAL-0471,Traditional Salwar,Black Printed Chiffon Traditional Salwar churidar fit,SALWAR,Black,Chiffon,Printed,399,1299
+P0472,V-SAL-0472,Elastic Waist Salwar,Navy Embroidered Cotton Elastic Waist Salwar regular fit,SALWAR,Navy,Cotton,Embroidered,399,1299
+P0473,V-TSH-0473,Relaxed Fit T-Shirt,Green Abstract Modal Relaxed Fit T-Shirt with long sleeves henley neck,TSHIRT,Green,Modal,Abstract,199,799
+P0474,V-POL-0474,Color Block Polo,Black Color Block Cotton Color Block Polo with short sleeves,POLO,Black,Cotton,Color Block,299,999
+P0475,V-SAL-0475,Trouser Style Salwar,Navy Embroidered Linen Trouser Style Salwar palazzo fit,SALWAR,Navy,Linen,Embroidered,399,1299
+P0476,V-KUR-0476,A-Line Kurta,Red Floral Chiffon A-Line Kurta with long sleeves v-neck neck,KURTA,Red,Chiffon,Floral,499,1999
+P0477,V-POL-0477,Long Sleeve Polo,Navy Stripes Pique Cotton Long Sleeve Polo with short sleeves,POLO,Navy,Pique Cotton,Stripes,299,999
+P0478,V-TOP-0478,Tunic Top,Red Linen Tunic Top with three-quarter sleeves v-neck neck,TOP,Red,Linen,Solid,299,899
+P0479,V-TOP-0479,Ruffle Sleeve Top,Navy Chiffon Ruffle Sleeve Top with short sleeves v-neck neck,TOP,Navy,Chiffon,Solid,299,899
+P0480,V-SHI-0480,Relaxed Fit Shirt,White Checks Chambray Relaxed Fit Shirt with long sleeves,SHIRT,White,Chambray,Checks,399,1499
+P0481,V-POL-0481,Golf Polo Shirt,Blue Color Block Pique Cotton Golf Polo Shirt with short sleeves,POLO,Blue,Pique Cotton,Color Block,299,999
+P0482,V-SHI-0482,Oxford Button-Down Shirt,Gray Printed Cotton Oxford Button-Down Shirt with short sleeves,SHIRT,Gray,Cotton,Printed,399,1499
+P0483,V-TOP-0483,Peplum Top,White Polyester Peplum Top with short sleeves v-neck neck,TOP,White,Polyester,Solid,299,899
+P0484,V-DRE-0484,Wrap Style Dress,White Polka Dots Crepe Wrap Style Dress with short sleeves halter neck,DRESS,White,Crepe,Polka Dots,599,1999
+P0485,V-SHI-0485,Casual Linen Shirt,White Checks Cotton Casual Linen Shirt with long sleeves,SHIRT,White,Cotton,Checks,399,1499
+P0486,V-POL-0486,Embroidered Polo,White Color Block Cotton Embroidered Polo with short sleeves,POLO,White,Cotton,Color Block,299,999
+P0487,V-SAL-0487,Traditional Salwar,White Georgette Traditional Salwar wide leg fit,SALWAR,White,Georgette,Solid,399,1299
+P0488,V-SAL-0488,Palazzo Salwar,Navy Printed Chiffon Palazzo Salwar palazzo fit,SALWAR,Navy,Chiffon,Printed,399,1299
+P0489,V-SHI-0489,Denim Shirt,White Denim Linen Denim Shirt with short sleeves button-down neck,SHIRT,White,Linen,Denim,399,1499
+P0490,V-SHI-0490,Denim Shirt,Striped Printed Poplin Denim Shirt with short sleeves,SHIRT,Striped,Poplin,Printed,399,1499
+P0491,V-SHI-0491,Long Sleeve Casual Shirt,Gray Checks Linen Long Sleeve Casual Shirt with short sleeves button-down neck,SHIRT,Gray,Linen,Checks,399,1499
+P0492,V-TSH-0492,Graphic Print T-Shirt,Yellow Graphic Cotton Blend Graphic Print T-Shirt with long sleeves scoop neck,TSHIRT,Yellow,Cotton Blend,Graphic,199,799
+P0493,V-KUR-0493,A-Line Kurta,Blue Chiffon A-Line Kurta with long sleeves v-neck neck,KURTA,Blue,Chiffon,Solid,499,1999
+P0494,V-TSH-0494,Slim Fit Basic Tee,Yellow Graphic Cotton Slim Fit Basic Tee with long sleeves v-neck neck,TSHIRT,Yellow,Cotton,Graphic,199,799
+P0495,V-DRE-0495,Floral Print Maxi Dress,Blue Printed Polyester Floral Print Maxi Dress with short sleeves v-neck neck,DRESS,Blue,Polyester,Printed,599,1999
+P0496,V-SAL-0496,Designer Salwar,Navy Printed Linen Designer Salwar palazzo fit,SALWAR,Navy,Linen,Printed,399,1299
+P0497,V-KUR-0497,Casual Kurta,Red Geometric Cotton Casual Kurta with three-quarter sleeves v-neck neck,KURTA,Red,Cotton,Geometric,499,1999
+P0498,V-JEA-0498,Distressed Denim Jeans,Gray Faded Raw Denim Distressed Denim Jeans slim fit,JEANS,Gray,Raw Denim,Faded,799,2499
+P0499,V-POL-0499,Classic Polo Shirt,Gray Pique Cotton Classic Polo Shirt with long sleeves,POLO,Gray,Pique Cotton,Solid,299,999
+P0500,V-KUR-0500,Casual Kurta,Blue Embroidered Linen Casual Kurta with three-quarter sleeves v-neck neck,KURTA,Blue,Linen,Embroidered,499,1999
+P0501,V-KUR-0501,Cotton Kurta,Blue Geometric Cotton Cotton Kurta with three-quarter sleeves v-neck neck,KURTA,Blue,Cotton,Geometric,499,1999
+P0502,V-POL-0502,Business Casual Polo,Navy Embroidered Cotton Blend Business Casual Polo with long sleeves,POLO,Navy,Cotton Blend,Embroidered,299,999
+P0503,V-KUR-0503,Anarkali Kurta,Blue Printed Chiffon Anarkali Kurta with three-quarter sleeves boat neck neck,KURTA,Blue,Chiffon,Printed,499,1999
+P0504,V-TOP-0504,Asymmetric Top,Black Striped Linen Asymmetric Top with sleeveless sleeves v-neck neck,TOP,Black,Linen,Striped,299,899
+P0505,V-SAL-0505,Solid Color Salwar,Navy Printed Chiffon Solid Color Salwar regular fit,SALWAR,Navy,Chiffon,Printed,399,1299
+P0506,V-SAL-0506,Wide Leg Salwar,Navy Embroidered Cotton Wide Leg Salwar churidar fit,SALWAR,Navy,Cotton,Embroidered,399,1299
+P0507,V-POL-0507,Athletic Fit Polo,Blue Pique Cotton Athletic Fit Polo with short sleeves,POLO,Blue,Pique Cotton,Solid,299,999
+P0508,V-KUR-0508,Printed Kurta,Red Floral Cotton Printed Kurta with short sleeves mandarin neck,KURTA,Red,Cotton,Floral,499,1999
+P0509,V-JEA-0509,Relaxed Fit Jeans,Blue Distressed Raw Denim Relaxed Fit Jeans slim fit,JEANS,Blue,Raw Denim,Distressed,799,2499
+P0510,V-TSH-0510,Classic Crew Neck T-Shirt,Yellow Abstract Organic Cotton Classic Crew Neck T-Shirt with long sleeves v-neck neck,TSHIRT,Yellow,Organic Cotton,Abstract,199,799
+P0511,V-SAL-0511,Elastic Waist Salwar,Beige Striped Georgette Elastic Waist Salwar regular fit,SALWAR,Beige,Georgette,Striped,399,1299
+P0512,V-TOP-0512,Knot Front Top,Black Floral Polyester Knot Front Top with short sleeves round neck,TOP,Black,Polyester,Floral,299,899
+P0513,V-SHI-0513,Formal Cotton Shirt,Black Cotton Blend Formal Cotton Shirt with short sleeves band collar neck,SHIRT,Black,Cotton Blend,Solid,399,1499
+P0514,V-DRE-0514,Sundress with Pockets,Navy Geometric Polyester Sundress with Pockets with short sleeves square neck,DRESS,Navy,Polyester,Geometric,599,1999
+P0515,V-TOP-0515,Bardot Top,Red Printed Cotton Bardot Top with bell sleeves sleeves v-neck neck,TOP,Red,Cotton,Printed,299,899
+P0516,V-TSH-0516,Premium Cotton Tee,Gray Stripes Cotton Blend Premium Cotton Tee with long sleeves scoop neck,TSHIRT,Gray,Cotton Blend,Stripes,199,799
+P0517,V-SHI-0517,Striped Business Shirt,White Linen Striped Business Shirt with long sleeves button-down neck,SHIRT,White,Linen,Solid,399,1499
+P0518,V-TOP-0518,Off-Shoulder Top,Navy Cotton Off-Shoulder Top with bell sleeves sleeves round neck,TOP,Navy,Cotton,Solid,299,899
+P0519,V-SHI-0519,Poplin Dress Shirt,Gray Checks Chambray Poplin Dress Shirt with short sleeves,SHIRT,Gray,Chambray,Checks,399,1499
+P0520,V-JEA-0520,Skinny Fit Jeans,Gray Raw Denim Skinny Fit Jeans slim fit,JEANS,Gray,Raw Denim,Solid,799,2499
+P0521,V-SHI-0521,Long Sleeve Casual Shirt,Gray Stripes Poplin Long Sleeve Casual Shirt with short sleeves button-down neck,SHIRT,Gray,Poplin,Stripes,399,1499
+P0522,V-SAL-0522,Palazzo Salwar,White Embroidered Chiffon Palazzo Salwar churidar fit,SALWAR,White,Chiffon,Embroidered,399,1299
+P0523,V-TOP-0523,Crop Top,Red Floral Linen Crop Top with three-quarter sleeves v-neck neck,TOP,Red,Linen,Floral,299,899
+P0524,V-SHI-0524,Chambray Shirt,Blue Cotton Chambray Shirt with short sleeves button-down neck,SHIRT,Blue,Cotton,Solid,399,1499
+P0525,V-KUR-0525,Party Wear Kurta,Pink Geometric Silk Party Wear Kurta with short sleeves boat neck neck,KURTA,Pink,Silk,Geometric,499,1999
+P0526,V-SAL-0526,Ankle Length Salwar,Printed Printed Georgette Ankle Length Salwar wide leg fit,SALWAR,Printed,Georgette,Printed,399,1299
+P0527,V-SHI-0527,Casual Linen Shirt,Checked Poplin Casual Linen Shirt with short sleeves,SHIRT,Checked,Poplin,Solid,399,1499
+P0528,V-TOP-0528,Off-Shoulder Top,Black Printed Polyester Off-Shoulder Top with sleeveless sleeves round neck,TOP,Black,Polyester,Printed,299,899
+P0529,V-SAL-0529,Churidar Salwar,Navy Printed Georgette Churidar Salwar palazzo fit,SALWAR,Navy,Georgette,Printed,399,1299
+P0530,V-KUR-0530,Chikankari Kurta,Beige Floral Cotton Chikankari Kurta with three-quarter sleeves boat neck neck,KURTA,Beige,Cotton,Floral,499,1999
+P0531,V-KUR-0531,Anarkali Kurta,Printed Georgette Anarkali Kurta with three-quarter sleeves boat neck neck,KURTA,Printed,Georgette,Solid,499,1999
+P0532,V-POL-0532,Premium Cotton Polo,Black Pique Cotton Premium Cotton Polo with short sleeves,POLO,Black,Pique Cotton,Solid,299,999
+P0533,V-SHI-0533,Flannel Shirt,Gray Stripes Cotton Blend Flannel Shirt with long sleeves button-down neck,SHIRT,Gray,Cotton Blend,Stripes,399,1499
+P0534,V-TOP-0534,Knot Front Top,White Printed Chiffon Knot Front Top with three-quarter sleeves halter neck,TOP,White,Chiffon,Printed,299,899
+P0535,V-DRE-0535,Boho Chic Dress,Pink Linen Boho Chic Dress with cap sleeves sleeves square neck,DRESS,Pink,Linen,Solid,599,1999
+P0536,V-JEA-0536,Slim Fit Denim Jeans,White Distressed Raw Denim Slim Fit Denim Jeans slim fit,JEANS,White,Raw Denim,Distressed,799,2499
+P0537,V-KUR-0537,Anarkali Kurta,Green Floral Chiffon Anarkali Kurta with three-quarter sleeves round neck,KURTA,Green,Chiffon,Floral,499,1999
+P0538,V-JEA-0538,Skinny Fit Jeans,Dark Blue Vintage Wash Stretch Denim Skinny Fit Jeans relaxed fit,JEANS,Dark Blue,Stretch Denim,Vintage Wash,799,2499
+P0539,V-SAL-0539,Wide Leg Salwar,Navy Striped Cotton Wide Leg Salwar churidar fit,SALWAR,Navy,Cotton,Striped,399,1299
+P0540,V-SAL-0540,Traditional Salwar,Printed Embroidered Georgette Traditional Salwar regular fit,SALWAR,Printed,Georgette,Embroidered,399,1299
+P0541,V-DRE-0541,Floral Print Maxi Dress,Yellow Abstract Chiffon Floral Print Maxi Dress with long sleeves halter neck,DRESS,Yellow,Chiffon,Abstract,599,1999
+P0542,V-TSH-0542,V-Neck Casual T-Shirt,Gray Polyester V-Neck Casual T-Shirt with short sleeves crew neck,TSHIRT,Gray,Polyester,Solid,199,799
+P0543,V-TOP-0543,Crop Top,Yellow Printed Linen Crop Top with three-quarter sleeves off-shoulder neck,TOP,Yellow,Linen,Printed,299,899
+P0544,V-TOP-0544,Blouse Style Top,Yellow Chiffon Blouse Style Top with short sleeves v-neck neck,TOP,Yellow,Chiffon,Solid,299,899
+P0545,V-KUR-0545,Designer Kurta,Printed Printed Georgette Designer Kurta with long sleeves mandarin neck,KURTA,Printed,Georgette,Printed,499,1999
+P0546,V-KUR-0546,Printed Kurta,Beige Embroidered Chiffon Printed Kurta with short sleeves boat neck neck,KURTA,Beige,Chiffon,Embroidered,499,1999
+P0547,V-TSH-0547,V-Neck Casual T-Shirt,Gray Stripes Modal V-Neck Casual T-Shirt with sleeveless sleeves v-neck neck,TSHIRT,Gray,Modal,Stripes,199,799
+P0548,V-JEA-0548,Straight Leg Jeans,White Raw Denim Straight Leg Jeans skinny fit,JEANS,White,Raw Denim,Solid,799,2499
+P0549,V-DRE-0549,Linen Blend Dress,Black Floral Polyester Linen Blend Dress with sleeveless sleeves halter neck,DRESS,Black,Polyester,Floral,599,1999
+P0550,V-SHI-0550,Relaxed Fit Shirt,Gray Printed Cotton Blend Relaxed Fit Shirt with long sleeves band collar neck,SHIRT,Gray,Cotton Blend,Printed,399,1499
+P0551,V-SHI-0551,Checked Pattern Shirt,Black Denim Poplin Checked Pattern Shirt with long sleeves button-down neck,SHIRT,Black,Poplin,Denim,399,1499
+P0552,V-POL-0552,Classic Polo Shirt,Green Embroidered Cotton Blend Classic Polo Shirt with short sleeves,POLO,Green,Cotton Blend,Embroidered,299,999
+P0553,V-POL-0553,Embroidered Polo,Blue Embroidered Cotton Blend Embroidered Polo with long sleeves,POLO,Blue,Cotton Blend,Embroidered,299,999
+P0554,V-JEA-0554,Skinny Fit Jeans,Black Raw Denim Skinny Fit Jeans bootcut fit,JEANS,Black,Raw Denim,Solid,799,2499
+P0555,V-KUR-0555,Festive Kurta,White Floral Linen Festive Kurta with long sleeves mandarin neck,KURTA,White,Linen,Floral,499,1999
+P0556,V-SAL-0556,Comfort Fit Salwar,Solid Georgette Comfort Fit Salwar churidar fit,SALWAR,Solid,Georgette,Solid,399,1299
+P0557,V-KUR-0557,Chikankari Kurta,Printed Embroidered Linen Chikankari Kurta with three-quarter sleeves mandarin neck,KURTA,Printed,Linen,Embroidered,499,1999
+P0558,V-DRE-0558,Linen Blend Dress,Red Printed Linen Linen Blend Dress with short sleeves off-shoulder neck,DRESS,Red,Linen,Printed,599,1999
+P0559,V-DRE-0559,Chiffon Evening Dress,Yellow Floral Chiffon Chiffon Evening Dress with sleeveless sleeves round neck,DRESS,Yellow,Chiffon,Floral,599,1999
+P0560,V-JEA-0560,Bootcut Jeans,Dark Blue Distressed Denim Bootcut Jeans relaxed fit,JEANS,Dark Blue,Denim,Distressed,799,2499
+P0561,V-KUR-0561,Anarkali Kurta,Green Floral Georgette Anarkali Kurta with short sleeves boat neck neck,KURTA,Green,Georgette,Floral,499,1999
+P0562,V-TSH-0562,Ribbed Knit Tee,Black Logo Modal Ribbed Knit Tee with short sleeves crew neck,TSHIRT,Black,Modal,Logo,199,799
+P0563,V-SAL-0563,Ankle Length Salwar,White Chiffon Ankle Length Salwar churidar fit,SALWAR,White,Chiffon,Solid,399,1299
+P0564,V-DRE-0564,Wrap Style Dress,Pink Geometric Chiffon Wrap Style Dress with cap sleeves sleeves v-neck neck,DRESS,Pink,Chiffon,Geometric,599,1999
+P0565,V-KUR-0565,Chikankari Kurta,Beige Floral Linen Chikankari Kurta with long sleeves v-neck neck,KURTA,Beige,Linen,Floral,499,1999
+P0566,V-KUR-0566,Festive Kurta,White Floral Cotton Festive Kurta with long sleeves v-neck neck,KURTA,White,Cotton,Floral,499,1999
+P0567,V-DRE-0567,Boho Chic Dress,Green Polyester Boho Chic Dress with long sleeves halter neck,DRESS,Green,Polyester,Solid,599,1999
+P0568,V-SAL-0568,Trouser Style Salwar,White Striped Georgette Trouser Style Salwar wide leg fit,SALWAR,White,Georgette,Striped,399,1299
+P0569,V-SAL-0569,Cotton Salwar,Printed Printed Cotton Cotton Salwar palazzo fit,SALWAR,Printed,Cotton,Printed,399,1299
+P0570,V-TSH-0570,Oversized Comfort T-Shirt,Gray Modal Oversized Comfort T-Shirt with sleeveless sleeves crew neck,TSHIRT,Gray,Modal,Solid,199,799
+P0571,V-JEA-0571,Relaxed Fit Jeans,Gray Distressed Raw Denim Relaxed Fit Jeans slim fit,JEANS,Gray,Raw Denim,Distressed,799,2499
+P0572,V-SAL-0572,Ankle Length Salwar,Navy Chiffon Ankle Length Salwar regular fit,SALWAR,Navy,Chiffon,Solid,399,1299
+P0573,V-SHI-0573,Striped Business Shirt,Checked Denim Poplin Striped Business Shirt with long sleeves band collar neck,SHIRT,Checked,Poplin,Denim,399,1499
+P0574,V-DRE-0574,Shift Dress,White Floral Crepe Shift Dress with long sleeves off-shoulder neck,DRESS,White,Crepe,Floral,599,1999
+P0575,V-TSH-0575,Relaxed Fit T-Shirt,Navy Stripes Polyester Relaxed Fit T-Shirt with sleeveless sleeves crew neck,TSHIRT,Navy,Polyester,Stripes,199,799
+P0576,V-DRE-0576,Floral Print Maxi Dress,Black Abstract Chiffon Floral Print Maxi Dress with sleeveless sleeves halter neck,DRESS,Black,Chiffon,Abstract,599,1999
+P0577,V-TSH-0577,Henley Style T-Shirt,Black Abstract Cotton Henley Style T-Shirt with short sleeves crew neck,TSHIRT,Black,Cotton,Abstract,199,799
+P0578,V-POL-0578,Premium Cotton Polo,Red Performance Fabric Premium Cotton Polo with long sleeves,POLO,Red,Performance Fabric,Solid,299,999
+P0579,V-DRE-0579,Wrap Style Dress,Black Printed Georgette Wrap Style Dress with cap sleeves sleeves round neck,DRESS,Black,Georgette,Printed,599,1999
+P0580,V-SHI-0580,Chambray Shirt,Checked Checks Chambray Chambray Shirt with long sleeves,SHIRT,Checked,Chambray,Checks,399,1499
+P0581,V-POL-0581,Striped Polo Shirt,Navy Color Block Cotton Striped Polo Shirt with short sleeves,POLO,Navy,Cotton,Color Block,299,999
+P0582,V-SHI-0582,Flannel Shirt,Black Printed Linen Flannel Shirt with long sleeves,SHIRT,Black,Linen,Printed,399,1499
+P0583,V-TSH-0583,Pocket T-Shirt,Gray Abstract Organic Cotton Pocket T-Shirt with long sleeves scoop neck,TSHIRT,Gray,Organic Cotton,Abstract,199,799
+P0584,V-JEA-0584,Slim Fit Denim Jeans,Dark Blue Denim Slim Fit Denim Jeans straight fit,JEANS,Dark Blue,Denim,Solid,799,2499
+P0585,V-TOP-0585,Off-Shoulder Top,Printed Cotton Off-Shoulder Top with short sleeves off-shoulder neck,TOP,Printed,Cotton,Solid,299,899
+P0586,V-JEA-0586,Distressed Denim Jeans,Gray Vintage Wash Stretch Denim Distressed Denim Jeans slim fit,JEANS,Gray,Stretch Denim,Vintage Wash,799,2499
+P0587,V-DRE-0587,A-Line Summer Dress,White Polka Dots Chiffon A-Line Summer Dress with sleeveless sleeves off-shoulder neck,DRESS,White,Chiffon,Polka Dots,599,1999
+P0588,V-POL-0588,Pique Polo T-Shirt,White Stripes Cotton Pique Polo T-Shirt with short sleeves,POLO,White,Cotton,Stripes,299,999
+P0589,V-KUR-0589,Designer Kurta,Green Georgette Designer Kurta with long sleeves mandarin neck,KURTA,Green,Georgette,Solid,499,1999
+P0590,V-DRE-0590,Floral Print Maxi Dress,Pink Abstract Crepe Floral Print Maxi Dress with sleeveless sleeves off-shoulder neck,DRESS,Pink,Crepe,Abstract,599,1999
+P0591,V-TOP-0591,Wrap Top,White Printed Polyester Wrap Top with short sleeves v-neck neck,TOP,White,Polyester,Printed,299,899
+P0592,V-POL-0592,Premium Cotton Polo,Maroon Stripes Performance Fabric Premium Cotton Polo with long sleeves,POLO,Maroon,Performance Fabric,Stripes,299,999
+P0593,V-TSH-0593,Ribbed Knit Tee,Yellow Logo Polyester Ribbed Knit Tee with short sleeves henley neck,TSHIRT,Yellow,Polyester,Logo,199,799
+P0594,V-TOP-0594,Crop Top,Navy Striped Cotton Crop Top with short sleeves v-neck neck,TOP,Navy,Cotton,Striped,299,899
+P0595,V-KUR-0595,Party Wear Kurta,Beige Floral Georgette Party Wear Kurta with three-quarter sleeves v-neck neck,KURTA,Beige,Georgette,Floral,499,1999
+P0596,V-TOP-0596,Tie-Up Top,Black Chiffon Tie-Up Top with short sleeves v-neck neck,TOP,Black,Chiffon,Solid,299,899
+P0597,V-TOP-0597,Tunic Top,White Floral Polyester Tunic Top with three-quarter sleeves v-neck neck,TOP,White,Polyester,Floral,299,899
+P0598,V-KUR-0598,Anarkali Kurta,Pink Geometric Cotton Anarkali Kurta with three-quarter sleeves boat neck neck,KURTA,Pink,Cotton,Geometric,499,1999
+P0599,V-SAL-0599,Printed Salwar,White Striped Cotton Printed Salwar wide leg fit,SALWAR,White,Cotton,Striped,399,1299
+P0600,V-POL-0600,Athletic Fit Polo,Blue Performance Fabric Athletic Fit Polo with long sleeves,POLO,Blue,Performance Fabric,Solid,299,999
+P0601,V-POL-0601,Premium Cotton Polo,White Performance Fabric Premium Cotton Polo with short sleeves,POLO,White,Performance Fabric,Solid,299,999
+P0602,V-JEA-0602,Black Denim Jeans,White Distressed Raw Denim Black Denim Jeans slim fit,JEANS,White,Raw Denim,Distressed,799,2499
+P0603,V-JEA-0603,Distressed Denim Jeans,Light Blue Vintage Wash Stretch Denim Distressed Denim Jeans bootcut fit,JEANS,Light Blue,Stretch Denim,Vintage Wash,799,2499
+P0604,V-TOP-0604,Peplum Top,Printed Printed Cotton Peplum Top with short sleeves off-shoulder neck,TOP,Printed,Cotton,Printed,299,899
+P0605,V-KUR-0605,Festive Kurta,Red Chiffon Festive Kurta with short sleeves v-neck neck,KURTA,Red,Chiffon,Solid,499,1999
+P0606,V-TOP-0606,Off-Shoulder Top,White Striped Chiffon Off-Shoulder Top with sleeveless sleeves v-neck neck,TOP,White,Chiffon,Striped,299,899
+P0607,V-POL-0607,Premium Cotton Polo,Maroon Stripes Pique Cotton Premium Cotton Polo with long sleeves,POLO,Maroon,Pique Cotton,Stripes,299,999
+P0608,V-SAL-0608,Cotton Salwar,White Striped Cotton Cotton Salwar churidar fit,SALWAR,White,Cotton,Striped,399,1299
+P0609,V-TOP-0609,Crop Top,Pink Floral Cotton Crop Top with bell sleeves sleeves v-neck neck,TOP,Pink,Cotton,Floral,299,899
+P0610,V-DRE-0610,Chiffon Evening Dress,Navy Abstract Polyester Chiffon Evening Dress with sleeveless sleeves halter neck,DRESS,Navy,Polyester,Abstract,599,1999
+P0611,V-SAL-0611,Comfort Fit Salwar,Beige Striped Linen Comfort Fit Salwar palazzo fit,SALWAR,Beige,Linen,Striped,399,1299
+P0612,V-SHI-0612,Denim Shirt,Blue Printed Linen Denim Shirt with long sleeves button-down neck,SHIRT,Blue,Linen,Printed,399,1499
+P0613,V-KUR-0613,Chikankari Kurta,Pink Printed Georgette Chikankari Kurta with short sleeves mandarin neck,KURTA,Pink,Georgette,Printed,499,1999
+P0614,V-KUR-0614,Festive Kurta,Blue Geometric Linen Festive Kurta with three-quarter sleeves mandarin neck,KURTA,Blue,Linen,Geometric,499,1999
+P0615,V-POL-0615,Embroidered Polo,Red Embroidered Performance Fabric Embroidered Polo with long sleeves,POLO,Red,Performance Fabric,Embroidered,299,999
+P0616,V-POL-0616,Classic Polo Shirt,Black Performance Fabric Classic Polo Shirt with short sleeves,POLO,Black,Performance Fabric,Solid,299,999
+P0617,V-SHI-0617,Oxford Button-Down Shirt,Checked Stripes Cotton Blend Oxford Button-Down Shirt with short sleeves,SHIRT,Checked,Cotton Blend,Stripes,399,1499
+P0618,V-SHI-0618,Checked Pattern Shirt,White Stripes Chambray Checked Pattern Shirt with long sleeves,SHIRT,White,Chambray,Stripes,399,1499
+P0619,V-JEA-0619,Wide Leg Jeans,Light Blue Vintage Wash Raw Denim Wide Leg Jeans straight fit,JEANS,Light Blue,Raw Denim,Vintage Wash,799,2499
+P0620,V-SHI-0620,Relaxed Fit Shirt,Gray Printed Cotton Relaxed Fit Shirt with long sleeves button-down neck,SHIRT,Gray,Cotton,Printed,399,1499
+P0621,V-KUR-0621,Party Wear Kurta,White Embroidered Cotton Party Wear Kurta with short sleeves boat neck neck,KURTA,White,Cotton,Embroidered,499,1999
+P0622,V-JEA-0622,Black Denim Jeans,Dark Blue Distressed Raw Denim Black Denim Jeans bootcut fit,JEANS,Dark Blue,Raw Denim,Distressed,799,2499
+P0623,V-JEA-0623,Straight Leg Jeans,Black Stretch Denim Straight Leg Jeans regular fit,JEANS,Black,Stretch Denim,Solid,799,2499
+P0624,V-POL-0624,Premium Cotton Polo,Red Embroidered Cotton Premium Cotton Polo with long sleeves,POLO,Red,Cotton,Embroidered,299,999
+P0625,V-DRE-0625,Boho Chic Dress,Black Printed Chiffon Boho Chic Dress with cap sleeves sleeves v-neck neck,DRESS,Black,Chiffon,Printed,599,1999
+P0626,V-TSH-0626,V-Neck Casual T-Shirt,White Abstract Cotton Blend V-Neck Casual T-Shirt with sleeveless sleeves scoop neck,TSHIRT,White,Cotton Blend,Abstract,199,799
+P0627,V-TOP-0627,Knot Front Top,White Striped Linen Knot Front Top with sleeveless sleeves v-neck neck,TOP,White,Linen,Striped,299,899
+P0628,V-POL-0628,Business Casual Polo,Red Color Block Pique Cotton Business Casual Polo with short sleeves,POLO,Red,Pique Cotton,Color Block,299,999
+P0629,V-JEA-0629,Relaxed Fit Jeans,Gray Distressed Raw Denim Relaxed Fit Jeans relaxed fit,JEANS,Gray,Raw Denim,Distressed,799,2499
+P0630,V-JEA-0630,Vintage Wash Jeans,White Raw Denim Vintage Wash Jeans bootcut fit,JEANS,White,Raw Denim,Solid,799,2499
+P0631,V-KUR-0631,Designer Kurta,Pink Linen Designer Kurta with three-quarter sleeves mandarin neck,KURTA,Pink,Linen,Solid,499,1999
+P0632,V-SAL-0632,Churidar Salwar,Beige Embroidered Georgette Churidar Salwar regular fit,SALWAR,Beige,Georgette,Embroidered,399,1299
+P0633,V-KUR-0633,Party Wear Kurta,Printed Floral Georgette Party Wear Kurta with short sleeves mandarin neck,KURTA,Printed,Georgette,Floral,499,1999
+P0634,V-JEA-0634,Bootcut Jeans,Blue Raw Denim Bootcut Jeans straight fit,JEANS,Blue,Raw Denim,Solid,799,2499
+P0635,V-TSH-0635,Ribbed Knit Tee,Gray Abstract Cotton Ribbed Knit Tee with sleeveless sleeves v-neck neck,TSHIRT,Gray,Cotton,Abstract,199,799
+P0636,V-SAL-0636,Churidar Salwar,Printed Striped Linen Churidar Salwar regular fit,SALWAR,Printed,Linen,Striped,399,1299
+P0637,V-DRE-0637,A-Line Summer Dress,White Crepe A-Line Summer Dress with short sleeves round neck,DRESS,White,Crepe,Solid,599,1999
+P0638,V-TSH-0638,V-Neck Casual T-Shirt,Pink Cotton Blend V-Neck Casual T-Shirt with sleeveless sleeves v-neck neck,TSHIRT,Pink,Cotton Blend,Solid,199,799
+P0639,V-SHI-0639,Long Sleeve Casual Shirt,Gray Printed Poplin Long Sleeve Casual Shirt with long sleeves band collar neck,SHIRT,Gray,Poplin,Printed,399,1499
+P0640,V-TSH-0640,Graphic Print T-Shirt,Pink Cotton Graphic Print T-Shirt with sleeveless sleeves crew neck,TSHIRT,Pink,Cotton,Solid,199,799
+P0641,V-TSH-0641,Organic Cotton T-Shirt,Blue Graphic Cotton Organic Cotton T-Shirt with short sleeves scoop neck,TSHIRT,Blue,Cotton,Graphic,199,799
+P0642,V-SHI-0642,Chambray Shirt,Black Printed Cotton Chambray Shirt with long sleeves band collar neck,SHIRT,Black,Cotton,Printed,399,1499
+P0643,V-TSH-0643,Striped Casual Tee,Pink Stripes Polyester Striped Casual Tee with short sleeves henley neck,TSHIRT,Pink,Polyester,Stripes,199,799
+P0644,V-SHI-0644,Poplin Dress Shirt,Black Stripes Linen Poplin Dress Shirt with short sleeves button-down neck,SHIRT,Black,Linen,Stripes,399,1499
+P0645,V-DRE-0645,Floral Print Maxi Dress,Black Geometric Cotton Floral Print Maxi Dress with cap sleeves sleeves halter neck,DRESS,Black,Cotton,Geometric,599,1999
+P0646,V-POL-0646,Striped Polo Shirt,Blue Stripes Pique Cotton Striped Polo Shirt with long sleeves,POLO,Blue,Pique Cotton,Stripes,299,999
+P0647,V-DRE-0647,Casual Midi Dress,Floral Floral Polyester Casual Midi Dress with short sleeves v-neck neck,DRESS,Floral,Polyester,Floral,599,1999
+P0648,V-TSH-0648,Pocket T-Shirt,Pink Organic Cotton Pocket T-Shirt with long sleeves crew neck,TSHIRT,Pink,Organic Cotton,Solid,199,799
+P0649,V-SHI-0649,Casual Linen Shirt,Checked Denim Linen Casual Linen Shirt with long sleeves band collar neck,SHIRT,Checked,Linen,Denim,399,1499
+P0650,V-KUR-0650,Printed Kurta,Beige Embroidered Linen Printed Kurta with three-quarter sleeves round neck,KURTA,Beige,Linen,Embroidered,499,1999
+P0651,V-JEA-0651,Bootcut Jeans,White Distressed Stretch Denim Bootcut Jeans bootcut fit,JEANS,White,Stretch Denim,Distressed,799,2499
+P0652,V-DRE-0652,Boho Chic Dress,White Printed Linen Boho Chic Dress with cap sleeves sleeves v-neck neck,DRESS,White,Linen,Printed,599,1999
+P0653,V-TSH-0653,Oversized Comfort T-Shirt,Gray Abstract Polyester Oversized Comfort T-Shirt with sleeveless sleeves henley neck,TSHIRT,Gray,Polyester,Abstract,199,799
+P0654,V-SHI-0654,Short Sleeve Shirt,Checked Stripes Linen Short Sleeve Shirt with long sleeves band collar neck,SHIRT,Checked,Linen,Stripes,399,1499
+P0655,V-TOP-0655,Tie-Up Top,Red Linen Tie-Up Top with sleeveless sleeves round neck,TOP,Red,Linen,Solid,299,899
+P0656,V-SHI-0656,Oxford Button-Down Shirt,Blue Stripes Chambray Oxford Button-Down Shirt with short sleeves button-down neck,SHIRT,Blue,Chambray,Stripes,399,1499
+P0657,V-POL-0657,Classic Polo Shirt,Red Stripes Cotton Classic Polo Shirt with short sleeves,POLO,Red,Cotton,Stripes,299,999
+P0658,V-TOP-0658,Asymmetric Top,Navy Floral Polyester Asymmetric Top with sleeveless sleeves off-shoulder neck,TOP,Navy,Polyester,Floral,299,899
+P0659,V-DRE-0659,Cocktail Dress,Yellow Linen Cocktail Dress with cap sleeves sleeves square neck,DRESS,Yellow,Linen,Solid,599,1999
+P0660,V-TSH-0660,Ribbed Knit Tee,Navy Graphic Polyester Ribbed Knit Tee with short sleeves henley neck,TSHIRT,Navy,Polyester,Graphic,199,799
+P0661,V-DRE-0661,Casual Midi Dress,Red Polka Dots Linen Casual Midi Dress with cap sleeves sleeves square neck,DRESS,Red,Linen,Polka Dots,599,1999
+P0662,V-TSH-0662,Relaxed Fit T-Shirt,Gray Organic Cotton Relaxed Fit T-Shirt with long sleeves scoop neck,TSHIRT,Gray,Organic Cotton,Solid,199,799
+P0663,V-JEA-0663,Slim Fit Denim Jeans,Black Distressed Raw Denim Slim Fit Denim Jeans skinny fit,JEANS,Black,Raw Denim,Distressed,799,2499
+P0664,V-TOP-0664,Crop Top,Yellow Striped Cotton Crop Top with short sleeves off-shoulder neck,TOP,Yellow,Cotton,Striped,299,899
+P0665,V-SHI-0665,Chambray Shirt,Striped Checks Chambray Chambray Shirt with long sleeves button-down neck,SHIRT,Striped,Chambray,Checks,399,1499
+P0666,V-SAL-0666,Designer Salwar,Printed Embroidered Cotton Designer Salwar wide leg fit,SALWAR,Printed,Cotton,Embroidered,399,1299
+P0667,V-JEA-0667,Stretch Comfort Jeans,Gray Distressed Stretch Denim Stretch Comfort Jeans skinny fit,JEANS,Gray,Stretch Denim,Distressed,799,2499
+P0668,V-TSH-0668,Pocket T-Shirt,Yellow Stripes Polyester Pocket T-Shirt with short sleeves crew neck,TSHIRT,Yellow,Polyester,Stripes,199,799
+P0669,V-SHI-0669,Checked Pattern Shirt,Blue Checks Linen Checked Pattern Shirt with long sleeves button-down neck,SHIRT,Blue,Linen,Checks,399,1499
+P0670,V-POL-0670,Mesh Polo Shirt,Red Embroidered Pique Cotton Mesh Polo Shirt with short sleeves,POLO,Red,Pique Cotton,Embroidered,299,999
+P0671,V-TOP-0671,Tunic Top,Pink Printed Polyester Tunic Top with bell sleeves sleeves round neck,TOP,Pink,Polyester,Printed,299,899
+P0672,V-JEA-0672,Slim Fit Denim Jeans,Light Blue Faded Denim Slim Fit Denim Jeans bootcut fit,JEANS,Light Blue,Denim,Faded,799,2499
+P0673,V-TSH-0673,Henley Style T-Shirt,White Stripes Polyester Henley Style T-Shirt with long sleeves v-neck neck,TSHIRT,White,Polyester,Stripes,199,799
+P0674,V-SAL-0674,Wide Leg Salwar,Solid Embroidered Cotton Wide Leg Salwar regular fit,SALWAR,Solid,Cotton,Embroidered,399,1299
+P0675,V-JEA-0675,Distressed Denim Jeans,White Vintage Wash Raw Denim Distressed Denim Jeans regular fit,JEANS,White,Raw Denim,Vintage Wash,799,2499
+P0676,V-SAL-0676,Wide Leg Salwar,Printed Printed Linen Wide Leg Salwar palazzo fit,SALWAR,Printed,Linen,Printed,399,1299
+P0677,V-DRE-0677,Chiffon Evening Dress,White Abstract Georgette Chiffon Evening Dress with short sleeves v-neck neck,DRESS,White,Georgette,Abstract,599,1999
+P0678,V-SAL-0678,Comfort Fit Salwar,Black Linen Comfort Fit Salwar churidar fit,SALWAR,Black,Linen,Solid,399,1299
+P0679,V-SAL-0679,Palazzo Salwar,Navy Striped Cotton Palazzo Salwar regular fit,SALWAR,Navy,Cotton,Striped,399,1299
+P0680,V-POL-0680,Pique Polo T-Shirt,Black Performance Fabric Pique Polo T-Shirt with long sleeves,POLO,Black,Performance Fabric,Solid,299,999
+P0681,V-KUR-0681,Cotton Kurta,Yellow Printed Georgette Cotton Kurta with long sleeves boat neck neck,KURTA,Yellow,Georgette,Printed,499,1999
+P0682,V-KUR-0682,Casual Kurta,Beige Floral Georgette Casual Kurta with short sleeves mandarin neck,KURTA,Beige,Georgette,Floral,499,1999
+P0683,V-TOP-0683,Cold Shoulder Top,Navy Floral Cotton Cold Shoulder Top with three-quarter sleeves v-neck neck,TOP,Navy,Cotton,Floral,299,899
+P0684,V-TSH-0684,Organic Cotton T-Shirt,Pink Cotton Organic Cotton T-Shirt with sleeveless sleeves crew neck,TSHIRT,Pink,Cotton,Solid,199,799
+P0685,V-SAL-0685,Trouser Style Salwar,Solid Embroidered Linen Trouser Style Salwar wide leg fit,SALWAR,Solid,Linen,Embroidered,399,1299
+P0686,V-KUR-0686,Linen Kurta,Yellow Geometric Linen Linen Kurta with long sleeves mandarin neck,KURTA,Yellow,Linen,Geometric,499,1999
+P0687,V-SAL-0687,Wide Leg Salwar,Printed Embroidered Chiffon Wide Leg Salwar wide leg fit,SALWAR,Printed,Chiffon,Embroidered,399,1299
+P0688,V-JEA-0688,High Waist Jeans,Light Blue Vintage Wash Raw Denim High Waist Jeans relaxed fit,JEANS,Light Blue,Raw Denim,Vintage Wash,799,2499
+P0689,V-TOP-0689,Ruffle Sleeve Top,Pink Striped Linen Ruffle Sleeve Top with bell sleeves sleeves v-neck neck,TOP,Pink,Linen,Striped,299,899
+P0690,V-POL-0690,Golf Polo Shirt,Maroon Stripes Pique Cotton Golf Polo Shirt with short sleeves,POLO,Maroon,Pique Cotton,Stripes,299,999
+P0691,V-SAL-0691,Designer Salwar,Navy Striped Cotton Designer Salwar regular fit,SALWAR,Navy,Cotton,Striped,399,1299
+P0692,V-POL-0692,Performance Polo,Red Performance Fabric Performance Polo with short sleeves,POLO,Red,Performance Fabric,Solid,299,999
+P0693,V-JEA-0693,Bootcut Jeans,Light Blue Denim Bootcut Jeans skinny fit,JEANS,Light Blue,Denim,Solid,799,2499
+P0694,V-SHI-0694,Relaxed Fit Shirt,White Checks Chambray Relaxed Fit Shirt with long sleeves band collar neck,SHIRT,White,Chambray,Checks,399,1499
+P0695,V-TSH-0695,Relaxed Fit T-Shirt,Red Stripes Modal Relaxed Fit T-Shirt with short sleeves v-neck neck,TSHIRT,Red,Modal,Stripes,199,799
+P0696,V-DRE-0696,Linen Blend Dress,White Floral Cotton Linen Blend Dress with short sleeves v-neck neck,DRESS,White,Cotton,Floral,599,1999
+P0697,V-POL-0697,Striped Polo Shirt,Blue Color Block Performance Fabric Striped Polo Shirt with long sleeves,POLO,Blue,Performance Fabric,Color Block,299,999
+P0698,V-TSH-0698,Organic Cotton T-Shirt,Black Graphic Cotton Organic Cotton T-Shirt with long sleeves scoop neck,TSHIRT,Black,Cotton,Graphic,199,799
+P0699,V-KUR-0699,Anarkali Kurta,Pink Floral Linen Anarkali Kurta with long sleeves round neck,KURTA,Pink,Linen,Floral,499,1999
+P0700,V-SHI-0700,Oxford Button-Down Shirt,Striped Poplin Oxford Button-Down Shirt with short sleeves button-down neck,SHIRT,Striped,Poplin,Solid,399,1499
+P0701,V-SHI-0701,Short Sleeve Shirt,Striped Stripes Cotton Short Sleeve Shirt with long sleeves button-down neck,SHIRT,Striped,Cotton,Stripes,399,1499
+P0702,V-TOP-0702,Wrap Top,Printed Printed Chiffon Wrap Top with three-quarter sleeves halter neck,TOP,Printed,Chiffon,Printed,299,899
+P0703,V-TOP-0703,Knot Front Top,Red Cotton Knot Front Top with three-quarter sleeves round neck,TOP,Red,Cotton,Solid,299,899
+P0704,V-SAL-0704,Trouser Style Salwar,Solid Printed Linen Trouser Style Salwar palazzo fit,SALWAR,Solid,Linen,Printed,399,1299
+P0705,V-SAL-0705,Designer Salwar,Solid Embroidered Cotton Designer Salwar churidar fit,SALWAR,Solid,Cotton,Embroidered,399,1299
+P0706,V-SHI-0706,Casual Linen Shirt,Checked Stripes Poplin Casual Linen Shirt with short sleeves button-down neck,SHIRT,Checked,Poplin,Stripes,399,1499
+P0707,V-DRE-0707,Cocktail Dress,White Floral Chiffon Cocktail Dress with sleeveless sleeves v-neck neck,DRESS,White,Chiffon,Floral,599,1999
+P0708,V-JEA-0708,Distressed Denim Jeans,Black Faded Raw Denim Distressed Denim Jeans relaxed fit,JEANS,Black,Raw Denim,Faded,799,2499
+P0709,V-JEA-0709,Relaxed Fit Jeans,Black Distressed Denim Relaxed Fit Jeans slim fit,JEANS,Black,Denim,Distressed,799,2499
+P0710,V-POL-0710,Pique Polo T-Shirt,White Performance Fabric Pique Polo T-Shirt with long sleeves,POLO,White,Performance Fabric,Solid,299,999
+P0711,V-KUR-0711,Designer Kurta,Green Floral Georgette Designer Kurta with short sleeves mandarin neck,KURTA,Green,Georgette,Floral,499,1999
+P0712,V-SAL-0712,Printed Salwar,Black Striped Linen Printed Salwar wide leg fit,SALWAR,Black,Linen,Striped,399,1299
+P0713,V-TSH-0713,Pocket T-Shirt,Green Abstract Cotton Blend Pocket T-Shirt with short sleeves henley neck,TSHIRT,Green,Cotton Blend,Abstract,199,799
+P0714,V-POL-0714,Golf Polo Shirt,Blue Performance Fabric Golf Polo Shirt with short sleeves,POLO,Blue,Performance Fabric,Solid,299,999
+P0715,V-SAL-0715,Wide Leg Salwar,Beige Embroidered Cotton Wide Leg Salwar palazzo fit,SALWAR,Beige,Cotton,Embroidered,399,1299
+P0716,V-DRE-0716,Office Formal Dress,Blue Printed Chiffon Office Formal Dress with cap sleeves sleeves halter neck,DRESS,Blue,Chiffon,Printed,599,1999
+P0717,V-KUR-0717,Straight Cut Kurta,Printed Floral Linen Straight Cut Kurta with short sleeves boat neck neck,KURTA,Printed,Linen,Floral,499,1999
+P0718,V-KUR-0718,Straight Cut Kurta,Green Floral Silk Straight Cut Kurta with short sleeves v-neck neck,KURTA,Green,Silk,Floral,499,1999
+P0719,V-JEA-0719,Regular Fit Jeans,Gray Faded Raw Denim Regular Fit Jeans skinny fit,JEANS,Gray,Raw Denim,Faded,799,2499
+P0720,V-JEA-0720,Skinny Fit Jeans,Black Vintage Wash Raw Denim Skinny Fit Jeans regular fit,JEANS,Black,Raw Denim,Vintage Wash,799,2499
+P0721,V-SAL-0721,Elastic Waist Salwar,Solid Embroidered Linen Elastic Waist Salwar wide leg fit,SALWAR,Solid,Linen,Embroidered,399,1299
+P0722,V-SHI-0722,Striped Business Shirt,Striped Chambray Striped Business Shirt with long sleeves,SHIRT,Striped,Chambray,Solid,399,1499
+P0723,V-DRE-0723,A-Line Summer Dress,Floral Abstract Polyester A-Line Summer Dress with short sleeves off-shoulder neck,DRESS,Floral,Polyester,Abstract,599,1999
+P0724,V-KUR-0724,Anarkali Kurta,Red Geometric Chiffon Anarkali Kurta with three-quarter sleeves mandarin neck,KURTA,Red,Chiffon,Geometric,499,1999
+P0725,V-KUR-0725,Cotton Kurta,Beige Embroidered Silk Cotton Kurta with three-quarter sleeves v-neck neck,KURTA,Beige,Silk,Embroidered,499,1999
+P0726,V-DRE-0726,Bodycon Party Dress,White Polka Dots Chiffon Bodycon Party Dress with cap sleeves sleeves off-shoulder neck,DRESS,White,Chiffon,Polka Dots,599,1999
+P0727,V-POL-0727,Premium Cotton Polo,Maroon Stripes Cotton Blend Premium Cotton Polo with short sleeves,POLO,Maroon,Cotton Blend,Stripes,299,999
+P0728,V-SAL-0728,Trouser Style Salwar,Black Georgette Trouser Style Salwar churidar fit,SALWAR,Black,Georgette,Solid,399,1299
+P0729,V-KUR-0729,Embroidered Kurta,Red Embroidered Chiffon Embroidered Kurta with three-quarter sleeves mandarin neck,KURTA,Red,Chiffon,Embroidered,499,1999
+P0730,V-SAL-0730,Solid Color Salwar,Beige Striped Georgette Solid Color Salwar wide leg fit,SALWAR,Beige,Georgette,Striped,399,1299
+P0731,V-DRE-0731,Casual Midi Dress,Red Polka Dots Cotton Casual Midi Dress with long sleeves square neck,DRESS,Red,Cotton,Polka Dots,599,1999
+P0732,V-POL-0732,Long Sleeve Polo,Red Pique Cotton Long Sleeve Polo with short sleeves,POLO,Red,Pique Cotton,Solid,299,999
+P0733,V-TOP-0733,Blouse Style Top,White Floral Cotton Blouse Style Top with short sleeves round neck,TOP,White,Cotton,Floral,299,899
+P0734,V-SHI-0734,Chambray Shirt,White Printed Linen Chambray Shirt with long sleeves,SHIRT,White,Linen,Printed,399,1499
+P0735,V-JEA-0735,Wide Leg Jeans,White Faded Stretch Denim Wide Leg Jeans straight fit,JEANS,White,Stretch Denim,Faded,799,2499
+P0736,V-DRE-0736,A-Line Summer Dress,White Printed Cotton A-Line Summer Dress with cap sleeves sleeves off-shoulder neck,DRESS,White,Cotton,Printed,599,1999
+P0737,V-SHI-0737,Flannel Shirt,Blue Denim Poplin Flannel Shirt with short sleeves button-down neck,SHIRT,Blue,Poplin,Denim,399,1499
+P0738,V-TOP-0738,Asymmetric Top,Pink Striped Chiffon Asymmetric Top with three-quarter sleeves halter neck,TOP,Pink,Chiffon,Striped,299,899
+P0739,V-JEA-0739,Regular Fit Jeans,Gray Distressed Stretch Denim Regular Fit Jeans relaxed fit,JEANS,Gray,Stretch Denim,Distressed,799,2499
+P0740,V-DRE-0740,Bodycon Party Dress,Black Geometric Cotton Bodycon Party Dress with long sleeves square neck,DRESS,Black,Cotton,Geometric,599,1999
+P0741,V-SHI-0741,Denim Shirt,White Printed Chambray Denim Shirt with long sleeves band collar neck,SHIRT,White,Chambray,Printed,399,1499
+P0742,V-TSH-0742,Graphic Print T-Shirt,Gray Cotton Blend Graphic Print T-Shirt with sleeveless sleeves scoop neck,TSHIRT,Gray,Cotton Blend,Solid,199,799
+P0743,V-JEA-0743,High Waist Jeans,White Vintage Wash Raw Denim High Waist Jeans regular fit,JEANS,White,Raw Denim,Vintage Wash,799,2499
+P0744,V-SAL-0744,Comfort Fit Salwar,Beige Linen Comfort Fit Salwar wide leg fit,SALWAR,Beige,Linen,Solid,399,1299
+P0745,V-JEA-0745,Stretch Comfort Jeans,Dark Blue Distressed Raw Denim Stretch Comfort Jeans bootcut fit,JEANS,Dark Blue,Raw Denim,Distressed,799,2499
+P0746,V-SHI-0746,Long Sleeve Casual Shirt,White Checks Linen Long Sleeve Casual Shirt with short sleeves band collar neck,SHIRT,White,Linen,Checks,399,1499
+P0747,V-POL-0747,Mesh Polo Shirt,Maroon Embroidered Performance Fabric Mesh Polo Shirt with long sleeves,POLO,Maroon,Performance Fabric,Embroidered,299,999
+P0748,V-KUR-0748,Cotton Kurta,White Geometric Linen Cotton Kurta with short sleeves v-neck neck,KURTA,White,Linen,Geometric,499,1999
+P0749,V-POL-0749,Striped Polo Shirt,Black Color Block Cotton Blend Striped Polo Shirt with short sleeves,POLO,Black,Cotton Blend,Color Block,299,999
+P0750,V-POL-0750,Performance Polo,Maroon Stripes Cotton Performance Polo with long sleeves,POLO,Maroon,Cotton,Stripes,299,999
+P0751,V-SHI-0751,Denim Shirt,Gray Cotton Blend Denim Shirt with long sleeves,SHIRT,Gray,Cotton Blend,Solid,399,1499
+P0752,V-DRE-0752,A-Line Summer Dress,Pink Chiffon A-Line Summer Dress with cap sleeves sleeves v-neck neck,DRESS,Pink,Chiffon,Solid,599,1999
+P0753,V-JEA-0753,Straight Leg Jeans,Blue Stretch Denim Straight Leg Jeans skinny fit,JEANS,Blue,Stretch Denim,Solid,799,2499
+P0754,V-TOP-0754,Cold Shoulder Top,Black Floral Cotton Cold Shoulder Top with short sleeves v-neck neck,TOP,Black,Cotton,Floral,299,899
+P0755,V-TOP-0755,Wrap Top,Navy Printed Linen Wrap Top with short sleeves round neck,TOP,Navy,Linen,Printed,299,899
+P0756,V-SHI-0756,Denim Shirt,Blue Stripes Cotton Blend Denim Shirt with short sleeves button-down neck,SHIRT,Blue,Cotton Blend,Stripes,399,1499
+P0757,V-JEA-0757,Regular Fit Jeans,Dark Blue Vintage Wash Denim Regular Fit Jeans slim fit,JEANS,Dark Blue,Denim,Vintage Wash,799,2499
+P0758,V-DRE-0758,Bodycon Party Dress,Navy Abstract Linen Bodycon Party Dress with long sleeves round neck,DRESS,Navy,Linen,Abstract,599,1999
+P0759,V-TSH-0759,Henley Style T-Shirt,Navy Printed Organic Cotton Henley Style T-Shirt with short sleeves v-neck neck,TSHIRT,Navy,Organic Cotton,Printed,199,799
+P0760,V-DRE-0760,Cocktail Dress,White Polka Dots Cotton Cocktail Dress with short sleeves round neck,DRESS,White,Cotton,Polka Dots,599,1999
+P0761,V-KUR-0761,Festive Kurta,Beige Printed Linen Festive Kurta with long sleeves v-neck neck,KURTA,Beige,Linen,Printed,499,1999
+P0762,V-KUR-0762,Party Wear Kurta,Printed Printed Chiffon Party Wear Kurta with short sleeves boat neck neck,KURTA,Printed,Chiffon,Printed,499,1999
+P0763,V-KUR-0763,Chikankari Kurta,Green Linen Chikankari Kurta with long sleeves boat neck neck,KURTA,Green,Linen,Solid,499,1999
+P0764,V-SHI-0764,Flannel Shirt,Blue Denim Poplin Flannel Shirt with short sleeves button-down neck,SHIRT,Blue,Poplin,Denim,399,1499
+P0765,V-KUR-0765,Straight Cut Kurta,Green Geometric Silk Straight Cut Kurta with three-quarter sleeves v-neck neck,KURTA,Green,Silk,Geometric,499,1999
+P0766,V-POL-0766,Business Casual Polo,Maroon Embroidered Pique Cotton Business Casual Polo with long sleeves,POLO,Maroon,Pique Cotton,Embroidered,299,999
+P0767,V-TOP-0767,Crop Top,Yellow Printed Chiffon Crop Top with short sleeves off-shoulder neck,TOP,Yellow,Chiffon,Printed,299,899
+P0768,V-JEA-0768,Bootcut Jeans,Blue Vintage Wash Raw Denim Bootcut Jeans straight fit,JEANS,Blue,Raw Denim,Vintage Wash,799,2499
+P0769,V-TOP-0769,Blouse Style Top,Pink Striped Polyester Blouse Style Top with three-quarter sleeves halter neck,TOP,Pink,Polyester,Striped,299,899
+P0770,V-KUR-0770,Linen Kurta,Beige Cotton Linen Kurta with short sleeves v-neck neck,KURTA,Beige,Cotton,Solid,499,1999
+P0771,V-TSH-0771,Relaxed Fit T-Shirt,Yellow Stripes Cotton Relaxed Fit T-Shirt with short sleeves crew neck,TSHIRT,Yellow,Cotton,Stripes,199,799
+P0772,V-SAL-0772,Trouser Style Salwar,Printed Embroidered Georgette Trouser Style Salwar regular fit,SALWAR,Printed,Georgette,Embroidered,399,1299
+P0773,V-KUR-0773,Embroidered Kurta,Beige Georgette Embroidered Kurta with short sleeves boat neck neck,KURTA,Beige,Georgette,Solid,499,1999
+P0774,V-POL-0774,Athletic Fit Polo,Blue Color Block Cotton Athletic Fit Polo with long sleeves,POLO,Blue,Cotton,Color Block,299,999
+P0775,V-SHI-0775,Flannel Shirt,Checked Cotton Flannel Shirt with long sleeves,SHIRT,Checked,Cotton,Solid,399,1499
+P0776,V-JEA-0776,Stretch Comfort Jeans,Blue Faded Denim Stretch Comfort Jeans regular fit,JEANS,Blue,Denim,Faded,799,2499
+P0777,V-JEA-0777,Stretch Comfort Jeans,Black Faded Raw Denim Stretch Comfort Jeans bootcut fit,JEANS,Black,Raw Denim,Faded,799,2499
+P0778,V-POL-0778,Mesh Polo Shirt,Maroon Color Block Cotton Blend Mesh Polo Shirt with short sleeves,POLO,Maroon,Cotton Blend,Color Block,299,999
+P0779,V-DRE-0779,Office Formal Dress,Yellow Printed Crepe Office Formal Dress with long sleeves halter neck,DRESS,Yellow,Crepe,Printed,599,1999
+P0780,V-TOP-0780,Tie-Up Top,Pink Striped Linen Tie-Up Top with three-quarter sleeves halter neck,TOP,Pink,Linen,Striped,299,899
+P0781,V-SAL-0781,Traditional Salwar,Printed Printed Chiffon Traditional Salwar churidar fit,SALWAR,Printed,Chiffon,Printed,399,1299
+P0782,V-SAL-0782,Ankle Length Salwar,Beige Striped Chiffon Ankle Length Salwar wide leg fit,SALWAR,Beige,Chiffon,Striped,399,1299
+P0783,V-SAL-0783,Cotton Salwar,Beige Cotton Cotton Salwar churidar fit,SALWAR,Beige,Cotton,Solid,399,1299
+P0784,V-SHI-0784,Formal Cotton Shirt,Blue Checks Cotton Blend Formal Cotton Shirt with long sleeves,SHIRT,Blue,Cotton Blend,Checks,399,1499
+P0785,V-SHI-0785,Flannel Shirt,Striped Denim Chambray Flannel Shirt with short sleeves,SHIRT,Striped,Chambray,Denim,399,1499
+P0786,V-TSH-0786,Striped Casual Tee,Navy Stripes Cotton Blend Striped Casual Tee with long sleeves scoop neck,TSHIRT,Navy,Cotton Blend,Stripes,199,799
+P0787,V-JEA-0787,Relaxed Fit Jeans,Gray Stretch Denim Relaxed Fit Jeans straight fit,JEANS,Gray,Stretch Denim,Solid,799,2499
+P0788,V-JEA-0788,Wide Leg Jeans,Dark Blue Distressed Denim Wide Leg Jeans regular fit,JEANS,Dark Blue,Denim,Distressed,799,2499
+P0789,V-TOP-0789,Bardot Top,Pink Striped Cotton Bardot Top with short sleeves halter neck,TOP,Pink,Cotton,Striped,299,899
+P0790,V-POL-0790,Classic Polo Shirt,Blue Color Block Cotton Blend Classic Polo Shirt with long sleeves,POLO,Blue,Cotton Blend,Color Block,299,999
+P0791,V-JEA-0791,Wide Leg Jeans,Light Blue Raw Denim Wide Leg Jeans slim fit,JEANS,Light Blue,Raw Denim,Solid,799,2499
+P0792,V-SHI-0792,Flannel Shirt,Black Denim Cotton Flannel Shirt with short sleeves band collar neck,SHIRT,Black,Cotton,Denim,399,1499
+P0793,V-JEA-0793,Skinny Fit Jeans,Dark Blue Vintage Wash Denim Skinny Fit Jeans straight fit,JEANS,Dark Blue,Denim,Vintage Wash,799,2499
+P0794,V-POL-0794,Long Sleeve Polo,Green Color Block Performance Fabric Long Sleeve Polo with short sleeves,POLO,Green,Performance Fabric,Color Block,299,999
+P0795,V-KUR-0795,Linen Kurta,White Geometric Silk Linen Kurta with long sleeves mandarin neck,KURTA,White,Silk,Geometric,499,1999
+P0796,V-POL-0796,Premium Cotton Polo,Black Stripes Performance Fabric Premium Cotton Polo with long sleeves,POLO,Black,Performance Fabric,Stripes,299,999
+P0797,V-TOP-0797,Wrap Top,Pink Printed Polyester Wrap Top with sleeveless sleeves round neck,TOP,Pink,Polyester,Printed,299,899
+P0798,V-SHI-0798,Long Sleeve Casual Shirt,Checked Denim Cotton Blend Long Sleeve Casual Shirt with short sleeves,SHIRT,Checked,Cotton Blend,Denim,399,1499
+P0799,V-SAL-0799,Comfort Fit Salwar,Beige Printed Chiffon Comfort Fit Salwar palazzo fit,SALWAR,Beige,Chiffon,Printed,399,1299
+P0800,V-KUR-0800,Casual Kurta,Green Printed Cotton Casual Kurta with long sleeves boat neck neck,KURTA,Green,Cotton,Printed,499,1999
+P0801,V-DRE-0801,Cocktail Dress,Blue Floral Cotton Cocktail Dress with sleeveless sleeves v-neck neck,DRESS,Blue,Cotton,Floral,599,1999
+P0802,V-POL-0802,Pique Polo T-Shirt,Gray Stripes Cotton Pique Polo T-Shirt with long sleeves,POLO,Gray,Cotton,Stripes,299,999
+P0803,V-KUR-0803,Chikankari Kurta,Green Floral Cotton Chikankari Kurta with long sleeves round neck,KURTA,Green,Cotton,Floral,499,1999
+P0804,V-KUR-0804,Embroidered Kurta,Pink Printed Georgette Embroidered Kurta with three-quarter sleeves mandarin neck,KURTA,Pink,Georgette,Printed,499,1999
+P0805,V-TOP-0805,Knot Front Top,Yellow Polyester Knot Front Top with bell sleeves sleeves round neck,TOP,Yellow,Polyester,Solid,299,899
+P0806,V-SHI-0806,Oxford Button-Down Shirt,Black Checks Cotton Oxford Button-Down Shirt with long sleeves,SHIRT,Black,Cotton,Checks,399,1499
+P0807,V-TOP-0807,Asymmetric Top,White Floral Cotton Asymmetric Top with three-quarter sleeves off-shoulder neck,TOP,White,Cotton,Floral,299,899
+P0808,V-POL-0808,Classic Polo Shirt,Red Stripes Cotton Blend Classic Polo Shirt with long sleeves,POLO,Red,Cotton Blend,Stripes,299,999
+P0809,V-KUR-0809,Designer Kurta,Beige Printed Georgette Designer Kurta with short sleeves boat neck neck,KURTA,Beige,Georgette,Printed,499,1999
+P0810,V-TSH-0810,Classic Crew Neck T-Shirt,Pink Printed Polyester Classic Crew Neck T-Shirt with long sleeves henley neck,TSHIRT,Pink,Polyester,Printed,199,799
+P0811,V-SAL-0811,Traditional Salwar,Black Embroidered Linen Traditional Salwar palazzo fit,SALWAR,Black,Linen,Embroidered,399,1299
+P0812,V-KUR-0812,Festive Kurta,Pink Geometric Chiffon Festive Kurta with long sleeves round neck,KURTA,Pink,Chiffon,Geometric,499,1999
+P0813,V-SHI-0813,Long Sleeve Casual Shirt,Striped Stripes Cotton Long Sleeve Casual Shirt with short sleeves,SHIRT,Striped,Cotton,Stripes,399,1499
+P0814,V-KUR-0814,A-Line Kurta,Beige Floral Linen A-Line Kurta with three-quarter sleeves v-neck neck,KURTA,Beige,Linen,Floral,499,1999
+P0815,V-SAL-0815,Printed Salwar,White Embroidered Linen Printed Salwar palazzo fit,SALWAR,White,Linen,Embroidered,399,1299
+P0816,V-TOP-0816,Blouse Style Top,Black Printed Polyester Blouse Style Top with sleeveless sleeves v-neck neck,TOP,Black,Polyester,Printed,299,899
+P0817,V-SHI-0817,Relaxed Fit Shirt,Blue Printed Chambray Relaxed Fit Shirt with short sleeves button-down neck,SHIRT,Blue,Chambray,Printed,399,1499
+P0818,V-DRE-0818,Shift Dress,Yellow Geometric Cotton Shift Dress with short sleeves v-neck neck,DRESS,Yellow,Cotton,Geometric,599,1999
+P0819,V-KUR-0819,Printed Kurta,Red Floral Cotton Printed Kurta with long sleeves mandarin neck,KURTA,Red,Cotton,Floral,499,1999
+P0820,V-TOP-0820,Bardot Top,Black Printed Linen Bardot Top with short sleeves v-neck neck,TOP,Black,Linen,Printed,299,899
+P0821,V-DRE-0821,A-Line Summer Dress,Floral Geometric Linen A-Line Summer Dress with long sleeves halter neck,DRESS,Floral,Linen,Geometric,599,1999
+P0822,V-JEA-0822,Relaxed Fit Jeans,Blue Distressed Raw Denim Relaxed Fit Jeans bootcut fit,JEANS,Blue,Raw Denim,Distressed,799,2499
+P0823,V-TOP-0823,Off-Shoulder Top,Yellow Striped Chiffon Off-Shoulder Top with sleeveless sleeves halter neck,TOP,Yellow,Chiffon,Striped,299,899
+P0824,V-TOP-0824,Tunic Top,Black Printed Polyester Tunic Top with sleeveless sleeves round neck,TOP,Black,Polyester,Printed,299,899
+P0825,V-SAL-0825,Cotton Salwar,White Printed Chiffon Cotton Salwar churidar fit,SALWAR,White,Chiffon,Printed,399,1299
+P0826,V-JEA-0826,Regular Fit Jeans,White Vintage Wash Denim Regular Fit Jeans skinny fit,JEANS,White,Denim,Vintage Wash,799,2499
+P0827,V-JEA-0827,High Waist Jeans,Blue Vintage Wash Stretch Denim High Waist Jeans skinny fit,JEANS,Blue,Stretch Denim,Vintage Wash,799,2499
+P0828,V-TSH-0828,Pocket T-Shirt,Yellow Logo Cotton Pocket T-Shirt with short sleeves v-neck neck,TSHIRT,Yellow,Cotton,Logo,199,799
+P0829,V-SAL-0829,Traditional Salwar,Printed Striped Cotton Traditional Salwar regular fit,SALWAR,Printed,Cotton,Striped,399,1299
+P0830,V-JEA-0830,Straight Leg Jeans,White Distressed Stretch Denim Straight Leg Jeans skinny fit,JEANS,White,Stretch Denim,Distressed,799,2499
+P0831,V-DRE-0831,Sundress with Pockets,Black Polka Dots Chiffon Sundress with Pockets with long sleeves off-shoulder neck,DRESS,Black,Chiffon,Polka Dots,599,1999
+P0832,V-TOP-0832,Peplum Top,Black Printed Cotton Peplum Top with bell sleeves sleeves halter neck,TOP,Black,Cotton,Printed,299,899
+P0833,V-KUR-0833,Designer Kurta,Blue Floral Cotton Designer Kurta with three-quarter sleeves v-neck neck,KURTA,Blue,Cotton,Floral,499,1999
+P0834,V-TOP-0834,Peplum Top,Navy Printed Linen Peplum Top with short sleeves round neck,TOP,Navy,Linen,Printed,299,899
+P0835,V-POL-0835,Golf Polo Shirt,Blue Performance Fabric Golf Polo Shirt with long sleeves,POLO,Blue,Performance Fabric,Solid,299,999
+P0836,V-SAL-0836,Ankle Length Salwar,Black Printed Georgette Ankle Length Salwar palazzo fit,SALWAR,Black,Georgette,Printed,399,1299
+P0837,V-DRE-0837,Casual Midi Dress,Red Polka Dots Polyester Casual Midi Dress with short sleeves off-shoulder neck,DRESS,Red,Polyester,Polka Dots,599,1999
+P0838,V-SHI-0838,Striped Business Shirt,Black Checks Poplin Striped Business Shirt with short sleeves,SHIRT,Black,Poplin,Checks,399,1499
+P0839,V-JEA-0839,Slim Fit Denim Jeans,Gray Raw Denim Slim Fit Denim Jeans skinny fit,JEANS,Gray,Raw Denim,Solid,799,2499
+P0840,V-TOP-0840,Blouse Style Top,Pink Floral Cotton Blouse Style Top with sleeveless sleeves v-neck neck,TOP,Pink,Cotton,Floral,299,899
+P0841,V-TOP-0841,Tunic Top,Red Chiffon Tunic Top with short sleeves v-neck neck,TOP,Red,Chiffon,Solid,299,899
+P0842,V-SHI-0842,Chambray Shirt,Blue Chambray Chambray Shirt with short sleeves,SHIRT,Blue,Chambray,Solid,399,1499
+P0843,V-TSH-0843,Ribbed Knit Tee,White Stripes Cotton Blend Ribbed Knit Tee with short sleeves scoop neck,TSHIRT,White,Cotton Blend,Stripes,199,799
+P0844,V-KUR-0844,Linen Kurta,Beige Floral Cotton Linen Kurta with short sleeves v-neck neck,KURTA,Beige,Cotton,Floral,499,1999
+P0845,V-SHI-0845,Chambray Shirt,Striped Denim Chambray Chambray Shirt with short sleeves band collar neck,SHIRT,Striped,Chambray,Denim,399,1499
+P0846,V-KUR-0846,Cotton Kurta,Green Embroidered Cotton Cotton Kurta with long sleeves boat neck neck,KURTA,Green,Cotton,Embroidered,499,1999
+P0847,V-POL-0847,Premium Cotton Polo,Green Color Block Cotton Premium Cotton Polo with short sleeves,POLO,Green,Cotton,Color Block,299,999
+P0848,V-SHI-0848,Short Sleeve Shirt,Gray Denim Chambray Short Sleeve Shirt with short sleeves button-down neck,SHIRT,Gray,Chambray,Denim,399,1499
+P0849,V-JEA-0849,Vintage Wash Jeans,Blue Denim Vintage Wash Jeans bootcut fit,JEANS,Blue,Denim,Solid,799,2499
+P0850,V-SHI-0850,Long Sleeve Casual Shirt,Black Stripes Chambray Long Sleeve Casual Shirt with long sleeves,SHIRT,Black,Chambray,Stripes,399,1499
+P0851,V-TOP-0851,Blouse Style Top,Red Printed Chiffon Blouse Style Top with sleeveless sleeves off-shoulder neck,TOP,Red,Chiffon,Printed,299,899
+P0852,V-JEA-0852,Slim Fit Denim Jeans,Blue Vintage Wash Denim Slim Fit Denim Jeans bootcut fit,JEANS,Blue,Denim,Vintage Wash,799,2499
+P0853,V-JEA-0853,Vintage Wash Jeans,White Stretch Denim Vintage Wash Jeans relaxed fit,JEANS,White,Stretch Denim,Solid,799,2499
+P0854,V-JEA-0854,Slim Fit Denim Jeans,Black Distressed Raw Denim Slim Fit Denim Jeans slim fit,JEANS,Black,Raw Denim,Distressed,799,2499
+P0855,V-SHI-0855,Striped Business Shirt,Striped Stripes Chambray Striped Business Shirt with short sleeves,SHIRT,Striped,Chambray,Stripes,399,1499
+P0856,V-KUR-0856,Straight Cut Kurta,White Printed Silk Straight Cut Kurta with short sleeves mandarin neck,KURTA,White,Silk,Printed,499,1999
+P0857,V-KUR-0857,Festive Kurta,Printed Silk Festive Kurta with three-quarter sleeves v-neck neck,KURTA,Printed,Silk,Solid,499,1999
+P0858,V-TOP-0858,Off-Shoulder Top,Printed Striped Chiffon Off-Shoulder Top with bell sleeves sleeves halter neck,TOP,Printed,Chiffon,Striped,299,899
+P0859,V-TSH-0859,Pocket T-Shirt,Blue Graphic Cotton Blend Pocket T-Shirt with sleeveless sleeves crew neck,TSHIRT,Blue,Cotton Blend,Graphic,199,799
+P0860,V-JEA-0860,Vintage Wash Jeans,Gray Distressed Raw Denim Vintage Wash Jeans regular fit,JEANS,Gray,Raw Denim,Distressed,799,2499
+P0861,V-SHI-0861,Formal Cotton Shirt,Gray Denim Cotton Blend Formal Cotton Shirt with short sleeves button-down neck,SHIRT,Gray,Cotton Blend,Denim,399,1499
+P0862,V-SAL-0862,Palazzo Salwar,Beige Embroidered Cotton Palazzo Salwar regular fit,SALWAR,Beige,Cotton,Embroidered,399,1299
+P0863,V-SHI-0863,Long Sleeve Casual Shirt,Gray Checks Cotton Long Sleeve Casual Shirt with long sleeves band collar neck,SHIRT,Gray,Cotton,Checks,399,1499
+P0864,V-SHI-0864,Checked Pattern Shirt,Black Checks Chambray Checked Pattern Shirt with short sleeves band collar neck,SHIRT,Black,Chambray,Checks,399,1499
+P0865,V-TSH-0865,Relaxed Fit T-Shirt,Yellow Graphic Cotton Relaxed Fit T-Shirt with short sleeves henley neck,TSHIRT,Yellow,Cotton,Graphic,199,799
+P0866,V-DRE-0866,Wrap Style Dress,Green Polka Dots Chiffon Wrap Style Dress with sleeveless sleeves square neck,DRESS,Green,Chiffon,Polka Dots,599,1999
+P0867,V-DRE-0867,Floral Print Maxi Dress,Red Floral Linen Floral Print Maxi Dress with short sleeves off-shoulder neck,DRESS,Red,Linen,Floral,599,1999
+P0868,V-SAL-0868,Traditional Salwar,Black Embroidered Cotton Traditional Salwar regular fit,SALWAR,Black,Cotton,Embroidered,399,1299
+P0869,V-POL-0869,Embroidered Polo,White Performance Fabric Embroidered Polo with long sleeves,POLO,White,Performance Fabric,Solid,299,999
+P0870,V-SHI-0870,Poplin Dress Shirt,Black Checks Linen Poplin Dress Shirt with short sleeves band collar neck,SHIRT,Black,Linen,Checks,399,1499
+P0871,V-SHI-0871,Flannel Shirt,Gray Cotton Blend Flannel Shirt with long sleeves,SHIRT,Gray,Cotton Blend,Solid,399,1499
+P0872,V-DRE-0872,Bodycon Party Dress,Black Geometric Cotton Bodycon Party Dress with short sleeves v-neck neck,DRESS,Black,Cotton,Geometric,599,1999
+P0873,V-KUR-0873,Party Wear Kurta,Green Printed Chiffon Party Wear Kurta with three-quarter sleeves mandarin neck,KURTA,Green,Chiffon,Printed,499,1999
+P0874,V-JEA-0874,Skinny Fit Jeans,Gray Distressed Denim Skinny Fit Jeans slim fit,JEANS,Gray,Denim,Distressed,799,2499
+P0875,V-DRE-0875,A-Line Summer Dress,Black Crepe A-Line Summer Dress with cap sleeves sleeves round neck,DRESS,Black,Crepe,Solid,599,1999
+P0876,V-POL-0876,Premium Cotton Polo,Black Color Block Performance Fabric Premium Cotton Polo with long sleeves,POLO,Black,Performance Fabric,Color Block,299,999
+P0877,V-KUR-0877,Embroidered Kurta,Beige Floral Georgette Embroidered Kurta with three-quarter sleeves v-neck neck,KURTA,Beige,Georgette,Floral,499,1999
+P0878,V-POL-0878,Golf Polo Shirt,Navy Color Block Performance Fabric Golf Polo Shirt with long sleeves,POLO,Navy,Performance Fabric,Color Block,299,999
+P0879,V-TOP-0879,Cold Shoulder Top,Black Striped Polyester Cold Shoulder Top with three-quarter sleeves halter neck,TOP,Black,Polyester,Striped,299,899
+P0880,V-DRE-0880,Chiffon Evening Dress,White Printed Georgette Chiffon Evening Dress with cap sleeves sleeves off-shoulder neck,DRESS,White,Georgette,Printed,599,1999
+P0881,V-TSH-0881,Premium Cotton Tee,Black Printed Organic Cotton Premium Cotton Tee with long sleeves henley neck,TSHIRT,Black,Organic Cotton,Printed,199,799
+P0882,V-DRE-0882,Bodycon Party Dress,Red Geometric Chiffon Bodycon Party Dress with short sleeves off-shoulder neck,DRESS,Red,Chiffon,Geometric,599,1999
+P0883,V-POL-0883,Embroidered Polo,Green Color Block Cotton Embroidered Polo with long sleeves,POLO,Green,Cotton,Color Block,299,999
+P0884,V-JEA-0884,Vintage Wash Jeans,Light Blue Faded Denim Vintage Wash Jeans skinny fit,JEANS,Light Blue,Denim,Faded,799,2499
+P0885,V-POL-0885,Embroidered Polo,Red Color Block Pique Cotton Embroidered Polo with long sleeves,POLO,Red,Pique Cotton,Color Block,299,999
+P0886,V-DRE-0886,Linen Blend Dress,Navy Polka Dots Georgette Linen Blend Dress with cap sleeves sleeves round neck,DRESS,Navy,Georgette,Polka Dots,599,1999
+P0887,V-TOP-0887,Tie-Up Top,Printed Floral Cotton Tie-Up Top with sleeveless sleeves off-shoulder neck,TOP,Printed,Cotton,Floral,299,899
+P0888,V-SAL-0888,Churidar Salwar,Solid Striped Cotton Churidar Salwar palazzo fit,SALWAR,Solid,Cotton,Striped,399,1299
+P0889,V-TOP-0889,Asymmetric Top,White Printed Cotton Asymmetric Top with sleeveless sleeves round neck,TOP,White,Cotton,Printed,299,899
+P0890,V-DRE-0890,Linen Blend Dress,Green Geometric Polyester Linen Blend Dress with sleeveless sleeves off-shoulder neck,DRESS,Green,Polyester,Geometric,599,1999
+P0891,V-TOP-0891,Cold Shoulder Top,Yellow Striped Polyester Cold Shoulder Top with three-quarter sleeves off-shoulder neck,TOP,Yellow,Polyester,Striped,299,899
+P0892,V-SAL-0892,Traditional Salwar,Black Chiffon Traditional Salwar wide leg fit,SALWAR,Black,Chiffon,Solid,399,1299
+P0893,V-DRE-0893,Bodycon Party Dress,White Geometric Cotton Bodycon Party Dress with short sleeves round neck,DRESS,White,Cotton,Geometric,599,1999
+P0894,V-KUR-0894,Linen Kurta,White Printed Chiffon Linen Kurta with long sleeves boat neck neck,KURTA,White,Chiffon,Printed,499,1999
+P0895,V-KUR-0895,Chikankari Kurta,Yellow Floral Silk Chikankari Kurta with long sleeves v-neck neck,KURTA,Yellow,Silk,Floral,499,1999
+P0896,V-DRE-0896,Cocktail Dress,Blue Geometric Polyester Cocktail Dress with cap sleeves sleeves square neck,DRESS,Blue,Polyester,Geometric,599,1999
+P0897,V-SAL-0897,Palazzo Salwar,Solid Printed Chiffon Palazzo Salwar churidar fit,SALWAR,Solid,Chiffon,Printed,399,1299
+P0898,V-TSH-0898,Premium Cotton Tee,Navy Abstract Cotton Premium Cotton Tee with long sleeves henley neck,TSHIRT,Navy,Cotton,Abstract,199,799
+P0899,V-DRE-0899,Floral Print Maxi Dress,Pink Abstract Polyester Floral Print Maxi Dress with cap sleeves sleeves halter neck,DRESS,Pink,Polyester,Abstract,599,1999
+P0900,V-DRE-0900,Cocktail Dress,Pink Geometric Linen Cocktail Dress with cap sleeves sleeves off-shoulder neck,DRESS,Pink,Linen,Geometric,599,1999
+P0901,V-KUR-0901,Embroidered Kurta,Yellow Geometric Linen Embroidered Kurta with short sleeves boat neck neck,KURTA,Yellow,Linen,Geometric,499,1999
+P0902,V-JEA-0902,Wide Leg Jeans,Gray Vintage Wash Raw Denim Wide Leg Jeans slim fit,JEANS,Gray,Raw Denim,Vintage Wash,799,2499
+P0903,V-TSH-0903,Henley Style T-Shirt,Blue Organic Cotton Henley Style T-Shirt with sleeveless sleeves henley neck,TSHIRT,Blue,Organic Cotton,Solid,199,799
+P0904,V-POL-0904,Performance Polo,Maroon Cotton Blend Performance Polo with short sleeves,POLO,Maroon,Cotton Blend,Solid,299,999
+P0905,V-TOP-0905,Asymmetric Top,Yellow Striped Cotton Asymmetric Top with short sleeves off-shoulder neck,TOP,Yellow,Cotton,Striped,299,899
+P0906,V-TSH-0906,Striped Casual Tee,Pink Logo Organic Cotton Striped Casual Tee with sleeveless sleeves scoop neck,TSHIRT,Pink,Organic Cotton,Logo,199,799
+P0907,V-SAL-0907,Designer Salwar,Beige Printed Chiffon Designer Salwar regular fit,SALWAR,Beige,Chiffon,Printed,399,1299
+P0908,V-SHI-0908,Relaxed Fit Shirt,Black Chambray Relaxed Fit Shirt with long sleeves button-down neck,SHIRT,Black,Chambray,Solid,399,1499
+P0909,V-DRE-0909,Boho Chic Dress,Floral Polka Dots Cotton Boho Chic Dress with short sleeves square neck,DRESS,Floral,Cotton,Polka Dots,599,1999
+P0910,V-TOP-0910,Peplum Top,Pink Polyester Peplum Top with three-quarter sleeves off-shoulder neck,TOP,Pink,Polyester,Solid,299,899
+P0911,V-DRE-0911,Boho Chic Dress,Floral Printed Chiffon Boho Chic Dress with short sleeves round neck,DRESS,Floral,Chiffon,Printed,599,1999
+P0912,V-DRE-0912,Boho Chic Dress,Red Polka Dots Georgette Boho Chic Dress with cap sleeves sleeves square neck,DRESS,Red,Georgette,Polka Dots,599,1999
+P0913,V-DRE-0913,Bodycon Party Dress,Blue Abstract Georgette Bodycon Party Dress with long sleeves halter neck,DRESS,Blue,Georgette,Abstract,599,1999
+P0914,V-TSH-0914,Oversized Comfort T-Shirt,Navy Graphic Cotton Oversized Comfort T-Shirt with short sleeves henley neck,TSHIRT,Navy,Cotton,Graphic,199,799
+P0915,V-SAL-0915,Comfort Fit Salwar,Solid Striped Linen Comfort Fit Salwar churidar fit,SALWAR,Solid,Linen,Striped,399,1299
+P0916,V-JEA-0916,Vintage Wash Jeans,Gray Raw Denim Vintage Wash Jeans slim fit,JEANS,Gray,Raw Denim,Solid,799,2499
+P0917,V-TSH-0917,V-Neck Casual T-Shirt,Green Logo Organic Cotton V-Neck Casual T-Shirt with long sleeves henley neck,TSHIRT,Green,Organic Cotton,Logo,199,799
+P0918,V-JEA-0918,High Waist Jeans,Dark Blue Vintage Wash Raw Denim High Waist Jeans relaxed fit,JEANS,Dark Blue,Raw Denim,Vintage Wash,799,2499
+P0919,V-DRE-0919,Office Formal Dress,Black Printed Crepe Office Formal Dress with cap sleeves sleeves off-shoulder neck,DRESS,Black,Crepe,Printed,599,1999
+P0920,V-KUR-0920,Party Wear Kurta,Beige Geometric Cotton Party Wear Kurta with three-quarter sleeves mandarin neck,KURTA,Beige,Cotton,Geometric,499,1999
+P0921,V-SAL-0921,Wide Leg Salwar,Beige Embroidered Chiffon Wide Leg Salwar palazzo fit,SALWAR,Beige,Chiffon,Embroidered,399,1299
+P0922,V-POL-0922,Striped Polo Shirt,Maroon Stripes Performance Fabric Striped Polo Shirt with short sleeves,POLO,Maroon,Performance Fabric,Stripes,299,999
+P0923,V-DRE-0923,Shift Dress,Black Polka Dots Linen Shift Dress with short sleeves round neck,DRESS,Black,Linen,Polka Dots,599,1999
+P0924,V-TSH-0924,Graphic Print T-Shirt,Pink Cotton Graphic Print T-Shirt with sleeveless sleeves henley neck,TSHIRT,Pink,Cotton,Solid,199,799
+P0925,V-KUR-0925,Embroidered Kurta,Green Printed Chiffon Embroidered Kurta with short sleeves round neck,KURTA,Green,Chiffon,Printed,499,1999
+P0926,V-POL-0926,Classic Polo Shirt,Navy Pique Cotton Classic Polo Shirt with short sleeves,POLO,Navy,Pique Cotton,Solid,299,999
+P0927,V-SAL-0927,Trouser Style Salwar,Black Printed Linen Trouser Style Salwar palazzo fit,SALWAR,Black,Linen,Printed,399,1299
+P0928,V-SHI-0928,Denim Shirt,Checked Printed Cotton Denim Shirt with long sleeves band collar neck,SHIRT,Checked,Cotton,Printed,399,1499
+P0929,V-KUR-0929,Anarkali Kurta,Beige Embroidered Linen Anarkali Kurta with short sleeves boat neck neck,KURTA,Beige,Linen,Embroidered,499,1999
+P0930,V-SAL-0930,Designer Salwar,Beige Embroidered Cotton Designer Salwar churidar fit,SALWAR,Beige,Cotton,Embroidered,399,1299
+P0931,V-TOP-0931,Peplum Top,Black Floral Chiffon Peplum Top with sleeveless sleeves halter neck,TOP,Black,Chiffon,Floral,299,899
+P0932,V-POL-0932,Performance Polo,Gray Performance Fabric Performance Polo with long sleeves,POLO,Gray,Performance Fabric,Solid,299,999
+P0933,V-POL-0933,Classic Polo Shirt,Navy Embroidered Cotton Classic Polo Shirt with long sleeves,POLO,Navy,Cotton,Embroidered,299,999
+P0934,V-TOP-0934,Off-Shoulder Top,White Floral Cotton Off-Shoulder Top with three-quarter sleeves v-neck neck,TOP,White,Cotton,Floral,299,899
+P0935,V-KUR-0935,A-Line Kurta,White Geometric Georgette A-Line Kurta with three-quarter sleeves boat neck neck,KURTA,White,Georgette,Geometric,499,1999
+P0936,V-TOP-0936,Wrap Top,Printed Chiffon Wrap Top with sleeveless sleeves round neck,TOP,Printed,Chiffon,Solid,299,899
+P0937,V-SAL-0937,Traditional Salwar,Black Embroidered Georgette Traditional Salwar palazzo fit,SALWAR,Black,Georgette,Embroidered,399,1299
+P0938,V-SHI-0938,Long Sleeve Casual Shirt,Checked Cotton Long Sleeve Casual Shirt with long sleeves button-down neck,SHIRT,Checked,Cotton,Solid,399,1499
+P0939,V-KUR-0939,Linen Kurta,Green Printed Silk Linen Kurta with short sleeves round neck,KURTA,Green,Silk,Printed,499,1999
+P0940,V-SAL-0940,Trouser Style Salwar,Beige Striped Linen Trouser Style Salwar regular fit,SALWAR,Beige,Linen,Striped,399,1299
+P0941,V-KUR-0941,Designer Kurta,Printed Printed Cotton Designer Kurta with short sleeves round neck,KURTA,Printed,Cotton,Printed,499,1999
+P0942,V-JEA-0942,Slim Fit Denim Jeans,Light Blue Faded Raw Denim Slim Fit Denim Jeans skinny fit,JEANS,Light Blue,Raw Denim,Faded,799,2499
+P0943,V-POL-0943,Business Casual Polo,Maroon Color Block Cotton Blend Business Casual Polo with short sleeves,POLO,Maroon,Cotton Blend,Color Block,299,999
+P0944,V-KUR-0944,Cotton Kurta,White Floral Chiffon Cotton Kurta with short sleeves v-neck neck,KURTA,White,Chiffon,Floral,499,1999
+P0945,V-TOP-0945,Asymmetric Top,Yellow Printed Polyester Asymmetric Top with short sleeves round neck,TOP,Yellow,Polyester,Printed,299,899
+P0946,V-DRE-0946,Cocktail Dress,Black Abstract Georgette Cocktail Dress with short sleeves v-neck neck,DRESS,Black,Georgette,Abstract,599,1999
+P0947,V-DRE-0947,A-Line Summer Dress,Black Printed Polyester A-Line Summer Dress with short sleeves off-shoulder neck,DRESS,Black,Polyester,Printed,599,1999
+P0948,V-DRE-0948,Boho Chic Dress,Navy Cotton Boho Chic Dress with cap sleeves sleeves halter neck,DRESS,Navy,Cotton,Solid,599,1999
+P0949,V-JEA-0949,Regular Fit Jeans,White Distressed Denim Regular Fit Jeans relaxed fit,JEANS,White,Denim,Distressed,799,2499
+P0950,V-POL-0950,Mesh Polo Shirt,Blue Stripes Pique Cotton Mesh Polo Shirt with short sleeves,POLO,Blue,Pique Cotton,Stripes,299,999
+P0951,V-KUR-0951,Linen Kurta,Green Printed Cotton Linen Kurta with long sleeves v-neck neck,KURTA,Green,Cotton,Printed,499,1999
+P0952,V-KUR-0952,Party Wear Kurta,Printed Printed Linen Party Wear Kurta with three-quarter sleeves round neck,KURTA,Printed,Linen,Printed,499,1999
+P0953,V-DRE-0953,Floral Print Maxi Dress,Pink Floral Georgette Floral Print Maxi Dress with short sleeves off-shoulder neck,DRESS,Pink,Georgette,Floral,599,1999
+P0954,V-POL-0954,Classic Polo Shirt,Black Cotton Classic Polo Shirt with long sleeves,POLO,Black,Cotton,Solid,299,999
+P0955,V-TOP-0955,Bardot Top,Black Printed Polyester Bardot Top with three-quarter sleeves halter neck,TOP,Black,Polyester,Printed,299,899
+P0956,V-SAL-0956,Printed Salwar,Printed Linen Printed Salwar churidar fit,SALWAR,Printed,Linen,Solid,399,1299
+P0957,V-TOP-0957,Knot Front Top,Yellow Striped Cotton Knot Front Top with three-quarter sleeves halter neck,TOP,Yellow,Cotton,Striped,299,899
+P0958,V-TSH-0958,Pocket T-Shirt,Gray Polyester Pocket T-Shirt with sleeveless sleeves crew neck,TSHIRT,Gray,Polyester,Solid,199,799
+P0959,V-KUR-0959,Party Wear Kurta,Pink Floral Georgette Party Wear Kurta with three-quarter sleeves v-neck neck,KURTA,Pink,Georgette,Floral,499,1999
+P0960,V-SHI-0960,Formal Cotton Shirt,White Checks Linen Formal Cotton Shirt with long sleeves band collar neck,SHIRT,White,Linen,Checks,399,1499
+P0961,V-DRE-0961,Casual Midi Dress,Black Georgette Casual Midi Dress with sleeveless sleeves square neck,DRESS,Black,Georgette,Solid,599,1999
+P0962,V-JEA-0962,High Waist Jeans,Gray Vintage Wash Stretch Denim High Waist Jeans slim fit,JEANS,Gray,Stretch Denim,Vintage Wash,799,2499
+P0963,V-TSH-0963,Pocket T-Shirt,Navy Polyester Pocket T-Shirt with long sleeves crew neck,TSHIRT,Navy,Polyester,Solid,199,799
+P0964,V-POL-0964,Long Sleeve Polo,Blue Color Block Performance Fabric Long Sleeve Polo with short sleeves,POLO,Blue,Performance Fabric,Color Block,299,999
+P0965,V-JEA-0965,Regular Fit Jeans,Black Stretch Denim Regular Fit Jeans bootcut fit,JEANS,Black,Stretch Denim,Solid,799,2499
+P0966,V-SAL-0966,Printed Salwar,Navy Georgette Printed Salwar wide leg fit,SALWAR,Navy,Georgette,Solid,399,1299
+P0967,V-TOP-0967,Crop Top,Black Printed Chiffon Crop Top with bell sleeves sleeves v-neck neck,TOP,Black,Chiffon,Printed,299,899
+P0968,V-SAL-0968,Designer Salwar,White Printed Linen Designer Salwar palazzo fit,SALWAR,White,Linen,Printed,399,1299
+P0969,V-SHI-0969,Checked Pattern Shirt,Blue Cotton Blend Checked Pattern Shirt with short sleeves band collar neck,SHIRT,Blue,Cotton Blend,Solid,399,1499
+P0970,V-DRE-0970,Floral Print Maxi Dress,Green Abstract Crepe Floral Print Maxi Dress with long sleeves square neck,DRESS,Green,Crepe,Abstract,599,1999
+P0971,V-JEA-0971,Straight Leg Jeans,Black Faded Raw Denim Straight Leg Jeans slim fit,JEANS,Black,Raw Denim,Faded,799,2499
+P0972,V-SAL-0972,Ankle Length Salwar,Navy Striped Georgette Ankle Length Salwar wide leg fit,SALWAR,Navy,Georgette,Striped,399,1299
+P0973,V-SHI-0973,Formal Cotton Shirt,Checked Checks Poplin Formal Cotton Shirt with short sleeves band collar neck,SHIRT,Checked,Poplin,Checks,399,1499
+P0974,V-SAL-0974,Wide Leg Salwar,Printed Printed Linen Wide Leg Salwar regular fit,SALWAR,Printed,Linen,Printed,399,1299
+P0975,V-SAL-0975,Cotton Salwar,White Cotton Cotton Salwar wide leg fit,SALWAR,White,Cotton,Solid,399,1299
+P0976,V-SAL-0976,Elastic Waist Salwar,White Striped Cotton Elastic Waist Salwar churidar fit,SALWAR,White,Cotton,Striped,399,1299
+P0977,V-POL-0977,Business Casual Polo,Red Stripes Cotton Business Casual Polo with short sleeves,POLO,Red,Cotton,Stripes,299,999
+P0978,V-SHI-0978,Checked Pattern Shirt,White Printed Cotton Checked Pattern Shirt with long sleeves,SHIRT,White,Cotton,Printed,399,1499
+P0979,V-TOP-0979,Knot Front Top,Red Floral Cotton Knot Front Top with sleeveless sleeves halter neck,TOP,Red,Cotton,Floral,299,899
+P0980,V-DRE-0980,Shift Dress,Green Polka Dots Georgette Shift Dress with short sleeves round neck,DRESS,Green,Georgette,Polka Dots,599,1999
+P0981,V-SAL-0981,Traditional Salwar,Printed Chiffon Traditional Salwar palazzo fit,SALWAR,Printed,Chiffon,Solid,399,1299
+P0982,V-SAL-0982,Solid Color Salwar,Solid Linen Solid Color Salwar palazzo fit,SALWAR,Solid,Linen,Solid,399,1299
+P0983,V-TSH-0983,Pocket T-Shirt,White Cotton Blend Pocket T-Shirt with long sleeves scoop neck,TSHIRT,White,Cotton Blend,Solid,199,799
+P0984,V-TOP-0984,Knot Front Top,Navy Striped Cotton Knot Front Top with sleeveless sleeves round neck,TOP,Navy,Cotton,Striped,299,899
+P0985,V-JEA-0985,Skinny Fit Jeans,Black Stretch Denim Skinny Fit Jeans bootcut fit,JEANS,Black,Stretch Denim,Solid,799,2499
+P0986,V-JEA-0986,Wide Leg Jeans,Gray Distressed Denim Wide Leg Jeans straight fit,JEANS,Gray,Denim,Distressed,799,2499
+P0987,V-SAL-0987,Solid Color Salwar,Black Embroidered Cotton Solid Color Salwar palazzo fit,SALWAR,Black,Cotton,Embroidered,399,1299
+P0988,V-TOP-0988,Tunic Top,Red Striped Cotton Tunic Top with bell sleeves sleeves off-shoulder neck,TOP,Red,Cotton,Striped,299,899
+P0989,V-POL-0989,Long Sleeve Polo,Navy Performance Fabric Long Sleeve Polo with long sleeves,POLO,Navy,Performance Fabric,Solid,299,999
+P0990,V-SHI-0990,Casual Linen Shirt,Blue Stripes Cotton Casual Linen Shirt with short sleeves button-down neck,SHIRT,Blue,Cotton,Stripes,399,1499
+P0991,V-DRE-0991,Cocktail Dress,Blue Geometric Polyester Cocktail Dress with short sleeves square neck,DRESS,Blue,Polyester,Geometric,599,1999
+P0992,V-SAL-0992,Trouser Style Salwar,White Embroidered Linen Trouser Style Salwar wide leg fit,SALWAR,White,Linen,Embroidered,399,1299
+P0993,V-TOP-0993,Bardot Top,Navy Printed Cotton Bardot Top with short sleeves round neck,TOP,Navy,Cotton,Printed,299,899
+P0994,V-JEA-0994,Stretch Comfort Jeans,Gray Vintage Wash Raw Denim Stretch Comfort Jeans bootcut fit,JEANS,Gray,Raw Denim,Vintage Wash,799,2499
+P0995,V-KUR-0995,Designer Kurta,Printed Floral Georgette Designer Kurta with long sleeves v-neck neck,KURTA,Printed,Georgette,Floral,499,1999
+P0996,V-SHI-0996,Oxford Button-Down Shirt,Blue Printed Cotton Blend Oxford Button-Down Shirt with long sleeves band collar neck,SHIRT,Blue,Cotton Blend,Printed,399,1499
+P0997,V-TSH-0997,V-Neck Casual T-Shirt,Red Logo Cotton Blend V-Neck Casual T-Shirt with short sleeves v-neck neck,TSHIRT,Red,Cotton Blend,Logo,199,799
+P0998,V-SHI-0998,Oxford Button-Down Shirt,Checked Checks Linen Oxford Button-Down Shirt with short sleeves,SHIRT,Checked,Linen,Checks,399,1499
+P0999,V-POL-0999,Classic Polo Shirt,Black Color Block Cotton Blend Classic Polo Shirt with long sleeves,POLO,Black,Cotton Blend,Color Block,299,999
+P1000,V-DRE-1000,Wrap Style Dress,Black Polka Dots Linen Wrap Style Dress with sleeveless sleeves square neck,DRESS,Black,Linen,Polka Dots,599,1999

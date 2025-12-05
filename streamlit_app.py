@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Streamlit UI for Intelli-ODM CEO Demo.
+Streamlit UI for Intelli-ODMDemo.
 
 Controlled demo scenarios for executive presentation.
 """
@@ -11,12 +11,15 @@ import plotly.express as px
 import plotly.graph_objects as go
 import json
 import time
+import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Any
 
+logger = logging.getLogger(__name__)
+
 # Configure page
 st.set_page_config(
-    page_title="Intelli-ODM CEO Demo",
+    page_title="Intelli-ODMDemo",
     page_icon="🎯",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -122,8 +125,9 @@ def setup_system():
                 "model": settings.openai_model
             }
         
-        # Get LangSmith configuration for tracking
-        langsmith_config = settings.get_langsmith_config()
+        # LangSmith configuration will be read automatically from .env file
+        # You can also pass langsmith_config explicitly if needed
+        langsmith_config = settings.get_langsmith_config() if settings.langchain_tracing_v2 else None
         
         llm_client = LLMClientFactory.create_client(llm_config, langsmith_config=langsmith_config)
         kb = SharedKnowledgeBase()
@@ -349,7 +353,7 @@ def display_attribute_analysis(results):
         
         # Display table
         st.subheader("📋 Extracted Attributes")
-        st.dataframe(df, use_container_width=True)
+        st.dataframe(df, width='stretch')
         
         # Visualizations
         col1, col2 = st.columns(2)
@@ -363,7 +367,7 @@ def display_attribute_analysis(results):
                     names=category_counts.index,
                     title="Product Category Distribution"
                 )
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width='stretch')
         
         with col2:
             # Confidence scores
@@ -377,7 +381,7 @@ def display_attribute_analysis(results):
                     color_continuous_scale='viridis'
                 )
                 fig.update_layout(xaxis_tickangle=-45)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width='stretch')
 
 def display_demand_forecasting(results):
     """Display demand forecasting results."""
@@ -420,7 +424,7 @@ def display_demand_forecasting(results):
         
         # Display forecast table
         st.subheader("📊 Demand Forecasts")
-        st.dataframe(df, use_container_width=True)
+        st.dataframe(df, width='stretch')
         
         # Visualizations
         col1, col2 = st.columns(2)
@@ -446,7 +450,7 @@ def display_demand_forecasting(results):
                 yaxis_title='Quantity',
                 barmode='group'
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
         
         with col2:
             # Coverage analysis
@@ -462,7 +466,7 @@ def display_demand_forecasting(results):
             fig.update_traces(texttemplate='%{text}', textposition='outside')
             fig.add_hline(y=30, line_dash="dash", line_color="red", 
                          annotation_text="30-day target")
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
 
 def display_procurement_recommendations(results):
     """Display procurement optimization results."""
@@ -504,7 +508,7 @@ def display_procurement_recommendations(results):
         for rec in recommendations
     ])
     
-    st.dataframe(rec_df, use_container_width=True)
+    st.dataframe(rec_df, width='stretch')
     
     # Visualizations
     col1, col2 = st.columns(2)
@@ -520,7 +524,7 @@ def display_procurement_recommendations(results):
             color_discrete_map={'High': 'red', 'Medium': 'orange', 'Low': 'green'}
         )
         fig.update_layout(xaxis_tickangle=-45)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
     
     with col2:
         # Priority distribution
@@ -531,7 +535,7 @@ def display_procurement_recommendations(results):
             title="Recommendations by Priority",
             color_discrete_map={'High': 'red', 'Medium': 'orange', 'Low': 'green'}
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
     
     # Strategic recommendations
     strategic_recs = results.get('recommendations', {}).get('strategic', [])
@@ -570,7 +574,7 @@ def display_errors_and_logs(results):
                 y='Time (seconds)',
                 title="Execution Time by Phase"
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
 
 def export_results(results):
     """Provide export functionality."""
@@ -644,7 +648,7 @@ KEY INSIGHTS
         )
 
 def main():
-    """Main CEO Demo Application."""
+    """MainDemo Application."""
     # Initialize session state
     initialize_session_state()
     
@@ -688,6 +692,58 @@ def main():
             st.session_state.current_scenario = scenario_choice
             st.session_state.demo_results = None
             st.session_state.agent_logs = []
+            
+            # Load and process demo data using DataIngestionAgent
+            if st.session_state.orchestrator:
+                progress_bar = st.progress(0)
+                status_text = st.empty()
+                
+                try:
+                    status_text.text("📊 Step 1/4: Loading and validating data files...")
+                    progress_bar.progress(10)
+                    
+                    # Load data based on scenario type
+                    if st.session_state.current_scenario == "odm_data_ingestion":
+                        # Load dirty ODM data directly (no cleaning)
+                        dirty_input_file = "data/sample/dirty_odm_input.csv"
+                        historical_file = "data/sample/odm_historical_dataset_5000.csv"
+                        status_text.text("📊 Loading dirty ODM data (no cleaning applied)...")
+                        progress_bar.progress(30)
+                        processed_data = st.session_state.orchestrator.load_dirty_odm_data(
+                            dirty_input_file, historical_file
+                        )
+                        status_text.text("✅ Dirty ODM data loaded and stored in vector database!")
+                    else:
+                        # Load regular demo data
+                        processed_data = st.session_state.orchestrator.load_demo_data("data/sample")
+                        status_text.text("✅ Demo data loaded and processed successfully!")
+                    
+                    progress_bar.progress(100)
+                    time.sleep(0.5)
+                    progress_bar.empty()
+                    status_text.empty()
+                    
+                    st.session_state.processed_data = processed_data
+                    
+                    # Show success message based on scenario
+                    if st.session_state.current_scenario == "odm_data_ingestion":
+                        summary = processed_data.get('summary', {})
+                        dirty_input_count = summary.get('dirty_input_count', 0)
+                        historical_count = summary.get('historical_products_count', 0)
+                        cleaning_applied = summary.get('cleaning_applied', False)
+                        st.success(f"✅ Dirty ODM data loaded: {dirty_input_count} input products + {historical_count} historical products stored in vector DB (cleaning: {'No' if not cleaning_applied else 'Yes'})")
+                    else:
+                        st.success(f"✅ Demo data loaded: {len(processed_data.get('products', []))} products processed!")
+                    
+                    logger.info(f"Data processed: {len(processed_data.get('products', []))} products")
+                except Exception as e:
+                    progress_bar.empty()
+                    status_text.empty()
+                    st.error(f"Failed to load demo data: {e}")
+                    logger.error(f"Demo data loading error: {e}")
+                    import traceback
+                    st.exception(e)
+            
             st.rerun()
         
         if st.session_state.current_scenario:
@@ -772,7 +828,7 @@ def display_demo_scenario():
         st.markdown("### ⚡ Challenge")
         st.markdown(story['challenge'])
         
-        # Current inventory status
+        # Current inventory status with search
         st.markdown("**Current Inventory:**")
         products = scenario_data['products']
         inventory_items = []
@@ -797,7 +853,107 @@ def display_demo_scenario():
             })
         
         inventory_df = pd.DataFrame(inventory_items)
-        st.dataframe(inventory_df, use_container_width=True)
+        
+        # Add search functionality
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            search_term = st.text_input("🔍 Search products:", placeholder="Search by product name or ID...", key="inventory_search")
+        with col2:
+            status_filter = st.selectbox("Filter by Status:", ["All", "🔴 Critical", "🟡 Low", "🟢 Adequate"], key="status_filter")
+        
+        # Apply filters
+        filtered_df = inventory_df.copy()
+        if search_term:
+            mask = (filtered_df['Product'].str.contains(search_term, case=False, na=False) | 
+                   filtered_df['Product ID'].str.contains(search_term, case=False, na=False))
+            filtered_df = filtered_df[mask]
+        
+        if status_filter != "All":
+            filtered_df = filtered_df[filtered_df['Status'] == status_filter]
+        
+        st.dataframe(filtered_df, width='stretch')
+        
+        # Show summary
+        if len(filtered_df) < len(inventory_df):
+            st.caption(f"Showing {len(filtered_df)} of {len(inventory_df)} products")
+        
+        # Store-level inventory view
+        st.markdown("---")
+        st.markdown("### 📍 Store-Level Inventory")
+        st.info("💡 Inventory is distributed across 50 stores nationwide. Location factors (climate, locality) impact procurement decisions.")
+        
+        # Try to load store inventory from data
+        try:
+            from utils.data_summarizer import DataSummarizer
+            data_summarizer = DataSummarizer()
+            store_summary = data_summarizer.get_inventory_summary_by_store()
+            
+            if store_summary:
+                # Store inventory summary table
+                store_df = pd.DataFrame(list(store_summary.values()))
+                
+                # Add search for stores
+                col1, col2, col3 = st.columns([2, 2, 1])
+                with col1:
+                    store_search = st.text_input("🔍 Search stores:", placeholder="Search by city, state, or region...", key="store_search")
+                with col2:
+                    region_filter = st.selectbox("Filter by Region:", ["All"] + list(store_df['region'].unique()), key="region_filter")
+                with col3:
+                    locality_filter = st.selectbox("Filter by Locality:", ["All"] + list(store_df['locality'].unique()), key="locality_filter")
+                
+                # Apply filters
+                filtered_store_df = store_df.copy()
+                if store_search:
+                    mask = (filtered_store_df['city'].str.contains(store_search, case=False, na=False) |
+                           filtered_store_df['state'].str.contains(store_search, case=False, na=False) |
+                           filtered_store_df['region'].str.contains(store_search, case=False, na=False))
+                    filtered_store_df = filtered_store_df[mask]
+                
+                if region_filter != "All":
+                    filtered_store_df = filtered_store_df[filtered_store_df['region'] == region_filter]
+                
+                if locality_filter != "All":
+                    filtered_store_df = filtered_store_df[filtered_store_df['locality'] == locality_filter]
+                
+                # Display store summary
+                display_cols = ['store_id', 'city', 'state', 'region', 'climate', 'locality', 
+                              'total_units', 'total_products', 'low_stock_items']
+                st.dataframe(
+                    filtered_store_df[display_cols].rename(columns={
+                        'store_id': 'Store ID',
+                        'city': 'City',
+                        'state': 'State',
+                        'region': 'Region',
+                        'climate': 'Climate',
+                        'locality': 'Locality',
+                        'total_units': 'Total Units',
+                        'total_products': 'Products',
+                        'low_stock_items': 'Low Stock Items'
+                    }),
+                    width='stretch'
+                )
+                
+                # Location factors impact
+                st.markdown("**📍 Location Factors Impact:**")
+                col1, col2, col3 = st.columns(3)
+                
+                with col1:
+                    st.metric("Total Stores", len(store_df))
+                with col2:
+                    st.metric("Total Inventory Units", f"{store_df['total_units'].sum():,}")
+                with col3:
+                    st.metric("Stores with Low Stock", len(store_df[store_df['low_stock_items'] > 0]))
+                
+                # Climate distribution
+                if 'climate' in store_df.columns:
+                    st.markdown("**🌡️ Climate Distribution:**")
+                    climate_counts = store_df['climate'].value_counts()
+                    for climate, count in climate_counts.items():
+                        st.write(f"• {climate}: {count} stores")
+            else:
+                st.warning("Store inventory data not available. Generate test data with stores to see store-level inventory.")
+        except Exception as e:
+            st.info("💡 Store-level inventory will be available after generating test data with stores.")
     
     with tab3:
         st.markdown("### 🎯 AI Solution")
@@ -955,7 +1111,7 @@ def display_demo_results():
                 return ['background-color: #e8f5e8'] * len(row)
         
         styled_df = rec_df.style.apply(highlight_priority, axis=1)
-        st.dataframe(styled_df, use_container_width=True)
+        st.dataframe(styled_df, width='stretch')
         
         # Visualization
         fig = px.bar(
@@ -966,7 +1122,7 @@ def display_demo_results():
             title="Procurement Investment by Priority",
             color_discrete_map={'High': '#f44336', 'Medium': '#ff9800', 'Low': '#4caf50'}
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
         
         # Business impact summary
         st.subheader("📈 Business Impact")
@@ -1050,23 +1206,45 @@ def display_new_product_evaluation():
                 }
                 
                 # Show evaluation in progress
-                with st.spinner("🤖 Analyzing product viability and procurement recommendations..."):
-                    try:
-                        # Get procurement agent
-                        procurement_agent = orchestrator.procurement_agent
-                        
-                        # Evaluate the product
-                        evaluation_result = procurement_agent.evaluate_new_product(
-                            product_description=product_description,
-                            product_attributes=product_attributes
-                        )
-                        
-                        # Store result in session state
-                        st.session_state.new_product_evaluation = evaluation_result
-                        
-                    except Exception as e:
-                        st.error(f"Evaluation failed: {e}")
-                        st.exception(e)
+                progress_bar = st.progress(0)
+                status_text = st.empty()
+                
+                try:
+                    # Get procurement agent
+                    procurement_agent = orchestrator.procurement_agent
+                    
+                    # Step 1: Analyze all products (first time only, then cached)
+                    status_text.text("📊 Step 1/3: Analyzing all existing products and their performance patterns...")
+                    progress_bar.progress(20)
+                    product_analysis = procurement_agent.analyze_all_products()
+                    
+                    # Step 2: Find similar products
+                    status_text.text("🔍 Step 2/3: Finding similar products and gathering sales data...")
+                    progress_bar.progress(50)
+                    
+                    # Step 3: Evaluate new product with analysis
+                    status_text.text("🤖 Step 3/3: Generating procurement recommendations using analyzed data...")
+                    progress_bar.progress(80)
+                    
+                    evaluation_result = procurement_agent.evaluate_new_product(
+                        product_description=product_description,
+                        product_attributes=product_attributes
+                    )
+                    
+                    progress_bar.progress(100)
+                    status_text.text("✅ Analysis complete!")
+                    time.sleep(0.5)  # Brief pause to show completion
+                    progress_bar.empty()
+                    status_text.empty()
+                    
+                    # Store result in session state
+                    st.session_state.new_product_evaluation = evaluation_result
+                    
+                except Exception as e:
+                    progress_bar.empty()
+                    status_text.empty()
+                    st.error(f"Evaluation failed: {e}")
+                    st.exception(e)
     
     # Display evaluation results
     if 'new_product_evaluation' in st.session_state and st.session_state.new_product_evaluation is not None:
@@ -1096,25 +1274,197 @@ def display_new_product_evaluation():
             confidence = evaluation.get('confidence', 0.0)
             st.metric("Confidence", f"{confidence:.1%}")
         
-        # Similar products found
+        # Analysis insights (if available)
+        if 'product_analysis' in evaluation or evaluation.get('analysis_used'):
+            with st.expander("📊 Product Analysis Insights", expanded=False):
+                st.info("""
+                **Analysis Process:**
+                1. ✅ Analyzed all existing products with their attributes and performance
+                2. ✅ Identified patterns by category, material, and color
+                3. ✅ Generated insights on top performers and market trends
+                4. ✅ Used this analysis to evaluate the new product
+                
+                The recommendation above is based on comprehensive analysis of historical product performance patterns.
+                """)
+        
+        # Similar products found with detailed sales analysis
         similar_products = evaluation.get('similar_products', [])
         if similar_products:
-            st.subheader("🔍 Similar Products Found")
-            st.info(f"Found {len(similar_products)} similar products in historical data")
+            st.subheader("🔍 Agent Analysis: Similar Products & Sales Performance")
             
-            similar_df = pd.DataFrame([
-                {
-                    'Product Name': p.get('name', 'Unknown'),
-                    'Category': p.get('attributes', {}).get('category', 'N/A'),
-                    'Total Units Sold': p.get('sales', {}).get('total_units', 0),
-                    'Total Revenue': f"₹{p.get('sales', {}).get('total_revenue', 0):,.0f}",
-                    'Avg Monthly Units': f"{p.get('sales', {}).get('avg_monthly_units', 0):.1f}",
-                    'Similarity': f"{p.get('similarity_score', 0.0):.2f}" if 'similarity_score' in p else 'N/A'
-                }
-                for p in similar_products
-            ])
+            # Summary metrics
+            total_products = len(similar_products)
+            total_sales = sum(p.get('sales', {}).get('total_units', 0) for p in similar_products)
+            total_revenue = sum(p.get('sales', {}).get('total_revenue', 0) for p in similar_products)
+            avg_similarity = sum(p.get('similarity_score', 0) for p in similar_products) / max(total_products, 1)
             
-            st.dataframe(similar_df, use_container_width=True)
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                st.metric("Similar Products", f"{total_products}")
+            with col2:
+                st.metric("Combined Sales", f"{total_sales:,} units")
+            with col3:
+                st.metric("Combined Revenue", f"₹{total_revenue:,.0f}")
+            with col4:
+                st.metric("Avg Similarity", f"{avg_similarity:.2f}")
+            
+            # Detailed analysis tabs
+            tab1, tab2, tab3 = st.tabs(["📊 Sales Performance", "🔍 Product Details", "📈 Market Insights"])
+            
+            with tab1:
+                st.markdown("### Sales Performance Analysis")
+                
+                # Create performance dataframe
+                perf_data = []
+                for p in similar_products:
+                    sales_data = p.get('sales', {})
+                    attrs = p.get('attributes', {})
+                    
+                    # Calculate performance metrics
+                    total_units = sales_data.get('total_units', 0)
+                    total_rev = sales_data.get('total_revenue', 0)
+                    avg_price = total_rev / max(total_units, 1)
+                    
+                    perf_data.append({
+                        'Product': p.get('name', 'Unknown')[:30],
+                        'Units Sold': total_units,
+                        'Revenue': total_rev,
+                        'Avg Price': avg_price,
+                        'Monthly Avg': sales_data.get('avg_monthly_units', 0),
+                        'Similarity': p.get('similarity_score', 0.0),
+                        'Category': attrs.get('category', 'N/A'),
+                        'Material': attrs.get('material', 'N/A'),
+                        'Color': attrs.get('color', 'N/A')
+                    })
+                
+                if perf_data:
+                    perf_df = pd.DataFrame(perf_data)
+                    
+                    # Format for display
+                    display_df = perf_df.copy()
+                    display_df['Revenue'] = display_df['Revenue'].apply(lambda x: f"₹{x:,.0f}")
+                    display_df['Avg Price'] = display_df['Avg Price'].apply(lambda x: f"₹{x:.0f}")
+                    display_df['Monthly Avg'] = display_df['Monthly Avg'].apply(lambda x: f"{x:.1f}")
+                    display_df['Similarity'] = display_df['Similarity'].apply(lambda x: f"{x:.3f}")
+                    
+                    st.dataframe(display_df, width='stretch')
+                    
+                    # Performance visualization
+                    if len(perf_data) > 1:
+                        col1, col2 = st.columns(2)
+                        
+                        with col1:
+                            fig = go.Figure()
+                            fig.add_trace(go.Scatter(
+                                x=[p['Similarity'] for p in perf_data],
+                                y=[p['Units Sold'] for p in perf_data],
+                                mode='markers+text',
+                                text=[p['Product'][:15] for p in perf_data],
+                                textposition="top center",
+                                marker=dict(size=10, color='lightblue'),
+                                name='Products'
+                            ))
+                            fig.update_layout(
+                                title='Similarity vs Sales Performance',
+                                xaxis_title='Similarity Score',
+                                yaxis_title='Units Sold',
+                                height=400
+                            )
+                            st.plotly_chart(fig, width='stretch')
+                        
+                        with col2:
+                            # Top performers
+                            top_performers = sorted(perf_data, key=lambda x: x['Units Sold'], reverse=True)[:3]
+                            st.markdown("### 🏆 Top Performing Similar Items")
+                            for i, product in enumerate(top_performers, 1):
+                                st.markdown(f"""
+                                **#{i} {product['Product']}**
+                                - Sales: {product['Units Sold']:,} units
+                                - Revenue: ₹{product['Revenue']:,.0f}
+                                - Similarity: {product['Similarity']:.3f}
+                                """)
+            
+            with tab2:
+                st.markdown("### Product Attribute Analysis")
+                
+                # Detailed product information
+                similar_df = pd.DataFrame([
+                    {
+                        'Product Name': p.get('name', 'Unknown'),
+                        'Product ID': p.get('product_id', 'N/A'),
+                        'Description': p.get('description', 'N/A')[:100] + '...' if len(p.get('description', '')) > 100 else p.get('description', 'N/A'),
+                        'Category': p.get('attributes', {}).get('category', 'N/A'),
+                        'Material': p.get('attributes', {}).get('material', 'N/A'),
+                        'Color': p.get('attributes', {}).get('color', 'N/A'),
+                        'Pattern': p.get('attributes', {}).get('pattern', 'N/A'),
+                        'Similarity Score': f"{p.get('similarity_score', 0.0):.3f}"
+                    }
+                    for p in similar_products
+                ])
+                
+                st.dataframe(similar_df, width='stretch')
+            
+            with tab3:
+                st.markdown("### Market Insights from Agent Analysis")
+                
+                if perf_data:
+                    # Calculate insights
+                    best_performer = max(perf_data, key=lambda x: x['Units Sold'])
+                    worst_performer = min(perf_data, key=lambda x: x['Units Sold'])
+                    avg_monthly = sum(p['Monthly Avg'] for p in perf_data) / len(perf_data)
+                    avg_price_range = sum(p['Avg Price'] for p in perf_data) / len(perf_data)
+                    
+                    # Category analysis
+                    category_sales = {}
+                    for p in perf_data:
+                        cat = p['Category']
+                        if cat not in category_sales:
+                            category_sales[cat] = 0
+                        category_sales[cat] += p['Units Sold']
+                    
+                    material_sales = {}
+                    for p in perf_data:
+                        mat = p['Material']
+                        if mat not in material_sales:
+                            material_sales[mat] = 0
+                        material_sales[mat] += p['Units Sold']
+                    
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        st.markdown("#### 🎯 Key Insights")
+                        st.success(f"**Best Performer:** {best_performer['Product']}")
+                        st.info(f"• Sold {best_performer['Units Sold']:,} units")
+                        st.info(f"• Similarity score: {best_performer['Similarity']:.3f}")
+                        
+                        st.markdown("#### 📊 Market Averages")
+                        st.metric("Avg Monthly Sales", f"{avg_monthly:.1f} units")
+                        st.metric("Avg Price Point", f"₹{avg_price_range:.0f}")
+                    
+                    with col2:
+                        st.markdown("#### 📈 Category Performance")
+                        if category_sales:
+                            best_category = max(category_sales.items(), key=lambda x: x[1])
+                            st.success(f"**Top Category:** {best_category[0]}")
+                            st.info(f"Total sales: {best_category[1]:,} units")
+                        
+                        st.markdown("#### 🧵 Material Performance")
+                        if material_sales:
+                            best_material = max(material_sales.items(), key=lambda x: x[1])
+                            st.success(f"**Top Material:** {best_material[0]}")
+                            st.info(f"Total sales: {best_material[1]:,} units")
+                
+                # Agent recommendations based on analysis
+                st.markdown("#### 🤖 Agent Recommendations")
+                st.info("""
+                **Based on similar products analysis:**
+                - The agent found products with strong sales history to base predictions on
+                - Higher similarity scores indicate better comparability for forecasting
+                - Top performers show market demand patterns for this product type
+                - Material and category trends inform procurement strategy
+                """)
+        else:
+            st.warning("🔍 No similar products found in historical data for analysis")
         
         # LLM Analysis
         llm_analysis = evaluation.get('llm_analysis', '')

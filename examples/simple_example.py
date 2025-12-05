@@ -48,7 +48,7 @@ def main():
         print("✅ LLM client initialized")
         
         # Initialize knowledge base
-        kb = SharedKnowledgeBase(persist_directory="data/chroma_db")
+        kb = SharedKnowledgeBase()
         print("✅ Knowledge base initialized")
         
         # Initialize orchestrator

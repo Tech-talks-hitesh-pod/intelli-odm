@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Quick test script to verify the CEO demo setup.
+Quick test script to verify thedemo setup.
 """
 
 import os
@@ -70,7 +70,7 @@ def test_knowledge_base():
     
     try:
         from shared_knowledge_base import SharedKnowledgeBase
-        kb = SharedKnowledgeBase(persist_directory="data/chroma_db")
+        kb = SharedKnowledgeBase()
         
         size = kb.get_collection_size()
         print(f"✅ Knowledge base ready ({size} products)")
@@ -123,7 +123,7 @@ def test_file_structure():
 
 def main():
     """Run all tests."""
-    print("🎯 Intelli-ODM CEO Demo System Test")
+    print("🎯 Intelli-ODMDemo System Test")
     print("=" * 50)
     
     tests = [
@@ -154,7 +154,7 @@ def main():
     print(f"📊 Test Results: {passed}/{total} passed")
     
     if passed == total:
-        print("🎉 All tests passed! CEO demo is ready!")
+        print("🎉 All tests passed!demo is ready!")
         print()
         print("🚀 To start demo:")
         print("   ./launch_demo.sh")

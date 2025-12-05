@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Intelli-ODM CEO Demo Setup Script
+# Intelli-ODMDemo Setup Script
 # Quick 5-minute setup for executive demonstration
 
 set -e  # Exit on any error
 
-echo "🎯 Intelli-ODM CEO Demo Setup"
+echo "🎯 Intelli-ODMDemo Setup"
 echo "================================"
 
 # Colors for output
@@ -159,25 +159,29 @@ setup_environment() {
     
     if [ ! -f ".env" ]; then
         cat > .env << EOF
-# LLM Configuration
-LLM_PROVIDER=ollama
+# LLM Configuration (OpenAI by default - add your API key)
+LLM_PROVIDER=openai
+DEMO_MODE=false
+
+# OpenAI Configuration
+OPENAI_API_KEY=your_openai_api_key_here
+OPENAI_MODEL=gpt-4o-mini
+OPENAI_TEMPERATURE=0.1
+
+# Ollama Configuration (alternative)
 OLLAMA_BASE_URL=http://localhost:11434
 OLLAMA_MODEL=llama3:8b
-
-# OpenAI Configuration (optional)
-# OPENAI_API_KEY=your_openai_api_key_here
-OPENAI_MODEL=gpt-4o-mini
 
 # Database Configuration
 CHROMA_PERSIST_DIRECTORY=data/chroma_db
 
 # Observability Configuration
 LANGCHAIN_TRACING_V2=true
-LANGCHAIN_PROJECT=pr-clear-beauty-56 #intelli-odm-demo
-LANGCHAIN_API_KEY=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 
+LANGCHAIN_PROJECT=intelli-odm
+LANGCHAIN_API_KEY=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
+LANGCHAIN_ENDPOINT=https://api.smith.langchain.com
 
 # Demo Configuration
-DEMO_MODE=false
 LOG_LEVEL=INFO
 EOF
         print_success "Environment file created"
@@ -199,7 +203,7 @@ setup_directories() {
 
 # Create launcher script
 create_launcher() {
-    print_status "Creating demo launcher..."
+    print_status "Creating ODM Intelligence launcher..."
     
     cat > launch_demo.sh << 'EOF'
 #!/bin/bash
@@ -210,22 +214,30 @@ source venv/bin/activate
 # Set environment variables
 export PYTHONPATH=$PWD:$PYTHONPATH
 
-echo "🎯 Starting Intelli-ODM CEO Demo..."
-echo "=================================="
+echo "🏪 Starting ODM Intelligence Platform..."
+echo "========================================"
 echo
-echo "🌐 Demo will open in your browser at: http://localhost:8501"
-echo "📋 Use the sidebar to select different business scenarios"
-echo "🚀 Click 'Run AI Analysis' to see results"
+echo "🌐 Platform will open in your browser at: http://localhost:8502"
+echo "📊 Features:"
+echo "  • 📈 Data Summary Dashboard"
+echo "  • 🔍 Product Search (Vector Database)"
+echo "  • 🔮 AI-Powered Sales Prediction"
+echo "  • ⚠️  Smart Procurement Recommendations"
 echo
-echo "Press Ctrl+C to stop the demo"
+echo "🎯 Test Cases:"
+echo "  • Search: 'red cotton shirt' - Find similar products"
+echo "  • Predict: 'pink jeans' - See CAUTIOUS recommendation"
+echo "  • Predict: 'floral dress' - Get sales forecast"
+echo
+echo "Press Ctrl+C to stop the platform"
 echo
 
-# Start Streamlit
-streamlit run streamlit_app.py --server.port=8501 --server.address=0.0.0.0 --theme.base=light
+# Start ODM Intelligence Platform
+streamlit run odm_app.py --server.port=8502 --server.address=0.0.0.0 --theme.base=light
 EOF
     
     chmod +x launch_demo.sh
-    print_success "Demo launcher created"
+    print_success "ODM Intelligence launcher created"
 }
 
 # Initialize knowledge base with sample data
@@ -242,7 +254,7 @@ from shared_knowledge_base import SharedKnowledgeBase
 
 def main():
     try:
-        kb = SharedKnowledgeBase(persist_directory="data/chroma_db")
+        kb = SharedKnowledgeBase()
         
         # Add some sample products for similarity search
         sample_products = [
@@ -306,7 +318,7 @@ except Exception as e:
     python3 -c "
 try:
     from shared_knowledge_base import SharedKnowledgeBase
-    kb = SharedKnowledgeBase(persist_directory='data/chroma_db')
+    kb = SharedKnowledgeBase()
     print(f'✅ Knowledge base working ({kb.get_collection_size()} products)')
 except Exception as e:
     print(f'❌ Knowledge base issue: {e}')
@@ -379,7 +391,7 @@ EOF
 # Main setup function
 main() {
     echo
-    print_status "Starting Intelli-ODM CEO Demo setup..."
+    print_status "Starting Intelli-ODMDemo setup..."
     
     # Core setup steps
     check_python
@@ -397,7 +409,7 @@ main() {
     print_success "🎉 Setup completed successfully!"
     echo
     echo "======================================"
-    echo "🚀 CEO Demo Ready!"
+    echo "🚀Demo Ready!"
     echo "======================================"
     echo
     echo "📍 Services Running:"
@@ -422,19 +434,27 @@ main() {
     echo "  curl http://localhost:11434/api/version"
     echo "======================================"
     
-    # Offer to start demo immediately
+    # Automatically start demo and open browser
     echo
-    read -p "🚀 Start CEO demo now? (y/N): " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        print_status "Starting CEO demo..."
-        echo "🌐 Opening http://localhost:8501 in your browser..."
-        ./launch_demo.sh
+    print_status "Starting demo automatically..."
+    echo "🌐 Opening http://localhost:8501 in your browser..."
+    
+    # Detect OS and open browser automatically
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        sleep 3 && open http://localhost:8501 &
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        # Linux
+        sleep 3 && (xdg-open http://localhost:8501 || sensible-browser http://localhost:8501) &
+    elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "win32" ]]; then
+        # Windows
+        sleep 3 && start http://localhost:8501 &
     else
-        print_status "Setup complete! Run './launch_demo.sh' when ready for your presentation."
-        echo
-        print_warning "💡 Pro tip: Test the demo once before your CEO presentation!"
+        # Fallback
+        echo "🌐 Please open http://localhost:8501 in your browser"
     fi
+    
+    ./launch_demo.sh
 }
 
 # Run main function

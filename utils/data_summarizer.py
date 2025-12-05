@@ -350,4 +350,89 @@ class DataSummarizer:
                 similar_products.append(product_data)
         
         return similar_products
+    
+    def get_store_inventory(self, store_id: Optional[str] = None,
+                           product_id: Optional[str] = None) -> pd.DataFrame:
+        """
+        Get inventory data by store and/or product.
+        
+        Args:
+            store_id: Filter by store ID
+            product_id: Filter by product ID
+            
+        Returns:
+            DataFrame with inventory data
+        """
+        data = self.load_all_data()
+        
+        if 'inventory' not in data:
+            return pd.DataFrame()
+        
+        inventory_df = data['inventory'].copy()
+        
+        # Apply filters
+        if store_id:
+            inventory_df = inventory_df[inventory_df['store_id'] == store_id]
+        if product_id:
+            inventory_df = inventory_df[inventory_df['sku'] == product_id]
+        
+        # Join with stores and products for better context
+        if 'stores' in data and not inventory_df.empty:
+            inventory_df = inventory_df.merge(
+                data['stores'],
+                on='store_id',
+                how='left'
+            )
+        
+        if 'products' in data and not inventory_df.empty:
+            inventory_df = inventory_df.merge(
+                data['products'][['product_id', 'name', 'category', 'description']],
+                left_on='sku',
+                right_on='product_id',
+                how='left'
+            )
+        
+        return inventory_df
+    
+    def get_inventory_summary_by_store(self) -> Dict[str, Any]:
+        """
+        Get inventory summary grouped by store.
+        
+        Returns:
+            Dictionary with store-level inventory summaries
+        """
+        data = self.load_all_data()
+        
+        if 'inventory' not in data or 'stores' not in data:
+            return {}
+        
+        inventory_df = data['inventory']
+        stores_df = data['stores']
+        
+        # Group by store
+        store_summary = {}
+        
+        for _, store in stores_df.iterrows():
+            store_id = store['store_id']
+            store_inventory = inventory_df[inventory_df['store_id'] == store_id]
+            
+            if not store_inventory.empty:
+                total_units = store_inventory['on_hand'].sum()
+                total_products = len(store_inventory)
+                low_stock = len(store_inventory[store_inventory['on_hand'] < 50])
+                
+                store_summary[store_id] = {
+                    'store_id': store_id,
+                    'city': store.get('city', 'Unknown'),
+                    'state': store.get('state', 'Unknown'),
+                    'region': store.get('region', 'Unknown'),
+                    'climate': store.get('climate', 'Unknown'),
+                    'locality': store.get('locality', 'Unknown'),
+                    'total_units': int(total_units),
+                    'total_products': total_products,
+                    'low_stock_items': low_stock,
+                    'avg_stock_per_product': float(total_units / total_products) if total_products > 0 else 0
+                }
+        
+        return store_summary
 
