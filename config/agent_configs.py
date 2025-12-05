@@ -137,6 +137,44 @@ PROCUREMENT_CONFIG: Dict[str, Any] = {
     }
 }
 
+# Alias for backward compatibility
+PROCUREMENT_AGENT_CONFIG = PROCUREMENT_CONFIG
+
+# Orchestrator Agent Configuration
+ORCHESTRATOR_AGENT_CONFIG: Dict[str, Any] = {
+    "execution": {
+        "max_workers": 3,
+        "timeout_seconds": 600,
+        "retry_attempts": 2,
+        "parallel_processing": True
+    },
+    "workflow": {
+        "enable_phase_skipping": False,
+        "continue_on_error": True,
+        "min_confidence_threshold": 0.5
+    },
+    "prompt_templates": {
+        "executive_summary": """
+Generate a concise executive summary for the Intelli-ODM analysis:
+
+Analysis Results:
+- Products processed: {total_products}
+- Successful analyses: {successful_analyses}  
+- Demand forecasts: {forecasts_generated}
+- Procurement recommendations: {procurement_recommendations}
+- Total recommended investment: ${total_investment:,.0f}
+- Overall success rate: {success_rate:.1%}
+
+Provide a brief 2-3 sentence summary highlighting key findings and recommendations.
+"""
+    },
+    "logging": {
+        "log_phase_results": True,
+        "log_errors": True,
+        "log_metrics": True
+    }
+}
+
 # Shared Knowledge Base Configuration
 KNOWLEDGE_BASE_CONFIG: Dict[str, Any] = {
     "chromadb": {

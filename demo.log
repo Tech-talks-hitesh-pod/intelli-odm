@@ -74,3 +74,4 @@ Traceback (most recent call last):
                                                                                                  ^
 SyntaxError: unterminated string literal (detected at line 786)
 2025-12-05 14:16:03.920 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+./launch_demo.sh: line 20:  8755 Killed: 9               streamlit run streamlit_app.py --server.port=8501 --server.address=0.0.0.0 --theme.base=light

@@ -783,7 +783,7 @@ def run_demo_analysis():
         {"name": "Data Ingestion", "action": "Processing product catalog", "duration": 1.5},
         {"name": "Attribute Analysis", "action": "Extracting product features", "duration": 2.0},
         {"name": "Demand Forecasting", "action": "Generating demand predictions", "duration": 1.8}, 
-        {"name": "Procurement Optimization", "action": "Optimizing procurement plan", "duration": 1.2"}
+        {"name": "Procurement Optimization", "action": "Optimizing procurement plan", "duration": 1.2}
     ]
     
     import time

@@ -2,14 +2,15 @@
 
 import os
 from typing import Dict, Any, Optional, Literal
-from pydantic import BaseSettings, Field, validator
+from pydantic import Field, field_validator, model_validator
+from pydantic_settings import BaseSettings
 from pathlib import Path
 
 class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
     
     # LLM Configuration
-    llm_provider: Literal["ollama", "openai"] = Field(default="ollama", description="LLM provider to use")
+    llm_provider: Literal["ollama", "openai", "demo"] = Field(default="ollama", description="LLM provider to use")
     
     # Ollama Configuration
     ollama_base_url: str = Field(default="http://localhost:11434", description="Ollama server URL")
@@ -23,7 +24,7 @@ class Settings(BaseSettings):
     
     # Vector Database
     vector_db_type: Literal["chromadb", "faiss"] = Field(default="chromadb", description="Vector database type")
-    chromadb_persist_dir: str = Field(default="./data/chromadb", description="ChromaDB persistence directory")
+    chromadb_persist_dir: str = Field(default="./data/chromadb", description="ChromaDB persistence directory", alias="chroma_persist_directory")
     chromadb_host: str = Field(default="localhost", description="ChromaDB host")
     chromadb_port: int = Field(default=8000, description="ChromaDB port")
     
@@ -45,24 +46,29 @@ class Settings(BaseSettings):
     log_format: str = Field(default="%(asctime)s - %(name)s - %(levelname)s - %(message)s", description="Log format")
     
     # Development
-    debug_mode: bool = Field(default=False, description="Enable debug mode")
+    debug_mode: bool = Field(default=False, description="Enable debug mode", alias="demo_mode")
     enable_profiling: bool = Field(default=False, description="Enable performance profiling")
     
     # Streamlit UI
     streamlit_port: int = Field(default=8501, description="Streamlit port")
     streamlit_host: str = Field(default="localhost", description="Streamlit host")
     
-    @validator('llm_provider')
+    @field_validator('llm_provider')
+    @classmethod
     def validate_llm_provider(cls, v):
+        # Convert 'demo' to 'ollama' for backward compatibility
+        if v == "demo":
+            return "ollama"
         if v not in ["ollama", "openai"]:
-            raise ValueError("llm_provider must be 'ollama' or 'openai'")
+            raise ValueError("llm_provider must be 'ollama', 'openai', or 'demo'")
         return v
     
-    @validator('openai_api_key')
-    def validate_openai_key(cls, v, values):
-        if values.get('llm_provider') == 'openai' and not v:
+    @model_validator(mode='after')
+    def validate_openai_key(self):
+        """Validate that OpenAI API key is provided when using OpenAI provider."""
+        if self.llm_provider == 'openai' and not self.openai_api_key:
             raise ValueError("openai_api_key is required when using OpenAI provider")
-        return v
+        return self
     
     def get_llm_config(self) -> Dict[str, Any]:
         """Get LLM configuration based on provider."""
@@ -91,10 +97,13 @@ class Settings(BaseSettings):
             "safety_stock_factor": self.default_safety_stock_factor
         }
     
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = False
+    model_config = {
+        "env_file": ".env",
+        "env_file_encoding": "utf-8",
+        "case_sensitive": False,
+        "populate_by_name": True,  # Allow both field name and alias
+        "extra": "ignore"  # Ignore extra fields from environment
+    }
 
 # Global settings instance
 settings = Settings()
