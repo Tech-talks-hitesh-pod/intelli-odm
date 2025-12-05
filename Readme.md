@@ -758,13 +758,6 @@ You now have both:
 
 ---
 
-**User:**  
-Convert the above into markdown format
-
-**Assistant:**  
-Here is your **README.md** converted into **clean, production-ready Markdown format** with headings, tables, code blocks, and proper structure.
-
----
 
 # **Intelli-ODM: Multi-Agent LLM System for New Product Forecasting**  
 _A modular, extensible, multi-agent architecture powered by Ollama (Llama-3 8B) for fashion retail forecasting, procurement planning, and store allocation._
