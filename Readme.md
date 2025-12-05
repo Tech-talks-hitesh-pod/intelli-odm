@@ -399,14 +399,14 @@ flowchart LR
 
 **products.csv**
 ```
-product_id, vendor_sku, description, category, color, material, size_set
-P123, V-001, "White cotton t-shirt, chest print, short sleeve", TSHIRT, White, Cotton, S,M,L,XL
+product_id, vendor_sku, description, category, color, material, size_set, brick, class, segment, family, brand 
+P123, V-001, "White cotton t-shirt, chest print, short sleeve", TSHIRT, White, Cotton, S,M,L,XL, T-SHIRT, Top Wear, Mens wear, Active Wear, GAP
 ```
 
 **sales.csv**
 ```
-date, store_id, sku, units_sold, revenue
-2025-09-01, store_001, TS-114, 2, 698
+date, store_id, sku, units_sold, revenue, city, avgdiscount, pricebucket
+2025-09-01, store_001, TS-114, 2, 698, Delhi, 5%, 699-999
 ```
 
 **inventory.csv**
