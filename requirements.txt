@@ -49,15 +49,6 @@ sentence-transformers>=2.2.0,<3.0.0
 # Utilities (cross-platform)
 # ============================================
 python-dotenv>=1.0.0,<2.0.0
-pydantic>=2.0.0,<3.0.0
-requests>=2.31.0,<3.0.0
-tqdm>=4.65.0,<5.0.0
-
-# ============================================
-# Data Validation & Processing
-# ============================================
-jsonschema>=4.17.0,<5.0.0
-pyyaml>=6.0,<7.0
 
 # ============================================
 # OPTIONAL DEPENDENCIES
@@ -74,76 +65,43 @@ pyyaml>=6.0,<7.0
 # For Alternative Forecasting (Statsmodels):
 #   pip install statsmodels>=0.14.0,<1.0.0
 #
+# For Development & Testing:
+#   pip install pytest pytest-cov black flake8 mypy isort
+#
+# For Jupyter & Notebooks:
+#   pip install jupyter matplotlib seaborn
+#
 # Or install using pyproject.toml extras:
+#   pip install -e .[dev]            # Installs dev tools
+#   pip install -e .[jupyter]        # Installs jupyter + visualization
 #   pip install -e .[forecasting]    # Installs prophet + statsmodels
 #   pip install -e .[optimization]   # Installs ortools
 #   pip install -e .[all]            # Installs all optional dependencies
+
+# ============================================
+# Installation Instructions
+# ============================================
+# 
+# Core runtime dependencies only (this file):
+#   pip install -r requirements.txt
 #
-# Uncomment below to include as core dependencies:
-# prophet>=1.1.4,<2.0.0; platform_system != "Windows"
-# ortools>=9.7.0,<10.0.0
-# statsmodels>=0.14.0,<1.0.0
-
-# ============================================
-# Development & Testing
-# ============================================
-pytest>=7.4.0,<8.0.0
-pytest-cov>=4.1.0,<5.0.0
-black>=23.0.0,<25.0.0
-flake8>=6.0.0,<7.0.0
-mypy>=1.5.0,<2.0.0
-isort>=5.12.0,<6.0.0
-
-# ============================================
-# Jupyter & Notebooks
-# ============================================
-jupyter>=1.0.0,<2.0.0
-ipykernel>=6.25.0,<7.0.0
-matplotlib>=3.7.0,<4.0.0
-seaborn>=0.12.0,<1.0.0
-
+# With development tools:
+#   pip install -e .[dev]
+#
+# With Jupyter and visualization:
+#   pip install -e .[jupyter]
+#
+# With all optional dependencies:
+#   pip install -e .[all]
+#
 # ============================================
 # Platform-Specific Notes
 # ============================================
 # Windows:
 #   - All core dependencies work out of the box
 #   - For Prophet (optional): Use conda (conda install -c conda-forge prophet)
-#   - Prophet requires Visual C++ Build Tools if installing via pip
-#   - Build Tools: https://visualstudio.microsoft.com/downloads/
 #
-# macOS (Apple Silicon):
-#   - All core dependencies have ARM-native builds
-#   - For better compatibility with optional packages, use conda-forge
-#
-# Linux:
-#   - All core dependencies work out of the box
-#   - May need build-essential for compiling: sudo apt-get install build-essential
-#
-# ============================================
-# Installation Commands by Platform
-# ============================================
-# Windows (PowerShell/CMD):
-#   python -m venv .venv
-#   .venv\Scripts\activate
-#   python -m pip install --upgrade pip setuptools wheel
-#   pip install -r requirements.txt
-#   # Optional: pip install prophet (or use conda - see above)
-#
-# macOS/Linux (bash/zsh):
-#   python3 -m venv .venv
-#   source .venv/bin/activate
-#   python -m pip install --upgrade pip setuptools wheel
-#   pip install -r requirements.txt
-#   # Optional: pip install prophet statsmodels
-#
-# Using pyproject.toml with optional dependencies:
-#   pip install -e .                    # Core only
-#   pip install -e .[forecasting]       # Core + Prophet + Statsmodels
-#   pip install -e .[all]               # Everything
-#
-# Using Conda (if you need Prophet):
-#   conda create -n intelli-odm python=3.10
-#   conda activate intelli-odm
-#   conda install -c conda-forge prophet
-#   pip install -r requirements.txt
+# macOS/Linux:
+#   - All core dependencies have native builds
+#   - Prophet can be installed via pip (pip install prophet)
 
