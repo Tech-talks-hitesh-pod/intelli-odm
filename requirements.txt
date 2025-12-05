@@ -36,12 +36,17 @@ ollama>=0.1.0,<1.0.0
 # llama-cpp-python>=0.2.0
 
 # ============================================
-# Vector Database & Embeddings
+# Vector Database & Embeddings (OPTIONAL - NOT USED YET)
 # ============================================
-chromadb>=0.4.0,<0.6.0
-sentence-transformers>=2.2.0,<3.0.0
-
-# Vector DB alternatives (choose based on your needs)
+# chromadb>=0.4.0,<0.6.0
+# sentence-transformers>=2.2.0,<3.0.0
+#
+# Note: These dependencies are commented out because:
+# - shared_knowledge_base.py is currently a skeleton
+# - Saves ~1.5GB and ~4-5 minutes of Docker build time
+# - Uncomment when implementing vector database functionality
+#
+# Vector DB alternatives (choose based on your needs):
 # faiss-cpu>=1.7.4; platform_system != "Darwin" or platform_machine != "arm64"
 # hnswlib>=0.7.0
 
@@ -54,6 +59,10 @@ python-dotenv>=1.0.0,<2.0.0
 # OPTIONAL DEPENDENCIES
 # ============================================
 # Install these separately based on your needs:
+#
+# For Vector Database & Embeddings (when implementing shared_knowledge_base.py):
+#   pip install chromadb>=0.4.0,<0.6.0 sentence-transformers>=2.2.0,<3.0.0
+#   Warning: Adds ~1.5GB and ~5 minutes build time (includes PyTorch)
 #
 # For Time-Series Forecasting (Prophet):
 #   pip install prophet>=1.1.4,<2.0.0  # macOS/Linux

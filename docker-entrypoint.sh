@@ -38,7 +38,7 @@ fi
 
 # Verify Python packages
 echo "Verifying Python packages..."
-python -c "import pandas, numpy, sklearn, chromadb, pulp, cvxpy, ollama; print('✅ All core packages available')" || {
+python -c "import pandas, numpy, sklearn, pulp, cvxpy, ollama; print('✅ All core packages available')" || {
     echo "❌ Error: Some Python packages are missing"
     exit 1
 }

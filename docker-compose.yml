@@ -55,7 +55,7 @@ services:
     
     # Health check
     healthcheck:
-      test: ["CMD", "python", "-c", "import pandas, numpy, sklearn, chromadb; print('OK')"]
+      test: ["CMD", "python", "-c", "import pandas, numpy, sklearn, ollama; print('OK')"]
       interval: 30s
       timeout: 10s
       retries: 3
