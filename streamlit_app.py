@@ -122,8 +122,11 @@ def setup_system():
                 "model": settings.openai_model
             }
         
-        llm_client = LLMClientFactory.create_client(llm_config)
-        kb = SharedKnowledgeBase(persist_directory="data/chroma_db")
+        # Get LangSmith configuration for tracking
+        langsmith_config = settings.get_langsmith_config()
+        
+        llm_client = LLMClientFactory.create_client(llm_config, langsmith_config=langsmith_config)
+        kb = SharedKnowledgeBase()
         orchestrator = OrchestratorAgent(llm_client, kb)
         
         return orchestrator, llm_client, kb
@@ -478,7 +481,7 @@ def display_procurement_recommendations(results):
     
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.metric("Total Investment", f"${total_investment:,.0f}")
+        st.metric("Total Investment", f"₹{total_investment:,.0f}")
     with col2:
         st.metric("Total Quantity", f"{total_quantity:,} units")
     with col3:
@@ -492,7 +495,7 @@ def display_procurement_recommendations(results):
             'Product': rec['product_id'],
             'Action': rec['action'],
             'Quantity': rec['quantity'],
-            'Cost': f"${rec['estimated_cost']:,.0f}",
+            'Cost': f"₹{rec['estimated_cost']:,.0f}",
             'Priority': rec['priority'],
             'Timeline': rec['timeline'],
             'Supplier': rec['supplier']['name'],
@@ -511,7 +514,7 @@ def display_procurement_recommendations(results):
         fig = px.bar(
             rec_df,
             x='Product',
-            y=[float(cost.replace('$', '').replace(',', '')) for cost in rec_df['Cost']],
+            y=[float(cost.replace('₹', '').replace(',', '')) for cost in rec_df['Cost']],
             color='Priority',
             title="Procurement Cost by Priority",
             color_discrete_map={'High': 'red', 'Medium': 'orange', 'Low': 'green'}
@@ -643,12 +646,26 @@ KEY INSIGHTS
 def main():
     """Main CEO Demo Application."""
     # Initialize session state
+    initialize_session_state()
+    
+    # Additional session state variables
     if 'current_scenario' not in st.session_state:
         st.session_state.current_scenario = None
     if 'demo_results' not in st.session_state:
         st.session_state.demo_results = None
     if 'agent_logs' not in st.session_state:
         st.session_state.agent_logs = []
+    if 'new_product_evaluation' not in st.session_state:
+        st.session_state.new_product_evaluation = None
+    
+    # Setup system if not already done
+    if st.session_state.orchestrator is None:
+        with st.spinner("🔄 Initializing system..."):
+            orchestrator, llm_client, kb = setup_system()
+            if orchestrator:
+                st.session_state.orchestrator = orchestrator
+                st.session_state.llm_client = llm_client
+                st.session_state.kb = kb
     
     # App header
     st.title("🎯 Intelli-ODM Executive Demo")
@@ -685,11 +702,17 @@ def main():
                 st.session_state.agent_logs = []
                 st.rerun()
     
-    # Main content area
-    if not st.session_state.current_scenario:
-        display_welcome_screen()
-    else:
-        display_demo_scenario()
+    # Main content area - Use tabs for different views
+    tab1, tab2 = st.tabs(["📊 Scenario Analysis", "🆕 New Product Evaluation"])
+    
+    with tab1:
+        if not st.session_state.current_scenario:
+            display_welcome_screen()
+        else:
+            display_demo_scenario()
+    
+    with tab2:
+        display_new_product_evaluation()
 
 def display_welcome_screen():
     """Display welcome screen with business value proposition."""
@@ -751,10 +774,29 @@ def display_demo_scenario():
         
         # Current inventory status
         st.markdown("**Current Inventory:**")
-        inventory_df = pd.DataFrame([
-            {"Product": k, "Current Stock": v, "Status": "🔴 Critical" if v < 50 else "🟡 Low" if v < 100 else "🟢 Adequate"}
-            for k, v in scenario_data['inventory'].items()
-        ])
+        products = scenario_data['products']
+        inventory_items = []
+        
+        for i, (product_id, current_stock) in enumerate(scenario_data['inventory'].items(), 1):
+            # Get actual product description
+            if i <= len(products):
+                product_name = products[i-1]
+                # Extract short name (first part before comma or first 60 chars)
+                if ',' in product_name:
+                    short_name = product_name.split(',')[0].strip()
+                else:
+                    short_name = product_name[:60] + "..." if len(product_name) > 60 else product_name
+            else:
+                short_name = product_id
+            
+            inventory_items.append({
+                "Product": short_name,
+                "Product ID": product_id,
+                "Current Stock": current_stock,
+                "Status": "🔴 Critical" if current_stock < 50 else "🟡 Low" if current_stock < 100 else "🟢 Adequate"
+            })
+        
+        inventory_df = pd.DataFrame(inventory_items)
         st.dataframe(inventory_df, use_container_width=True)
     
     with tab3:
@@ -831,8 +873,17 @@ def generate_demo_results(scenario_data):
             cost = quantity * (50 + i * 10)  # Varied pricing
             priority = "High" if current_stock < 50 else "Medium"
             
+            # Use actual product description instead of generic ID
+            product_name = products[i-1] if i <= len(products) else product_id
+            # Extract a short name from description (first part before comma or first 50 chars)
+            if ',' in product_name:
+                short_name = product_name.split(',')[0]
+            else:
+                short_name = product_name[:60] + "..." if len(product_name) > 60 else product_name
+            
             recommendations.append({
-                "product": product_id,
+                "product": short_name,  # Use actual product name
+                "product_id": product_id,
                 "quantity": quantity,
                 "cost": cost,
                 "priority": priority,
@@ -879,7 +930,7 @@ def display_demo_results():
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        st.metric("💰 Investment Required", f"${results['total_investment']:,}")
+        st.metric("💰 Investment Required", f"₹{results['total_investment']:,}")
     with col2:
         st.metric("📦 Items to Procure", len(results['recommendations']))
     with col3:
@@ -892,7 +943,7 @@ def display_demo_results():
     
     if results['recommendations']:
         rec_df = pd.DataFrame(results['recommendations'])
-        rec_df['Cost'] = rec_df['cost'].apply(lambda x: f"${x:,}")
+        rec_df['Cost'] = rec_df['cost'].apply(lambda x: f"₹{x:,}")
         
         # Color code by priority
         def highlight_priority(row):
@@ -932,6 +983,188 @@ def display_demo_results():
             st.write("• Data-driven decision making")
             st.write("• Scenario-based planning")
             st.write("• Real-time market responsiveness")
+
+def display_new_product_evaluation():
+    """Display UI for new product procurement evaluation."""
+    st.header("🆕 New Product Procurement Evaluation")
+    st.markdown("Evaluate a new product for procurement based on similar products' historical performance")
+    
+    # Check if system is initialized
+    if 'orchestrator' not in st.session_state or st.session_state.orchestrator is None:
+        st.warning("⚠️ System not initialized. Please wait for system setup...")
+        # Try to initialize
+        with st.spinner("🔄 Initializing system..."):
+            orchestrator, llm_client, kb = setup_system()
+            if orchestrator:
+                st.session_state.orchestrator = orchestrator
+                st.session_state.llm_client = llm_client
+                st.session_state.kb = kb
+                st.rerun()
+            else:
+                st.error("Failed to initialize system. Please check your configuration.")
+                return
+    
+    orchestrator = st.session_state.orchestrator
+    
+    # Product input form
+    with st.form("new_product_form"):
+        st.subheader("📝 Product Information")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            product_description = st.text_area(
+                "Product Description:",
+                height=100,
+                placeholder="Example: Blue Cotton Classic Crew Neck T-Shirt, short sleeves, casual fit",
+                help="Provide a detailed description of the product you want to evaluate"
+            )
+        
+        with col2:
+            st.subheader("Product Attributes")
+            category = st.selectbox(
+                "Category:",
+                ["TSHIRT", "POLO", "DRESS", "JEANS", "SHIRT", "KURTA", "SALWAR", "TOP"],
+                help="Select the product category"
+            )
+            
+            material = st.text_input("Material:", placeholder="e.g., Cotton, Polyester")
+            color = st.text_input("Color:", placeholder="e.g., Blue, White, Black")
+            pattern = st.selectbox(
+                "Pattern:",
+                ["Solid", "Striped", "Printed", "Floral", "Checks", "Embroidered", "Other"]
+            )
+        
+        submitted = st.form_submit_button("🔍 Evaluate Product", type="primary")
+        
+        if submitted:
+            if not product_description:
+                st.error("Please enter a product description")
+            else:
+                # Prepare attributes
+                product_attributes = {
+                    'category': category,
+                    'material': material or 'Unknown',
+                    'color': color or 'Unknown',
+                    'pattern': pattern
+                }
+                
+                # Show evaluation in progress
+                with st.spinner("🤖 Analyzing product viability and procurement recommendations..."):
+                    try:
+                        # Get procurement agent
+                        procurement_agent = orchestrator.procurement_agent
+                        
+                        # Evaluate the product
+                        evaluation_result = procurement_agent.evaluate_new_product(
+                            product_description=product_description,
+                            product_attributes=product_attributes
+                        )
+                        
+                        # Store result in session state
+                        st.session_state.new_product_evaluation = evaluation_result
+                        
+                    except Exception as e:
+                        st.error(f"Evaluation failed: {e}")
+                        st.exception(e)
+    
+    # Display evaluation results
+    if 'new_product_evaluation' in st.session_state and st.session_state.new_product_evaluation is not None:
+        evaluation = st.session_state.new_product_evaluation
+        
+        st.markdown("---")
+        st.header("📊 Evaluation Results")
+        
+        # Key metrics
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            should_procure = evaluation.get('should_procure', False)
+            status_icon = "✅" if should_procure else "❌"
+            st.metric("Recommendation", f"{status_icon} {'Procure' if should_procure else 'Do Not Procure'}")
+        
+        with col2:
+            viability_score = evaluation.get('viability_score', 0.0)
+            st.metric("Viability Score", f"{viability_score:.2f}", 
+                     delta=f"{(viability_score - 0.5) * 100:.1f}% vs baseline")
+        
+        with col3:
+            recommended_qty = evaluation.get('recommended_quantity', 0)
+            st.metric("Recommended Quantity", f"{recommended_qty:,} units")
+        
+        with col4:
+            confidence = evaluation.get('confidence', 0.0)
+            st.metric("Confidence", f"{confidence:.1%}")
+        
+        # Similar products found
+        similar_products = evaluation.get('similar_products', [])
+        if similar_products:
+            st.subheader("🔍 Similar Products Found")
+            st.info(f"Found {len(similar_products)} similar products in historical data")
+            
+            similar_df = pd.DataFrame([
+                {
+                    'Product Name': p.get('name', 'Unknown'),
+                    'Category': p.get('attributes', {}).get('category', 'N/A'),
+                    'Total Units Sold': p.get('sales', {}).get('total_units', 0),
+                    'Total Revenue': f"₹{p.get('sales', {}).get('total_revenue', 0):,.0f}",
+                    'Avg Monthly Units': f"{p.get('sales', {}).get('avg_monthly_units', 0):.1f}",
+                    'Similarity': f"{p.get('similarity_score', 0.0):.2f}" if 'similarity_score' in p else 'N/A'
+                }
+                for p in similar_products
+            ])
+            
+            st.dataframe(similar_df, use_container_width=True)
+        
+        # LLM Analysis
+        llm_analysis = evaluation.get('llm_analysis', '')
+        if llm_analysis:
+            st.subheader("🤖 AI Analysis")
+            with st.expander("View Detailed Analysis", expanded=True):
+                st.markdown(llm_analysis)
+        
+        # Reasoning
+        reasoning = evaluation.get('reasoning', '')
+        if reasoning:
+            st.subheader("💡 Reasoning")
+            st.info(reasoning)
+        
+        # Recommendations
+        if should_procure and recommended_qty > 0:
+            st.subheader("✅ Procurement Recommendation")
+            
+            # Calculate estimated cost (using average price from similar products)
+            avg_price = 0
+            if similar_products:
+                prices = [p.get('sales', {}).get('total_revenue', 0) / max(p.get('sales', {}).get('total_units', 1), 1) 
+                         for p in similar_products if p.get('sales', {}).get('total_units', 0) > 0]
+                if prices:
+                    avg_price = sum(prices) / len(prices)
+            
+            estimated_cost = recommended_qty * avg_price if avg_price > 0 else recommended_qty * 500  # Fallback
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.markdown("**Recommended Action:**")
+                st.success(f"✅ Procure {recommended_qty:,} units")
+                st.info(f"Estimated Investment: ₹{estimated_cost:,.0f}")
+            
+            with col2:
+                st.markdown("**Next Steps:**")
+                st.write("1. Review similar products' performance")
+                st.write("2. Validate supplier availability")
+                st.write("3. Confirm budget allocation")
+                st.write("4. Set up reorder points")
+        
+        elif not should_procure:
+            st.subheader("⚠️ Recommendation: Do Not Procure")
+            st.warning("Based on historical data analysis, procurement is not recommended at this time.")
+            st.write("**Reasons may include:**")
+            st.write("• Low similarity to successful products")
+            st.write("• Poor performance of similar products")
+            st.write("• Market conditions not favorable")
+            st.write("• Insufficient confidence in demand forecast")
 
 if __name__ == "__main__":
     main()

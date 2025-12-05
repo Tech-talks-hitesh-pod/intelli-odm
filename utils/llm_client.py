@@ -1,12 +1,84 @@
-"""LLM client factory for Ollama and OpenAI integration."""
+"""LLM client factory for Ollama and OpenAI integration with LangSmith tracking."""
 
 import logging
+import os
 from typing import Dict, Any, Optional, Union
 from abc import ABC, abstractmethod
 import json
 import time
 
 logger = logging.getLogger(__name__)
+
+# LangSmith/LangChain tracking setup
+_langsmith_initialized = False
+_langsmith_callbacks = None
+
+def setup_langsmith_tracking(api_key: Optional[str] = None, 
+                            project: str = "intelli-odm",
+                            endpoint: str = "https://api.smith.langchain.com",
+                            enabled: bool = False):
+    """
+    Setup LangSmith tracking for agent call monitoring using LangChain callbacks.
+    
+    Args:
+        api_key: LangSmith API key
+        project: Project name for tracking
+        endpoint: LangSmith API endpoint
+        enabled: Whether to enable tracking
+    """
+    global _langsmith_initialized, _langsmith_callbacks
+    
+    if not enabled or not api_key:
+        os.environ.pop("LANGCHAIN_TRACING_V2", None)
+        os.environ.pop("LANGCHAIN_API_KEY", None)
+        os.environ.pop("LANGCHAIN_PROJECT", None)
+        os.environ.pop("LANGCHAIN_ENDPOINT", None)
+        _langsmith_initialized = False
+        _langsmith_callbacks = None
+        return None
+    
+    try:
+        # Set environment variables for LangSmith
+        os.environ["LANGCHAIN_TRACING_V2"] = "true"
+        os.environ["LANGCHAIN_API_KEY"] = api_key
+        os.environ["LANGCHAIN_PROJECT"] = project
+        os.environ["LANGCHAIN_ENDPOINT"] = endpoint
+        
+        # Try to import and setup LangChain callbacks
+        try:
+            from langchain.callbacks import LangChainTracer
+            from langsmith import Client
+            
+            # Create LangSmith client
+            client = Client(api_key=api_key, api_url=endpoint)
+            
+            # Create callback handler
+            _langsmith_callbacks = LangChainTracer(project_name=project, client=client)
+            _langsmith_initialized = True
+            
+            logger.info(f"LangSmith tracking enabled for project: {project}")
+            return _langsmith_callbacks
+            
+        except ImportError:
+            logger.warning("LangChain not installed. LangSmith tracking may not work. Install with: pip install langchain langsmith")
+            _langsmith_initialized = False
+            _langsmith_callbacks = None
+            return None
+        except Exception as e:
+            logger.warning(f"Failed to setup LangChain callbacks: {e}")
+            # Still set environment variables for basic tracking
+            _langsmith_initialized = True
+            return None
+            
+    except Exception as e:
+        logger.error(f"Failed to setup LangSmith tracking: {e}")
+        _langsmith_initialized = False
+        _langsmith_callbacks = None
+        return None
+
+def get_langsmith_callbacks():
+    """Get LangSmith callbacks if initialized."""
+    return _langsmith_callbacks
 
 class LLMError(Exception):
     """Base exception for LLM operations."""
@@ -46,13 +118,40 @@ class OllamaClient(LLMClient):
             raise LLMError(f"Failed to initialize Ollama client: {e}")
     
     def generate(self, prompt: str, **kwargs) -> Dict[str, Any]:
-        """Generate response using Ollama."""
+        """Generate response using Ollama with LangSmith tracking."""
         try:
             # Extract parameters
             temperature = kwargs.get('temperature', 0.1)
             max_tokens = kwargs.get('max_tokens', 500)
             
-            # Call Ollama API
+            # Get LangSmith callbacks if available
+            callbacks = get_langsmith_callbacks()
+            
+            # Use LangChain wrapper if callbacks are available
+            if callbacks:
+                try:
+                    from langchain_community.llms import Ollama
+                    from langchain.callbacks.manager import CallbackManager
+                    
+                    llm = Ollama(
+                        model=self.model,
+                        base_url=self.base_url,
+                        temperature=temperature,
+                        num_predict=max_tokens,
+                        callback_manager=CallbackManager([callbacks])
+                    )
+                    
+                    response_text = llm.invoke(prompt)
+                    
+                    return {
+                        'response': response_text.strip(),
+                        'model': self.model,
+                        'finish_reason': 'completed'
+                    }
+                except Exception as e:
+                    logger.warning(f"LangChain Ollama wrapper failed, using direct call: {e}")
+            
+            # Fallback to direct Ollama API call
             response = self.client.generate(
                 model=self.model,
                 prompt=prompt,
@@ -100,13 +199,42 @@ class OpenAIClient(LLMClient):
             raise LLMError(f"Failed to initialize OpenAI client: {e}")
     
     def generate(self, prompt: str, **kwargs) -> Dict[str, Any]:
-        """Generate response using OpenAI."""
+        """Generate response using OpenAI with LangSmith tracking."""
         try:
             # Extract parameters
             temperature = kwargs.get('temperature', self.temperature)
             max_tokens = kwargs.get('max_tokens', 500)
             
-            # Call OpenAI API
+            # Get LangSmith callbacks if available
+            callbacks = get_langsmith_callbacks()
+            
+            # Use LangChain wrapper if callbacks are available
+            if callbacks:
+                try:
+                    from langchain_openai import ChatOpenAI
+                    from langchain.callbacks.manager import CallbackManager
+                    from langchain.schema import HumanMessage
+                    
+                    llm = ChatOpenAI(
+                        model=self.model,
+                        temperature=temperature,
+                        max_tokens=max_tokens,
+                        openai_api_key=self.client.api_key,
+                        callback_manager=CallbackManager([callbacks])
+                    )
+                    
+                    messages = [HumanMessage(content=prompt)]
+                    response = llm.invoke(messages)
+                    
+                    return {
+                        'response': response.content.strip(),
+                        'model': self.model,
+                        'finish_reason': 'completed'
+                    }
+                except Exception as e:
+                    logger.warning(f"LangChain OpenAI wrapper failed, using direct call: {e}")
+            
+            # Fallback to direct OpenAI API call
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[
@@ -148,12 +276,19 @@ class LLMClientFactory:
     """Factory for creating LLM clients."""
     
     @staticmethod
-    def create_client(config: Dict[str, Any]) -> LLMClient:
+    def create_client(config: Dict[str, Any], langsmith_config: Optional[Dict[str, Any]] = None) -> LLMClient:
         """
         Create LLM client based on configuration.
         
         Args:
             config: LLM configuration dictionary
+            langsmith_config: Optional LangSmith configuration for tracking
+                {
+                    'enabled': bool,
+                    'api_key': str,
+                    'project': str,
+                    'endpoint': str
+                }
             
         Returns:
             LLM client instance
@@ -161,6 +296,15 @@ class LLMClientFactory:
         Raises:
             LLMError: If client creation fails
         """
+        # Setup LangSmith tracking if configured
+        if langsmith_config:
+            setup_langsmith_tracking(
+                api_key=langsmith_config.get('api_key'),
+                project=langsmith_config.get('project', 'intelli-odm'),
+                endpoint=langsmith_config.get('endpoint', 'https://api.smith.langchain.com'),
+                enabled=langsmith_config.get('enabled', False)
+            )
+        
         provider = config.get('provider', 'ollama')
         
         if provider == 'ollama':

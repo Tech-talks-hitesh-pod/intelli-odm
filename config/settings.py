@@ -49,6 +49,12 @@ class Settings(BaseSettings):
     debug_mode: bool = Field(default=False, description="Enable debug mode", alias="demo_mode")
     enable_profiling: bool = Field(default=False, description="Enable performance profiling")
     
+    # LangSmith / LangChain Observability
+    langchain_tracing_v2: bool = Field(default=False, description="Enable LangSmith tracing")
+    langchain_project: str = Field(default="intelli-odm", description="LangSmith project name")
+    langchain_api_key: Optional[str] = Field(default=None, description="LangSmith API key")
+    langchain_endpoint: str = Field(default="https://api.smith.langchain.com", description="LangSmith API endpoint")
+    
     # Streamlit UI
     streamlit_port: int = Field(default=8501, description="Streamlit port")
     streamlit_host: str = Field(default="localhost", description="Streamlit host")
@@ -95,6 +101,15 @@ class Settings(BaseSettings):
             "pack_size": self.default_pack_size,
             "lead_time_days": self.default_lead_time_days,
             "safety_stock_factor": self.default_safety_stock_factor
+        }
+    
+    def get_langsmith_config(self) -> Dict[str, Any]:
+        """Get LangSmith configuration for tracking."""
+        return {
+            "enabled": self.langchain_tracing_v2,
+            "api_key": self.langchain_api_key,
+            "project": self.langchain_project,
+            "endpoint": self.langchain_endpoint
         }
     
     model_config = {

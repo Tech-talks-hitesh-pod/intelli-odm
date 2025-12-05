@@ -173,8 +173,8 @@ CHROMA_PERSIST_DIRECTORY=data/chroma_db
 
 # Observability Configuration
 LANGCHAIN_TRACING_V2=true
-LANGCHAIN_PROJECT=intelli-odm-demo
-# LANGCHAIN_API_KEY=your_langsmith_api_key_here
+LANGCHAIN_PROJECT=pr-clear-beauty-56 #intelli-odm-demo
+LANGCHAIN_API_KEY=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 
 
 # Demo Configuration
 DEMO_MODE=false

@@ -15,55 +15,130 @@ class TestDataGenerator:
         np.random.seed(seed)
         random.seed(seed)
         
+        # Realistic fashion product names by category
+        self.product_names = {
+            'TSHIRT': [
+                'Classic Crew Neck T-Shirt', 'Premium Cotton Tee', 'V-Neck Casual T-Shirt',
+                'Relaxed Fit T-Shirt', 'Slim Fit Basic Tee', 'Oversized Comfort T-Shirt',
+                'Graphic Print T-Shirt', 'Striped Casual Tee', 'Pocket T-Shirt',
+                'Henley Style T-Shirt', 'Ribbed Knit Tee', 'Organic Cotton T-Shirt'
+            ],
+            'POLO': [
+                'Classic Polo Shirt', 'Pique Polo T-Shirt', 'Performance Polo',
+                'Long Sleeve Polo', 'Striped Polo Shirt', 'Embroidered Polo',
+                'Premium Cotton Polo', 'Athletic Fit Polo', 'Business Casual Polo',
+                'Color Block Polo', 'Mesh Polo Shirt', 'Golf Polo Shirt'
+            ],
+            'DRESS': [
+                'A-Line Summer Dress', 'Floral Print Maxi Dress', 'Casual Midi Dress',
+                'Wrap Style Dress', 'Bodycon Party Dress', 'Shift Dress',
+                'Sundress with Pockets', 'Cocktail Dress', 'Office Formal Dress',
+                'Boho Chic Dress', 'Linen Blend Dress', 'Chiffon Evening Dress'
+            ],
+            'JEANS': [
+                'Slim Fit Denim Jeans', 'Regular Fit Jeans', 'Skinny Fit Jeans',
+                'Relaxed Fit Jeans', 'Straight Leg Jeans', 'Bootcut Jeans',
+                'High Waist Jeans', 'Distressed Denim Jeans', 'Stretch Comfort Jeans',
+                'Vintage Wash Jeans', 'Black Denim Jeans', 'Wide Leg Jeans'
+            ],
+            'SHIRT': [
+                'Formal Cotton Shirt', 'Casual Linen Shirt', 'Oxford Button-Down Shirt',
+                'Checked Pattern Shirt', 'Striped Business Shirt', 'Short Sleeve Shirt',
+                'Long Sleeve Casual Shirt', 'Denim Shirt', 'Flannel Shirt',
+                'Chambray Shirt', 'Poplin Dress Shirt', 'Relaxed Fit Shirt'
+            ],
+            'KURTA': [
+                'Cotton Kurta', 'Linen Kurta', 'Printed Kurta',
+                'Embroidered Kurta', 'Anarkali Kurta', 'Straight Cut Kurta',
+                'A-Line Kurta', 'Designer Kurta', 'Party Wear Kurta',
+                'Casual Kurta', 'Festive Kurta', 'Chikankari Kurta'
+            ],
+            'SALWAR': [
+                'Cotton Salwar', 'Churidar Salwar', 'Palazzo Salwar',
+                'Printed Salwar', 'Solid Color Salwar', 'Designer Salwar',
+                'Comfort Fit Salwar', 'Elastic Waist Salwar', 'Ankle Length Salwar',
+                'Wide Leg Salwar', 'Trouser Style Salwar', 'Traditional Salwar'
+            ],
+            'TOP': [
+                'Crop Top', 'Peplum Top', 'Off-Shoulder Top',
+                'Cold Shoulder Top', 'Ruffle Sleeve Top', 'Tie-Up Top',
+                'Wrap Top', 'Tunic Top', 'Blouse Style Top',
+                'Knot Front Top', 'Asymmetric Top', 'Bardot Top'
+            ]
+        }
+        
         # Fashion categories and attributes
         self.categories = {
             'TSHIRT': {
-                'materials': ['Cotton', 'Polyester', 'Cotton Blend'],
-                'colors': ['White', 'Black', 'Navy', 'Gray', 'Red', 'Blue'],
-                'patterns': ['Solid', 'Stripes', 'Printed', 'Logo'],
+                'materials': ['Cotton', 'Polyester', 'Cotton Blend', 'Organic Cotton', 'Modal'],
+                'colors': ['White', 'Black', 'Navy', 'Gray', 'Red', 'Blue', 'Green', 'Yellow', 'Pink'],
+                'patterns': ['Solid', 'Stripes', 'Printed', 'Logo', 'Graphic', 'Abstract'],
                 'sleeves': ['Short', 'Long', 'Sleeveless'],
-                'necklines': ['Crew', 'V-neck', 'Scoop'],
+                'necklines': ['Crew', 'V-neck', 'Scoop', 'Henley'],
                 'price_range': (199, 799)
             },
             'POLO': {
-                'materials': ['Cotton', 'Pique Cotton', 'Cotton Blend'],
-                'colors': ['White', 'Navy', 'Black', 'Gray', 'Green', 'Blue'],
-                'patterns': ['Solid', 'Stripes', 'Embroidered'],
-                'sleeves': ['Short'],
+                'materials': ['Cotton', 'Pique Cotton', 'Cotton Blend', 'Performance Fabric'],
+                'colors': ['White', 'Navy', 'Black', 'Gray', 'Green', 'Blue', 'Red', 'Maroon'],
+                'patterns': ['Solid', 'Stripes', 'Embroidered', 'Color Block'],
+                'sleeves': ['Short', 'Long'],
                 'necklines': ['Polo Collar'],
                 'price_range': (299, 999)
             },
             'DRESS': {
-                'materials': ['Cotton', 'Polyester', 'Chiffon', 'Crepe'],
-                'colors': ['Black', 'Navy', 'Red', 'Blue', 'Floral', 'White'],
-                'patterns': ['Solid', 'Floral', 'Printed', 'Abstract'],
-                'sleeves': ['Short', 'Long', 'Sleeveless'],
-                'necklines': ['Round', 'V-neck', 'Square'],
+                'materials': ['Cotton', 'Polyester', 'Chiffon', 'Crepe', 'Linen', 'Georgette'],
+                'colors': ['Black', 'Navy', 'Red', 'Blue', 'Floral', 'White', 'Pink', 'Green', 'Yellow'],
+                'patterns': ['Solid', 'Floral', 'Printed', 'Abstract', 'Geometric', 'Polka Dots'],
+                'sleeves': ['Short', 'Long', 'Sleeveless', 'Cap Sleeves'],
+                'necklines': ['Round', 'V-neck', 'Square', 'Off-Shoulder', 'Halter'],
                 'price_range': (599, 1999)
             },
             'JEANS': {
-                'materials': ['Denim', 'Stretch Denim'],
-                'colors': ['Blue', 'Black', 'Gray', 'White'],
-                'patterns': ['Solid', 'Faded', 'Distressed'],
+                'materials': ['Denim', 'Stretch Denim', 'Raw Denim'],
+                'colors': ['Blue', 'Black', 'Gray', 'White', 'Light Blue', 'Dark Blue'],
+                'patterns': ['Solid', 'Faded', 'Distressed', 'Vintage Wash'],
                 'sleeves': ['Full Length'],
-                'fits': ['Slim', 'Regular', 'Relaxed', 'Skinny'],
+                'fits': ['Slim', 'Regular', 'Relaxed', 'Skinny', 'Straight', 'Bootcut'],
                 'price_range': (799, 2499)
             },
             'SHIRT': {
-                'materials': ['Cotton', 'Linen', 'Cotton Blend'],
-                'colors': ['White', 'Blue', 'Black', 'Gray', 'Striped'],
-                'patterns': ['Solid', 'Checks', 'Stripes', 'Printed'],
+                'materials': ['Cotton', 'Linen', 'Cotton Blend', 'Poplin', 'Chambray'],
+                'colors': ['White', 'Blue', 'Black', 'Gray', 'Striped', 'Checked'],
+                'patterns': ['Solid', 'Checks', 'Stripes', 'Printed', 'Denim'],
                 'sleeves': ['Short', 'Long'],
-                'necklines': ['Collar', 'Band Collar'],
+                'necklines': ['Collar', 'Band Collar', 'Button-Down'],
                 'price_range': (399, 1499)
+            },
+            'KURTA': {
+                'materials': ['Cotton', 'Linen', 'Chiffon', 'Silk', 'Georgette'],
+                'colors': ['White', 'Beige', 'Blue', 'Pink', 'Green', 'Red', 'Yellow', 'Printed'],
+                'patterns': ['Solid', 'Printed', 'Embroidered', 'Floral', 'Geometric'],
+                'sleeves': ['Short', 'Long', 'Three-Quarter'],
+                'necklines': ['Round', 'V-neck', 'Mandarin', 'Boat Neck'],
+                'price_range': (499, 1999)
+            },
+            'SALWAR': {
+                'materials': ['Cotton', 'Linen', 'Chiffon', 'Georgette'],
+                'colors': ['Black', 'Navy', 'Beige', 'White', 'Printed', 'Solid'],
+                'patterns': ['Solid', 'Printed', 'Embroidered', 'Striped'],
+                'fits': ['Regular', 'Churidar', 'Palazzo', 'Wide Leg'],
+                'price_range': (399, 1299)
+            },
+            'TOP': {
+                'materials': ['Cotton', 'Polyester', 'Linen', 'Chiffon'],
+                'colors': ['White', 'Black', 'Navy', 'Red', 'Pink', 'Yellow', 'Printed'],
+                'patterns': ['Solid', 'Printed', 'Striped', 'Floral'],
+                'sleeves': ['Short', 'Sleeveless', 'Three-Quarter', 'Bell Sleeves'],
+                'necklines': ['Round', 'V-neck', 'Off-Shoulder', 'Halter'],
+                'price_range': (299, 899)
             }
         }
         
-        # Store information
+        # Store information - increased for more data
         self.store_tiers = {
-            'Tier_1': {'count': 10, 'performance_factor': 1.3},
-            'Tier_2': {'count': 15, 'performance_factor': 1.0},
-            'Tier_3': {'count': 12, 'performance_factor': 0.7}
+            'Tier_1': {'count': 20, 'performance_factor': 1.3},
+            'Tier_2': {'count': 30, 'performance_factor': 1.0},
+            'Tier_3': {'count': 25, 'performance_factor': 0.7}
         }
         
         # Seasonal patterns
@@ -77,11 +152,17 @@ class TestDataGenerator:
             'JEANS': {1: 1.1, 2: 1.0, 3: 0.9, 4: 0.8, 5: 0.7, 6: 0.8,
                      7: 0.9, 8: 1.0, 9: 1.2, 10: 1.3, 11: 1.2, 12: 1.1},
             'SHIRT': {1: 1.0, 2: 1.0, 3: 1.1, 4: 1.2, 5: 1.1, 6: 1.0,
-                     7: 1.0, 8: 1.0, 9: 1.1, 10: 1.2, 11: 1.1, 12: 1.0}
+                     7: 1.0, 8: 1.0, 9: 1.1, 10: 1.2, 11: 1.1, 12: 1.0},
+            'KURTA': {1: 1.2, 2: 1.3, 3: 1.1, 4: 1.0, 5: 0.9, 6: 0.8,
+                     7: 0.7, 8: 0.8, 9: 1.0, 10: 1.2, 11: 1.4, 12: 1.5},  # Festive seasons
+            'SALWAR': {1: 1.2, 2: 1.3, 3: 1.1, 4: 1.0, 5: 0.9, 6: 0.8,
+                      7: 0.7, 8: 0.8, 9: 1.0, 10: 1.2, 11: 1.4, 12: 1.5},
+            'TOP': {1: 0.8, 2: 0.9, 3: 1.2, 4: 1.3, 5: 1.4, 6: 1.3,
+                   7: 1.2, 8: 1.1, 9: 1.0, 10: 0.9, 11: 0.8, 12: 0.9}
         }
     
-    def generate_products(self, num_products=100):
-        """Generate product catalog."""
+    def generate_products(self, num_products=500):
+        """Generate product catalog with realistic fashion product names."""
         products = []
         
         for i in range(num_products):
@@ -89,28 +170,46 @@ class TestDataGenerator:
             category = random.choice(list(self.categories.keys()))
             cat_attrs = self.categories[category]
             
+            # Use realistic product name if available
+            if category in self.product_names:
+                base_name = random.choice(self.product_names[category])
+            else:
+                base_name = f"{category} Product"
+            
             # Generate product attributes
             material = random.choice(cat_attrs['materials'])
             color = random.choice(cat_attrs['colors'])
             pattern = random.choice(cat_attrs['patterns'])
             
-            # Generate description
-            description_parts = [color, material, category.lower()]
+            # Build detailed description
+            description_parts = [color]
+            if pattern != 'Solid':
+                description_parts.append(pattern)
+            description_parts.append(material)
+            description_parts.append(base_name)
+            
             if 'sleeves' in cat_attrs:
                 sleeve = random.choice(cat_attrs['sleeves'])
-                description_parts.append(f"{sleeve.lower()} sleeve")
+                if sleeve != 'Full Length':  # Skip for jeans
+                    description_parts.append(f"with {sleeve.lower()} sleeves")
             
             if 'necklines' in cat_attrs:
                 neckline = random.choice(cat_attrs['necklines'])
-                if neckline != 'Collar':
-                    description_parts.append(neckline.lower())
+                if neckline not in ['Collar', 'Polo Collar']:
+                    description_parts.append(f"{neckline.lower()} neck")
             
-            description_parts.append(pattern.lower())
+            if 'fits' in cat_attrs:
+                fit = random.choice(cat_attrs['fits'])
+                description_parts.append(f"{fit.lower()} fit")
+            
+            # Create full description
+            full_description = ' '.join(description_parts)
             
             products.append({
-                'product_id': f'P{i+1:03d}',
-                'vendor_sku': f'V-{category[:3]}-{i+1:03d}',
-                'description': ' '.join(description_parts),
+                'product_id': f'P{i+1:04d}',
+                'vendor_sku': f'V-{category[:3]}-{i+1:04d}',
+                'name': base_name,
+                'description': full_description,
                 'category': category,
                 'color': color,
                 'material': material,
@@ -261,8 +360,8 @@ class TestDataGenerator:
         
         return pd.DataFrame(pricing_records)
     
-    def generate_all_data(self, output_dir='data/sample', num_products=100, 
-                         start_date='2024-01-01', days=365):
+    def generate_all_data(self, output_dir='data/sample', num_products=500, 
+                         start_date='2023-01-01', days=730):
         """Generate complete dataset."""
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
@@ -327,9 +426,9 @@ class TestDataGenerator:
 def main():
     """Main function for command line usage."""
     parser = argparse.ArgumentParser(description='Generate test data for Intelli-ODM')
-    parser.add_argument('--products', type=int, default=100, help='Number of products to generate')
-    parser.add_argument('--days', type=int, default=365, help='Number of days of sales data')
-    parser.add_argument('--start-date', default='2024-01-01', help='Start date for sales data (YYYY-MM-DD)')
+    parser.add_argument('--products', type=int, default=500, help='Number of products to generate')
+    parser.add_argument('--days', type=int, default=730, help='Number of days of sales data (default: 2 years)')
+    parser.add_argument('--start-date', default='2023-01-01', help='Start date for sales data (YYYY-MM-DD)')
     parser.add_argument('--output-dir', default='data/sample', help='Output directory')
     parser.add_argument('--seed', type=int, default=42, help='Random seed for reproducibility')
     

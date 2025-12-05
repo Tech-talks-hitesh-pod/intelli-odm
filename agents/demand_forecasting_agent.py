@@ -25,15 +25,19 @@ class DemandForecastingAgent:
     Includes price sensitivity analysis and confidence estimation.
     """
     
-    def __init__(self, llm_client: LLMClient, config: Optional[Dict] = None):
+    def __init__(self, llm_client: LLMClient, 
+                 knowledge_base: Optional[Any] = None,
+                 config: Optional[Dict] = None):
         """
         Initialize with LLM client for method selection guidance.
         
         Args:
             llm_client: LLM client for reasoning about forecast methods
+            knowledge_base: Optional knowledge base (for future use)
             config: Agent configuration
         """
         self.llm_client = llm_client
+        self.knowledge_base = knowledge_base
         self.config = config or DEMAND_FORECASTING_CONFIG
         
         # Initialize forecasting models

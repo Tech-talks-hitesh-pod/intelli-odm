@@ -57,12 +57,23 @@ class KnowledgeBasePopulator:
                 # Get performance data
                 perf_data = performance_metrics.get(product_id, {})
                 
+                # Use name field if available, otherwise use description
+                product_name = product.get('name', product.get('description', ''))
+                product_description = product.get('description', '')
+                
+                # Enhance description with name if different
+                if product_name and product_name != product_description:
+                    full_description = f"{product_name}. {product_description}"
+                else:
+                    full_description = product_description or product_name
+                
                 # Store in knowledge base
                 success = self.kb.store_product(
                     product_id=product_id,
                     attributes=attributes,
-                    description=product.get('description', ''),
+                    description=full_description,
                     metadata={
+                        'product_name': product_name,  # Store name separately
                         'performance': perf_data,
                         'price_range': {
                             'min': product.get('price_min', 0),

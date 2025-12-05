@@ -193,8 +193,18 @@ class SharedKnowledgeBase:
                     # Parse stored attributes
                     stored_attributes = json.loads(metadata.get("attributes", "{}"))
                     
+                    # Get product name from metadata if available
+                    product_name = metadata.get("product_name", metadata.get("description", ""))
+                    if not product_name:
+                        # Try to extract from description
+                        description = metadata.get("description", "")
+                        if description:
+                            # Take first part as name
+                            product_name = description.split('.')[0] if '.' in description else description.split('\n')[0]
+                    
                     similar_products.append({
                         "product_id": product_id,
+                        "name": product_name,  # Add name field
                         "similarity_score": similarity_score,
                         "attributes": stored_attributes,
                         "description": metadata.get("description", ""),

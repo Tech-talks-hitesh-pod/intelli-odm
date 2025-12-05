@@ -8,6 +8,8 @@ from datetime import datetime, timedelta
 from config.agent_configs import PROCUREMENT_AGENT_CONFIG
 from shared_knowledge_base import SharedKnowledgeBase
 from utils.llm_client import LLMClient, LLMError, retry_llm_call
+from utils.prompt_builder import PromptBuilder
+from utils.data_summarizer import DataSummarizer
 
 try:
     import pulp
@@ -41,6 +43,8 @@ class ProcurementAllocationAgent:
         self.llm_client = llm_client
         self.knowledge_base = knowledge_base
         self.config = config or PROCUREMENT_AGENT_CONFIG
+        self.prompt_builder = PromptBuilder()
+        self.data_summarizer = DataSummarizer()
         
         if pulp is None:
             logger.warning("PuLP not available - optimization features limited")
@@ -506,6 +510,148 @@ Keep response concise and actionable.
             logger.warning(f"Failed to get LLM procurement insights: {e}")
             return f"Optimization completed successfully with {optimization_result['summary']['products_to_order']} products recommended for procurement."
 
+    def evaluate_new_product(self, product_description: str, 
+                            product_attributes: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Evaluate a new product for procurement using LLM with historical data context.
+        
+        Args:
+            product_description: Description of the new product
+            product_attributes: Attributes of the new product
+            
+        Returns:
+            Procurement evaluation with viability score and recommendations
+        """
+        logger.info(f"Evaluating new product: {product_description}")
+        
+        try:
+            # Find similar products from knowledge base
+            similar_products = self.knowledge_base.find_similar_products(
+                query_attributes=product_attributes,
+                query_description=product_description,
+                top_k=5
+            )
+            
+            # Get sales data for similar products
+            similar_products_data = []
+            for similar in similar_products:
+                product_id = similar['product_id']
+                perf_data = self.knowledge_base.get_product_performance(product_id)
+                
+                product_data = {
+                    'product_id': product_id,
+                    'name': similar.get('description', 'Unknown'),
+                    'attributes': similar.get('attributes', {}),
+                    'similarity_score': similar.get('similarity_score', 0.0)
+                }
+                
+                # Extract sales data from performance records
+                if perf_data:
+                    latest_perf = perf_data[-1].get('data', {})
+                    product_data['sales'] = {
+                        'total_units': latest_perf.get('total_units_sold', 0),
+                        'total_revenue': latest_perf.get('total_revenue', 0),
+                        'avg_monthly_units': latest_perf.get('avg_monthly_sales', 0)
+                    }
+                
+                similar_products_data.append(product_data)
+            
+            # Also get from data summarizer
+            data_similar = self.data_summarizer.get_similar_products_data(
+                attributes=product_attributes,
+                top_k=3
+            )
+            
+            # Merge and deduplicate
+            existing_ids = {p['product_id'] for p in similar_products_data}
+            for data_product in data_similar:
+                if data_product['product_id'] not in existing_ids:
+                    similar_products_data.append(data_product)
+            
+            # Build prompt with data context
+            prompt = self.prompt_builder.build_procurement_prompt(
+                product_description=product_description,
+                product_attributes=product_attributes,
+                similar_products_data=similar_products_data
+            )
+            
+            # Get LLM recommendation
+            response = retry_llm_call(
+                self.llm_client,
+                prompt,
+                max_retries=3,
+                temperature=0.2,
+                max_tokens=1000
+            )
+            
+            # Parse response (try to extract structured data)
+            llm_response = response.get('response', '')
+            
+            # Try to extract viability score
+            viability_score = 0.5  # Default
+            if 'viability' in llm_response.lower() or 'score' in llm_response.lower():
+                import re
+                score_match = re.search(r'(?:viability|score)[:\s]+([0-9.]+)', llm_response, re.IGNORECASE)
+                if score_match:
+                    try:
+                        viability_score = float(score_match.group(1))
+                        if viability_score > 1.0:
+                            viability_score = viability_score / 100.0  # Convert percentage
+                    except:
+                        pass
+            
+            # Try to extract recommended quantity
+            recommended_quantity = 0
+            if 'procure' in llm_response.lower() or 'quantity' in llm_response.lower():
+                qty_match = re.search(r'(?:procure|quantity|units?)[:\s]+([0-9,]+)', llm_response, re.IGNORECASE)
+                if qty_match:
+                    try:
+                        recommended_quantity = int(qty_match.group(1).replace(',', ''))
+                    except:
+                        pass
+            
+            # Determine recommendation
+            should_procure = viability_score >= 0.6 and recommended_quantity > 0
+            
+            evaluation_result = {
+                'should_procure': should_procure,
+                'viability_score': viability_score,
+                'recommended_quantity': recommended_quantity,
+                'similar_products_found': len(similar_products_data),
+                'similar_products': similar_products_data[:3],  # Top 3
+                'llm_analysis': llm_response,
+                'reasoning': self._extract_reasoning(llm_response),
+                'confidence': min(1.0, len(similar_products_data) / 5.0)  # More similar products = higher confidence
+            }
+            
+            logger.info(f"Product evaluation completed - Viability: {viability_score:.2f}, Should Procure: {should_procure}")
+            return evaluation_result
+            
+        except Exception as e:
+            logger.error(f"Failed to evaluate new product: {e}")
+            return {
+                'should_procure': False,
+                'viability_score': 0.0,
+                'recommended_quantity': 0,
+                'error': str(e),
+                'confidence': 0.0
+            }
+    
+    def _extract_reasoning(self, llm_response: str) -> str:
+        """Extract reasoning from LLM response."""
+        # Try to find reasoning section
+        reasoning_keywords = ['reasoning', 'analysis', 'because', 'due to', 'considering']
+        lines = llm_response.split('\n')
+        reasoning_lines = []
+        
+        for i, line in enumerate(lines):
+            if any(keyword in line.lower() for keyword in reasoning_keywords):
+                # Take next few lines as reasoning
+                reasoning_lines.extend(lines[i:min(i+5, len(lines))])
+                break
+        
+        return '\n'.join(reasoning_lines) if reasoning_lines else llm_response[:500]
+    
     def run(self, demand_forecast: Dict[str, Any], inventory: Dict[str, int], 
             price: Dict[str, Any]) -> Dict[str, Any]:
         """

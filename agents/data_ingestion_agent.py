@@ -7,6 +7,8 @@ from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from pathlib import Path
 from config.agent_configs import DATA_INGESTION_CONFIG
+from shared_knowledge_base import SharedKnowledgeBase
+from utils.llm_client import LLMClient
 
 logger = logging.getLogger(__name__)
 
@@ -22,8 +24,19 @@ class DataIngestionAgent:
     and feature engineering for downstream analysis.
     """
     
-    def __init__(self, config: Optional[Dict] = None):
-        """Initialize with configuration."""
+    def __init__(self, llm_client: Optional[LLMClient] = None, 
+                 knowledge_base: Optional[SharedKnowledgeBase] = None,
+                 config: Optional[Dict] = None):
+        """
+        Initialize with configuration.
+        
+        Args:
+            llm_client: Optional LLM client (for future use)
+            knowledge_base: Optional knowledge base (for future use)
+            config: Agent configuration
+        """
+        self.llm_client = llm_client
+        self.knowledge_base = knowledge_base
         self.config = config or DATA_INGESTION_CONFIG
         
     def validate(self, files: Dict[str, str]) -> Dict[str, pd.DataFrame]:
