@@ -1,0 +1,29 @@
+# docker-compose.mac.yml
+# macOS-specific optimizations for docker-compose
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.mac.yml up
+
+version: '3.8'
+
+services:
+  intelli-odm:
+    # macOS-specific volume optimizations
+    # Use delegated mode for better performance
+    volumes:
+      # Source code with delegated consistency
+      - ./agents:/app/agents:delegated
+      - ./orchestrator.py:/app/orchestrator.py:delegated
+      - ./shared_knowledge_base.py:/app/shared_knowledge_base.py:delegated
+      
+      # Data directories with delegated consistency
+      - ./data:/app/data:delegated
+      - ./logs:/app/logs:delegated
+      - ./chroma_db:/app/chroma_db:delegated
+      - ./models:/app/models:delegated
+      
+      # Config (cached for reads)
+      - ./.env:/app/.env:cached,ro
+    
+    environment:
+      # Explicitly set for macOS Docker Desktop
+      - OLLAMA_URL=http://host.docker.internal:11434
+

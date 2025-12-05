@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  intelli-odm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: intelli-odm
+    
+    # Network mode: host allows container to access Ollama on localhost
+    # On Windows/Mac, use the service below with extra_hosts instead
+    # network_mode: "host"  # Linux only
+    
+    # For Windows/Mac Docker Desktop
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    
+    ports:
+      - "8000:8000"  # For future API/web interface
+    
+    volumes:
+      # Mount source code for development
+      - ./agents:/app/agents
+      - ./orchestrator.py:/app/orchestrator.py
+      - ./shared_knowledge_base.py:/app/shared_knowledge_base.py
+      
+      # Mount data directories
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./chroma_db:/app/chroma_db
+      - ./models:/app/models
+      
+      # Mount config
+      - ./.env:/app/.env:ro
+    
+    environment:
+      # Ollama URL - use host.docker.internal for Windows/Mac
+      - OLLAMA_URL=http://host.docker.internal:11434
+      
+      # Or use environment variables from .env file
+      # These will override the above if .env is mounted
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Resource limits (adjust based on your needs)
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+        reservations:
+          cpus: '2'
+          memory: 4G
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import pandas, numpy, sklearn, chromadb; print('OK')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+# Optional: separate network for future services
+networks:
+  default:
+    name: intelli-odm-network
+

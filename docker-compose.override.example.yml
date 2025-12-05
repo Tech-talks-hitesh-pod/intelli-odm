@@ -1,0 +1,31 @@
+# docker-compose.override.yml.example
+# Copy this to docker-compose.override.yml for local customizations
+# This file is ignored by git
+
+version: '3.8'
+
+services:
+  intelli-odm:
+    # Override environment variables
+    environment:
+      - DEBUG=True
+      - LOG_LEVEL=DEBUG
+      
+    # Override resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '6'
+          memory: 12G
+    
+    # Add additional volumes
+    # volumes:
+    #   - ./custom_data:/app/custom_data
+    
+    # Override command for development
+    # command: python -m pytest -v
+    
+    # Add port mappings for debugging
+    # ports:
+    #   - "5678:5678"  # debugpy
+

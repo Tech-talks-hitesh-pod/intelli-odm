@@ -14,6 +14,13 @@ Your Intelli-ODM project is now configured for **Windows, macOS, and Linux** env
 - ✅ **config.example** - Environment configuration template
 - ✅ **.gitignore** - Comprehensive cross-platform gitignore
 
+### Docker Files
+- ✅ **Dockerfile** - Multi-stage Docker image for Python app
+- ✅ **docker-compose.yml** - Docker Compose configuration
+- ✅ **.dockerignore** - Docker build exclusions
+- ✅ **docker-entrypoint.sh** - Container startup script
+- ✅ **DOCKER.md** - Complete Docker setup guide
+
 ### Setup Scripts
 - ✅ **setup.sh** - Automated setup for macOS/Linux
 - ✅ **setup.bat** - Automated setup for Windows (CMD)
@@ -27,7 +34,23 @@ Your Intelli-ODM project is now configured for **Windows, macOS, and Linux** env
 
 ## 🚀 Quick Start Guide
 
-### Windows
+### 🐳 Docker (Recommended for Windows - No Compiler Issues!)
+
+```cmd
+# Install Docker Desktop & Ollama on host
+# Then:
+docker-compose up --build
+```
+
+**Benefits:** ✅ No VS C++ compiler needed, ✅ No numpy issues, ✅ Clean setup
+
+📖 See `DOCKER.md` for detailed instructions
+
+---
+
+### 💻 Local Installation
+
+**Windows:**
 
 **Option 1: PowerShell**
 ```powershell
@@ -39,7 +62,7 @@ Your Intelli-ODM project is now configured for **Windows, macOS, and Linux** env
 setup.bat
 ```
 
-### macOS / Linux
+**macOS / Linux:**
 ```bash
 chmod +x setup.sh
 ./setup.sh

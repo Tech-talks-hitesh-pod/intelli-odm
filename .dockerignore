@@ -1,0 +1,77 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+.Python
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+!Readme.md
+INSTALL.md
+QUICKSTART.md
+SETUP_SUMMARY.md
+DEPENDENCY_FIX_SUMMARY.md
+
+# Setup scripts (not needed in container)
+setup.sh
+setup.bat
+setup.ps1
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Environment
+.env
+.env.*
+
+# Data directories (will be mounted as volumes)
+data/
+logs/
+chroma_db/
+models/
+outputs/
+results/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+tests/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+

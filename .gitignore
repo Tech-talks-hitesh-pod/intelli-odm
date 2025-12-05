@@ -247,6 +247,14 @@ site/
 .mkdocs_cache/
 
 # ============================================
+# ============================================
+# Docker
+# ============================================
+# Don't ignore Dockerfile and docker-compose.yml - we want these in git
+# But ignore runtime data
+docker-compose.override.yml
+
+# ============================================
 # Project Specific
 # ============================================
 # Add project-specific ignores here

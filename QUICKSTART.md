@@ -12,7 +12,35 @@ cd intelli-odm
 
 ---
 
-## 2️⃣ Run Setup Script
+## 2️⃣ Choose Your Setup Method
+
+### 🐳 Option A: Docker (Recommended for Windows)
+
+**Best for:** Avoiding compiler issues, clean setup, Windows users
+
+```bash
+# 1. Install Docker Desktop
+# Download from: https://docker.com/products/docker-desktop
+
+# 2. Install Ollama on your host machine
+# Download from: https://ollama.com/download/windows
+
+# 3. Pull the model
+ollama pull llama3:8b
+
+# 4. Build and run with Docker
+docker-compose up --build
+```
+
+✅ **Benefits:** No compiler needed, works instantly, isolated environment
+
+📖 **Detailed Guide:** See `DOCKER.md` for complete Docker setup instructions
+
+---
+
+### 💻 Option B: Local Installation
+
+**Best for:** macOS/Linux users, direct development
 
 ### Windows (PowerShell)
 ```powershell
@@ -32,7 +60,7 @@ chmod +x setup.sh
 
 ---
 
-## 3️⃣ Install Ollama
+## 3️⃣ Install Ollama (if not using Docker or already installed)
 
 **Download & Install:**
 - Windows: https://ollama.com/download/windows

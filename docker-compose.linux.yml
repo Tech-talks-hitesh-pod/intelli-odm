@@ -1,0 +1,22 @@
+# docker-compose.linux.yml
+# Linux-specific overrides for docker-compose
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.linux.yml up
+
+version: '3.8'
+
+services:
+  intelli-odm:
+    # On Linux, use host network mode for better performance
+    # This allows direct access to localhost
+    network_mode: "host"
+    
+    # Remove extra_hosts when using host network
+    extra_hosts: []
+    
+    # Remove port mapping (not needed with host network)
+    ports: []
+    
+    environment:
+      # Use localhost on Linux with host network
+      - OLLAMA_URL=http://localhost:11434
+

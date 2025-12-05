@@ -1,0 +1,36 @@
+# docker-compose.windows.yml
+# Windows-specific optimizations for docker-compose
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.windows.yml up
+
+version: '3.8'
+
+services:
+  intelli-odm:
+    # Windows-specific volume optimizations
+    # Use named volumes for better performance on Windows
+    volumes:
+      # Source code (use bind mount for development)
+      - ./agents:/app/agents
+      - ./orchestrator.py:/app/orchestrator.py
+      - ./shared_knowledge_base.py:/app/shared_knowledge_base.py
+      
+      # Data directories (use named volumes for better performance)
+      - data-volume:/app/data
+      - logs-volume:/app/logs
+      - chroma-volume:/app/chroma_db
+      - models-volume:/app/models
+      
+      # Config (bind mount)
+      - ./.env:/app/.env:ro
+    
+    environment:
+      # Explicitly set for Windows Docker Desktop
+      - OLLAMA_URL=http://host.docker.internal:11434
+
+# Named volumes for better Windows performance
+volumes:
+  data-volume:
+  logs-volume:
+  chroma-volume:
+  models-volume:
+
