@@ -18,7 +18,6 @@ Your Intelli-ODM project is now configured for **Windows, macOS, and Linux** env
 - ✅ **setup.sh** - Automated setup for macOS/Linux
 - ✅ **setup.bat** - Automated setup for Windows (CMD)
 - ✅ **setup.ps1** - Automated setup for Windows (PowerShell)
-- ✅ **Makefile** - Cross-platform automation commands
 
 ### Documentation
 - ✅ **INSTALL.md** - Comprehensive installation guide for all platforms
@@ -46,11 +45,6 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-### Using Make (All Platforms)
-```bash
-make install
-```
-
 ---
 
 ## 📋 What Gets Installed
@@ -59,14 +53,20 @@ make install
 - **pandas** (>=2.0.0) - Data processing
 - **numpy** (>=1.24.0) - Numerical computing
 - **scikit-learn** (>=1.3.0) - Machine learning
-
-### Forecasting
-- **prophet** (>=1.1.4) - Time series forecasting
-  - Note: May require additional setup on Windows
-
-### Optimization
 - **pulp** (>=2.7.0) - Linear programming
 - **cvxpy** (>=1.4.0) - Convex optimization
+
+### Optional Dependencies
+
+**Forecasting (install separately if needed):**
+- **prophet** (>=1.1.4) - Time series forecasting
+  - Optional: System works with analogy-based forecasting without it
+  - Windows: Use conda (conda install -c conda-forge prophet)
+  - macOS/Linux: pip install prophet
+- **statsmodels** - Alternative forecasting library
+
+**Advanced Optimization:**
+- **ortools** - Google OR-Tools for complex optimization problems
 
 ### LLM & Embeddings
 - **ollama** (>=0.1.0) - Ollama Python client
@@ -86,8 +86,8 @@ make install
 
 ### Windows
 - ✅ Virtual environment: `.venv\Scripts\activate`
-- ⚠️ Prophet may require Visual C++ Build Tools
-- 💡 Consider using Conda for easier Prophet installation
+- ✅ All core dependencies work without C++ compiler
+- 💡 For Prophet (optional): Use conda (conda install -c conda-forge prophet)
 
 ### macOS
 - ✅ Virtual environment: `source .venv/bin/activate`
@@ -162,18 +162,23 @@ python -c "import pandas, numpy, sklearn, chromadb; print('✅ Success!')"
 
 ---
 
-## 🛠️ Available Make Commands
+## 🛠️ Available Commands
 
 ```bash
-make help        # Show all available commands
-make setup       # Create virtual environment
-make install     # Install all dependencies
-make clean       # Remove cache and venv
-make test        # Run tests
-make lint        # Run linters
-make format      # Format code
-make run         # Run orchestrator
-make jupyter     # Start Jupyter notebook
+# Setup (if not using setup scripts)
+python -m venv .venv
+source .venv/bin/activate  # or .venv\Scripts\activate on Windows
+pip install -r requirements.txt
+
+# Development
+pytest                      # Run tests
+black . && isort .         # Format code
+flake8                     # Run linter
+mypy .                     # Type checking
+jupyter notebook           # Start Jupyter
+
+# Run the system
+python orchestrator.py
 ```
 
 ---
@@ -183,7 +188,6 @@ make jupyter     # Start Jupyter notebook
 ### ✅ Cross-Platform Compatibility
 - Works on Windows, macOS, and Linux
 - Platform-specific installation scripts
-- OS-aware Makefile
 - Comprehensive .gitignore
 
 ### ✅ Version Management
@@ -292,11 +296,11 @@ pip list --outdated
 pip install --upgrade package-name
 ```
 
-### 3. Use Make for Common Tasks
+### 3. Use Development Tools
 ```bash
-make format  # Before committing
-make lint    # Check code quality
-make test    # Run tests
+black . && isort .  # Format before committing
+flake8              # Check code quality
+pytest              # Run tests
 ```
 
 ### 4. Never Commit Secrets

@@ -41,6 +41,8 @@ Write-Host "`n==========================================" -ForegroundColor Cyan
 Write-Host "✅ Setup complete!" -ForegroundColor Green
 Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host ""
+Write-Host "Core dependencies installed successfully!" -ForegroundColor Green
+Write-Host ""
 Write-Host "To activate the virtual environment, run:" -ForegroundColor Yellow
 Write-Host "  .\.venv\Scripts\Activate.ps1" -ForegroundColor White
 Write-Host ""
@@ -49,6 +51,10 @@ Write-Host "  Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUs
 Write-Host ""
 Write-Host "To deactivate, run:" -ForegroundColor Yellow
 Write-Host "  deactivate" -ForegroundColor White
+Write-Host ""
+Write-Host "Optional: Install time-series forecasting support:" -ForegroundColor Yellow
+Write-Host "  conda install -c conda-forge prophet" -ForegroundColor White
+Write-Host "  (Prophet on Windows works best via conda)" -ForegroundColor Gray
 Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Yellow
 Write-Host "  1. Install Ollama: https://ollama.com/download/windows" -ForegroundColor White

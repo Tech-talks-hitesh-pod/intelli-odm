@@ -9,12 +9,11 @@ numpy>=1.24.0
 # ============================================
 scikit-learn>=1.3.0,<1.6.0
 
-# Prophet: Use lightweight version for better cross-platform compatibility
-# For full prophet with Stan backend, see platform-specific notes below
-prophet>=1.1.4,<2.0.0; platform_system != "Windows"
-# Windows users: prophet can be challenging to install due to C++ compiler requirements
-# Alternative: Use statsmodels or install prophet via conda
-# conda install -c conda-forge prophet
+# Note: Prophet is OPTIONAL (see "Optional Dependencies" section below)
+# The system supports multiple forecasting methods including:
+# - Analogy-based forecasting (no additional packages needed)
+# - Regression-based forecasting (uses scikit-learn above)
+# - Time-series forecasting (requires prophet - see optional section)
 
 # ============================================
 # Optimization (cross-platform)
@@ -61,10 +60,29 @@ jsonschema>=4.17.0,<5.0.0
 pyyaml>=6.0,<7.0
 
 # ============================================
-# Optional: Advanced Optimization
+# OPTIONAL DEPENDENCIES
 # ============================================
-# Google OR-Tools (cross-platform but large package)
+# Install these separately based on your needs:
+#
+# For Time-Series Forecasting (Prophet):
+#   pip install prophet>=1.1.4,<2.0.0  # macOS/Linux
+#   conda install -c conda-forge prophet  # Windows (recommended)
+#
+# For Advanced Optimization (OR-Tools):
+#   pip install ortools>=9.7.0,<10.0.0
+#
+# For Alternative Forecasting (Statsmodels):
+#   pip install statsmodels>=0.14.0,<1.0.0
+#
+# Or install using pyproject.toml extras:
+#   pip install -e .[forecasting]    # Installs prophet + statsmodels
+#   pip install -e .[optimization]   # Installs ortools
+#   pip install -e .[all]            # Installs all optional dependencies
+#
+# Uncomment below to include as core dependencies:
+# prophet>=1.1.4,<2.0.0; platform_system != "Windows"
 # ortools>=9.7.0,<10.0.0
+# statsmodels>=0.14.0,<1.0.0
 
 # ============================================
 # Development & Testing
@@ -88,17 +106,18 @@ seaborn>=0.12.0,<1.0.0
 # Platform-Specific Notes
 # ============================================
 # Windows:
-#   - Prophet may require Visual C++ Build Tools
-#   - Alternative: Use conda for prophet installation
-#   - Install Build Tools: https://visualstudio.microsoft.com/downloads/
+#   - All core dependencies work out of the box
+#   - For Prophet (optional): Use conda (conda install -c conda-forge prophet)
+#   - Prophet requires Visual C++ Build Tools if installing via pip
+#   - Build Tools: https://visualstudio.microsoft.com/downloads/
 #
 # macOS (Apple Silicon):
-#   - Some packages may need Rosetta 2 or ARM-native builds
-#   - Use conda-forge for better ARM support
+#   - All core dependencies have ARM-native builds
+#   - For better compatibility with optional packages, use conda-forge
 #
 # Linux:
-#   - Most packages work out of the box
-#   - May need build-essential: sudo apt-get install build-essential
+#   - All core dependencies work out of the box
+#   - May need build-essential for compiling: sudo apt-get install build-essential
 #
 # ============================================
 # Installation Commands by Platform
@@ -108,14 +127,21 @@ seaborn>=0.12.0,<1.0.0
 #   .venv\Scripts\activate
 #   python -m pip install --upgrade pip setuptools wheel
 #   pip install -r requirements.txt
+#   # Optional: pip install prophet (or use conda - see above)
 #
 # macOS/Linux (bash/zsh):
 #   python3 -m venv .venv
 #   source .venv/bin/activate
 #   python -m pip install --upgrade pip setuptools wheel
 #   pip install -r requirements.txt
+#   # Optional: pip install prophet statsmodels
 #
-# Using Conda (recommended for Prophet on Windows):
+# Using pyproject.toml with optional dependencies:
+#   pip install -e .                    # Core only
+#   pip install -e .[forecasting]       # Core + Prophet + Statsmodels
+#   pip install -e .[all]               # Everything
+#
+# Using Conda (if you need Prophet):
 #   conda create -n intelli-odm python=3.10
 #   conda activate intelli-odm
 #   conda install -c conda-forge prophet

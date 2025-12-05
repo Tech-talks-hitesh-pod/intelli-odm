@@ -47,11 +47,17 @@ echo ==========================================
 echo Setup complete!
 echo ==========================================
 echo.
+echo Core dependencies installed successfully!
+echo.
 echo To activate the virtual environment, run:
 echo   .venv\Scripts\activate
 echo.
 echo To deactivate, run:
 echo   deactivate
+echo.
+echo Optional: Install time-series forecasting support:
+echo   conda install -c conda-forge prophet
+echo   (Prophet on Windows works best via conda)
 echo.
 echo Next steps:
 echo   1. Install Ollama: https://ollama.com/download/windows

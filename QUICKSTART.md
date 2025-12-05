@@ -30,11 +30,6 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-### Or Use Make
-```bash
-make install
-```
-
 ---
 
 ## 3️⃣ Install Ollama
@@ -76,22 +71,44 @@ ollama list
 
 ## 🎯 You're Ready!
 
+The core system is installed and ready to use!
+
+**Optional: Time-Series Forecasting**
+```bash
+# Only needed if you want Prophet-based time-series forecasting
+# The system also supports analogy-based and regression forecasting
+
+# macOS/Linux:
+pip install prophet
+
+# Windows (recommended):
+conda install -c conda-forge prophet
+```
+
 **Next Steps:**
 - Read `Readme.md` for full documentation
 - Check `INSTALL.md` for troubleshooting
 - Copy `config.example` to `.env` for configuration
-- Run `make help` to see all available commands
 
 ---
 
 ## 🚀 Common Commands
 
 ```bash
-make test        # Run tests
-make format      # Format code
-make lint        # Check code quality
-make jupyter     # Start Jupyter notebook
-python orchestrator.py  # Run the system
+# Run tests
+pytest
+
+# Format code
+black . && isort .
+
+# Check code quality
+flake8
+
+# Start Jupyter notebook
+jupyter notebook
+
+# Run the system
+python orchestrator.py
 ```
 
 ---

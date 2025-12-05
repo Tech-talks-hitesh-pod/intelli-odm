@@ -81,11 +81,13 @@ pip install -r requirements.txt
 ollama pull llama3:8b
 ```
 
-### Known Issues on Windows
+### Optional: Time-Series Forecasting (Prophet)
 
-**Prophet Installation Issues:**
-- Prophet requires C++ build tools on Windows
-- **Solution 1**: Use Conda instead
+Prophet is **optional** - the system works with analogy-based and regression forecasting without it.
+
+**To install Prophet on Windows (optional):**
+
+**Recommended - Use Conda:**
 ```cmd
 conda create -n intelli-odm python=3.10
 conda activate intelli-odm
@@ -93,9 +95,11 @@ conda install -c conda-forge prophet
 pip install -r requirements.txt
 ```
 
-- **Solution 2**: Install Visual C++ Build Tools
+**Alternative - Use pip with Build Tools:**
+- Install Visual C++ Build Tools first
   - Download from: https://visualstudio.microsoft.com/downloads/
   - Select "Desktop development with C++" workload
+- Then: `pip install prophet`
 
 ---
 
@@ -263,13 +267,17 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 ### Issue: Prophet installation fails
 
-**Solution:**
+**Note:** Prophet is **optional** - the system has alternative forecasting methods.
+
+**If you want Prophet:**
 ```bash
-# Use Conda
+# Recommended: Use Conda (all platforms)
 conda install -c conda-forge prophet
 
-# Or use prophet-lite (no Stan backend)
-pip install prophet --no-binary prophet
+# macOS/Linux: Can use pip
+pip install prophet
+
+# Windows: Conda strongly recommended, or install Visual C++ Build Tools first
 ```
 
 ### Issue: ChromaDB installation fails
@@ -341,7 +349,7 @@ brew install python@3.11
 
 ## Using Conda (Alternative Method - All Platforms)
 
-Conda often provides better cross-platform compatibility:
+Conda often provides better cross-platform compatibility, especially for optional packages like Prophet:
 
 ```bash
 # Create environment
@@ -350,8 +358,11 @@ conda create -n intelli-odm python=3.10
 # Activate environment
 conda activate intelli-odm
 
-# Install conda packages first
-conda install -c conda-forge prophet pandas numpy scikit-learn
+# Install core packages
+conda install -c conda-forge pandas numpy scikit-learn
+
+# Optional: Install prophet for time-series forecasting
+conda install -c conda-forge prophet
 
 # Install remaining packages via pip
 pip install -r requirements.txt
