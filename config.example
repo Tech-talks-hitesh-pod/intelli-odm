@@ -1,0 +1,76 @@
+# ============================================
+# Intelli-ODM Configuration Template
+# ============================================
+# Copy this file to .env and update with your values
+# Never commit .env to version control!
+
+# ============================================
+# Ollama Configuration
+# ============================================
+OLLAMA_URL=http://localhost:11434
+OLLAMA_MODEL=llama3:8b
+OLLAMA_TIMEOUT=300
+OLLAMA_NUM_PREDICT=512
+
+# ============================================
+# Knowledge Base Configuration
+# ============================================
+# Vector DB Type: chroma, faiss, weaviate, pinecone
+KB_TYPE=chroma
+KB_PATH=./chroma_db
+KB_COLLECTION_NAME=intelli_odm_products
+
+# For remote vector DBs (Weaviate, Pinecone, etc.)
+# KB_HOST=localhost
+# KB_PORT=8000
+# KB_API_KEY=your_api_key_here
+
+# ============================================
+# Embedding Model Configuration
+# ============================================
+EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+EMBEDDING_DIMENSION=384
+
+# ============================================
+# Procurement & Allocation Constraints
+# ============================================
+DEFAULT_BUDGET=1000000
+DEFAULT_MOQ=200
+DEFAULT_PACK_SIZE=20
+DEFAULT_STORE_CAPACITY=500
+
+# ============================================
+# Forecasting Configuration
+# ============================================
+FORECAST_HORIZON_DAYS=60
+CONFIDENCE_LEVEL=0.95
+DEFAULT_PRICE_OPTIONS=299,349,399
+
+# ============================================
+# Data Paths
+# ============================================
+DATA_INPUT_PATH=./data/input
+DATA_OUTPUT_PATH=./data/output
+MODELS_PATH=./models
+
+# ============================================
+# Logging Configuration
+# ============================================
+LOG_LEVEL=INFO
+LOG_FILE=./logs/intelli_odm.log
+LOG_FORMAT=%(asctime)s - %(name)s - %(levelname)s - %(message)s
+
+# ============================================
+# Development Settings
+# ============================================
+DEBUG=False
+VERBOSE=False
+
+# ============================================
+# Performance Settings
+# ============================================
+MAX_WORKERS=4
+BATCH_SIZE=100
+CACHE_ENABLED=True
+CACHE_TTL=3600
+
