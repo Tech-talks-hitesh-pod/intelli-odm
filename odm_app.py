@@ -104,6 +104,109 @@ def load_odm_data(_kb, _data_agent):
         st.error(f"Failed to load ODM data: {e}")
         return None
 
+@st.cache_data
+def load_store_data():
+    """Load store information from historical dataset."""
+    try:
+        historical_file = "data/sample/odm_historical_dataset_5000.csv"
+        df = pd.read_csv(historical_file)
+        
+        # Get unique stores with their details
+        stores = df[['StoreID', 'StoreName', 'City', 'ClimateTag']].drop_duplicates()
+        stores = stores.sort_values('StoreID')
+        
+        logger.info(f"✅ Loaded {len(stores)} unique stores")
+        return stores.to_dict('records')
+        
+    except Exception as e:
+        logger.error(f"❌ Failed to load store data: {e}")
+        return []
+
+def get_weather_factor(climate_tag: str, product_description: str) -> float:
+    """Calculate weather factor based on climate and product type."""
+    description_lower = product_description.lower()
+    climate_lower = str(climate_tag).lower()
+    
+    # Winter products
+    winter_keywords = ['winter', 'wool', 'sweater', 'jacket', 'coat', 'blazer', 'warm']
+    # Summer products
+    summer_keywords = ['summer', 'cotton', 'linen', 't-shirt', 'tshirt', 'shorts', 'light']
+    # Monsoon products
+    monsoon_keywords = ['rain', 'waterproof', 'monsoon', 'windcheater']
+    
+    # Determine product type
+    is_winter_product = any(kw in description_lower for kw in winter_keywords)
+    is_summer_product = any(kw in description_lower for kw in summer_keywords)
+    is_monsoon_product = any(kw in description_lower for kw in monsoon_keywords)
+    
+    # Climate-based factors
+    if 'winter' in climate_lower or 'cold' in climate_lower:
+        if is_winter_product:
+            return 1.5  # High demand
+        elif is_summer_product:
+            return 0.6  # Low demand
+        else:
+            return 1.0
+    elif 'hot' in climate_lower or 'humid' in climate_lower:
+        if is_summer_product:
+            return 1.5  # High demand
+        elif is_winter_product:
+            return 0.6  # Low demand
+        else:
+            return 1.0
+    elif 'mild' in climate_lower or 'pleasant' in climate_lower:
+        return 1.2  # Good for all products
+    elif 'monsoon' in climate_lower or 'rain' in climate_lower:
+        if is_monsoon_product:
+            return 1.4
+        else:
+            return 0.8
+    elif 'festive' in climate_lower:
+        return 1.3  # Festive season boost
+    else:
+        return 1.0  # Neutral
+
+def generate_store_predictions(base_prediction: int, product_description: str, stores: List[Dict]) -> List[Dict]:
+    """Generate store-wise predictions based on base prediction and store characteristics."""
+    predictions = []
+    
+    for store in stores:
+        store_id = store.get('StoreID', '')
+        store_name = store.get('StoreName', '')
+        city = store.get('City', '')
+        climate = store.get('ClimateTag', '')
+        
+        # Calculate weather factor
+        weather_factor = get_weather_factor(climate, product_description)
+        
+        # Calculate predicted demand for this store
+        predicted_demand = int(base_prediction * weather_factor)
+        
+        # Determine recommendation
+        if predicted_demand >= 1000:
+            recommendation = 'HIGH_PRIORITY_BUY'
+        elif predicted_demand >= 500:
+            recommendation = 'BUY'
+        elif predicted_demand >= 200:
+            recommendation = 'MODERATE_BUY'
+        else:
+            recommendation = 'LOW_QUANTITY'
+        
+        predictions.append({
+            'store_id': store_id,
+            'store_name': store_name,
+            'city': city,
+            'climate': climate,
+            'predicted_demand': predicted_demand,
+            'weather_factor': weather_factor,
+            'recommendation': recommendation
+        })
+    
+    # Sort by predicted demand (descending)
+    predictions.sort(key=lambda x: x['predicted_demand'], reverse=True)
+    
+    return predictions
+
 def show_data_summary(data_summary: Dict[str, Any]):
     """Display ODM data summary on landing screen."""
     st.header("📊 ODM Data Summary")
@@ -210,8 +313,11 @@ def search_indexed_products(kb: SharedKnowledgeBase, query: str) -> List[Dict[st
         logger.error(f"❌ Search failed: {e}")
         return []
 
-def get_status_indicator(recommendation: str, confidence: float, predicted_sales: int) -> Dict[str, str]:
-    """Get Red/Yellow/Green status indicator based on recommendation and confidence."""
+def get_status_indicator(recommendation: str, confidence: float, predicted_sales: int, total_store_demand: int = 0) -> Dict[str, str]:
+    """Get Red/Yellow/Green status indicator based on recommendation, confidence, and sales predictions."""
+    
+    # Use total store demand if available, otherwise use predicted_sales
+    effective_sales = total_store_demand if total_store_demand > 0 else predicted_sales
     
     if recommendation == 'AVOID' or predicted_sales == 0:
         return {
@@ -219,13 +325,17 @@ def get_status_indicator(recommendation: str, confidence: float, predicted_sales
             'message': '🔴 RED - DO NOT PROCURE',
             'description': 'High risk, avoid procurement'
         }
-    elif recommendation == 'BUY' and confidence >= 0.7 and predicted_sales >= 100:
+    # GREEN: High sales potential (either high monthly avg OR high total store demand)
+    elif (recommendation == 'BUY' and confidence >= 0.6 and (predicted_sales >= 100 or effective_sales >= 1000)) or \
+         (predicted_sales >= 200 and confidence >= 0.5) or \
+         (effective_sales >= 2000):
         return {
             'color': 'GREEN', 
             'message': '🟢 GREEN - RECOMMENDED',
             'description': 'High confidence, good sales potential'
         }
-    elif recommendation == 'BUY' and confidence >= 0.5 and predicted_sales >= 50:
+    # YELLOW: Moderate potential
+    elif recommendation == 'BUY' and confidence >= 0.5 and (predicted_sales >= 50 or effective_sales >= 500):
         return {
             'color': 'YELLOW',
             'message': '🟡 YELLOW - PROCEED WITH CAUTION',
@@ -244,86 +354,270 @@ def get_status_indicator(recommendation: str, confidence: float, predicted_sales
             'description': 'Uncertain outcome, moderate risk'
         }
 
-def analyze_product_viability(product_description: str, similar_products: List[Dict]) -> Dict[str, Any]:
-    """Analyze if a product combination is viable based on market logic."""
-    description_lower = product_description.lower()
+def are_colors_similar(color1: str, color2: str) -> bool:
+    """Check if two colors are similar (e.g., red and light red, but not red and blue)."""
+    color1_lower = color1.lower().strip()
+    color2_lower = color2.lower().strip()
     
-    # Define problematic color-category combinations
-    problematic_combinations = {
-        'jeans': ['pink', 'bright pink', 'hot pink', 'neon', 'purple', 'yellow', 'orange'],
-        'pants': ['pink', 'bright pink', 'hot pink', 'neon', 'purple'],
-        'trousers': ['pink', 'bright pink', 'hot pink', 'neon', 'purple', 'yellow'],
-        'formal pants': ['pink', 'bright pink', 'hot pink', 'neon', 'purple', 'yellow'],
-        'shorts': ['pink', 'bright pink', 'hot pink'] if 'mens' in description_lower else []
+    # Exact match
+    if color1_lower == color2_lower:
+        return True
+    
+    # Extract base colors (remove modifiers like "light", "dark", "bright", etc.)
+    base_colors = {
+        'red': ['red', 'light red', 'dark red', 'bright red', 'deep red', 'crimson', 'maroon', 'burgundy', 'scarlet'],
+        'blue': ['blue', 'light blue', 'dark blue', 'bright blue', 'navy', 'sky blue', 'royal blue', 'indigo'],
+        'green': ['green', 'light green', 'dark green', 'bright green', 'olive', 'emerald', 'forest green'],
+        'yellow': ['yellow', 'light yellow', 'dark yellow', 'bright yellow', 'gold', 'mustard'],
+        'orange': ['orange', 'light orange', 'dark orange', 'bright orange', 'peach', 'coral'],
+        'purple': ['purple', 'light purple', 'dark purple', 'bright purple', 'violet', 'lavender'],
+        'pink': ['pink', 'light pink', 'dark pink', 'bright pink', 'hot pink', 'rose', 'fuchsia'],
+        'black': ['black', 'charcoal', 'ebony'],
+        'white': ['white', 'ivory', 'cream', 'off-white', 'beige'],
+        'brown': ['brown', 'light brown', 'dark brown', 'tan', 'khaki', 'camel'],
+        'gray': ['gray', 'grey', 'light gray', 'dark gray', 'silver', 'charcoal'],
     }
     
-    # Check for problematic combinations
-    for category, problematic_colors in problematic_combinations.items():
-        if category in description_lower:
-            for color in problematic_colors:
-                if color in description_lower:
-                    return {
-                        'viable': False,
-                        'reason': f'{color.title()} color is not commercially viable for {category}',
-                        'risk_level': 'HIGH',
-                        'market_acceptance': 'VERY_LOW'
-                    }
+    # Find base color for each
+    base1 = None
+    base2 = None
     
-    # Check if we found any actual historical data for this color-category combination
-    matching_products = 0
-    category_matches = 0
-    color_matches = 0
+    for base, variants in base_colors.items():
+        if any(variant in color1_lower for variant in variants):
+            base1 = base
+        if any(variant in color2_lower for variant in variants):
+            base2 = base
+    
+    # If both have the same base color, they're similar
+    if base1 and base2 and base1 == base2:
+        return True
+    
+    # If one color contains the other (e.g., "red" in "light red")
+    if base1 and base1 in color2_lower:
+        return True
+    if base2 and base2 in color1_lower:
+        return True
+    
+    return False
+
+def extract_product_attributes(description: str, similar_products: List[Dict]) -> Dict[str, Any]:
+    """Extract product attributes from description and match with sales data fields."""
+    description_lower = description.lower()
+    
+    # Extract color
+    color_keywords = ['red', 'blue', 'black', 'white', 'green', 'yellow', 'purple', 'pink', 'brown', 'gray', 'grey', 
+                     'orange', 'navy', 'beige', 'maroon', 'teal', 'crimson', 'burgundy', 'olive', 'emerald', 
+                     'gold', 'mustard', 'peach', 'coral', 'violet', 'lavender', 'rose', 'fuchsia', 'charcoal', 
+                     'ivory', 'cream', 'tan', 'khaki', 'camel', 'silver', 'indigo', 'sky', 'royal', 'forest']
+    desc_color = None
+    for color in color_keywords:
+        if color in description_lower:
+            desc_color = color
+            break
+    
+    # Extract category (Brick)
+    brick_keywords = ['jeans', 'pants', 'shirt', 'dress', 't-shirt', 'tshirt', 'top', 'jacket', 'kurta', 'shorts', 
+                     'jogger', 'cargo', 'hoodie', 'thermal', 'leggings', 'dungaree', 'pyjama', 'lehenga', 
+                     'tracksuit', 'suit', 'blazer', 'coat', 'sweater', 'trousers']
+    desc_brick = None
+    for brick in brick_keywords:
+        if brick in description_lower:
+            desc_brick = brick
+            break
+    
+    # Extract segment
+    desc_segment = None
+    if 'men' in description_lower or 'mens' in description_lower:
+        desc_segment = 'Mens'
+    elif 'women' in description_lower or 'womens' in description_lower:
+        desc_segment = 'Womens'
+    elif 'kid' in description_lower or 'boys' in description_lower:
+        desc_segment = 'Kids'
+    elif 'girl' in description_lower:
+        desc_segment = 'Girls'
+    
+    return {
+        'color': desc_color,
+        'brick': desc_brick,
+        'segment': desc_segment
+    }
+
+def analyze_product_viability(product_description: str, similar_products: List[Dict]) -> Dict[str, Any]:
+    """Analyze if a product combination is viable based on actual sales data."""
+    description_lower = product_description.lower()
+    
+    # Extract attributes from description
+    desc_attrs = extract_product_attributes(product_description, similar_products)
+    desc_color = desc_attrs.get('color')
+    desc_brick = desc_attrs.get('brick')
+    desc_segment = desc_attrs.get('segment')
+    
+    # Check sales data for exact or similar matches
+    exact_matches = 0  # Exact color-category matches
+    similar_color_matches = 0  # Similar color (e.g., red vs light red) matches
+    category_only_matches = 0  # Same category, different color
+    products_with_sales = 0  # Products that actually have sales data
     
     for product in similar_products:
         attrs = product.get('attributes', {})
-        product_color = str(attrs.get('Colour', '')).lower()
-        product_category = str(attrs.get('Brick', '')).lower()
+        # Try multiple field name variations (case insensitive) - check lowercase 'colour' first as that's how data is stored
+        product_color = str(attrs.get('colour', attrs.get('Colour', attrs.get('color', attrs.get('Color', ''))))).lower().strip()
+        product_brick = str(attrs.get('brick', attrs.get('Brick', attrs.get('category', attrs.get('Category', ''))))).lower().strip()
+        product_segment = str(attrs.get('segment', attrs.get('Segment', ''))).lower().strip()
         
-        # Check category matches (more lenient)
-        description_words = description_lower.split()
-        category_keywords = ['jeans', 'pants', 'shirt', 'dress', 't-shirt', 'tshirt', 'top', 'jacket']
+        # Also check metadata for these fields if not found in attributes
+        metadata = product.get('metadata', {})
+        if not product_color and metadata:
+            product_color = str(metadata.get('colour', metadata.get('Colour', metadata.get('color', metadata.get('Color', ''))))).lower().strip()
+        if not product_brick and metadata:
+            product_brick = str(metadata.get('brick', metadata.get('Brick', metadata.get('category', metadata.get('Category', ''))))).lower().strip()
+        if not product_segment and metadata:
+            product_segment = str(metadata.get('segment', metadata.get('Segment', ''))).lower().strip()
         
-        for word in description_words:
-            if word in category_keywords and (word in product_category or any(cat in word for cat in product_category.split())):
-                category_matches += 1
-                break
+        # Also check if attributes are stored directly in product (not nested)
+        if not product_color:
+            product_color = str(product.get('colour', product.get('Colour', product.get('color', '')))).lower().strip()
+        if not product_brick:
+            product_brick = str(product.get('brick', product.get('Brick', product.get('category', '')))).lower().strip()
+        if not product_segment:
+            product_segment = str(product.get('segment', product.get('Segment', ''))).lower().strip()
         
-        # Check color matches
-        color_keywords = ['red', 'blue', 'black', 'white', 'green', 'yellow', 'purple', 'pink', 'brown', 'gray', 'grey']
-        for color in color_keywords:
-            if color in description_lower and color in product_color:
-                color_matches += 1
-                break
+        # Debug logging for first few products
+        if len([p for p in similar_products if similar_products.index(p) < 3]) > 0 and similar_products.index(product) < 3:
+            logger.debug(f"Product {similar_products.index(product)}: color='{product_color}', brick='{product_brick}', segment='{product_segment}'")
         
-        # Count exact color-category combinations
-        if any(color in product_color for color in description_words) and \
-           any(cat in product_category for cat in description_words):
-            matching_products += 1
+        # Check if product has sales data
+        sales_data = product.get('sales', {})
+        has_sales = sales_data.get('total_units', 0) > 0
+        if has_sales:
+            products_with_sales += 1
+        
+        # Match category (Brick) - be more flexible
+        brick_match = False
+        if desc_brick:
+            if product_brick:
+                # Direct match or one contains the other
+                if desc_brick in product_brick or product_brick in desc_brick:
+                    brick_match = True
+            # Also check if description contains the brick keyword (for cases where Brick field might be empty)
+            if not brick_match and desc_brick in description_lower:
+                # If we're looking for jeans and product description/name contains jeans, consider it a match
+                product_name = str(product.get('name', '')).lower()
+                product_desc = str(product.get('description', '')).lower()
+                if desc_brick in product_name or desc_brick in product_desc:
+                    brick_match = True
+        else:
+            # No specific brick mentioned, so any product is a potential match
+            brick_match = True
+        
+        # Match segment if specified - be more lenient
+        segment_match = True  # Default to True if not specified
+        if desc_segment and product_segment:
+            # Check if segments match (case insensitive)
+            desc_seg_lower = desc_segment.lower()
+            prod_seg_lower = product_segment.lower()
+            # Allow partial matches (e.g., "Mens" matches "Men")
+            if desc_seg_lower in prod_seg_lower or prod_seg_lower in desc_seg_lower:
+                segment_match = True
+            else:
+                segment_match = False
+        
+        if not brick_match:
+            continue
+        if desc_segment and not segment_match:
+            continue
+        
+        category_only_matches += 1
+        
+        # Match color
+        if desc_color and product_color:
+            # Exact color match (case insensitive substring match)
+            if desc_color in product_color or product_color in desc_color:
+                exact_matches += 1
+                logger.debug(f"Exact color match: '{desc_color}' in '{product_color}' for {product_brick}")
+            # Similar color match (e.g., red ≈ light red, but red ≠ blue)
+            elif are_colors_similar(desc_color, product_color):
+                similar_color_matches += 1
+                logger.debug(f"Similar color match: '{desc_color}' similar to '{product_color}' for {product_brick}")
+        elif not desc_color:
+            # No color specified, so any product with matching category is considered a match
+            exact_matches += 1
     
-    # Be more lenient - if we have category matches or reasonable similar products, allow it
-    if category_matches >= 3 or len(similar_products) >= 10:
-        return {
-            'viable': True,
-            'reason': f'Found {category_matches} category matches and {len(similar_products)} similar products',
-            'risk_level': 'MEDIUM' if matching_products == 0 else 'LOW',
-            'market_acceptance': 'ACCEPTABLE'
-        }
+    # Log matching results for debugging
+    logger.info(f"Viability check for '{product_description}': color={desc_color}, brick={desc_brick}, segment={desc_segment}")
+    logger.info(f"Matches: exact={exact_matches}, similar={similar_color_matches}, category_only={category_only_matches}, with_sales={products_with_sales}, total_products={len(similar_products)}")
     
-    if matching_products == 0 and category_matches < 2:
-        # Very limited historical evidence
-        return {
-            'viable': False,
-            'reason': 'Very limited historical evidence of similar products being successful',
-            'risk_level': 'HIGH',
-            'market_acceptance': 'UNPROVEN'
-        }
-    
-    return {
-        'viable': True,
-        'reason': 'Product combination appears viable',
-        'risk_level': 'LOW',
-        'market_acceptance': 'ACCEPTABLE'
-    }
+    # Decision logic based on sales data
+    if desc_color and desc_brick:
+        # Specific color and category mentioned
+        if exact_matches > 0:
+            # Found exact color-category matches in sales data
+            logger.info(f"✅ Found {exact_matches} exact matches for {desc_color} {desc_brick}")
+            return {
+                'viable': True,
+                'reason': f'Found {exact_matches} exact {desc_color.title()} {desc_brick} products in sales data',
+                'risk_level': 'LOW',
+                'market_acceptance': 'PROVEN'
+            }
+        elif similar_color_matches > 0:
+            # Found similar color matches (e.g., light red when searching for red)
+            logger.info(f"✅ Found {similar_color_matches} similar color matches for {desc_color} {desc_brick}")
+            return {
+                'viable': True,
+                'reason': f'Found {similar_color_matches} similar color {desc_brick} products in sales data (e.g., {desc_color} variants)',
+                'risk_level': 'LOW',
+                'market_acceptance': 'ACCEPTABLE'
+            }
+        elif category_only_matches > 0:
+            # Found category matches but different colors (e.g., blue jeans when searching for red jeans)
+            logger.warning(f"❌ No {desc_color} {desc_brick} found. Found {category_only_matches} {desc_brick} in different colors")
+            return {
+                'viable': False,
+                'reason': f'No {desc_color.title()} {desc_brick} found in sales data. Found {category_only_matches} {desc_brick} products but all in different colors.',
+                'risk_level': 'HIGH',
+                'market_acceptance': 'UNPROVEN'
+            }
+        else:
+            # No category matches at all
+            logger.warning(f"❌ No {desc_brick} products found in sales data")
+            return {
+                'viable': False,
+                'reason': f'No {desc_brick} products found in sales data',
+                'risk_level': 'HIGH',
+                'market_acceptance': 'UNPROVEN'
+            }
+    elif desc_brick:
+        # Only category mentioned, no specific color
+        if category_only_matches > 0:
+            return {
+                'viable': True,
+                'reason': f'Found {category_only_matches} {desc_brick} products in sales data',
+                'risk_level': 'LOW' if products_with_sales > 0 else 'MEDIUM',
+                'market_acceptance': 'ACCEPTABLE'
+            }
+        else:
+            return {
+                'viable': False,
+                'reason': f'No {desc_brick} products found in sales data',
+                'risk_level': 'HIGH',
+                'market_acceptance': 'UNPROVEN'
+            }
+    else:
+        # Generic product, check if we have any similar products
+        if len(similar_products) >= 5:
+            return {
+                'viable': True,
+                'reason': f'Found {len(similar_products)} similar products in sales data',
+                'risk_level': 'MEDIUM',
+                'market_acceptance': 'ACCEPTABLE'
+            }
+        else:
+            return {
+                'viable': False,
+                'reason': 'Very limited historical evidence of similar products',
+                'risk_level': 'HIGH',
+                'market_acceptance': 'UNPROVEN'
+            }
 
 def predict_product_sales(kb: SharedKnowledgeBase, llm_client: LLMClient, product_description: str) -> Dict[str, Any]:
     """Predict sales for a new product based on similar historical products."""
@@ -372,13 +666,45 @@ def predict_product_sales(kb: SharedKnowledgeBase, llm_client: LLMClient, produc
         # Filter for products with actual sales data (historical products)
         products_with_sales = [p for p in similar_products if p.get('sales', {}).get('total_units', 0) > 0]
         
+        # Also filter for products that match the color-category (even if no sales data)
+        # This helps when we have exact matches but they're new products without sales history
+        exact_color_category_matches = []
+        for p in similar_products:
+            attrs = p.get('attributes', {})
+            p_color = str(attrs.get('colour', attrs.get('Colour', attrs.get('color', '')))).lower().strip()
+            p_brick = str(attrs.get('brick', attrs.get('Brick', attrs.get('category', '')))).lower().strip()
+            
+            desc_attrs = extract_product_attributes(product_description, similar_products)
+            desc_color = desc_attrs.get('color')
+            desc_brick = desc_attrs.get('brick')
+            
+            if desc_color and desc_brick:
+                # Check if this is an exact or similar color-category match
+                color_match = False
+                if desc_color in p_color or p_color in desc_color:
+                    color_match = True
+                elif are_colors_similar(desc_color, p_color):
+                    color_match = True
+                
+                if color_match and desc_brick in p_brick:
+                    exact_color_category_matches.append(p)
+        
         if not products_with_sales:
-            # If no products have sales, use the best similar products and estimate
-            logger.info("No similar products with sales data, using estimation based on similarity")
-            # Use top similar products and estimate based on market averages
-            top_similar = similar_products[:3]
-            estimated_monthly_sales = int(50 + (sum(p.get('similarity_score', 0) for p in top_similar) / len(top_similar)) * 100)
-            confidence = 0.4  # Lower confidence for estimation
+            # If no products have sales, but we have exact color-category matches, use those
+            if exact_color_category_matches:
+                logger.info(f"Using {len(exact_color_category_matches)} exact color-category matches for estimation")
+                top_similar = exact_color_category_matches[:3]
+            else:
+                # Use the best similar products and estimate
+                logger.info("No similar products with sales data, using estimation based on similarity")
+                top_similar = similar_products[:3]
+            
+            # Calculate estimated sales based on similarity
+            avg_similarity = sum(p.get('similarity_score', 0) for p in top_similar) / len(top_similar) if top_similar else 0.5
+            # Base prediction: higher if we have exact matches, lower if just similar
+            base_prediction = 100 if exact_color_category_matches else 50
+            estimated_monthly_sales = int(base_prediction + (avg_similarity * 150))
+            confidence = min(0.6, 0.3 + (avg_similarity * 0.3))  # Higher confidence if we have exact matches
             
             return {
                 'predicted_monthly_sales': estimated_monthly_sales,
@@ -415,7 +741,23 @@ def predict_product_sales(kb: SharedKnowledgeBase, llm_client: LLMClient, produc
         
         # Calculate confidence based on similarity scores and number of matches
         avg_similarity = total_similarity / len(products_with_sales) if products_with_sales else 0
-        confidence = min(avg_similarity * (len(products_with_sales) / 5), 1.0)  # Max confidence when 5+ similar products with sales
+        
+        # Base confidence from similarity and number of matches
+        base_confidence = min(avg_similarity * (len(products_with_sales) / 5), 1.0)
+        
+        # Boost confidence if we have exact color-category matches (from viability analysis)
+        if viability.get('market_acceptance') == 'PROVEN':
+            # Proven products get higher confidence
+            confidence = min(0.8, base_confidence + 0.2)
+        elif viability.get('market_acceptance') == 'ACCEPTABLE':
+            # Acceptable products get moderate boost
+            confidence = min(0.7, base_confidence + 0.15)
+        else:
+            confidence = max(0.3, base_confidence)  # Ensure minimum 30% if we have any matches
+        
+        # Ensure confidence is never 0 if we have products with sales
+        if products_with_sales and confidence == 0:
+            confidence = 0.3  # Minimum confidence when we have sales data
         
         # Use LLM for detailed analysis (use products with sales data)
         similar_products_text = "\n".join([
@@ -486,8 +828,8 @@ MARKET_OPPORTUNITY: [market potential assessment]"""
             except:
                 procurement_recommendation = "CAUTIOUS"
         
-        # Get status indicator (Red/Yellow/Green)
-        status = get_status_indicator(procurement_recommendation, confidence, predicted_sales)
+        # Get status indicator (Red/Yellow/Green) - will update with total store demand later if available
+        status = get_status_indicator(procurement_recommendation, confidence, predicted_sales, total_store_demand=0)
         
         result = {
             'predicted_monthly_sales': predicted_sales,
@@ -635,12 +977,33 @@ def main():
                 recommendation = prediction.get('procurement_recommendation', 'CAUTIOUS')
                 st.write(f"**Detailed Recommendation:** {recommendation}")
                 
+                # Calculate total store demand early for display
+                stores = load_store_data()
+                total_store_demand = 0
+                store_predictions = []
+                if stores:
+                    base_prediction = prediction.get('predicted_monthly_sales', 100)
+                    store_predictions = generate_store_predictions(base_prediction, new_product, stores)
+                    if store_predictions:
+                        total_store_demand = sum(pred['predicted_demand'] for pred in store_predictions)
+                
                 # Key metrics
                 col1, col2, col3, col4 = st.columns(4)
                 with col1:
+                    # Show total predicted sales (sum across all stores)
+                    if total_store_demand > 0:
+                        predicted_total = total_store_demand
+                        help_text = f"Total predicted monthly sales across all {len(stores)} stores based on weather and climate factors"
+                    else:
+                        # Estimate total if store predictions not available yet
+                        num_stores = len(stores) if stores else 10  # Default to 10 stores
+                        predicted_total = prediction['predicted_monthly_sales'] * num_stores
+                        help_text = f"Estimated total monthly sales across {num_stores} stores (base: {prediction['predicted_monthly_sales']} units/store avg)"
+                    
                     st.metric(
-                        "Predicted Monthly Sales", 
-                        f"{prediction['predicted_monthly_sales']} units"
+                        "Predicted Total Monthly Sales", 
+                        f"{predicted_total:,} units",
+                        help=help_text
                     )
                 with col2:
                     confidence_pct = prediction['confidence'] * 100
@@ -680,6 +1043,107 @@ def main():
                                 st.write(f"**Total Sales:** {sales.get('total_units', 0)} units")
                                 st.write(f"**Revenue:** ₹{sales.get('total_revenue', 0):,.0f}")
                                 st.write(f"**Monthly Avg:** {sales.get('avg_monthly_units', 0):.1f} units")
+                
+                # Store-wise predictions
+                st.subheader("🏪 Store-wise Sales Predictions")
+                st.markdown("*Predictions for each store based on weather patterns and climate factors*")
+                
+                # Use already calculated store predictions if available, otherwise calculate
+                if stores and not store_predictions:
+                    base_prediction = prediction.get('predicted_monthly_sales', 100)
+                    store_predictions = generate_store_predictions(base_prediction, new_product, stores)
+                
+                if store_predictions:
+                        # Summary metrics (use already calculated total_store_demand or recalculate)
+                        if total_store_demand == 0:
+                            total_store_demand = sum(pred['predicted_demand'] for pred in store_predictions)
+                        green_stores = len([p for p in store_predictions if p['predicted_demand'] >= 1000])
+                        high_priority = len([p for p in store_predictions if p['recommendation'] == 'HIGH_PRIORITY_BUY'])
+                        
+                        # Recalculate status with total store demand for better accuracy
+                        updated_status = get_status_indicator(
+                            prediction.get('procurement_recommendation', 'CAUTIOUS'),
+                            prediction.get('confidence', 0.5),
+                            prediction.get('predicted_monthly_sales', 0),
+                            total_store_demand=total_store_demand
+                        )
+                        
+                        # Update prediction with new status if it improved (especially if it changed to GREEN)
+                        if updated_status['color'] == 'GREEN' or \
+                           (updated_status['color'] == 'GREEN' and prediction.get('status_color') != 'GREEN'):
+                            prediction['status_color'] = updated_status['color']
+                            prediction['status_message'] = updated_status['message']
+                            prediction['status_description'] = updated_status['description']
+                            
+                            # Show updated status banner
+                            st.info(f"📊 **Status Updated:** {updated_status['message']} - Based on total store demand of {total_store_demand:,} units across {len(store_predictions)} stores")
+                        
+                        col1, col2, col3 = st.columns(3)
+                        with col1:
+                            st.metric("🏪 Total Store Demand", f"{total_store_demand:,} units")
+                        with col2:
+                            st.metric("🟢 HIGH Priority Stores (≥1000 units)", high_priority)
+                        with col3:
+                            st.metric("✅ BUY Recommendation Stores", len([p for p in store_predictions if p['recommendation'] in ['BUY', 'HIGH_PRIORITY_BUY']]))
+                        
+                        # Top 10 stores
+                        st.write("**Top 10 Performing Stores:**")
+                        top_10_stores = store_predictions[:10]
+                        
+                        store_data = []
+                        for store in top_10_stores:
+                            store_data.append({
+                                'Store ID': store['store_id'],
+                                'Store Name': store['store_name'],
+                                'City': store['city'],
+                                'Climate': store['climate'],
+                                'Predicted Demand': f"{store['predicted_demand']:,} units",
+                                'Weather Factor': f"{store['weather_factor']:.2f}x",
+                                'Recommendation': store['recommendation']
+                            })
+                        
+                        # Display as dataframe
+                        df = pd.DataFrame(store_data)
+                        st.dataframe(df, use_container_width=True)
+                        
+                        # Climate breakdown
+                        with st.expander("🌍 Climate-wise Performance Breakdown"):
+                            climate_summary = {}
+                            for pred in store_predictions:
+                                climate = pred['climate']
+                                if climate not in climate_summary:
+                                    climate_summary[climate] = {'stores': 0, 'total_demand': 0}
+                                climate_summary[climate]['stores'] += 1
+                                climate_summary[climate]['total_demand'] += pred['predicted_demand']
+                            
+                            for climate, data in climate_summary.items():
+                                avg_demand = data['total_demand'] / data['stores']
+                                col1, col2, col3 = st.columns(3)
+                                with col1:
+                                    st.write(f"**{climate}**")
+                                with col2:
+                                    st.write(f"{data['total_demand']:,} total units")
+                                with col3:
+                                    st.write(f"{avg_demand:.0f} avg per store")
+                        
+                        # All stores table
+                        with st.expander("📋 View All Store Predictions"):
+                            all_store_data = []
+                            for store in store_predictions:
+                                all_store_data.append({
+                                    'Store ID': store['store_id'],
+                                    'Store Name': store['store_name'],
+                                    'City': store['city'],
+                                    'Climate': store['climate'],
+                                    'Predicted Demand': store['predicted_demand'],
+                                    'Weather Factor': f"{store['weather_factor']:.2f}x",
+                                    'Recommendation': store['recommendation']
+                                })
+                            
+                            all_df = pd.DataFrame(all_store_data)
+                            st.dataframe(all_df, use_container_width=True)
+                else:
+                    st.warning("⚠️ Could not load store data. Store-wise predictions unavailable.")
             else:
                 st.error("❌ Prediction failed. Please try with a different product description.")
 

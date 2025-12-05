@@ -1,0 +1,343 @@
+2025-12-06 00:59:21,083 - INFO - Viability check for 'blue jeans': color=blue, brick=jeans, segment=None
+2025-12-06 00:59:21,083 - INFO - Matches: exact=1, similar=2, category_only=3, with_sales=3, total_products=3
+2025-12-06 00:59:21,083 - INFO - ✅ Found 1 exact matches for blue jeans
+2025-12-06 00:59:21,083 - INFO - Viability check for 'red jeans': color=red, brick=jeans, segment=None
+2025-12-06 00:59:21,083 - INFO - Matches: exact=0, similar=0, category_only=2, with_sales=2, total_products=2
+2025-12-06 00:59:21,084 - WARNING - ❌ No red jeans found. Found 2 jeans in different colors
+2025-12-06 00:59:21,084 - INFO - Viability check for 'pink jeans': color=pink, brick=jeans, segment=None
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=0, category_only=1, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - WARNING - ❌ No pink jeans found. Found 1 jeans in different colors
+2025-12-06 00:59:21,084 - INFO - Viability check for 'black jeans': color=black, brick=jeans, segment=None
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=0, category_only=1, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - WARNING - ❌ No black jeans found. Found 1 jeans in different colors
+2025-12-06 00:59:21,084 - INFO - Viability check for 'white jeans': color=white, brick=jeans, segment=None
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=0, category_only=1, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - WARNING - ❌ No white jeans found. Found 1 jeans in different colors
+2025-12-06 00:59:21,084 - INFO - Viability check for 'mens blue jeans': color=blue, brick=jeans, segment=Mens
+2025-12-06 00:59:21,084 - INFO - Matches: exact=1, similar=2, category_only=3, with_sales=3, total_products=3
+2025-12-06 00:59:21,084 - INFO - ✅ Found 1 exact matches for blue jeans
+2025-12-06 00:59:21,084 - INFO - Viability check for 'womens red dress': color=red, brick=dress, segment=Mens
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - WARNING - ❌ No dress products found in sales data
+2025-12-06 00:59:21,084 - INFO - Viability check for 'kids yellow t-shirt': color=yellow, brick=shirt, segment=Kids
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - WARNING - ❌ No shirt products found in sales data
+2025-12-06 00:59:21,084 - INFO - Viability check for 'light blue shirt': color=blue, brick=shirt, segment=None
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - WARNING - ❌ No shirt products found in sales data
+2025-12-06 00:59:21,084 - INFO - Viability check for 'dark blue jacket': color=blue, brick=jacket, segment=None
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - WARNING - ❌ No jacket products found in sales data
+2025-12-06 00:59:21,084 - INFO - Viability check for 'navy jeans': color=navy, brick=jeans, segment=None
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=1, category_only=1, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - INFO - ✅ Found 1 similar color matches for navy jeans
+2025-12-06 00:59:21,084 - INFO - Viability check for 'indigo jeans': color=indigo, brick=jeans, segment=None
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=1, category_only=1, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - INFO - ✅ Found 1 similar color matches for indigo jeans
+2025-12-06 00:59:21,084 - INFO - Viability check for 'red shirt': color=red, brick=shirt, segment=None
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - WARNING - ❌ No shirt products found in sales data
+2025-12-06 00:59:21,084 - INFO - Viability check for 'blue shirt': color=blue, brick=shirt, segment=None
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - WARNING - ❌ No shirt products found in sales data
+2025-12-06 00:59:21,084 - INFO - Viability check for 'black dress': color=black, brick=dress, segment=None
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - WARNING - ❌ No dress products found in sales data
+2025-12-06 00:59:21,084 - INFO - Viability check for 'white dress': color=white, brick=dress, segment=None
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - WARNING - ❌ No dress products found in sales data
+2025-12-06 00:59:21,084 - INFO - Viability check for 'green kurta': color=green, brick=kurta, segment=None
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - WARNING - ❌ No kurta products found in sales data
+2025-12-06 00:59:21,084 - INFO - Viability check for 'purple kurta': color=purple, brick=kurta, segment=None
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - WARNING - ❌ No kurta products found in sales data
+2025-12-06 00:59:21,084 - INFO - Viability check for 'orange hoodie': color=orange, brick=hoodie, segment=None
+2025-12-06 00:59:21,084 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,084 - WARNING - ❌ No hoodie products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'brown jacket': color=brown, brick=jacket, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No jacket products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'blue pants': color=blue, brick=pants, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No pants products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'red pants': color=red, brick=pants, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No pants products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'black pants': color=black, brick=pants, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No pants products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'white pants': color=white, brick=pants, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No pants products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'pink pants': color=pink, brick=pants, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No pants products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'red dress': color=red, brick=dress, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No dress products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'red t-shirt': color=red, brick=shirt, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No shirt products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'red jacket': color=red, brick=jacket, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No jacket products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'red kurta': color=red, brick=kurta, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No kurta products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'red shorts': color=red, brick=shorts, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No shorts products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'blue dress': color=blue, brick=dress, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No dress products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'blue t-shirt': color=blue, brick=shirt, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No shirt products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'blue jacket': color=blue, brick=jacket, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No jacket products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'blue kurta': color=blue, brick=kurta, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No kurta products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'blue shorts': color=blue, brick=shorts, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No shorts products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'black shirt': color=black, brick=shirt, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No shirt products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'black t-shirt': color=black, brick=shirt, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No shirt products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'black jacket': color=black, brick=jacket, segment=None
+2025-12-06 00:59:21,085 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,085 - WARNING - ❌ No jacket products found in sales data
+2025-12-06 00:59:21,085 - INFO - Viability check for 'black kurta': color=black, brick=kurta, segment=None
+2025-12-06 00:59:21,086 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,086 - WARNING - ❌ No kurta products found in sales data
+2025-12-06 00:59:21,086 - INFO - Viability check for 'black shorts': color=black, brick=shorts, segment=None
+2025-12-06 00:59:21,086 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,086 - WARNING - ❌ No shorts products found in sales data
+2025-12-06 00:59:21,086 - INFO - Viability check for 'white shirt': color=white, brick=shirt, segment=None
+2025-12-06 00:59:21,086 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,086 - WARNING - ❌ No shirt products found in sales data
+2025-12-06 00:59:21,086 - INFO - Viability check for 'white t-shirt': color=white, brick=shirt, segment=None
+2025-12-06 00:59:21,086 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,086 - WARNING - ❌ No shirt products found in sales data
+2025-12-06 00:59:21,086 - INFO - Viability check for 'white jacket': color=white, brick=jacket, segment=None
+2025-12-06 00:59:21,086 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,086 - WARNING - ❌ No jacket products found in sales data
+2025-12-06 00:59:21,086 - INFO - Viability check for 'white kurta': color=white, brick=kurta, segment=None
+2025-12-06 00:59:21,086 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,086 - WARNING - ❌ No kurta products found in sales data
+2025-12-06 00:59:21,086 - INFO - Viability check for 'white shorts': color=white, brick=shorts, segment=None
+2025-12-06 00:59:21,086 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,086 - WARNING - ❌ No shorts products found in sales data
+2025-12-06 00:59:21,086 - INFO - Viability check for 'green jeans': color=green, brick=jeans, segment=None
+2025-12-06 00:59:21,086 - INFO - Matches: exact=0, similar=0, category_only=1, with_sales=1, total_products=1
+2025-12-06 00:59:21,086 - WARNING - ❌ No green jeans found. Found 1 jeans in different colors
+2025-12-06 00:59:21,086 - INFO - Viability check for 'green pants': color=green, brick=pants, segment=None
+2025-12-06 00:59:21,086 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,086 - WARNING - ❌ No pants products found in sales data
+2025-12-06 00:59:21,086 - INFO - Viability check for 'green shirt': color=green, brick=shirt, segment=None
+2025-12-06 00:59:21,086 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,086 - WARNING - ❌ No shirt products found in sales data
+2025-12-06 00:59:21,086 - INFO - Viability check for 'green dress': color=green, brick=dress, segment=None
+2025-12-06 00:59:21,086 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,086 - WARNING - ❌ No dress products found in sales data
+2025-12-06 00:59:21,086 - INFO - Viability check for 'green t-shirt': color=green, brick=shirt, segment=None
+2025-12-06 00:59:21,086 - INFO - Matches: exact=0, similar=0, category_only=0, with_sales=1, total_products=1
+2025-12-06 00:59:21,086 - WARNING - ❌ No shirt products found in sales data
+================================================================================
+PRODUCT VIABILITY TEST - 50 VARIATIONS
+================================================================================
+
+Generated 50 test products
+
+ 1. Testing: blue jeans
+    ✅ Found 1 exact Blue jeans products in sales data
+ 2. Testing: red jeans
+    ❌ No Red jeans found in sales data. Found 2 jeans products but
+ 3. Testing: pink jeans
+    ❌ No Pink jeans found in sales data. Found 1 jeans products bu
+ 4. Testing: black jeans
+    ❌ No Black jeans found in sales data. Found 1 jeans products b
+ 5. Testing: white jeans
+    ❌ No White jeans found in sales data. Found 1 jeans products b
+ 6. Testing: mens blue jeans
+    ✅ Found 1 exact Blue jeans products in sales data
+ 7. Testing: womens red dress
+    ❌ No dress products found in sales data
+ 8. Testing: kids yellow t-shirt
+    ❌ No shirt products found in sales data
+ 9. Testing: light blue shirt
+    ❌ No shirt products found in sales data
+10. Testing: dark blue jacket
+    ❌ No jacket products found in sales data
+11. Testing: navy jeans
+    ✅ Found 1 similar color jeans products in sales data (e.g., na
+12. Testing: indigo jeans
+    ✅ Found 1 similar color jeans products in sales data (e.g., in
+13. Testing: red shirt
+    ❌ No shirt products found in sales data
+14. Testing: blue shirt
+    ❌ No shirt products found in sales data
+15. Testing: black dress
+    ❌ No dress products found in sales data
+16. Testing: white dress
+    ❌ No dress products found in sales data
+17. Testing: green kurta
+    ❌ No kurta products found in sales data
+18. Testing: purple kurta
+    ❌ No kurta products found in sales data
+19. Testing: orange hoodie
+    ❌ No hoodie products found in sales data
+20. Testing: brown jacket
+    ❌ No jacket products found in sales data
+21. Testing: blue pants
+    ❌ No pants products found in sales data
+22. Testing: red pants
+    ❌ No pants products found in sales data
+23. Testing: black pants
+    ❌ No pants products found in sales data
+24. Testing: white pants
+    ❌ No pants products found in sales data
+25. Testing: pink pants
+    ❌ No pants products found in sales data
+26. Testing: red dress
+    ❌ No dress products found in sales data
+27. Testing: red t-shirt
+    ❌ No shirt products found in sales data
+28. Testing: red jacket
+    ❌ No jacket products found in sales data
+29. Testing: red kurta
+    ❌ No kurta products found in sales data
+30. Testing: red shorts
+    ❌ No shorts products found in sales data
+31. Testing: blue dress
+    ❌ No dress products found in sales data
+32. Testing: blue t-shirt
+    ❌ No shirt products found in sales data
+33. Testing: blue jacket
+    ❌ No jacket products found in sales data
+34. Testing: blue kurta
+    ❌ No kurta products found in sales data
+35. Testing: blue shorts
+    ❌ No shorts products found in sales data
+36. Testing: black shirt
+    ❌ No shirt products found in sales data
+37. Testing: black t-shirt
+    ❌ No shirt products found in sales data
+38. Testing: black jacket
+    ❌ No jacket products found in sales data
+39. Testing: black kurta
+    ❌ No kurta products found in sales data
+40. Testing: black shorts
+    ❌ No shorts products found in sales data
+41. Testing: white shirt
+    ❌ No shirt products found in sales data
+42. Testing: white t-shirt
+    ❌ No shirt products found in sales data
+43. Testing: white jacket
+    ❌ No jacket products found in sales data
+44. Testing: white kurta
+    ❌ No kurta products found in sales data
+45. Testing: white shorts
+    ❌ No shorts products found in sales data
+46. Testing: green jeans
+    ❌ No Green jeans found in sales data. Found 1 jeans products b
+47. Testing: green pants
+    ❌ No pants products found in sales data
+48. Testing: green shirt
+    ❌ No shirt products found in sales data
+49. Testing: green dress
+    ❌ No dress products found in sales data
+50. Testing: green t-shirt
+    ❌ No shirt products found in sales data
+
+================================================================================
+SUMMARY
+================================================================================
+
+Total: 50
+✅ Viable: 4
+❌ Not Viable: 46
+⚠️  Errors: 0
+
+--------------------------------------------------------------------------------
+VIABLE PRODUCTS:
+--------------------------------------------------------------------------------
+✅ blue jeans                               | Found 1 exact Blue jeans products i
+✅ mens blue jeans                          | Found 1 exact Blue jeans products i
+✅ navy jeans                               | Found 1 similar color jeans product
+✅ indigo jeans                             | Found 1 similar color jeans product
+
+--------------------------------------------------------------------------------
+NOT VIABLE PRODUCTS:
+--------------------------------------------------------------------------------
+❌ red jeans                                | No Red jeans found in sales data. F
+❌ pink jeans                               | No Pink jeans found in sales data. 
+❌ black jeans                              | No Black jeans found in sales data.
+❌ white jeans                              | No White jeans found in sales data.
+❌ womens red dress                         | No dress products found in sales da
+❌ kids yellow t-shirt                      | No shirt products found in sales da
+❌ light blue shirt                         | No shirt products found in sales da
+❌ dark blue jacket                         | No jacket products found in sales d
+❌ red shirt                                | No shirt products found in sales da
+❌ blue shirt                               | No shirt products found in sales da
+❌ black dress                              | No dress products found in sales da
+❌ white dress                              | No dress products found in sales da
+❌ green kurta                              | No kurta products found in sales da
+❌ purple kurta                             | No kurta products found in sales da
+❌ orange hoodie                            | No hoodie products found in sales d
+❌ brown jacket                             | No jacket products found in sales d
+❌ blue pants                               | No pants products found in sales da
+❌ red pants                                | No pants products found in sales da
+❌ black pants                              | No pants products found in sales da
+❌ white pants                              | No pants products found in sales da
+❌ pink pants                               | No pants products found in sales da
+❌ red dress                                | No dress products found in sales da
+❌ red t-shirt                              | No shirt products found in sales da
+❌ red jacket                               | No jacket products found in sales d
+❌ red kurta                                | No kurta products found in sales da
+❌ red shorts                               | No shorts products found in sales d
+❌ blue dress                               | No dress products found in sales da
+❌ blue t-shirt                             | No shirt products found in sales da
+❌ blue jacket                              | No jacket products found in sales d
+❌ blue kurta                               | No kurta products found in sales da
+❌ blue shorts                              | No shorts products found in sales d
+❌ black shirt                              | No shirt products found in sales da
+❌ black t-shirt                            | No shirt products found in sales da
+❌ black jacket                             | No jacket products found in sales d
+❌ black kurta                              | No kurta products found in sales da
+❌ black shorts                             | No shorts products found in sales d
+❌ white shirt                              | No shirt products found in sales da
+❌ white t-shirt                            | No shirt products found in sales da
+❌ white jacket                             | No jacket products found in sales d
+❌ white kurta                              | No kurta products found in sales da
+❌ white shorts                             | No shorts products found in sales d
+❌ green jeans                              | No Green jeans found in sales data.
+❌ green pants                              | No pants products found in sales da
+❌ green shirt                              | No shirt products found in sales da
+❌ green dress                              | No dress products found in sales da
+❌ green t-shirt                            | No shirt products found in sales da
+
+--------------------------------------------------------------------------------
+BY COLOR:
+--------------------------------------------------------------------------------
+black                | ✅  0 | ❌  8
+blue                 | ✅  2 | ❌  9
+brown                | ✅  0 | ❌  1
+green                | ✅  0 | ❌  6
+indigo               | ✅  1 | ❌  0
+navy                 | ✅  1 | ❌  0
+orange               | ✅  0 | ❌  1
+pink                 | ✅  0 | ❌  2
+purple               | ✅  0 | ❌  1
+red                  | ✅  0 | ❌  9
+white                | ✅  0 | ❌  8
+yellow               | ✅  0 | ❌  1
+
+================================================================================
+Test Complete!
+================================================================================
