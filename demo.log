@@ -1,0 +1,76 @@
+🎯 Starting Intelli-ODM CEO Demo...
+==================================
+
+🌐 Demo will open in your browser at: http://localhost:8501
+📋 Use the sidebar to select different business scenarios
+🚀 Click 'Run AI Analysis' to see results
+
+Press Ctrl+C to stop the demo
+
+
+  You can now view your Streamlit app in your browser.
+
+  URL: http://0.0.0.0:8501
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+2025-12-05 14:14:39.159 Script compilation error
+Traceback (most recent call last):
+  File "/Users/prem.chaurasiya/Downloads/AI Technology Workshop pre-read - 4-6 Dec/smart-invoice-poc-main/intelli-odm/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 573, in _run_script
+    code = self._script_cache.get_bytecode(script_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prem.chaurasiya/Downloads/AI Technology Workshop pre-read - 4-6 Dec/smart-invoice-poc-main/intelli-odm/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_cache.py", line 72, in get_bytecode
+    filebody = magic.add_magic(filebody, script_path)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prem.chaurasiya/Downloads/AI Technology Workshop pre-read - 4-6 Dec/smart-invoice-poc-main/intelli-odm/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/magic.py", line 45, in add_magic
+    tree = ast.parse(code, script_path, "exec")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniconda/base/lib/python3.12/ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prem.chaurasiya/Downloads/AI Technology Workshop pre-read - 4-6 Dec/smart-invoice-poc-main/intelli-odm/streamlit_app.py", line 786
+    {"name": "Procurement Optimization", "action": "Optimizing procurement plan", "duration": 1.2"}
+                                                                                                 ^
+SyntaxError: unterminated string literal (detected at line 786)
+2025-12-05 14:14:39.163 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2025-12-05 14:14:50.686 Script compilation error
+Traceback (most recent call last):
+  File "/Users/prem.chaurasiya/Downloads/AI Technology Workshop pre-read - 4-6 Dec/smart-invoice-poc-main/intelli-odm/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 573, in _run_script
+    code = self._script_cache.get_bytecode(script_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prem.chaurasiya/Downloads/AI Technology Workshop pre-read - 4-6 Dec/smart-invoice-poc-main/intelli-odm/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_cache.py", line 72, in get_bytecode
+    filebody = magic.add_magic(filebody, script_path)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prem.chaurasiya/Downloads/AI Technology Workshop pre-read - 4-6 Dec/smart-invoice-poc-main/intelli-odm/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/magic.py", line 45, in add_magic
+    tree = ast.parse(code, script_path, "exec")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniconda/base/lib/python3.12/ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prem.chaurasiya/Downloads/AI Technology Workshop pre-read - 4-6 Dec/smart-invoice-poc-main/intelli-odm/streamlit_app.py", line 786
+    {"name": "Procurement Optimization", "action": "Optimizing procurement plan", "duration": 1.2"}
+                                                                                                 ^
+SyntaxError: unterminated string literal (detected at line 786)
+2025-12-05 14:14:50.688 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2025-12-05 14:16:03.918 Script compilation error
+Traceback (most recent call last):
+  File "/Users/prem.chaurasiya/Downloads/AI Technology Workshop pre-read - 4-6 Dec/smart-invoice-poc-main/intelli-odm/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 573, in _run_script
+    code = self._script_cache.get_bytecode(script_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prem.chaurasiya/Downloads/AI Technology Workshop pre-read - 4-6 Dec/smart-invoice-poc-main/intelli-odm/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_cache.py", line 72, in get_bytecode
+    filebody = magic.add_magic(filebody, script_path)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prem.chaurasiya/Downloads/AI Technology Workshop pre-read - 4-6 Dec/smart-invoice-poc-main/intelli-odm/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/magic.py", line 45, in add_magic
+    tree = ast.parse(code, script_path, "exec")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniconda/base/lib/python3.12/ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prem.chaurasiya/Downloads/AI Technology Workshop pre-read - 4-6 Dec/smart-invoice-poc-main/intelli-odm/streamlit_app.py", line 786
+    {"name": "Procurement Optimization", "action": "Optimizing procurement plan", "duration": 1.2"}
+                                                                                                 ^
+SyntaxError: unterminated string literal (detected at line 786)
+2025-12-05 14:16:03.920 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
