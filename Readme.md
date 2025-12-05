@@ -1,4 +1,4 @@
-# Intelli-ODM — Multi-Agent LLM System for New Product Forecasting (Full README + Conversation)
+# Intelli-ODM — Multi-Agent LLM System for New Product Forecasting
 
 **Note:** This README contains the complete conversation transcript from the session where the README and system design were authored. It includes the original user prompts, the Gemini-provided answer pasted by the user, code snippets, and all assistant replies. Use this document for record-keeping, reproducibility, or editing.
 
