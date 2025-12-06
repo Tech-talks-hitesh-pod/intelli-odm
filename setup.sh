@@ -89,7 +89,6 @@ python-dotenv>=1.0.0
 pydantic>=2.0.0
 pydantic-settings>=2.11.0
 requests>=2.28.0
-ollama>=0.1.7
 openai>=1.0.0
 pulp>=2.7.0
 prophet>=1.1.4
@@ -102,57 +101,6 @@ EOF
     print_success "Dependencies installed"
 }
 
-# Setup Ollama
-setup_ollama() {
-    print_status "Setting up Ollama LLM service..."
-    
-    # Check if Ollama is installed
-    if command -v ollama &> /dev/null; then
-        print_success "Ollama already installed"
-    else
-        print_status "Installing Ollama..."
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            # macOS
-            if command -v brew &> /dev/null; then
-                brew install ollama
-            else
-                curl -fsSL https://ollama.ai/install.sh | sh
-            fi
-        else
-            # Linux
-            curl -fsSL https://ollama.ai/install.sh | sh
-        fi
-        print_success "Ollama installed"
-    fi
-    
-    # Start Ollama service in background
-    print_status "Starting Ollama service..."
-    if ! pgrep -f "ollama serve" > /dev/null; then
-        ollama serve > ollama.log 2>&1 &
-        OLLAMA_PID=$!
-        sleep 5
-        print_success "Ollama service started (PID: $OLLAMA_PID)"
-    else
-        print_warning "Ollama service already running"
-    fi
-    
-    # Pull Llama3 model
-    print_status "Downloading Llama3 model (this may take a few minutes)..."
-    if ollama list | grep -q "llama3:8b"; then
-        print_success "Llama3 model already available"
-    else
-        ollama pull llama3:8b
-        print_success "Llama3 model downloaded"
-    fi
-    
-    # Test Ollama connection
-    print_status "Testing Ollama connection..."
-    if curl -s http://localhost:11434/api/version > /dev/null; then
-        print_success "Ollama service is ready"
-    else
-        print_warning "Ollama service may need a moment to start"
-    fi
-}
 
 # Setup environment variables
 setup_environment() {
@@ -302,18 +250,6 @@ except ImportError as e:
     sys.exit(1)
 "
     
-    # Test Ollama if configured
-    if [ -f ".env" ] && grep -q "LLM_PROVIDER=ollama" .env; then
-        python3 -c "
-try:
-    import ollama
-    client = ollama.Client()
-    response = client.list()
-    print('✅ Ollama connection working')
-except Exception as e:
-    print(f'⚠️ Ollama connection issue: {e}')
-"
-    fi
     
     # Test knowledge base
     python3 -c "
@@ -398,7 +334,6 @@ main() {
     check_python
     setup_venv
     install_dependencies
-    setup_ollama
     setup_environment
     setup_directories
     setup_observability
@@ -414,8 +349,7 @@ main() {
     echo "======================================"
     echo
     echo "📍 Services Running:"
-    echo "  • Ollama LLM:     http://localhost:11434"
-    echo "  • Demo UI:        http://localhost:8501"
+    echo "  • Demo UI:        http://localhost:8502"
     echo
     echo "🎯 To Start Demo:"
     echo "  ./launch_demo.sh"
@@ -431,28 +365,26 @@ main() {
     echo "  • Execution traces available in UI"
     echo "  • LangSmith ready (set LANGCHAIN_API_KEY)"
     echo
-    echo "⚡ Quick Test:"
-    echo "  curl http://localhost:11434/api/version"
     echo "======================================"
     
     # Automatically start demo and open browser
     echo
     print_status "Starting demo automatically..."
-    echo "🌐 Opening http://localhost:8501 in your browser..."
+    echo "🌐 Opening http://localhost:8502 in your browser..."
     
     # Detect OS and open browser automatically
     if [[ "$OSTYPE" == "darwin"* ]]; then
         # macOS
-        sleep 3 && open http://localhost:8501 &
+        sleep 3 && open http://localhost:8502 &
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         # Linux
-        sleep 3 && (xdg-open http://localhost:8501 || sensible-browser http://localhost:8501) &
+        sleep 3 && (xdg-open http://localhost:8502 || sensible-browser http://localhost:8502) &
     # elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "win32" ]]; then
     #     # Windows
-    #     sleep 3 && start http://localhost:8501 &
+    #     sleep 3 && start http://localhost:8502 &
     else
         # Fallback
-        echo "🌐 Please open http://localhost:8501 in your browser"
+        echo "🌐 Please open http://localhost:8502 in your browser"
     fi
     
     ./launch_demo.sh
