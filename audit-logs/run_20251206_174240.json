@@ -1,0 +1,191 @@
+[
+  {
+    "agent_name": "AttributeAnalogyAgent",
+    "date_time": "2025-12-06T17:42:40.561435",
+    "description": "Standardizing attributes for product: description: White hoodie, sample description 5, category: HOODIE, color: Navy Blue, segment: Mens w",
+    "status": "In Progress",
+    "run_id": "run_20251206_174240",
+    "inputs": {
+      "product_description": "description: White hoodie, sample description 5, category: HOODIE, color: Navy Blue, segment: Mens wear, family: Formal Wear, class: Top Wear, brick: HOODIE, material: Wool Blend, brand: COLUMBIA"
+    },
+    "outputs": null,
+    "error": null,
+    "metadata": {}
+  },
+  {
+    "agent_name": "AttributeAnalogyAgent",
+    "date_time": "2025-12-06T17:42:53.536516",
+    "description": "Successfully standardized attributes",
+    "status": "Success",
+    "run_id": "run_20251206_174240",
+    "inputs": {
+      "product_description": "description: Purple jacket, sample description 2, category: JACKET, color: White, segment: Womens wear, family: Denim Wear, class: Bottom Wear, brick: JACKET, material: Wool Blend, brand: LEVIS"
+    },
+    "outputs": {
+      "attributes": {
+        "style_code": "",
+        "color": "Purple",
+        "segment": "Womens wear",
+        "family": "Denim Wear",
+        "class": "Bottom Wear",
+        "brick": "JACKET",
+        "fabric": "Wool Blend"
+      }
+    },
+    "error": null,
+    "metadata": {}
+  },
+  {
+    "agent_name": "AttributeAnalogyAgent",
+    "date_time": "2025-12-06T17:42:53.540286",
+    "description": "Finding comparable products for attributes: Denim Wear",
+    "status": "In Progress",
+    "run_id": "run_20251206_174240",
+    "inputs": {
+      "attributes": {
+        "style_code": "",
+        "color": "Purple",
+        "segment": "Womens wear",
+        "family": "Denim Wear",
+        "class": "Bottom Wear",
+        "brick": "JACKET",
+        "fabric": "Wool Blend"
+      }
+    },
+    "outputs": null,
+    "error": null,
+    "metadata": {}
+  },
+  {
+    "agent_name": "AttributeAnalogyAgent",
+    "date_time": "2025-12-06T17:42:53.597035",
+    "description": "Successfully standardized attributes",
+    "status": "Success",
+    "run_id": "run_20251206_174240",
+    "inputs": {
+      "product_description": "description: Gray blazer, sample description 1, category: BLAZER, color: Beige, segment: Womens wear, family: Casual Wear, class: Bottom Wear, brick: BLAZER, material: Nylon, brand: H&M"
+    },
+    "outputs": {
+      "attributes": {
+        "style_code": "",
+        "color": "Beige",
+        "segment": "Womens wear",
+        "family": "Casual Wear",
+        "class": "Bottom Wear",
+        "brick": "BLAZER",
+        "fabric": "Nylon"
+      }
+    },
+    "error": null,
+    "metadata": {}
+  },
+  {
+    "agent_name": "AttributeAnalogyAgent",
+    "date_time": "2025-12-06T17:42:53.600155",
+    "description": "Finding comparable products for attributes: Casual Wear",
+    "status": "In Progress",
+    "run_id": "run_20251206_174240",
+    "inputs": {
+      "attributes": {
+        "style_code": "",
+        "color": "Beige",
+        "segment": "Womens wear",
+        "family": "Casual Wear",
+        "class": "Bottom Wear",
+        "brick": "BLAZER",
+        "fabric": "Nylon"
+      }
+    },
+    "outputs": null,
+    "error": null,
+    "metadata": {}
+  },
+  {
+    "agent_name": "AttributeAnalogyAgent",
+    "date_time": "2025-12-06T17:42:57.861995",
+    "description": "Successfully standardized attributes",
+    "status": "Success",
+    "run_id": "run_20251206_174240",
+    "inputs": {
+      "product_description": "description: Yellow blazer, sample description 4, category: BLAZER, color: Gray, segment: Womens wear, family: Formal Wear, class: Bottom Wear, brick: BLAZER, material: Nylon, brand: COLUMBIA"
+    },
+    "outputs": {
+      "attributes": {
+        "style_code": "",
+        "color": "Yellow",
+        "segment": "Formal",
+        "family": "Blazer",
+        "class": "Bottom Wear",
+        "brick": "Womens wear",
+        "fabric": "Nylon"
+      }
+    },
+    "error": null,
+    "metadata": {}
+  },
+  {
+    "agent_name": "AttributeAnalogyAgent",
+    "date_time": "2025-12-06T17:42:57.872025",
+    "description": "Finding comparable products for attributes: Blazer",
+    "status": "In Progress",
+    "run_id": "run_20251206_174240",
+    "inputs": {
+      "attributes": {
+        "style_code": "",
+        "color": "Yellow",
+        "segment": "Formal",
+        "family": "Blazer",
+        "class": "Bottom Wear",
+        "brick": "Womens wear",
+        "fabric": "Nylon"
+      }
+    },
+    "outputs": null,
+    "error": null,
+    "metadata": {}
+  },
+  {
+    "agent_name": "AttributeAnalogyAgent",
+    "date_time": "2025-12-06T17:42:58.272177",
+    "description": "Successfully standardized attributes",
+    "status": "Success",
+    "run_id": "run_20251206_174240",
+    "inputs": {
+      "product_description": "description: Blue sweatpants, sample description 3, category: SWEATPANTS, color: Black, segment: Mens wear, family: Casual Wear, class: Bottom Wear, brick: SWEATPANTS, material: Nylon, brand: ADIDAS"
+    },
+    "outputs": {
+      "attributes": {
+        "style_code": "",
+        "color": "Black",
+        "segment": "Mens wear",
+        "family": "Casual Wear",
+        "class": "Bottom Wear",
+        "brick": "SWEATPANTS",
+        "fabric": "Nylon"
+      }
+    },
+    "error": null,
+    "metadata": {}
+  },
+  {
+    "agent_name": "AttributeAnalogyAgent",
+    "date_time": "2025-12-06T17:42:58.273833",
+    "description": "Finding comparable products for attributes: Casual Wear",
+    "status": "In Progress",
+    "run_id": "run_20251206_174240",
+    "inputs": {
+      "attributes": {
+        "style_code": "",
+        "color": "Black",
+        "segment": "Mens wear",
+        "family": "Casual Wear",
+        "class": "Bottom Wear",
+        "brick": "SWEATPANTS",
+        "fabric": "Nylon"
+      }
+    },
+    "outputs": null,
+    "error": null,
+    "metadata": {}
+  }
+]

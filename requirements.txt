@@ -35,3 +35,9 @@ python-multipart>=0.0.6
 # Excel file support
 openpyxl>=3.1.0
 xlrd>=2.0.1
+
+# LangChain and LangGraph for orchestration
+langchain>=0.1.0
+langchain-core>=0.1.0
+langgraph>=0.0.20
+langsmith>=0.0.60

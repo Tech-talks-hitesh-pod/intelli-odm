@@ -21,6 +21,15 @@ import random
 import sys
 from pathlib import Path
 
+# Try to import LangGraph orchestrator (optional)
+try:
+    from agents.orchestrator_agent import DemandForecastingOrchestrator, LANGGRAPH_AVAILABLE
+    USE_LANGGRAPH = True
+except ImportError:
+    USE_LANGGRAPH = False
+    LANGGRAPH_AVAILABLE = False
+    print("[INFO] LangGraph orchestrator not available. Using standard workflow.")
+
 # Add parent directory to path
 parent_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(parent_dir))
@@ -31,6 +40,15 @@ from agents.data_ingestion_agent import DataIngestionAgent
 from agents.attribute_analogy_agent import AttributeAnalogyAgent
 from agents.demand_forecasting_agent import DemandForecastingAgent
 from shared_knowledge_base import SharedKnowledgeBase
+
+# Try to import LangGraph orchestrator (optional)
+try:
+    from agents.orchestrator_agent import DemandForecastingOrchestrator
+    LANGGRAPH_AVAILABLE = True
+except ImportError:
+    LANGGRAPH_AVAILABLE = False
+    DemandForecastingOrchestrator = None
+    print("[INFO] LangGraph orchestrator not available. Using standard workflow.")
 
 app = FastAPI(title="Demand Forecasting & Allocation Engine", version="1.0.0")
 
@@ -262,7 +280,8 @@ async def run_forecast_internal(
     max_quantity_per_store: int,
     universe_of_stores: Optional[int],
     store_mappings: Optional[str],
-    log_queue: Optional[asyncio.Queue] = None
+    log_queue: Optional[asyncio.Queue] = None,
+    use_langgraph: bool = False
 ):
     """Run demand forecasting and allocation"""
     global current_run_id
@@ -389,136 +408,196 @@ async def run_forecast_internal(
         
         print(f"\n[WORKFLOW] Extracted {len(product_attributes)} product attributes from new articles")
         
-        # Initialize agents
-        attribute_agent = AttributeAnalogyAgent(ollama_client, kb, audit_logger)
-        demand_agent = DemandForecastingAgent(
-            ollama_client=ollama_client,
-            default_margin_pct=0.40,
-            target_sell_through_pct=0.75,
-            min_margin_pct=0.25,
-            use_llm=True,
-            universe_of_stores=universe_of_stores,
-            enable_hitl=True,
-            variance_threshold=variance_threshold_decimal,
-            audit_logger=audit_logger
-        )
-        
-        # Get comparables from attribute analogy agent (offload blocking operations)
-        comparables = []
-        if new_articles_data is not None and not new_articles_data.empty:
-            loop = asyncio.get_event_loop()
-            print(f"\n[WORKFLOW] Running Attribute Analogy Agent for {len(new_articles_data)} new articles...")
-            # For each new article, find comparables
-            for idx, (_, row) in enumerate(new_articles_data.iterrows()):
-                # Build product description from attributes
-                desc_parts = []
-                for attr in ['description', 'category', 'color', 'segment', 'family', 'class', 'brick', 'material', 'brand']:
-                    if attr in row and pd.notna(row[attr]):
-                        desc_parts.append(f"{attr}: {row[attr]}")
-                
-                # Use vendor_sku or sku as fallback
-                sku = row.get('vendor_sku', '') or row.get('sku', '') or row.get('product_id', '')
-                product_description = ", ".join(desc_parts) if desc_parts else sku
-                
-                print(f"[WORKFLOW] Processing article {idx+1}/{len(new_articles_data)}: {sku}")
-                
-                # Find comparables - offload blocking agent.run() to thread pool
-                # Capture product_description in closure properly
-                def run_attribute_agent(desc=product_description):
-                    try:
-                        comps, _ = attribute_agent.run(desc, sales_data)
-                        print(f"[WORKFLOW] Found {len(comps)} comparables for: {desc[:50]}...")
-                        return comps
-                    except Exception as e:
-                        print(f"[WORKFLOW] Error in attribute agent for {desc[:50]}: {e}")
-                        import traceback
-                        traceback.print_exc()
-                        return []
-                
-                comps = await loop.run_in_executor(None, run_attribute_agent, product_description)
-                comparables.extend(comps)
-            
-            print(f"[WORKFLOW] Attribute Analogy Agent complete. Total comparables: {len(comparables)}")
-        
-        # Extract new article SKUs (vendor_sku) for forecasting
-        new_article_skus = []
-        if new_articles_data is not None and not new_articles_data.empty:
-            # Get vendor_sku or sku from new articles
-            if 'vendor_sku' in new_articles_data.columns:
-                new_article_skus = new_articles_data['vendor_sku'].dropna().unique().tolist()
-            elif 'sku' in new_articles_data.columns:
-                new_article_skus = new_articles_data['sku'].dropna().unique().tolist()
-            elif 'product_id' in new_articles_data.columns:
-                new_article_skus = new_articles_data['product_id'].dropna().unique().tolist()
-        
-        print(f"\n[WORKFLOW] New articles to forecast: {new_article_skus}")
-        
-        # Run demand forecasting - offload blocking agent.run() to thread pool
-        print(f"\n[WORKFLOW] Starting Demand Forecasting Agent...")
-        print(f"[WORKFLOW] Inputs: {len(comparables)} comparables, {len(product_attributes)} product attributes")
-        print(f"[WORKFLOW] New articles (vendor_sku): {len(new_article_skus)}")
-        print(f"[WORKFLOW] Sales data: {len(sales_data) if sales_data is not None and not sales_data.empty else 0} rows")
-        print(f"[WORKFLOW] Inventory data: {len(inventory_data) if inventory_data is not None and not inventory_data.empty else 0} rows")
-        print(f"[WORKFLOW] Price data: {len(price_data) if price_data is not None and not price_data.empty else 0} rows")
-        
-        # Add new articles to product_attributes if not already there (for forecasting)
-        # The demand agent needs to know which articles to forecast for
-        # We'll pass the new article SKUs through product_attributes
-        if new_article_skus:
-            for sku in new_article_skus:
-                if sku not in product_attributes:
-                    # Find the row for this SKU
-                    matching_row = new_articles_data[
-                        (new_articles_data.get('vendor_sku', '') == sku) |
-                        (new_articles_data.get('sku', '') == sku) |
-                        (new_articles_data.get('product_id', '') == sku)
-                    ]
-                    if not matching_row.empty:
-                        row = matching_row.iloc[0]
-                        product_attributes[sku] = {
-                            'style_code': row.get('style_code', row.get('product_id', 'N/A')),
-                            'color': row.get('color', 'N/A'),
-                            'segment': row.get('segment', 'N/A'),
-                            'family': row.get('family', 'N/A'),
-                            'class': row.get('class', 'N/A'),
-                            'brick': row.get('brick', 'N/A'),
-                            'category': row.get('category', 'N/A'),
-                            'material': row.get('material', 'N/A'),
-                            'brand': row.get('brand', 'N/A')
-                        }
-        
-        loop = asyncio.get_event_loop()
-        def run_demand_agent():
+        # Use LangGraph orchestrator if available and requested
+        if use_langgraph and LANGGRAPH_AVAILABLE and DemandForecastingOrchestrator:
+            print("\n[WORKFLOW] Using LangGraph Orchestrator for workflow execution...")
             try:
-                print("[WORKFLOW] Demand Forecasting Agent.run() called")
-                print(f"[WORKFLOW] Product attributes keys (articles to forecast): {list(product_attributes.keys())}")
-                result = demand_agent.run(
-                    comparables=comparables,
-                    sales_data=sales_data,
-                    inventory_data=inventory_data,
-                    price_data=price_data,
-                    price_options=[200, 300, 400, 500, 600, 700, 800, 900, 1000],
-                    product_attributes=product_attributes,  # This should include new article SKUs
-                    forecast_horizon_days=forecast_horizon_days,
-                    variance_threshold=variance_threshold_decimal,
-                    cost_data=cost_data,
-                    margin_target=margin_target_decimal,
-                    max_quantity_per_store=max_quantity_per_store
+                orchestrator = DemandForecastingOrchestrator(
+                    ollama_client=ollama_client,
+                    audit_logger=audit_logger,
+                    knowledge_base=kb
                 )
-                print(f"[WORKFLOW] Demand Forecasting Agent completed. Result type: {type(result)}")
-                if isinstance(result, tuple):
-                    print(f"[WORKFLOW] Result tuple length: {len(result)}")
-                return result
+                
+                # Run workflow using LangGraph
+                loop = asyncio.get_event_loop()
+                def run_orchestrator():
+                    return orchestrator.run(
+                        sales_data=sales_data,
+                        inventory_data=inventory_data,
+                        price_data=price_data,
+                        new_articles_data=new_articles_data,
+                        cost_data=cost_data,
+                        forecast_horizon_days=forecast_horizon_days,
+                        variance_threshold=variance_threshold_decimal,
+                        margin_target=margin_target_decimal,
+                        max_quantity_per_store=max_quantity_per_store,
+                        universe_of_stores=universe_of_stores,
+                        run_id=current_run_id
+                    )
+                
+                orchestrator_results = await loop.run_in_executor(None, run_orchestrator)
+                # LangGraph orchestrator returns (results, sensitivity) tuple
+                if isinstance(orchestrator_results, tuple):
+                    results, sensitivity = orchestrator_results
+                else:
+                    # Fallback if not tuple
+                    results = orchestrator_results
+                    sensitivity = {}
+                
+                print("[WORKFLOW] LangGraph orchestrator completed successfully")
+                # Continue to formatting section (bypass standard workflow)
+                use_langgraph = True  # Mark as completed
             except Exception as e:
-                print(f"[WORKFLOW] ERROR in Demand Forecasting Agent: {e}")
+                print(f"[WORKFLOW] LangGraph orchestrator failed, falling back to standard workflow: {e}")
                 import traceback
                 traceback.print_exc()
-                raise
+                use_langgraph = False  # Fallback to standard workflow
         
-        results, sensitivity = await loop.run_in_executor(None, run_demand_agent)
-        print(f"[WORKFLOW] Demand Forecasting Agent execution complete")
+        # Standard workflow (if LangGraph not used or failed)
+        if not use_langgraph or not LANGGRAPH_AVAILABLE:
+            # Initialize agents
+            attribute_agent = AttributeAnalogyAgent(ollama_client, kb, audit_logger)
+            demand_agent = DemandForecastingAgent(
+                ollama_client=ollama_client,
+                default_margin_pct=0.40,
+                target_sell_through_pct=0.75,
+                min_margin_pct=0.25,
+                use_llm=True,
+                universe_of_stores=universe_of_stores,
+                enable_hitl=True,
+                variance_threshold=variance_threshold_decimal,
+                audit_logger=audit_logger
+            )
+            
+            # Get comparables from attribute analogy agent (PARALLEL execution)
+            comparables = []
+            if new_articles_data is not None and not new_articles_data.empty:
+                loop = asyncio.get_event_loop()
+                print(f"\n[WORKFLOW] Running Attribute Analogy Agent in PARALLEL for {len(new_articles_data)} new articles...")
+                
+                # Prepare all product descriptions first
+                article_tasks = []
+                for idx, (_, row) in enumerate(new_articles_data.iterrows()):
+                    # Build product description from attributes
+                    desc_parts = []
+                    for attr in ['description', 'category', 'color', 'segment', 'family', 'class', 'brick', 'material', 'brand']:
+                        if attr in row and pd.notna(row[attr]):
+                            desc_parts.append(f"{attr}: {row[attr]}")
+                    
+                    # Use vendor_sku or sku as fallback
+                    sku = row.get('vendor_sku', '') or row.get('sku', '') or row.get('product_id', '')
+                    product_description = ", ".join(desc_parts) if desc_parts else sku
+                    
+                    # Create task for parallel execution
+                    def create_agent_task(desc, article_sku):
+                        def run_attribute_agent():
+                            try:
+                                print(f"[WORKFLOW] Processing article: {article_sku}")
+                                comps, _ = attribute_agent.run(desc, sales_data)
+                                print(f"[WORKFLOW] Found {len(comps)} comparables for: {article_sku}")
+                                return comps
+                            except Exception as e:
+                                print(f"[WORKFLOW] Error in attribute agent for {article_sku}: {e}")
+                                import traceback
+                                traceback.print_exc()
+                                return []
+                        return run_attribute_agent
+                    
+                    task = create_agent_task(product_description, sku)
+                    article_tasks.append(loop.run_in_executor(None, task))
+                
+                # Execute all attribute analogy agent calls in parallel
+                print(f"[WORKFLOW] Executing {len(article_tasks)} attribute analogy tasks in parallel...")
+                results = await asyncio.gather(*article_tasks, return_exceptions=True)
+                
+                # Collect all comparables from parallel results
+                for idx, result in enumerate(results):
+                    if isinstance(result, Exception):
+                        print(f"[WORKFLOW] Task {idx+1} failed with error: {result}")
+                        continue
+                    comparables.extend(result)
+                
+                print(f"[WORKFLOW] Attribute Analogy Agent complete. Total comparables: {len(comparables)}")
+            
+            # Extract new article SKUs (vendor_sku) for forecasting
+            new_article_skus = []
+            if new_articles_data is not None and not new_articles_data.empty:
+                # Get vendor_sku or sku from new articles
+                if 'vendor_sku' in new_articles_data.columns:
+                    new_article_skus = new_articles_data['vendor_sku'].dropna().unique().tolist()
+                elif 'sku' in new_articles_data.columns:
+                    new_article_skus = new_articles_data['sku'].dropna().unique().tolist()
+                elif 'product_id' in new_articles_data.columns:
+                    new_article_skus = new_articles_data['product_id'].dropna().unique().tolist()
+            
+            print(f"\n[WORKFLOW] New articles to forecast: {new_article_skus}")
+            
+            # Run demand forecasting - offload blocking agent.run() to thread pool
+            print(f"\n[WORKFLOW] Starting Demand Forecasting Agent...")
+            print(f"[WORKFLOW] Inputs: {len(comparables)} comparables, {len(product_attributes)} product attributes")
+            print(f"[WORKFLOW] New articles (vendor_sku): {len(new_article_skus)}")
+            print(f"[WORKFLOW] Sales data: {len(sales_data) if sales_data is not None and not sales_data.empty else 0} rows")
+            print(f"[WORKFLOW] Inventory data: {len(inventory_data) if inventory_data is not None and not inventory_data.empty else 0} rows")
+            print(f"[WORKFLOW] Price data: {len(price_data) if price_data is not None and not price_data.empty else 0} rows")
+            
+            # Add new articles to product_attributes if not already there (for forecasting)
+            # The demand agent needs to know which articles to forecast for
+            # We'll pass the new article SKUs through product_attributes
+            if new_article_skus:
+                for sku in new_article_skus:
+                    if sku not in product_attributes:
+                        # Find the row for this SKU
+                        matching_row = new_articles_data[
+                            (new_articles_data.get('vendor_sku', '') == sku) |
+                            (new_articles_data.get('sku', '') == sku) |
+                            (new_articles_data.get('product_id', '') == sku)
+                        ]
+                        if not matching_row.empty:
+                            row = matching_row.iloc[0]
+                            product_attributes[sku] = {
+                                'style_code': row.get('style_code', row.get('product_id', 'N/A')),
+                                'color': row.get('color', 'N/A'),
+                                'segment': row.get('segment', 'N/A'),
+                                'family': row.get('family', 'N/A'),
+                                'class': row.get('class', 'N/A'),
+                                'brick': row.get('brick', 'N/A'),
+                                'category': row.get('category', 'N/A'),
+                                'material': row.get('material', 'N/A'),
+                                'brand': row.get('brand', 'N/A')
+                            }
+            
+            loop = asyncio.get_event_loop()
+            def run_demand_agent():
+                try:
+                    print("[WORKFLOW] Demand Forecasting Agent.run() called")
+                    print(f"[WORKFLOW] Product attributes keys (articles to forecast): {list(product_attributes.keys())}")
+                    result = demand_agent.run(
+                        comparables=comparables,
+                        sales_data=sales_data,
+                        inventory_data=inventory_data,
+                        price_data=price_data,
+                        price_options=[200, 300, 400, 500, 600, 700, 800, 900, 1000],
+                        product_attributes=product_attributes,  # This should include new article SKUs
+                        forecast_horizon_days=forecast_horizon_days,
+                        variance_threshold=variance_threshold_decimal,
+                        cost_data=cost_data,
+                        margin_target=margin_target_decimal,
+                        max_quantity_per_store=max_quantity_per_store
+                    )
+                    print(f"[WORKFLOW] Demand Forecasting Agent completed. Result type: {type(result)}")
+                    if isinstance(result, tuple):
+                        print(f"[WORKFLOW] Result tuple length: {len(result)}")
+                    return result
+                except Exception as e:
+                    print(f"[WORKFLOW] ERROR in Demand Forecasting Agent: {e}")
+                    import traceback
+                    traceback.print_exc()
+                    raise
+            
+            results, sensitivity = await loop.run_in_executor(None, run_demand_agent)
+            print(f"[WORKFLOW] Demand Forecasting Agent execution complete")
         
-        # Debug: Log results structure
+        # Debug: Log results structure (for both workflows)
         print(f"\n[DEBUG] Results keys: {results.keys() if isinstance(results, dict) else 'Not a dict'}")
         if isinstance(results, dict):
             if 'recommendations' in results:
@@ -619,7 +698,8 @@ async def run_forecast(
     forecast_horizon_days: int = Form(60),
     max_quantity_per_store: int = Form(500),
     universe_of_stores: Optional[int] = Form(None),
-    store_mappings: Optional[str] = Form(None)
+    store_mappings: Optional[str] = Form(None),
+    use_langgraph: bool = Form(False)
 ):
     """Start forecast and return run_id immediately, then run forecast in background"""
     global current_run_id
@@ -675,7 +755,8 @@ async def run_forecast(
             await run_forecast_internal(
                 file_paths, sales_file_obj, inventory_file_obj, price_file_obj,
                 cost_file_obj, new_articles_file_obj, margin_target, variance_threshold,
-                forecast_horizon_days, max_quantity_per_store, universe_of_stores, store_mappings
+                forecast_horizon_days, max_quantity_per_store, universe_of_stores, store_mappings,
+                use_langgraph=use_langgraph
             )
         except Exception as e:
             print(f"Error in background forecast: {e}")

@@ -2328,12 +2328,12 @@ Return only a JSON object with your recommendation."""
         if optimized_qty > 0 and margin_safe and expected_sell_through >= self.target_sell_through_pct * 0.8:
             forecast['recommendation'] = 'buy'
             forecast['optimization_score'] = self._calculate_optimization_score(
-                expected_rate_of_sale, expected_sell_through, historical_margin, target_margin
+                expected_rate_of_sale, expected_sell_through, historical_margin
             )
         elif optimized_qty > 0 and margin_safe:
             forecast['recommendation'] = 'buy_cautious'
             forecast['optimization_score'] = self._calculate_optimization_score(
-                expected_rate_of_sale, expected_sell_through, historical_margin, target_margin
+                expected_rate_of_sale, expected_sell_through, historical_margin
             )
         elif not margin_safe:
             forecast['recommendation'] = 'skip_margin_risk'
