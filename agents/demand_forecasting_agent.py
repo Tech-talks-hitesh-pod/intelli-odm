@@ -285,7 +285,7 @@ class DemandForecastingAgent:
         
         # Use LLM to guide model selection (if enabled and available)
         model_recommendation = None
-        if self.use_llm and self.llama:
+        if self.use_llm and self.ollama:
             try:
                 model_recommendation = self._llm_model_selection(
                     data_characteristics, comparables
@@ -968,6 +968,15 @@ Return only a JSON object with your recommendation."""
         - Factor importance ranking
         """
         
+        from utils.audit_logger import LogStatus
+        
+        if self.audit_logger:
+            self.audit_logger.log_agent_operation(
+                agent_name="DemandForecastingAgent",
+                description="Starting Task 2: Sensitivity and Factor Analysis",
+                status=LogStatus.IN_PROGRESS
+            )
+        
         print("\n" + "=" * 60)
         print("TASK 2: Sensitivity and Factor Analysis")
         print("=" * 60)
@@ -1289,6 +1298,20 @@ Return only a JSON object with your recommendation."""
         - Analyzes historical MRP, selling price, discount, and margin
         """
         
+        from utils.audit_logger import LogStatus
+        
+        if self.audit_logger:
+            self.audit_logger.log_agent_operation(
+                agent_name="DemandForecastingAgent",
+                description="Starting Task 3: Store-Level Forecasting",
+                status=LogStatus.IN_PROGRESS,
+                inputs={
+                    "forecast_horizon_days": forecast_horizon_days,
+                    "max_quantity_per_store": max_quantity_per_store,
+                    "margin_target": margin_target
+                }
+            )
+        
         print("\n" + "=" * 60)
         print("TASK 3: Store-Level Forecasting (Optimized)")
         print("=" * 60)
@@ -1309,11 +1332,27 @@ Return only a JSON object with your recommendation."""
         stores = sales_data['store_id'].unique()
         store_forecasts = {}
         
-        # Get unique SKUs/articles
+        # Get unique SKUs/articles from sales data
         if 'sku' in sales_data.columns:
-            articles = sales_data['sku'].unique()
+            existing_articles = sales_data['sku'].unique().tolist()
         else:
-            articles = ['unknown_article']
+            existing_articles = []
+        
+        # Also get new articles from product_attributes (vendor_sku from new articles)
+        new_articles = []
+        if product_attributes:
+            # product_attributes keys are the SKUs (vendor_sku) of new articles
+            new_articles = list(product_attributes.keys())
+            print(f"\n[FORECAST] Found {len(new_articles)} new articles from product_attributes: {new_articles}")
+        
+        # Combine: prioritize new articles, but also include existing articles for comparison
+        # For new articles forecasting, we primarily want to forecast for the new articles
+        if new_articles:
+            articles = new_articles  # Forecast for new articles
+            print(f"[FORECAST] Forecasting for NEW articles: {articles}")
+        else:
+            articles = existing_articles  # Fallback to existing articles if no new articles
+            print(f"[FORECAST] No new articles found, forecasting for existing articles: {articles}")
         
         print(f"\nForecasting for {len(stores)} stores and {len(articles)} articles")
         print(f"Forecast horizon: {forecast_horizon_days} days")
@@ -3056,6 +3095,24 @@ Return only a JSON object with your recommendation."""
             Tuple of (forecast_results, sensitivity_analysis)
         """
         
+        from utils.audit_logger import LogStatus
+        
+        # Log start of demand forecasting agent
+        if self.audit_logger:
+            self.audit_logger.log_agent_operation(
+                agent_name="DemandForecastingAgent",
+                description="Starting Demand Forecasting Agent - Sequential Tasks",
+                status=LogStatus.IN_PROGRESS,
+                inputs={
+                    "forecast_horizon_days": forecast_horizon_days,
+                    "variance_threshold": variance_threshold,
+                    "margin_target": margin_target,
+                    "max_quantity_per_store": max_quantity_per_store,
+                    "num_comparables": len(comparables),
+                    "num_product_attributes": len(product_attributes) if product_attributes else 0
+                }
+            )
+        
         print("\n" + "=" * 60)
         print("DEMAND FORECASTING AGENT - Starting Sequential Tasks")
         print("=" * 60)
@@ -3110,9 +3167,24 @@ Return only a JSON object with your recommendation."""
         
         try:
             # Task 1: Select best forecasting model
+            if self.audit_logger:
+                self.audit_logger.log_agent_operation(
+                    agent_name="DemandForecastingAgent",
+                    description="Task 1: Selecting best forecasting model",
+                    status=LogStatus.IN_PROGRESS
+                )
+            
             model_selection = self.select_model(
                 comparables, sales_data, inventory_data, price_data
             )
+            
+            if self.audit_logger:
+                self.audit_logger.log_agent_operation(
+                    agent_name="DemandForecastingAgent",
+                    description=f"Task 1 Complete: Model selected - {model_selection.get('selected_model', 'unknown')}",
+                    status=LogStatus.SUCCESS,
+                    outputs={"model_selection": model_selection}
+                )
             
             # Task 2: Sensitivity and factor analysis
             if product_attributes is None:
@@ -3121,11 +3193,36 @@ Return only a JSON object with your recommendation."""
                 if comparables and len(comparables) > 0:
                     product_attributes = comparables[0].get('attributes', {})
             
+            if self.audit_logger:
+                self.audit_logger.log_agent_operation(
+                    agent_name="DemandForecastingAgent",
+                    description="Task 2: Running sensitivity and factor analysis",
+                    status=LogStatus.IN_PROGRESS
+                )
+            
             factor_analysis = self.sensitivity_and_factor_analysis(
                 sales_data, price_data, product_attributes, comparables
             )
             
+            if self.audit_logger:
+                self.audit_logger.log_agent_operation(
+                    agent_name="DemandForecastingAgent",
+                    description="Task 2 Complete: Sensitivity and factor analysis completed",
+                    status=LogStatus.SUCCESS,
+                    outputs={"factor_analysis_summary": {
+                        "sensitivity_results_count": len(factor_analysis.get('sensitivity_results', {})),
+                        "correlation_matrix_size": len(factor_analysis.get('correlation_matrix', {}))
+                    }}
+                )
+            
             # Task 3: Store-level forecasting
+            if self.audit_logger:
+                self.audit_logger.log_agent_operation(
+                    agent_name="DemandForecastingAgent",
+                    description="Task 3: Running store-level forecasting",
+                    status=LogStatus.IN_PROGRESS
+                )
+            
             forecast_results = self.forecast_store_level(
                 sales_data, inventory_data, price_data, 
                 product_attributes, comparables, forecast_horizon_days,
@@ -3135,10 +3232,40 @@ Return only a JSON object with your recommendation."""
             # Check if forecasting produced valid results
             if not forecast_results or not forecast_results.get('store_level_forecasts'):
                 print("\n⚠️  Forecasting produced empty results. Fallback already attempted in _generate_forecast.")
+                if self.audit_logger:
+                    self.audit_logger.log_agent_operation(
+                        agent_name="DemandForecastingAgent",
+                        description="Task 3 Warning: Forecasting produced empty results",
+                        status=LogStatus.WARNING
+                    )
+            else:
+                store_forecasts = forecast_results.get('store_level_forecasts', {})
+                recommendations = forecast_results.get('recommendations', {})
+                if self.audit_logger:
+                    self.audit_logger.log_agent_operation(
+                        agent_name="DemandForecastingAgent",
+                        description="Task 3 Complete: Store-level forecasting completed",
+                        status=LogStatus.SUCCESS,
+                        outputs={
+                            "stores_forecasted": len(store_forecasts),
+                            "articles_recommended": len(recommendations.get('articles_to_buy', [])),
+                            "total_quantity": recommendations.get('total_procurement_quantity', 0)
+                        }
+                    )
             
         except Exception as e:
             print(f"\n❌ Forecasting error: {str(e)}")
             print("Note: Fallback mechanism is built into _generate_forecast method")
+            
+            if self.audit_logger:
+                import traceback
+                self.audit_logger.log_agent_operation(
+                    agent_name="DemandForecastingAgent",
+                    description="Forecasting failed with error",
+                    status=LogStatus.FAIL,
+                    error=str(e),
+                    metadata={"traceback": traceback.format_exc()}
+                )
             
             # Return error response
             return {
@@ -3195,6 +3322,21 @@ Return only a JSON object with your recommendation."""
                 'variance_threshold': self.hitl.variance_threshold,
                 'variance_threshold_pct': self.hitl.variance_threshold * 100
             }
+        
+        # Log successful completion
+        if self.audit_logger:
+            recommendations = final_results.get('recommendations', {})
+            self.audit_logger.log_agent_operation(
+                agent_name="DemandForecastingAgent",
+                description="Demand Forecasting Agent completed successfully",
+                status=LogStatus.SUCCESS,
+                outputs={
+                    "articles_recommended": len(recommendations.get('articles_to_buy', [])),
+                    "total_quantity": recommendations.get('total_procurement_quantity', 0),
+                    "total_stores": recommendations.get('total_stores', 0),
+                    "model_used": final_results.get('forecast_results', {}).get('model_used', 'unknown')
+                }
+            )
         
         return final_results, factor_analysis.get('sensitivity_results', {}) if 'factor_analysis' in locals() else {}
     

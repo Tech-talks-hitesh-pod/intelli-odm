@@ -1,0 +1,63 @@
+[
+  {
+    "agent_name": "AttributeAnalogyAgent",
+    "date_time": "2025-12-06T15:55:28.904848",
+    "description": "Standardizing attributes for product: color: Beige, segment: Womens wear, family: Casual Wear, class: Bottom Wear, brick: BLAZER",
+    "status": "In Progress",
+    "run_id": "run_20251206_155528",
+    "inputs": {
+      "product_description": "color: Beige, segment: Womens wear, family: Casual Wear, class: Bottom Wear, brick: BLAZER"
+    },
+    "outputs": null,
+    "error": null,
+    "metadata": {}
+  },
+  {
+    "agent_name": "AttributeAnalogyAgent",
+    "date_time": "2025-12-06T15:55:34.187013",
+    "description": "Successfully standardized attributes",
+    "status": "Success",
+    "run_id": "run_20251206_155528",
+    "inputs": {
+      "product_description": "color: Beige, segment: Womens wear, family: Casual Wear, class: Bottom Wear, brick: BLAZER"
+    },
+    "outputs": {
+      "attributes": {
+        "style_code": null,
+        "color": "Beige",
+        "segment": "Womens wear",
+        "family": "Casual Wear",
+        "class": "Bottom Wear",
+        "brick": "BLAZER",
+        "fabric": null,
+        "pattern": null,
+        "sleeve_type": null
+      }
+    },
+    "error": null,
+    "metadata": {}
+  },
+  {
+    "agent_name": "AttributeAnalogyAgent",
+    "date_time": "2025-12-06T15:55:34.191302",
+    "description": "Finding comparable products for attributes: Casual Wear",
+    "status": "In Progress",
+    "run_id": "run_20251206_155528",
+    "inputs": {
+      "attributes": {
+        "style_code": null,
+        "color": "Beige",
+        "segment": "Womens wear",
+        "family": "Casual Wear",
+        "class": "Bottom Wear",
+        "brick": "BLAZER",
+        "fabric": null,
+        "pattern": null,
+        "sleeve_type": null
+      }
+    },
+    "outputs": null,
+    "error": null,
+    "metadata": {}
+  }
+]
