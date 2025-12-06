@@ -87,6 +87,7 @@ chromadb>=0.4.15
 sentence-transformers>=2.2.0
 python-dotenv>=1.0.0
 pydantic>=2.0.0
+pydantic-settings>=2.11.0
 requests>=2.28.0
 ollama>=0.1.7
 openai>=1.0.0
@@ -401,7 +402,7 @@ main() {
     setup_environment
     setup_directories
     setup_observability
-    init_knowledge_base
+    #init_knowledge_base
     verify_system
     create_launcher
     
