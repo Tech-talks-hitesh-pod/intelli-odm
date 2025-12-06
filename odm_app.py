@@ -150,6 +150,53 @@ def load_store_data():
         logger.warning(f"LangSmith tracing failed for store data loading: {e}")
         return _load_store_data_impl()
 
+@st.cache_data
+def load_stock_data():
+    """Load stock data from CSV file."""
+    try:
+        stock_file = "data/sample/store_stock_data.csv"
+        if not os.path.exists(stock_file):
+            logger.warning(f"Stock data file not found: {stock_file}")
+            return {}
+        
+        df = pd.read_csv(stock_file)
+        
+        # Create a dictionary: {(StoreID, StyleCode): stock_info}
+        stock_dict = {}
+        for _, row in df.iterrows():
+            key = (str(row.get('StoreID', '')), str(row.get('StyleCode', '')))
+            stock_dict[key] = {
+                'current_stock': int(row.get('CurrentStock', 0)),
+                'reorder_point': int(row.get('ReorderPoint', 0)),
+                'safety_stock': int(row.get('SafetyStock', 0)),
+                'stock_status': str(row.get('StockStatus', 'UNKNOWN'))
+            }
+        
+        logger.info(f"✅ Loaded stock data for {len(stock_dict)} store-style combinations")
+        return stock_dict
+        
+    except Exception as e:
+        logger.error(f"❌ Failed to load stock data: {e}")
+        return {}
+
+def get_stock_for_style(style_code: str, store_id: str, stock_data: Dict) -> Dict[str, Any]:
+    """Get stock information for a specific style code and store."""
+    if not style_code or not stock_data:
+        return {
+            'current_stock': 0,
+            'reorder_point': 0,
+            'safety_stock': 0,
+            'stock_status': 'NOT_AVAILABLE'
+        }
+    
+    key = (str(store_id), str(style_code))
+    return stock_data.get(key, {
+        'current_stock': 0,
+        'reorder_point': 0,
+        'safety_stock': 0,
+        'stock_status': 'NOT_FOUND'
+    })
+
 def _load_store_data_impl():
     """Internal implementation of store data loading."""
     try:
@@ -401,7 +448,8 @@ def _get_store_climate(stores: List[Dict], store_id: str) -> str:
     """Get climate for a specific store."""
     for store in stores:
         if store.get('StoreID') == store_id:
-            return store.get('Climate', 'Unknown')
+            # Try both ClimateTag and Climate keys
+            return store.get('ClimateTag') or store.get('Climate', 'Unknown')
     return 'Unknown'
 
 def _generate_store_predictions_impl(base_prediction: int, product_description: str, stores: List[Dict]) -> List[Dict]:
@@ -1070,32 +1118,40 @@ def _analyze_viability_impl(product_description: str, similar_products: List[Dic
                 'market_acceptance': 'UNPROVEN'
             }
 
-def predict_product_sales_comprehensive(kb: SharedKnowledgeBase, llm_client: LLMClient, product_description: str, stores: List[Dict]) -> Dict[str, Any]:
+def predict_product_sales_comprehensive(kb: SharedKnowledgeBase, llm_client: LLMClient, product_description: str, stores: List[Dict], style_code: Optional[str] = None) -> Dict[str, Any]:
     """Comprehensive prediction with single LLM call including store-wise analysis."""
     try:
         from langsmith import traceable
         
+        trace_name = f"{product_description} - Sales Prediction"
+        if style_code:
+            trace_name = f"{style_code} - {product_description} - Sales Prediction"
+        
         @traceable(
-            name= product_description + " - Sales Prediction",
+            name=trace_name,
             run_type="chain",
             tags=["sales-prediction", "comprehensive", "store-wise"],
             inputs={
                 "product_description": product_description,
+                "style_code": style_code or "N/A",
                 "num_stores": len(stores) if stores else 0
             }
         )
         def _comprehensive_prediction_wrapper():
-            return _predict_comprehensive_impl(kb, llm_client, product_description, stores)
+            return _predict_comprehensive_impl(kb, llm_client, product_description, stores, style_code)
         
         return _comprehensive_prediction_wrapper()
     except (ImportError, Exception) as e:
         if not isinstance(e, ImportError):
             logger.warning(f"LangSmith tracing failed: {e}")
-        return _predict_comprehensive_impl(kb, llm_client, product_description, stores)
+        return _predict_comprehensive_impl(kb, llm_client, product_description, stores, style_code)
 
-def _predict_comprehensive_impl(kb: SharedKnowledgeBase, llm_client: LLMClient, product_description: str, stores: List[Dict]) -> Dict[str, Any]:
+def _predict_comprehensive_impl(kb: SharedKnowledgeBase, llm_client: LLMClient, product_description: str, stores: List[Dict], style_code: Optional[str] = None) -> Dict[str, Any]:
     """Single comprehensive prediction implementation."""
-    logger.info(f"🔮 Comprehensive prediction for: {product_description}")
+    if style_code:
+        logger.info(f"🔮 Comprehensive prediction for: {product_description} (Style Code: {style_code})")
+    else:
+        logger.info(f"🔮 Comprehensive prediction for: {product_description}")
     
     try:
         # Vector search for similar products
@@ -1180,7 +1236,7 @@ def _predict_comprehensive_impl(kb: SharedKnowledgeBase, llm_client: LLMClient, 
         
         # Parse comprehensive response
         llm_response = llm_result.get('response', llm_result.get('content', str(llm_result)))
-        return _parse_comprehensive_response(llm_response, product_description, validated_products, stores)
+        return _parse_comprehensive_response(llm_response, product_description, validated_products, stores, style_code)
         
     except Exception as e:
         logger.error(f"❌ Comprehensive prediction failed: {e}")
@@ -1672,7 +1728,7 @@ def _parse_json_with_fallbacks(json_text: str) -> dict:
     # If all attempts fail, raise the original error
     raise json.JSONDecodeError("All JSON parsing attempts failed", json_text, 0)
 
-def _parse_comprehensive_response(llm_response: str, product_description: str, similar_products: List[Dict], stores: List[Dict]) -> Dict[str, Any]:
+def _parse_comprehensive_response(llm_response: str, product_description: str, similar_products: List[Dict], stores: List[Dict], style_code: Optional[str] = None) -> Dict[str, Any]:
     """Parse comprehensive LLM response into expected format."""
     import json
     
@@ -1696,21 +1752,50 @@ def _parse_comprehensive_response(llm_response: str, product_description: str, s
         store_preds = llm_data.get('store_predictions', [])
         summary = llm_data.get('summary', {})
         
+        # Load stock data if style code is provided
+        stock_data = {}
+        if style_code:
+            stock_data = load_stock_data()
+            logger.info(f"📦 Loaded stock data for style code: {style_code}")
+        
         # Convert store predictions to expected format
         store_predictions = []
         for pred in store_preds:
-            store_predictions.append({
-                'store_id': pred.get('store_id', ''),
+            store_id = pred.get('store_id', '')
+            predicted_demand = pred.get('predicted_monthly_sales', 0)
+            
+            # Get stock information if style code is provided
+            stock_info = {}
+            purchase_quantity = 0
+            if style_code and stock_data:
+                stock_info = get_stock_for_style(style_code, store_id, stock_data)
+                current_stock = stock_info.get('current_stock', 0)
+                # Calculate purchase quantity needed
+                purchase_quantity = max(0, predicted_demand - current_stock)
+            
+            store_pred = {
+                'store_id': store_id,
                 'store_name': pred.get('store_name', ''),
                 'city': pred.get('city', ''),
-                'predicted_demand': pred.get('predicted_monthly_sales', 0),
+                'predicted_demand': predicted_demand,
                 'confidence': pred.get('confidence', 0.5),
                 'reasoning': pred.get('reasoning', ''),
                 'recommendation': pred.get('recommendation', 'CAUTIOUS'),
-                'climate': _get_store_climate(stores, pred.get('store_id', '')),
+                'climate': _get_store_climate(stores, store_id),
                 'weather_factor': 1.0,  # LLM already considered
                 'ai_generated': True
-            })
+            }
+            
+            # Add inventory information if style code is provided
+            if style_code:
+                store_pred['current_stock'] = stock_info.get('current_stock', 0)
+                store_pred['purchase_quantity'] = purchase_quantity
+                store_pred['stock_status'] = stock_info.get('stock_status', 'NOT_AVAILABLE')
+                store_pred['has_inventory_data'] = True
+            else:
+                store_pred['has_inventory_data'] = False
+            
+            store_predictions.append(store_pred)
         
         # Sort by predicted demand
         store_predictions.sort(key=lambda x: x['predicted_demand'], reverse=True)
@@ -2225,18 +2310,28 @@ def main():
         st.header("🔮 Sales Prediction for New Products")
         st.markdown("Enter a product description to predict sales based on similar historical products.")
         
-        # Product input
-        new_product = st.text_area(
-            "Describe the new product:",
-            placeholder="e.g., Red cotton t-shirt with short sleeves for men",
-            help="Describe the product including color, material, style, and target audience"
-        )
+        # Product inputs in columns
+        col1, col2 = st.columns([2, 1])
+        with col1:
+            new_product = st.text_area(
+                "Describe the new product:",
+                placeholder="e.g., Red cotton t-shirt with short sleeves for men",
+                help="Describe the product including color, material, style, and target audience"
+            )
+        with col2:
+            style_code = st.text_input(
+                "Style Code (Optional):",
+                placeholder="e.g., STYLE001",
+                help="Enter the style code for this product if available"
+            )
         
         if st.button("🚀 Predict Sales", disabled=not new_product.strip()):
             with st.spinner("🤖 Analyzing products and generating comprehensive store-wise predictions..."):
                 # Load store data for comprehensive analysis
                 stores = load_store_data()
-                prediction = predict_product_sales_comprehensive(kb, llm_client, new_product, stores)
+                # Pass style code if provided
+                style_code_value = style_code.strip() if style_code and style_code.strip() else None
+                prediction = predict_product_sales_comprehensive(kb, llm_client, new_product, stores, style_code=style_code_value)
             
             if prediction.get('predicted_monthly_sales') is not None:
                 # Show prediction results
@@ -2252,7 +2347,7 @@ def main():
                     st.error(f"**{status_description}**")
                 elif status_color == 'GREEN':
                     st.success(f"**{status_message}**")
-                    st.success(f"**{status_description}**")
+                    #st.success(f"**{status_description}**")
                 else:  # YELLOW
                     st.warning(f"**{status_message}**")
                     st.warning(f"**{status_description}**")
@@ -2264,6 +2359,13 @@ def main():
                 # Store predictions are included in comprehensive analysis
                 total_store_demand = prediction.get('total_store_demand', 0)
                 store_predictions = prediction.get('store_predictions', [])
+                
+                # Calculate inventory totals if style code provided
+                total_existing_stock = 0
+                total_procurement_needed = 0
+                if style_code and style_code.strip() and store_predictions:
+                    total_existing_stock = sum(store.get('current_stock', 0) for store in store_predictions if store.get('has_inventory_data', False))
+                    total_procurement_needed = sum(store.get('purchase_quantity', 0) for store in store_predictions if store.get('has_inventory_data', False))
                 
                 # Key metrics
                 col1, col2, col3, col4 = st.columns(4)
@@ -2284,22 +2386,110 @@ def main():
                         help=help_text
                     )
                 with col2:
-                    confidence_pct = prediction['confidence'] * 100
-                    st.metric(
-                        "Confidence Level", 
-                        f"{confidence_pct:.1f}%"
-                    )
+                    if style_code and style_code.strip() and total_existing_stock > 0:
+                        st.metric(
+                            "Existing Stock", 
+                            f"{total_existing_stock:,} units"
+                        )
+                    else:
+                        confidence_pct = prediction['confidence'] * 100
+                        st.metric(
+                            "Confidence Level", 
+                            f"{confidence_pct:.1f}%"
+                        )
                 with col3:
-                    st.metric(
-                        "Similar Products Found", 
-                        prediction['similar_products_count']
-                    )
+                    if style_code and style_code.strip() and total_procurement_needed > 0:
+                        st.metric(
+                            "Procurement Required", 
+                            f"{total_procurement_needed:,} units"
+                        )
+                    else:
+                        st.metric(
+                            "Similar Products Found", 
+                            prediction['similar_products_count']
+                        )
                 with col4:
-                    products_with_sales = len(prediction.get('products_with_sales', []))
-                    st.metric(
-                        "With Historical Sales", 
-                        f"{products_with_sales} products"
+                    if not (style_code and style_code.strip()):
+                        confidence_pct = prediction['confidence'] * 100
+                        st.metric(
+                            "Confidence Level", 
+                            f"{confidence_pct:.1f}%"
+                        )
+                    else:
+                        st.metric(
+                            "Similar Products Found", 
+                            prediction['similar_products_count']
+                        )
+                # with col4:
+                #     products_with_sales = len(prediction.get('products_with_sales', []))
+                #     st.metric(
+                #         "With Historical Sales", 
+                #         f"{products_with_sales} products"
+                #     )
+                
+                # Store-wise predictions table - moved right after metrics
+                if store_predictions:
+                    st.subheader("🏪 Store-wise Sales Predictions")
+                    if style_code and style_code.strip():
+                        st.info(f"📦 **Style Code:** {style_code.strip()} - Inventory data included")
+                    
+                    # Prepare store data for table with multiline reasoning support
+                    store_data = []
+                    for store in store_predictions:
+                        row_data = {
+                            'Store ID': store.get('store_id', 'N/A'),
+                            'Store Name': store.get('store_name', 'N/A'),
+                            'City': store.get('city', 'N/A'),
+                            'Climate': store.get('climate', 'N/A'),
+                            'Predicted Demand': f"{store.get('predicted_demand', 0):,} units",
+                            'Recommendation': store.get('recommendation', 'N/A')
+                        }
+                        
+                        # Add inventory columns if style code was provided
+                        if store.get('has_inventory_data', False):
+                            row_data['Current Stock'] = f"{store.get('current_stock', 0):,} units"
+                            row_data['Purchase Needed'] = f"{store.get('purchase_quantity', 0):,} units"
+                            row_data['Stock Status'] = store.get('stock_status', 'N/A')
+                        
+                        # Add reasoning - preserve newlines by replacing with visible line breaks
+                        reasoning = store.get('reasoning', 'N/A')
+                        if reasoning and reasoning != 'N/A':
+                            # Replace newlines with a visible separator for multiline display
+                            reasoning = str(reasoning).replace('\n', ' | ')
+                        row_data['Reasoning'] = reasoning
+                        
+                        store_data.append(row_data)
+                    
+                    # Create DataFrame
+                    df = pd.DataFrame(store_data)
+                    
+                    # Display with custom column configuration for better multiline support
+                    st.dataframe(
+                        df,
+                        use_container_width=True,
+                        height=400,
+                        column_config={
+                            "Reasoning": st.column_config.TextColumn(
+                                "Reasoning",
+                                help="AI-generated reasoning for this store prediction (multiline supported)",
+                                width="large"
+                            ),
+                            "Store ID": st.column_config.TextColumn("Store ID", width="small"),
+                            "Store Name": st.column_config.TextColumn("Store Name", width="medium"),
+                            "City": st.column_config.TextColumn("City", width="small"),
+                            "Climate": st.column_config.TextColumn("Climate", width="medium"),
+                            "Predicted Demand": st.column_config.TextColumn("Predicted Demand", width="medium"),
+                            "Recommendation": st.column_config.TextColumn("Recommendation", width="small")
+                        }
                     )
+                    
+                    # Also show reasoning in expandable sections for better readability
+                    if any(store.get('reasoning') for store in store_predictions):
+                        st.subheader("📝 Detailed Reasoning (Multiline View)")
+                        for store in store_predictions:
+                            if store.get('reasoning'):
+                                with st.expander(f"**{store.get('store_name', 'Unknown')}** ({store.get('store_id', 'N/A')}) - {store.get('city', 'N/A')}"):
+                                    st.markdown(store['reasoning'])
                 
                 # LLM Analysis
                 if prediction.get('llm_analysis'):
@@ -2322,15 +2512,8 @@ def main():
                                 st.write(f"**Revenue:** ₹{sales.get('total_revenue', 0):,.0f}")
                                 st.write(f"**Monthly Avg:** {sales.get('avg_monthly_units', 0):.1f} units")
                 
-                # Store-wise predictions
-                st.subheader("🏪 AI-Powered Store-wise Sales Predictions")
-                st.markdown("*LLM-generated predictions for each store based on historical sales data and local factors*")
-                
-                # Store predictions are now included in comprehensive analysis
-                store_predictions = prediction.get('store_predictions', [])
-                total_store_demand = prediction.get('total_store_demand', 0)
-                
-                if store_predictions:
+                # Old store predictions section removed - now displayed above
+                if False:  # Dead code - kept for reference
                         # Summary metrics (use already calculated total_store_demand or recalculate)
                         if total_store_demand == 0:
                             total_store_demand = sum(pred['predicted_demand'] for pred in store_predictions)
@@ -2369,56 +2552,34 @@ def main():
                         
                         store_data = []
                         for store in top_10_stores:
-                            store_data.append({
+                            row_data = {
                                 'Store ID': store['store_id'],
                                 'Store Name': store['store_name'],
                                 'City': store['city'],
                                 'Climate': store['climate'],
                                 'Predicted Demand': f"{store['predicted_demand']:,} units",
-                                'Weather Factor': f"{store['weather_factor']:.2f}x",
                                 'Recommendation': store['recommendation']
-                            })
+                            }
+                            
+                            # Add inventory columns if style code was provided
+                            if store.get('has_inventory_data', False):
+                                row_data['Current Stock'] = f"{store.get('current_stock', 0):,} units"
+                                row_data['Purchase Needed'] = f"{store.get('purchase_quantity', 0):,} units"
+                                row_data['Stock Status'] = store.get('stock_status', 'N/A')
+                            
+                            store_data.append(row_data)
                         
                         # Display as dataframe
                         df = pd.DataFrame(store_data)
                         st.dataframe(df, use_container_width=True)
                         
-                        # Climate breakdown
-                        with st.expander("🌍 Climate-wise Performance Breakdown"):
-                            climate_summary = {}
-                            for pred in store_predictions:
-                                climate = pred['climate']
-                                if climate not in climate_summary:
-                                    climate_summary[climate] = {'stores': 0, 'total_demand': 0}
-                                climate_summary[climate]['stores'] += 1
-                                climate_summary[climate]['total_demand'] += pred['predicted_demand']
-                            
-                            for climate, data in climate_summary.items():
-                                avg_demand = data['total_demand'] / data['stores']
-                                col1, col2, col3 = st.columns(3)
-                                with col1:
-                                    st.write(f"**{climate}**")
-                                with col2:
-                                    st.write(f"{data['total_demand']:,} total units")
-                                with col3:
-                                    st.write(f"{avg_demand:.0f} avg per store")
-                        
-                        # All stores table
-                        with st.expander("📋 View All Store Predictions"):
-                            all_store_data = []
-                            for store in store_predictions:
-                                all_store_data.append({
-                                    'Store ID': store['store_id'],
-                                    'Store Name': store['store_name'],
-                                    'City': store['city'],
-                                    'Climate': store['climate'],
-                                    'Predicted Demand': store['predicted_demand'],
-                                    'Weather Factor': f"{store['weather_factor']:.2f}x",
-                                    'Recommendation': store['recommendation']
-                                })
-                            
-                            all_df = pd.DataFrame(all_store_data)
-                            st.dataframe(all_df, use_container_width=True)
+                        # Display reasoning for each store in multiline format
+                        if any(store.get('reasoning') for store in top_10_stores):
+                            st.subheader("📝 Prediction Reasoning")
+                            for store in top_10_stores:
+                                if store.get('reasoning'):
+                                    with st.expander(f"**{store['store_name']}** ({store['store_id']}) - {store['city']}"):
+                                        st.markdown(store['reasoning'])
                 else:
                     st.warning("⚠️ Could not load store data. Store-wise predictions unavailable.")
             else:

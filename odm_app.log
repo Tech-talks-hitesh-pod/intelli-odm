@@ -7557,3 +7557,31 @@
 2025-12-06 08:38:15,436 - __main__ - WARNING - ⚠️ LLM total (53600) differs significantly from calculated total (45700). Using calculated value.
 2025-12-06 08:38:15,436 - __main__ - INFO - ✅ Validation: Total=45700, Confidence=0.85, Stores=10
 2025-12-06 08:38:15,436 - __main__ - INFO - ✅ Comprehensive analysis completed: 45700 units/month, 10 stores
+2025-12-06 08:39:43,173 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:39:43,174 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:39:43,174 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:39:43,174 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:39:43,174 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:39:43,218 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:39:43,227 - __main__ - INFO - 🔮 Comprehensive prediction for: woolen leggings (Style Code: SYL330)
+2025-12-06 08:39:43,228 - shared_knowledge_base - INFO - Attempting real vector search for similar products
+2025-12-06 08:39:43,228 - shared_knowledge_base - INFO - Searching for products similar to: woolen leggings
+2025-12-06 08:39:43,231 - shared_knowledge_base - INFO - Vector database has 59 products
+2025-12-06 08:39:43,546 - shared_knowledge_base - INFO - Found 45 real similar products from vector database
+2025-12-06 08:39:46,229 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-06 08:39:46,233 - __main__ - WARNING - Relevance validation failed: slice(None, 200, None)
+2025-12-06 08:39:46,236 - __main__ - INFO - 🔍 Relevance validation result: is_relevant=True, products=45
+2025-12-06 08:39:46,237 - __main__ - INFO - ✅ Using 45 validated relevant products out of 45 found
+2025-12-06 08:39:46,241 - __main__ - INFO - Viability check for 'woolen leggings': color=None, brick=leggings, segment=None
+2025-12-06 08:39:46,241 - __main__ - INFO - Matches: exact=2, similar=0, category_only=2, with_sales=36, total_products=45
+2025-12-06 08:39:46,275 - __main__ - INFO - ✅ Loaded historical performance for 10 cities
+2025-12-06 08:40:08,570 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-06 08:40:08,595 - __main__ - INFO - 🧹 Cleaned JSON (first 300 chars): {
+  "overall_analysis": {
+    "predicted_monthly_sales": 51150,
+    "confidence": 0.85,
+    "procurement_recommendation": "BUY",
+    "reasoning": "Based on historical sales data of similar products and the climate conditions of each city, woolen leggings are expected to perform well, especially in c...
+2025-12-06 08:40:08,596 - __main__ - INFO - 📦 Loaded stock data for style code: SYL330
+2025-12-06 08:40:08,597 - __main__ - INFO - ✅ Validation: Total=51150, Confidence=0.85, Stores=10
+2025-12-06 08:40:08,597 - __main__ - INFO - ✅ Comprehensive analysis completed: 51150 units/month, 10 stores
