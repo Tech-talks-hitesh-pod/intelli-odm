@@ -191,21 +191,22 @@ if PYDANTIC_AVAILABLE:
 class DemandForecastingAgent:
     """
     Demand Forecasting Agent that performs three sequential tasks:
-    1. Select best forecasting model (decay/depletion + time series)
+    1. Select best forecasting model (decay/depletion + time series) using Ollama
     2. Sensitivity and factor analysis (correlation + dimensionality reduction)
     3. Store-level forecasting (article selection + quantity)
     """
     
-    def __init__(self, llama_client, default_margin_pct: float = 0.40, 
+    def __init__(self, ollama_client, default_margin_pct: float = 0.40, 
                  target_sell_through_pct: float = 0.75, min_margin_pct: float = 0.25,
                  use_llm: bool = True, max_llm_tokens: int = 500,
                  universe_of_stores: Optional[int] = None,
-                 enable_hitl: bool = True, variance_threshold: float = 0.05):
+                 enable_hitl: bool = True, variance_threshold: float = 0.05,
+                 audit_logger: Optional[Any] = None):
         """
         Initialize Demand Forecasting Agent with optimization parameters
         
         Args:
-            llama_client: LLM client for model selection
+            ollama_client: Ollama client for LLM interactions (llama3:8b)
             default_margin_pct: Default margin percentage (default 40%)
             target_sell_through_pct: Target sell-through rate (default 75%)
             min_margin_pct: Minimum acceptable margin percentage (default 25%)
@@ -214,8 +215,10 @@ class DemandForecastingAgent:
             universe_of_stores: Total number of stores in organization (for validation)
             enable_hitl: Enable Human-in-the-Loop workflow (default True)
             variance_threshold: Variance threshold for auto-approval (default 5% = 0.05)
+            audit_logger: Optional audit logger for tracking operations
         """
-        self.llama = llama_client
+        self.ollama = ollama_client
+        self.audit_logger = audit_logger
         self.selected_model = None
         self.model_params = {}
         self.factor_analysis_results = {}
@@ -594,59 +597,159 @@ class DemandForecastingAgent:
         return False
     
     def _llm_model_selection(self, characteristics: Dict, comparables: List[Dict]) -> Dict[str, Any]:
-        """Use LLM to recommend model selection (token-optimized)"""
+        """Use Ollama (llama3:8b) to recommend model selection"""
         
-        # Token-optimized prompt - concise and structured
-        ts = characteristics.get('has_time_series', False)
-        ts_len = characteristics.get('time_series_length', 0)
-        has_comp = characteristics.get('has_comparables', False)
-        n_comp = characteristics.get('num_comparables', 0)
-        decay = characteristics.get('decay_pattern', 'unknown')
-        season = characteristics.get('seasonality_detected', False)
-        stores = characteristics.get('store_count', 0)
-        
-        # Ultra-compact prompt to minimize tokens
-        prompt = f"Forecast model selection:\nTS:{ts},Len:{ts_len},Comp:{has_comp},N:{n_comp},Decay:{decay},Seas:{season},Stores:{stores}\nModels:1.TimeSeries 2.Decay 3.Analogy 4.Hybrid\nJSON:{{'model':'name','reason':'brief'}}"
-        
-        # Truncate prompt if too long
-        if len(prompt) > self.max_llm_tokens:
-            prompt = prompt[:self.max_llm_tokens]
+        from utils.audit_logger import LogStatus
         
         try:
-            if self.llama and self.use_llm:
-                # Use minimal token generation
-                response = self.llama.generate(prompt, max_tokens=100)  # Limit response tokens
-                # Parse JSON from response (simplified - in production, use proper JSON parsing)
-                return {
-                    'recommended_model': 'hybrid',
-                    'reasoning': 'Based on data characteristics',
-                    'llm_response': response[:200] if response else None  # Truncate response
-                }
+            if self.audit_logger:
+                self.audit_logger.log_agent_operation(
+                    agent_name="DemandForecastingAgent",
+                    description="Selecting forecasting model using Ollama",
+                    status=LogStatus.IN_PROGRESS,
+                    inputs={"characteristics": characteristics}
+                )
+            
+            # Build comprehensive prompt for model selection
+            ts = characteristics.get('has_time_series', False)
+            ts_len = characteristics.get('time_series_length', 0)
+            has_comp = characteristics.get('has_comparables', False)
+            n_comp = characteristics.get('num_comparables', 0)
+            decay = characteristics.get('decay_pattern', 'unknown')
+            season = characteristics.get('seasonality_detected', False)
+            stores = characteristics.get('store_count', 0)
+            skus = characteristics.get('sku_count', 0)
+            
+            system_prompt = """You are an expert demand forecasting analyst. 
+Your task is to select the best forecasting model based on data characteristics.
+
+Available models:
+1. time_series - Prophet-based model for products with sufficient historical time series data
+2. decay_model - Exponential decay model for products showing declining demand patterns
+3. analogy_based - Uses comparable products to forecast new products
+4. hybrid - Combines multiple approaches for robust forecasting
+
+Consider:
+- Time series length and quality
+- Decay/depletion patterns
+- Availability of comparable products
+- Data completeness
+- Store and SKU diversity
+
+Return a JSON object:
+{
+  "recommended_model": "model_name",
+  "reasoning": "explanation of why this model is best",
+  "confidence": 0.0-1.0
+}"""
+            
+            prompt = f"""Analyze the following data characteristics and recommend the best forecasting model:
+
+Data Characteristics:
+- Has Time Series Data: {ts}
+- Time Series Length (days): {ts_len}
+- Has Comparable Products: {has_comp}
+- Number of Comparables: {n_comp}
+- Decay Pattern: {decay}
+- Seasonality Detected: {season}
+- Number of Stores: {stores}
+- Number of SKUs: {skus}
+
+Based on these characteristics, which forecasting model would be most appropriate?
+
+Return only a JSON object with your recommendation."""
+            
+            if self.ollama and self.use_llm:
+                response = self.ollama.generate(
+                    prompt=prompt,
+                    system_prompt=system_prompt,
+                    max_tokens=300,
+                    temperature=0.3
+                )
+                
+                # Parse JSON response
+                try:
+                    import json
+                    # Extract JSON from response
+                    response = response.strip()
+                    if response.startswith("```json"):
+                        response = response[7:]
+                    if response.startswith("```"):
+                        response = response[3:]
+                    if response.endswith("```"):
+                        response = response[:-3]
+                    response = response.strip()
+                    
+                    # Find JSON object
+                    start = response.find('{')
+                    end = response.rfind('}') + 1
+                    if start >= 0 and end > start:
+                        json_str = response[start:end]
+                        result = json.loads(json_str)
+                        
+                        recommendation = {
+                            'recommended_model': result.get('recommended_model', 'hybrid'),
+                            'reasoning': result.get('reasoning', 'Based on data characteristics'),
+                            'confidence': result.get('confidence', 0.7),
+                            'llm_response': response[:200]
+                        }
+                        
+                        if self.audit_logger:
+                            self.audit_logger.log_agent_operation(
+                                agent_name="DemandForecastingAgent",
+                                description=f"Model selected: {recommendation['recommended_model']}",
+                                status=LogStatus.SUCCESS,
+                                inputs={"characteristics": characteristics},
+                                outputs={"recommendation": recommendation}
+                            )
+                        
+                        return recommendation
+                except Exception as e:
+                    print(f"Error parsing LLM response: {e}")
+                    if self.audit_logger:
+                        self.audit_logger.log_agent_operation(
+                            agent_name="DemandForecastingAgent",
+                            description="Failed to parse LLM model selection response",
+                            status=LogStatus.WARNING,
+                            error=str(e)
+                        )
+        
         except Exception as e:
             print(f"LLM model selection error: {e}")
+            if self.audit_logger:
+                self.audit_logger.log_agent_operation(
+                    agent_name="DemandForecastingAgent",
+                    description="LLM model selection failed, using fallback",
+                    status=LogStatus.WARNING,
+                    error=str(e)
+                )
             self.use_llm = False  # Disable LLM on error
         
-        # Fallback recommendation (no LLM needed)
+        # Fallback recommendation (rule-based)
         if ts and ts_len > 60:
             if decay in ['strong_decay', 'moderate_decay']:
                 return {
                     'recommended_model': 'decay_model',
-                    'reasoning': 'Time series data shows decay pattern'
+                    'reasoning': 'Time series data shows decay pattern',
+                    'confidence': 0.7
                 }
             else:
                 return {
                     'recommended_model': 'time_series',
-                    'reasoning': 'Sufficient time series data available'
+                    'reasoning': 'Sufficient time series data available',
+                    'confidence': 0.8
                 }
         elif has_comp and n_comp >= 3:
             return {
                 'recommended_model': 'analogy_based',
-                'reasoning': 'Good comparable products available'
+                'reasoning': 'Good comparable products available',
+                'confidence': 0.75
             }
         else:
             return {
                 'recommended_model': 'hybrid',
-                'reasoning': 'Combining available approaches'
+                'reasoning': 'Combining available approaches',
+                'confidence': 0.6
             }
     
     def _evaluate_models(self, sales_data: pd.DataFrame, inventory_data: pd.DataFrame,

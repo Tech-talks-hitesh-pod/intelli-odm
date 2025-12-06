@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demand Forecasting & Allocation Engine</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-chart-line"></i> Demand Forecasting & Allocation Engine</h1>
+            <p class="subtitle">Upload data and generate optimized demand forecasts with store-level allocations</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Panel: Data Upload & Parameters -->
+            <div class="left-panel">
+                <!-- Step 1: Data Upload -->
+                <section class="card">
+                    <h2><i class="fas fa-upload"></i> Step 1: Upload Data</h2>
+                    
+                    <div class="upload-section">
+                        <div class="upload-item">
+                            <label for="sales_data">
+                                <i class="fas fa-shopping-cart"></i> Historical Sales Data <span class="required">*</span>
+                            </label>
+                            <input type="file" id="sales_data" name="sales_data" accept=".csv,.xlsx,.xls">
+                            <small>Required columns: store_id, sku, units_sold, date (optional)</small>
+                        </div>
+
+                        <div class="upload-item">
+                            <label for="inventory_data">
+                                <i class="fas fa-warehouse"></i> Inventory Data
+                            </label>
+                            <input type="file" id="inventory_data" name="inventory_data" accept=".csv,.xlsx,.xls">
+                            <small>Required columns: store_id, sku, on_hand</small>
+                        </div>
+
+                        <div class="upload-item">
+                            <label for="price_data">
+                                <i class="fas fa-tag"></i> Price Data
+                            </label>
+                            <input type="file" id="price_data" name="price_data" accept=".csv,.xlsx,.xls">
+                            <small>Required columns: store_id, sku, price, mrp (optional)</small>
+                        </div>
+
+                        <div class="upload-item">
+                            <label for="cost_data">
+                                <i class="fas fa-dollar-sign"></i> Cost Data (Procurement)
+                            </label>
+                            <input type="file" id="cost_data" name="cost_data" accept=".csv,.xlsx,.xls">
+                            <small>Required columns: sku, cost</small>
+                        </div>
+
+                        <div class="upload-item">
+                            <label for="new_articles_data">
+                                <i class="fas fa-box"></i> New Articles Data <span class="required">*</span>
+                            </label>
+                            <input type="file" id="new_articles_data" name="new_articles_data" accept=".csv,.xlsx,.xls">
+                            <small>Required columns: sku, style_code, color, segment, family, class, brick</small>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Step 2: Parameters -->
+                <section class="card">
+                    <h2><i class="fas fa-cog"></i> Step 2: Configure Parameters</h2>
+                    
+                    <div class="form-group">
+                        <label for="margin_target">
+                            <i class="fas fa-percentage"></i> Margin Target (%)
+                        </label>
+                        <input type="number" id="margin_target" name="margin_target" min="0" max="100" step="0.1" value="30">
+                        <small>Target margin percentage (0-100%)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="variance_threshold">
+                            <i class="fas fa-exclamation-triangle"></i> Variance Threshold (%)
+                        </label>
+                        <input type="number" id="variance_threshold" name="variance_threshold" min="0" max="100" step="0.1" value="5">
+                        <small>Auto-approve if variance < threshold, flag if >= threshold</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="forecast_horizon_days">
+                            <i class="fas fa-calendar-alt"></i> Forecast Horizon (Days)
+                        </label>
+                        <input type="number" id="forecast_horizon_days" name="forecast_horizon_days" min="1" value="60">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="max_quantity_per_store">
+                            <i class="fas fa-boxes"></i> Max Quantity per Store
+                        </label>
+                        <input type="number" id="max_quantity_per_store" name="max_quantity_per_store" min="1" value="500">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="universe_of_stores">
+                            <i class="fas fa-store"></i> Universe of Stores
+                        </label>
+                        <input type="number" id="universe_of_stores" name="universe_of_stores" min="1" placeholder="Total stores in organization">
+                    </div>
+                </section>
+
+                <!-- Step 3: Store Mapping (HITL) -->
+                <section class="card" id="store-mapping-section">
+                    <h2><i class="fas fa-map"></i> Step 3: Store Mapping (Optional)</h2>
+                    
+                    <div class="store-mapping-form">
+                        <div class="form-group">
+                            <label for="new_store_id">New Store ID</label>
+                            <input type="text" id="new_store_id" name="new_store_id" placeholder="e.g., store_026">
+                        </div>
+                        <div class="form-group">
+                            <label for="reference_store_id">Reference Store</label>
+                            <select id="reference_store_id" name="reference_store_id">
+                                <option value="">Select reference store...</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="addStoreMapping()">
+                            <i class="fas fa-plus"></i> Add Mapping
+                        </button>
+                    </div>
+                    
+                    <div id="store-mappings-list" class="store-mappings-list"></div>
+                </section>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button type="button" class="btn btn-primary btn-large" onclick="runForecast()">
+                        <i class="fas fa-play"></i> Run Demand Forecast
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="clearAll()">
+                        <i class="fas fa-redo"></i> Clear All
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Panel: Results -->
+            <div class="right-panel">
+                <!-- Top Banner -->
+                <section class="card banner-card" id="top-banner" style="display: none;">
+                    <h2><i class="fas fa-chart-bar"></i> Summary</h2>
+                    <div class="banner-grid" id="banner-content"></div>
+                </section>
+
+                <!-- Results Tabs -->
+                <div class="tabs" id="results-tabs" style="display: none;">
+                    <button class="tab-button active" onclick="showTab('recommendations')">
+                        <i class="fas fa-list"></i> Recommendations
+                    </button>
+                    <button class="tab-button" onclick="showTab('article-metrics')">
+                        <i class="fas fa-chart-pie"></i> Article Metrics
+                    </button>
+                    <button class="tab-button" onclick="showTab('store-allocations')">
+                        <i class="fas fa-store"></i> Store Allocations
+                    </button>
+                    <button class="tab-button" onclick="showTab('factor-analysis')">
+                        <i class="fas fa-microscope"></i> Factor Analysis
+                    </button>
+                    <button class="tab-button" onclick="showTab('audit-trail')">
+                        <i class="fas fa-history"></i> Audit Trail
+                    </button>
+                </div>
+
+                <!-- Tab Contents -->
+                <div class="tab-content" id="recommendations-tab">
+                    <div class="card">
+                        <h3>Forecast Recommendations</h3>
+                        <div id="recommendations-content"></div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="article-metrics-tab" style="display: none;">
+                    <div class="card">
+                        <h3>Article-Level Metrics</h3>
+                        <div id="article-metrics-content"></div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="store-allocations-tab" style="display: none;">
+                    <div class="card">
+                        <h3>Store-Level Allocations</h3>
+                        <div id="store-allocations-content"></div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="factor-analysis-tab" style="display: none;">
+                    <div class="card">
+                        <h3>Factor Analysis Results</h3>
+                        <div id="factor-analysis-content"></div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="audit-trail-tab" style="display: none;">
+                    <div class="card">
+                        <h3>Audit Trail</h3>
+                        <div id="audit-trail-content"></div>
+                    </div>
+                </div>
+
+                <!-- Loading Indicator -->
+                <div id="loading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Running demand forecast...</p>
+                </div>
+
+                <!-- Error Display -->
+                <div id="error-message" class="error-message" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
+
