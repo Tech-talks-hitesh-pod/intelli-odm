@@ -2663,7 +2663,7 @@ class DemandForecastingAgent:
     def run(self, comparables: List[Dict], sales_data: pd.DataFrame, 
            inventory_data: pd.DataFrame, price_data: pd.DataFrame, 
            price_options: List[float], product_attributes: Optional[Dict] = None,
-           forecast_horizon_days: int = 60) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+           forecast_horizon_days: int = 60, variance_threshold: Optional[float] = None) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         """
         Main run method that executes all three tasks sequentially with fallback mechanisms
         
@@ -2675,6 +2675,8 @@ class DemandForecastingAgent:
             price_options: List of price options for sensitivity analysis
             product_attributes: Product attributes from attribute analogy agent
             forecast_horizon_days: Forecast horizon in days (default 60)
+            variance_threshold: Variance threshold for auto-approval (0.05 = 5%, configurable from UI)
+                                If None, uses the value set during initialization
         
         Returns:
             Tuple of (forecast_results, sensitivity_analysis)
@@ -2683,6 +2685,16 @@ class DemandForecastingAgent:
         print("\n" + "=" * 60)
         print("DEMAND FORECASTING AGENT - Starting Sequential Tasks")
         print("=" * 60)
+        
+        # Update variance threshold if provided from UI
+        if variance_threshold is not None:
+            if variance_threshold < 0 or variance_threshold > 1:
+                raise ValueError(f"Variance threshold must be between 0 and 1 (0-100%). Got: {variance_threshold}")
+            self.variance_threshold = variance_threshold
+            # Update HITL workflow if enabled
+            if self.enable_hitl and self.hitl:
+                self.hitl.variance_threshold = variance_threshold
+            print(f"\nVariance threshold set to: {variance_threshold*100:.1f}% (from UI input)")
         
         # Step 0: Validate input data
         is_valid, validation_messages = self.validate_input_data(
@@ -2792,12 +2804,53 @@ class DemandForecastingAgent:
                 'enabled': True,
                 'available_stores': self.hitl.get_available_stores(sales_data),
                 'store_mappings': self.hitl.store_mappings,
-                'variance_threshold': self.hitl.variance_threshold
+                'variance_threshold': self.hitl.variance_threshold,
+                'variance_threshold_pct': self.hitl.variance_threshold * 100
             }
         
         return final_results, factor_analysis.get('sensitivity_results', {}) if 'factor_analysis' in locals() else {}
     
     # HITL Workflow Methods
+    def set_variance_threshold(self, variance_threshold: float) -> Dict[str, Any]:
+        """
+        Set variance threshold for auto-approval (configurable from UI)
+        
+        Args:
+            variance_threshold: Variance threshold as decimal (0.05 = 5%, 0.10 = 10%)
+                               Must be between 0 and 1
+        
+        Returns:
+            Confirmation with updated threshold
+        """
+        if variance_threshold < 0 or variance_threshold > 1:
+            raise ValueError(f"Variance threshold must be between 0 and 1 (0-100%). Got: {variance_threshold}")
+        
+        self.variance_threshold = variance_threshold
+        
+        # Update HITL workflow if enabled
+        if self.enable_hitl and self.hitl:
+            self.hitl.variance_threshold = variance_threshold
+        
+        return {
+            'variance_threshold': variance_threshold,
+            'variance_threshold_pct': variance_threshold * 100,
+            'message': f'Variance threshold updated to {variance_threshold*100:.1f}%',
+            'updated_at': datetime.now().isoformat()
+        }
+    
+    def get_variance_threshold(self) -> Dict[str, Any]:
+        """
+        Get current variance threshold
+        
+        Returns:
+            Current variance threshold information
+        """
+        return {
+            'variance_threshold': self.variance_threshold,
+            'variance_threshold_pct': self.variance_threshold * 100,
+            'description': f'Auto-approve if variance < {self.variance_threshold*100:.1f}%, flag for approval if >= {self.variance_threshold*100:.1f}%'
+        }
+    
     def add_new_store_mapping(self, new_store_id: str, reference_store_id: str, 
                              user_id: str = "user") -> Dict[str, Any]:
         """
