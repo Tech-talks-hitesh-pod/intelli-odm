@@ -198,7 +198,9 @@ class DemandForecastingAgent:
     
     def __init__(self, llama_client, default_margin_pct: float = 0.40, 
                  target_sell_through_pct: float = 0.75, min_margin_pct: float = 0.25,
-                 use_llm: bool = True, max_llm_tokens: int = 500):
+                 use_llm: bool = True, max_llm_tokens: int = 500,
+                 universe_of_stores: Optional[int] = None,
+                 enable_hitl: bool = True, variance_threshold: float = 0.05):
         """
         Initialize Demand Forecasting Agent with optimization parameters
         
@@ -209,6 +211,9 @@ class DemandForecastingAgent:
             min_margin_pct: Minimum acceptable margin percentage (default 25%)
             use_llm: Whether to use LLM for model selection (default True)
             max_llm_tokens: Maximum tokens for LLM prompts (default 500)
+            universe_of_stores: Total number of stores in organization (for validation)
+            enable_hitl: Enable Human-in-the-Loop workflow (default True)
+            variance_threshold: Variance threshold for auto-approval (default 5% = 0.05)
         """
         self.llama = llama_client
         self.selected_model = None
@@ -220,8 +225,23 @@ class DemandForecastingAgent:
         self.min_margin_pct = min_margin_pct
         self.use_llm = use_llm
         self.max_llm_tokens = max_llm_tokens
+        self.universe_of_stores = universe_of_stores
+        self.enable_hitl = enable_hitl
+        self.variance_threshold = variance_threshold
         self.data_validation_errors = []
         self.fallback_used = False
+        
+        # Initialize HITL workflow if enabled
+        if self.enable_hitl:
+            try:
+                from agents.hitl_workflow import HITLWorkflow
+                self.hitl = HITLWorkflow(variance_threshold=variance_threshold)
+            except ImportError:
+                self.hitl = None
+                self.enable_hitl = False
+                print("Warning: HITL workflow module not available")
+        else:
+            self.hitl = None
         self.data_validation_errors = []
         self.llm_cache = {}  # Cache LLM responses for token optimization
         self.use_fallback = False
@@ -1235,7 +1255,7 @@ class DemandForecastingAgent:
         # Generate optimized recommendations
         recommendations = self._generate_optimized_recommendations(
             store_forecasts, aggregated_forecast, product_attributes,
-            sales_data, price_data, historical_metrics
+            sales_data, price_data, historical_metrics, forecast_horizon_days
         )
         
         self.forecast_results = {
@@ -1912,24 +1932,39 @@ class DemandForecastingAgent:
     def _calculate_rate_of_sale(self, sales_data: pd.DataFrame, 
                                 store_id: str, article: str,
                                 forecast_horizon_days: int) -> float:
-        """Calculate rate of sale (units per day)"""
+        """
+        Calculate rate of sale (ROS): total inventory sold in period / total days in period
+        
+        Formula: ROS = Total Units Sold / Total Days in Period
+        """
         
         store_article_data = sales_data[
             (sales_data['store_id'] == store_id) & 
             (sales_data['sku'] == article)
         ]
         
-        if store_article_data.empty or 'date' not in store_article_data.columns:
+        if store_article_data.empty:
             return 0.0
         
-        store_article_data['date'] = pd.to_datetime(store_article_data['date'])
-        date_range = (store_article_data['date'].max() - store_article_data['date'].min()).days
+        # Calculate total units sold
+        total_units_sold = store_article_data['units_sold'].sum() if 'units_sold' in store_article_data.columns else 0
         
-        if date_range <= 0:
+        if total_units_sold <= 0:
             return 0.0
         
-        total_units = store_article_data['units_sold'].sum() if 'units_sold' in store_article_data.columns else 0
-        return total_units / date_range
+        # Calculate total days in period
+        if 'date' in store_article_data.columns:
+            store_article_data['date'] = pd.to_datetime(store_article_data['date'])
+            date_range = (store_article_data['date'].max() - store_article_data['date'].min()).days
+            # Add 1 to include both start and end dates
+            total_days = max(1, date_range + 1)
+        else:
+            # If no date column, use forecast horizon as period
+            total_days = forecast_horizon_days if forecast_horizon_days > 0 else 1
+        
+        # ROS = Total Units Sold / Total Days
+        ros = total_units_sold / total_days
+        return ros
     
     def _estimate_sell_through_rate(self, forecast_qty: float, 
                                     current_inventory: float,
@@ -2206,14 +2241,22 @@ class DemandForecastingAgent:
                                            product_attributes: Dict[str, Any],
                                            sales_data: pd.DataFrame,
                                            price_data: pd.DataFrame,
-                                           historical_metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate optimized recommendations prioritizing rate of sale, sell-through, and margin protection"""
+                                           historical_metrics: Dict[str, Any],
+                                           forecast_horizon_days: int = 60) -> Dict[str, Any]:
+        """
+        Generate optimized recommendations prioritizing rate of sale, sell-through, and margin protection
+        Includes article-level metrics and store universe validation
+        """
         
         recommendations = {
             'articles_to_buy': [],
             'store_allocations': {},
             'total_procurement_quantity': 0,
+            'total_stores': 0,
+            'universe_of_stores': self.universe_of_stores,
+            'store_universe_validation': {},
             'priority_stores': [],
+            'article_level_metrics': {},  # New: Article-level aggregated metrics
             'optimization_summary': '',
             'expected_metrics': {},
             'risk_assessment': {}
@@ -2258,6 +2301,42 @@ class DemandForecastingAgent:
         recommendations['articles_to_buy'] = sorted_articles
         recommendations['store_allocations'] = store_allocations
         recommendations['total_procurement_quantity'] = sum(article_totals.values())
+        
+        # Calculate total stores (unique stores across all articles)
+        all_stores = set()
+        for article, stores in store_allocations.items():
+            all_stores.update(stores.keys())
+        recommendations['total_stores'] = len(all_stores)
+        
+        # Validate against universe of stores
+        if self.universe_of_stores is not None:
+            if recommendations['total_stores'] > self.universe_of_stores:
+                recommendations['store_universe_validation'] = {
+                    'valid': False,
+                    'message': f'WARNING: Total stores ({recommendations["total_stores"]}) exceeds universe ({self.universe_of_stores}). Recommendations may need adjustment.',
+                    'total_stores': recommendations['total_stores'],
+                    'universe_of_stores': self.universe_of_stores,
+                    'excess_stores': recommendations['total_stores'] - self.universe_of_stores
+                }
+            else:
+                recommendations['store_universe_validation'] = {
+                    'valid': True,
+                    'message': f'Total stores ({recommendations["total_stores"]}) is within universe ({self.universe_of_stores}).',
+                    'total_stores': recommendations['total_stores'],
+                    'universe_of_stores': self.universe_of_stores
+                }
+        else:
+            recommendations['store_universe_validation'] = {
+                'valid': None,
+                'message': 'Universe of stores not specified. Validation skipped.',
+                'total_stores': recommendations['total_stores']
+            }
+        
+        # Calculate article-level metrics
+        recommendations['article_level_metrics'] = self._calculate_article_level_metrics(
+            sorted_articles, store_allocations, sales_data, price_data, 
+            product_attributes, forecast_horizon_days
+        )
         
         # Identify priority stores (stores with highest optimization scores)
         store_scores = {}
@@ -2317,10 +2396,15 @@ class DemandForecastingAgent:
         total_revenue = recommendations['expected_metrics']['total_revenue']
         total_margin = recommendations['expected_metrics']['total_margin_value']
         
+        # Build optimization summary with store universe info
+        store_info = f"across {recommendations['total_stores']} stores"
+        if self.universe_of_stores:
+            store_info += f" (universe: {self.universe_of_stores})"
+        
         recommendations['optimization_summary'] = (
             f"Optimized recommendation: Procure {len(sorted_articles)} articles "
             f"with total quantity of {recommendations['total_procurement_quantity']:.0f} units "
-            f"across {len(store_totals)} stores.\n"
+            f"{store_info}.\n"
             f"Expected performance:\n"
             f"  - Sell-through rate: {avg_st*100:.1f}% (target: {self.target_sell_through_pct*100:.1f}%)\n"
             f"  - Average margin: {avg_margin*100:.1f}% (min: {self.min_margin_pct*100:.1f}%)\n"
@@ -2328,6 +2412,29 @@ class DemandForecastingAgent:
             f"  - Expected margin value: ₹{total_margin:,.0f}\n"
             f"  - Optimization score: {aggregated_forecast.get('avg_optimization_score', 0):.2f}/1.0"
         )
+        
+        # Add article-level summary to optimization_summary
+        if recommendations.get('article_level_metrics'):
+            recommendations['optimization_summary'] += "\n\nArticle-Level Metrics:\n"
+            for article, metrics in recommendations['article_level_metrics'].items():
+                details = metrics.get('article_details', {})
+                recommendations['optimization_summary'] += (
+                    f"\n  Article: {article}\n"
+                    f"    Style Code: {details.get('style_code', 'N/A')}, "
+                    f"Color: {details.get('color', 'N/A')}, "
+                    f"Segment: {details.get('segment', 'N/A')}\n"
+                    f"    Family: {details.get('family', 'N/A')}, "
+                    f"Class: {details.get('class', 'N/A')}, "
+                    f"Brick: {details.get('brick', 'N/A')}\n"
+                    f"    MRP: ₹{metrics.get('mrp', 0):.2f}, "
+                    f"Avg Selling Price: ₹{metrics.get('average_selling_price', 0):.2f}, "
+                    f"Avg Discount: {metrics.get('average_discount', 0):.1f}%\n"
+                    f"    Margin: {metrics.get('margin_pct', 0)*100:.1f}%, "
+                    f"Store Exposure: {metrics.get('total_store_exposure', 0)}, "
+                    f"ROS: {metrics.get('ros', 0):.2f} units/day, "
+                    f"STR: {metrics.get('str', 0)*100:.1f}%\n"
+                    f"    Net Sales Value: ₹{metrics.get('net_sales_value', 0):,.0f}\n"
+                )
         
         if margin_risk_articles:
             recommendations['optimization_summary'] += (
@@ -2342,6 +2449,196 @@ class DemandForecastingAgent:
             )
         
         return recommendations
+    
+    def _calculate_article_level_metrics(self, articles: List[str],
+                                         store_allocations: Dict[str, Dict],
+                                         sales_data: pd.DataFrame,
+                                         price_data: pd.DataFrame,
+                                         product_attributes: Union[Dict[str, Any], Dict[str, Dict[str, Any]]],
+                                         forecast_horizon_days: int) -> Dict[str, Dict[str, Any]]:
+        """
+        Calculate article-level metrics for each article:
+        - MRP, Average Selling Price, Average Discount, Margin
+        - Total Store Exposure, ROS, STR, Net Sales Value
+        - Article Details: style_code, color, segment, family, class, brick
+        """
+        
+        article_metrics = {}
+        
+        for article in articles:
+            if article not in store_allocations:
+                continue
+            
+            stores = store_allocations[article]
+            store_ids = list(stores.keys())
+            
+            # Extract article details from product_attributes
+            # product_attributes can be:
+            # 1. Dict with article as key: {article: {style_code: ..., color: ...}}
+            # 2. Dict with global attributes: {style_code: ..., color: ...} (applies to all)
+            # 3. Dict from attribute_analogy_agent: {attributes: {style_code: ..., color: ...}}
+            
+            article_attrs = {}
+            if isinstance(product_attributes, dict):
+                if article in product_attributes:
+                    # Article-specific attributes
+                    article_attrs = product_attributes[article]
+                elif 'attributes' in product_attributes:
+                    # Attributes from attribute_analogy_agent
+                    article_attrs = product_attributes['attributes']
+                else:
+                    # Global attributes (apply to all articles)
+                    article_attrs = product_attributes
+            
+            # Initialize article metrics
+            metrics = {
+                'article': article,
+                'article_details': {
+                    'style_code': article_attrs.get('style_code', 'N/A'),
+                    'color': article_attrs.get('color', 'N/A'),
+                    'segment': article_attrs.get('segment', 'N/A'),
+                    'family': article_attrs.get('family', 'N/A'),
+                    'class': article_attrs.get('class', 'N/A'),
+                    'brick': article_attrs.get('brick', 'N/A')
+                },
+                'total_store_exposure': len(store_ids),
+                'mrp': 0.0,
+                'average_selling_price': 0.0,
+                'average_discount': 0.0,
+                'margin_pct': 0.0,
+                'ros': 0.0,  # Rate of Sale (units per day)
+                'str': 0.0,  # Sell-Through Rate
+                'net_sales_value': 0.0,
+                'total_quantity': 0,
+                'expected_units_sold': 0
+            }
+            
+            # Get price information for this article
+            article_prices = []
+            article_mrps = []
+            total_quantity = 0
+            total_expected_units = 0
+            total_inventory = 0
+            total_units_sold_historical = 0
+            total_days_historical = 0
+            
+            if price_data is not None and not price_data.empty:
+                article_price_data = price_data[price_data['sku'] == article]
+                if not article_price_data.empty:
+                    # Get prices for stores where article is allocated
+                    store_price_data = article_price_data[article_price_data['store_id'].isin(store_ids)]
+                    if not store_price_data.empty:
+                        article_prices = store_price_data['price'].tolist()
+                        # Assume MRP is in a column or calculate from price
+                        if 'mrp' in store_price_data.columns:
+                            article_mrps = store_price_data['mrp'].tolist()
+                        elif 'price' in store_price_data.columns:
+                            # If no MRP, use price as MRP (no discount scenario)
+                            article_mrps = store_price_data['price'].tolist()
+            
+            # Calculate MRP and Average Selling Price
+            if article_mrps:
+                metrics['mrp'] = np.mean(article_mrps)
+            elif article_prices:
+                metrics['mrp'] = np.mean(article_prices)  # Fallback: use price as MRP
+            
+            if article_prices:
+                metrics['average_selling_price'] = np.mean(article_prices)
+            
+            # Calculate Average Discount
+            if metrics['mrp'] > 0 and metrics['average_selling_price'] > 0:
+                discount_pct = ((metrics['mrp'] - metrics['average_selling_price']) / metrics['mrp']) * 100
+                metrics['average_discount'] = max(0, discount_pct)
+            
+            # Aggregate quantities and calculate metrics from store allocations
+            for store_id, store_data in stores.items():
+                qty = store_data.get('quantity', 0)
+                total_quantity += qty
+                
+                expected_st = store_data.get('expected_sell_through', 0)
+                expected_units = qty * expected_st
+                total_expected_units += expected_units
+                
+                current_inv = store_data.get('current_inventory', 0)
+                total_inventory += (qty + current_inv)
+                
+                # Get margin from store data
+                margin = store_data.get('margin_pct', 0)
+                if margin > 0:
+                    metrics['margin_pct'] = margin  # Use latest margin or average if needed
+            
+            metrics['total_quantity'] = total_quantity
+            metrics['expected_units_sold'] = total_expected_units
+            
+            # Calculate STR (Sell-Through Rate)
+            if total_inventory > 0:
+                metrics['str'] = total_expected_units / total_inventory
+            elif total_quantity > 0:
+                # If no inventory data, use expected sell-through from forecasts
+                avg_st = np.mean([s.get('expected_sell_through', 0) for s in stores.values()])
+                metrics['str'] = avg_st
+            
+            # Calculate ROS (Rate of Sale) = Total Units Sold / Total Days
+            if sales_data is not None and not sales_data.empty:
+                article_sales = sales_data[sales_data['sku'] == article]
+                if not article_sales.empty:
+                    # Filter by stores where article is allocated
+                    article_sales = article_sales[article_sales['store_id'].isin(store_ids)]
+                    
+                    if not article_sales.empty:
+                        total_units_sold_historical = article_sales['units_sold'].sum()
+                        
+                        # Calculate total days in period
+                        if 'date' in article_sales.columns:
+                            article_sales['date'] = pd.to_datetime(article_sales['date'])
+                            date_range = (article_sales['date'].max() - article_sales['date'].min()).days
+                            total_days_historical = max(1, date_range + 1)
+                        else:
+                            total_days_historical = forecast_horizon_days
+                        
+                        if total_days_historical > 0:
+                            metrics['ros'] = total_units_sold_historical / total_days_historical
+                        else:
+                            # Fallback: use expected rate of sale from forecasts
+                            avg_ros = np.mean([s.get('expected_rate_of_sale', 0) for s in stores.values()])
+                            metrics['ros'] = avg_ros
+                    else:
+                        # No historical sales, use expected ROS from forecasts
+                        avg_ros = np.mean([s.get('expected_rate_of_sale', 0) for s in stores.values()])
+                        metrics['ros'] = avg_ros
+                else:
+                    # No sales data for article, use expected ROS from forecasts
+                    avg_ros = np.mean([s.get('expected_rate_of_sale', 0) for s in stores.values()])
+                    metrics['ros'] = avg_ros
+            else:
+                # No sales data available, use expected ROS from forecasts
+                avg_ros = np.mean([s.get('expected_rate_of_sale', 0) for s in stores.values()])
+                metrics['ros'] = avg_ros
+            
+            # Calculate Net Sales Value = Expected Units Sold * Average Selling Price
+            if metrics['average_selling_price'] > 0:
+                metrics['net_sales_value'] = total_expected_units * metrics['average_selling_price']
+            else:
+                # Fallback: use price from price_data or forecast
+                if article_prices:
+                    avg_price = np.mean(article_prices)
+                    metrics['net_sales_value'] = total_expected_units * avg_price
+            
+            # Calculate average margin
+            if 'margins' in metrics and metrics['margins']:
+                metrics['margin_pct'] = np.mean(metrics['margins'])
+                # Remove temporary margins list
+                del metrics['margins']
+            else:
+                margins = [s.get('margin_pct', 0) for s in stores.values()]
+                if margins:
+                    metrics['margin_pct'] = np.mean([m for m in margins if m > 0]) or self.default_margin_pct
+                else:
+                    metrics['margin_pct'] = self.default_margin_pct
+            
+            article_metrics[article] = metrics
+        
+        return article_metrics
     
     def validate_input_data(self, sales_data: pd.DataFrame, 
                            inventory_data: pd.DataFrame,
@@ -2452,6 +2749,33 @@ class DemandForecastingAgent:
                 'recommendations': {}
             }, {}
         
+        # Apply HITL store mappings if enabled
+        if self.enable_hitl and self.hitl and forecast_results:
+            store_forecasts = forecast_results.get('store_level_forecasts', {})
+            if store_forecasts:
+                # Apply store mappings
+                updated_forecasts = self.hitl.apply_store_mappings_to_forecast(
+                    store_forecasts, sales_data, inventory_data, price_data
+                )
+                forecast_results['store_level_forecasts'] = updated_forecasts
+                # Update recommendations with mapped stores
+                if 'recommendations' in forecast_results:
+                    # Calculate historical metrics if not available
+                    if 'historical_metrics' not in locals():
+                        historical_metrics = self._calculate_historical_metrics(
+                            sales_data, inventory_data, price_data
+                        )
+                    recommendations = self._generate_optimized_recommendations(
+                        updated_forecasts,
+                        forecast_results.get('aggregated_forecast', {}),
+                        product_attributes,
+                        sales_data,
+                        price_data,
+                        historical_metrics,
+                        forecast_horizon_days
+                    )
+                    forecast_results['recommendations'] = recommendations
+        
         # Combine results
         final_results = {
             'model_selection': model_selection if 'model_selection' in locals() else {},
@@ -2462,4 +2786,300 @@ class DemandForecastingAgent:
             'fallback_used': self.fallback_used
         }
         
+        # Add HITL metadata if enabled
+        if self.enable_hitl and self.hitl:
+            final_results['hitl_metadata'] = {
+                'enabled': True,
+                'available_stores': self.hitl.get_available_stores(sales_data),
+                'store_mappings': self.hitl.store_mappings,
+                'variance_threshold': self.hitl.variance_threshold
+            }
+        
         return final_results, factor_analysis.get('sensitivity_results', {}) if 'factor_analysis' in locals() else {}
+    
+    # HITL Workflow Methods
+    def add_new_store_mapping(self, new_store_id: str, reference_store_id: str, 
+                             user_id: str = "user") -> Dict[str, Any]:
+        """
+        Add new store ID with mapping to reference store (Step 1)
+        
+        Args:
+            new_store_id: New store identifier
+            reference_store_id: Existing store to use as reference
+            user_id: User adding the mapping
+        
+        Returns:
+            Mapping record with audit information
+        """
+        if not self.enable_hitl or not self.hitl:
+            raise ValueError("HITL workflow is not enabled")
+        
+        return self.hitl.add_new_store_mapping(new_store_id, reference_store_id, user_id)
+    
+    def get_available_stores_for_mapping(self, sales_data: pd.DataFrame) -> List[str]:
+        """
+        Get list of available stores for dropdown (Step 1)
+        
+        Args:
+            sales_data: Sales data DataFrame
+        
+        Returns:
+            List of store IDs
+        """
+        if not self.enable_hitl or not self.hitl:
+            return []
+        
+        return self.hitl.get_available_stores(sales_data)
+    
+    def edit_aggregate_quantity(self, article: str, edited_quantity: float,
+                               user_id: str = "user") -> Dict[str, Any]:
+        """
+        Edit aggregate quantity for an article (Step 3)
+        Auto-approves if variance < 5%, flags for approval if >= 5%
+        
+        Args:
+            article: Article identifier
+            edited_quantity: User-edited quantity
+            user_id: User making the edit
+        
+        Returns:
+            Edit record with variance and approval status
+        """
+        if not self.enable_hitl or not self.hitl:
+            raise ValueError("HITL workflow is not enabled")
+        
+        # Get original quantity from recommendations
+        recommendations = self.forecast_results.get('recommendations', {})
+        article_metrics = recommendations.get('article_level_metrics', {})
+        
+        if article not in article_metrics:
+            raise ValueError(f"Article {article} not found in forecasts")
+        
+        original_quantity = article_metrics[article].get('total_quantity', 0)
+        
+        # Edit aggregate quantity
+        edit_record = self.hitl.edit_aggregate_quantity(
+            article, edited_quantity, original_quantity, user_id
+        )
+        
+        # If auto-approved, re-run allocation algorithm
+        if edit_record['approval_status'] == 'auto_approved':
+            self._rebalance_after_aggregate_edit(article, edited_quantity)
+        
+        return edit_record
+    
+    def _rebalance_after_aggregate_edit(self, article: str, new_total_quantity: float):
+        """
+        Re-run allocation algorithm after aggregate edit (Step 4)
+        
+        Args:
+            article: Article identifier
+            new_total_quantity: New total quantity
+        """
+        recommendations = self.forecast_results.get('recommendations', {})
+        store_allocations = recommendations.get('store_allocations', {})
+        
+        if article not in store_allocations:
+            return
+        
+        # Get original allocations
+        original_allocations = {}
+        for store_id, allocation in store_allocations[article].items():
+            original_allocations[store_id] = {
+                'quantity': allocation.get('quantity', 0),
+                'expected_sell_through': allocation.get('expected_sell_through', 0),
+                'expected_rate_of_sale': allocation.get('expected_rate_of_sale', 0),
+                'margin_pct': allocation.get('margin_pct', 0),
+                'optimization_score': allocation.get('optimization_score', 0),
+                'recommendation': allocation.get('recommendation', 'buy')
+            }
+        
+        # Rebalance
+        rebalanced = self.hitl.rebalance_store_allocations(
+            article, new_total_quantity, store_allocations[article], original_allocations
+        )
+        
+        # Update recommendations
+        store_allocations[article] = rebalanced
+        
+        # Update article metrics
+        article_metrics = recommendations.get('article_level_metrics', {})
+        if article in article_metrics:
+            article_metrics[article]['total_quantity'] = new_total_quantity
+            article_metrics[article]['expected_units_sold'] = sum(
+                s.get('quantity', 0) * s.get('expected_sell_through', 0)
+                for s in rebalanced.values()
+            )
+    
+    def edit_store_level_quantity(self, article: str, store_id: str,
+                                 edited_quantity: float, user_id: str = "user") -> Dict[str, Any]:
+        """
+        Edit store-level quantity allocation (Step 5)
+        Dynamically rebalances other stores
+        
+        Args:
+            article: Article identifier
+            store_id: Store identifier
+            edited_quantity: User-edited quantity
+            user_id: User making the edit
+        
+        Returns:
+            Edit record with validation and rebalancing info
+        """
+        if not self.enable_hitl or not self.hitl:
+            raise ValueError("HITL workflow is not enabled")
+        
+        # Get original quantity and total forecasted quantity
+        recommendations = self.forecast_results.get('recommendations', {})
+        store_allocations = recommendations.get('store_allocations', {})
+        article_metrics = recommendations.get('article_level_metrics', {})
+        
+        if article not in store_allocations or store_id not in store_allocations[article]:
+            raise ValueError(f"Store {store_id} not found for article {article}")
+        
+        original_quantity = store_allocations[article][store_id].get('quantity', 0)
+        total_forecasted = article_metrics.get(article, {}).get('total_quantity', 0)
+        
+        # Edit store-level quantity
+        edit_record = self.hitl.edit_store_level_quantity(
+            article, store_id, edited_quantity, original_quantity, total_forecasted, user_id
+        )
+        
+        # Dynamically rebalance (Step 6)
+        rebalanced = self.hitl.rebalance_after_store_edit(
+            article, store_id, edited_quantity, store_allocations[article], total_forecasted
+        )
+        
+        # Update recommendations
+        store_allocations[article] = rebalanced
+        
+        return edit_record
+    
+    def generate_final_output_with_approvals(self) -> Dict[str, Any]:
+        """
+        Generate final output with approved and pending items separated (Step 7)
+        
+        Returns:
+            Final output with approved allocations and pending approvals
+        """
+        if not self.enable_hitl or not self.hitl:
+            raise ValueError("HITL workflow is not enabled")
+        
+        recommendations = self.forecast_results.get('recommendations', {})
+        store_allocations = recommendations.get('store_allocations', {})
+        article_level_metrics = recommendations.get('article_level_metrics', {})
+        
+        return self.hitl.generate_final_output(store_allocations, article_level_metrics)
+    
+    def get_approval_queue(self) -> List[Dict[str, Any]]:
+        """
+        Get items requiring approval (Step 7)
+        
+        Returns:
+            List of items needing approval
+        """
+        if not self.enable_hitl or not self.hitl:
+            return []
+        
+        return self.hitl.get_approval_queue()
+    
+    def approve_item(self, article: str, store_id: Optional[str] = None,
+                    approver_id: str = "category_head") -> Dict[str, Any]:
+        """
+        Approve an item (aggregate or store-level) (Step 7)
+        
+        Args:
+            article: Article identifier
+            store_id: Store ID (None for aggregate level)
+            approver_id: Approver user ID
+        
+        Returns:
+            Approval record
+        """
+        if not self.enable_hitl or not self.hitl:
+            raise ValueError("HITL workflow is not enabled")
+        
+        return self.hitl.approve_item(article, store_id, approver_id)
+    
+    def get_audit_trail(self, article: Optional[str] = None,
+                       store_id: Optional[str] = None,
+                       action_type: Optional[str] = None) -> List[Dict[str, Any]]:
+        """
+        Get audit trail with optional filters (Step 2, 8)
+        
+        Args:
+            article: Filter by article
+            store_id: Filter by store
+            action_type: Filter by action type
+        
+        Returns:
+            Filtered audit trail
+        """
+        if not self.enable_hitl or not self.hitl:
+            return []
+        
+        return self.hitl.get_audit_trail(article, store_id, action_type)
+    
+    def get_system_vs_human_comparison(self, article: str) -> Dict[str, Any]:
+        """
+        Get comparison of system suggested vs human finalized quantities (Step 8)
+        
+        Args:
+            article: Article identifier
+        
+        Returns:
+            Comparison data for audit trail
+        """
+        if not self.enable_hitl or not self.hitl:
+            return {}
+        
+        return self.hitl.get_system_vs_human_comparison(article)
+    
+    def get_variance_highlights(self) -> Dict[str, Any]:
+        """
+        Get all variances highlighted for quick check (Step 9)
+        
+        Returns:
+            Highlighted variances grouped by type
+        """
+        if not self.enable_hitl or not self.hitl:
+            return {}
+        
+        approval_queue = self.hitl.get_approval_queue()
+        
+        highlights = {
+            'aggregate_variances': [],
+            'store_level_variances': [],
+            'style_level_variances': [],
+            'critical_variances': [],  # Variances > 10%
+            'moderate_variances': []   # Variances 5-10%
+        }
+        
+        for item in approval_queue:
+            variance_pct = item['variance_pct']
+            
+            if item['type'] == 'aggregate':
+                highlights['aggregate_variances'].append(item)
+            elif item['type'] == 'store_level':
+                highlights['store_level_variances'].append(item)
+            elif item['type'] == 'style_level':
+                highlights['style_level_variances'].append(item)
+            
+            if variance_pct > 10:
+                highlights['critical_variances'].append(item)
+            elif variance_pct >= 5:
+                highlights['moderate_variances'].append(item)
+        
+        return highlights
+    
+    def export_hitl_metadata(self) -> Dict[str, Any]:
+        """
+        Export HITL metadata for persistence (Step 2)
+        
+        Returns:
+            Complete metadata dictionary
+        """
+        if not self.enable_hitl or not self.hitl:
+            return {}
+        
+        return self.hitl.export_metadata()
