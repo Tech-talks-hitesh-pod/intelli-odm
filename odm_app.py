@@ -2580,8 +2580,7 @@ def main():
                                 if store.get('reasoning'):
                                     with st.expander(f"**{store['store_name']}** ({store['store_id']}) - {store['city']}"):
                                         st.markdown(store['reasoning'])
-                else:
-                    st.warning("⚠️ Could not load store data. Store-wise predictions unavailable.")
+                
             else:
                 st.error("❌ Prediction failed. Please try with a different product description.")
     
