@@ -10,6 +10,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import logging
 import json
+import os
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional
 
@@ -23,6 +24,18 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
+
+# IMPORTANT: Initialize LangSmith tracking BEFORE importing other modules
+# This ensures environment variables are set before any traceable decorators are used
+try:
+    from utils.llm_client import setup_langsmith_tracking
+    langsmith_callbacks = setup_langsmith_tracking()
+    if langsmith_callbacks or os.getenv("LANGCHAIN_TRACING_V2") == "true":
+        logger.info("✅ LangSmith tracking initialized at module level")
+    else:
+        logger.warning("⚠️ LangSmith tracking not configured - set LANGCHAIN_API_KEY in .env")
+except Exception as e:
+    logger.warning(f"⚠️ LangSmith setup failed: {e}")
 
 # Import our modules
 try:
@@ -50,6 +63,18 @@ def initialize_system():
     logger.info("🔄 Initializing ODM system...")
     
     try:
+        # LangSmith should already be initialized at module level, but verify
+        langchain_tracing = os.getenv("LANGCHAIN_TRACING_V2")
+        langchain_api_key = os.getenv("LANGCHAIN_API_KEY") or os.getenv("LANGSMITH_API_KEY")
+        
+        if langchain_tracing == "true" and langchain_api_key:
+            logger.info(f"✅ LangSmith tracking enabled (Project: {os.getenv('LANGCHAIN_PROJECT', 'intelli-odm')})")
+        else:
+            logger.warning("⚠️ LangSmith tracking not configured. Add to .env:")
+            logger.warning("   LANGCHAIN_TRACING_V2=true")
+            logger.warning("   LANGCHAIN_API_KEY=your_api_key_here")
+            logger.warning("   LANGCHAIN_PROJECT=intelli-odm")
+        
         # Initialize knowledge base
         kb = SharedKnowledgeBase()
         logger.info("✅ Knowledge base initialized")
@@ -57,16 +82,19 @@ def initialize_system():
         # Initialize LLM client using factory
         llm_config = {
             'provider': settings.llm_provider,
-            'openai_api_key': settings.openai_api_key if settings.llm_provider == 'openai' else None,
-            'openai_model': settings.openai_model if settings.llm_provider == 'openai' else 'gpt-4o-mini',
-            'openai_temperature': settings.openai_temperature if settings.llm_provider == 'openai' else 0.1,
-            'ollama_base_url': settings.ollama_base_url if settings.llm_provider == 'ollama' else 'http://localhost:11434',
-            'ollama_model': settings.ollama_model if settings.llm_provider == 'ollama' else 'llama3:8b'
+            'api_key': settings.openai_api_key if settings.llm_provider == 'openai' else None,
+            'model': settings.openai_model if settings.llm_provider == 'openai' else settings.ollama_model,
+            'temperature': settings.openai_temperature if settings.llm_provider == 'openai' else 0.1,
+            'base_url': settings.ollama_base_url if settings.llm_provider == 'ollama' else None,
+            'timeout': settings.ollama_timeout if settings.llm_provider == 'ollama' else 300
         }
         
         try:
             llm_client = LLMClientFactory.create_client(llm_config)
-            logger.info("✅ LLM client initialized")
+            if llm_client is None:
+                logger.info("🔄 Demo mode - continuing with statistical analysis only (no AI insights)")
+            else:
+                logger.info("✅ LLM client initialized")
         except Exception as llm_error:
             logger.warning(f"⚠️ LLM client initialization failed: {llm_error}")
             logger.info("🔄 Continuing with statistical analysis only (no AI insights)")
@@ -107,6 +135,23 @@ def load_odm_data(_kb, _data_agent):
 @st.cache_data
 def load_store_data():
     """Load store information from historical dataset."""
+    # Wrap with LangSmith tracing
+    try:
+        from langsmith import traceable
+        
+        @traceable(name="Load_Store_Data", run_type="retriever", tags=["data-loading", "stores"])
+        def _load_stores():
+            return _load_store_data_impl()
+        
+        return _load_stores()
+    except ImportError:
+        return _load_store_data_impl()
+    except Exception as e:
+        logger.warning(f"LangSmith tracing failed for store data loading: {e}")
+        return _load_store_data_impl()
+
+def _load_store_data_impl():
+    """Internal implementation of store data loading."""
     try:
         historical_file = "data/sample/odm_historical_dataset_5000.csv"
         df = pd.read_csv(historical_file)
@@ -124,6 +169,12 @@ def load_store_data():
 
 def get_weather_factor(climate_tag: str, product_description: str) -> float:
     """Calculate weather factor based on climate and product type."""
+    # Don't trace individual weather factor calls - they're called many times per store
+    # The parent Generate_Store_Predictions trace will show the aggregate results
+    return _get_weather_factor_impl(climate_tag, product_description)
+
+def _get_weather_factor_impl(climate_tag: str, product_description: str) -> float:
+    """Internal implementation of weather factor calculation."""
     description_lower = product_description.lower()
     climate_lower = str(climate_tag).lower()
     
@@ -168,7 +219,195 @@ def get_weather_factor(climate_tag: str, product_description: str) -> float:
 
 def generate_store_predictions(base_prediction: int, product_description: str, stores: List[Dict]) -> List[Dict]:
     """Generate store-wise predictions based on base prediction and store characteristics."""
+    # Wrap with LangSmith tracing
+    try:
+        from langsmith import traceable
+        
+        # Use wrapper function to ensure proper trace nesting
+        @traceable(
+            name="Generate_Store_Predictions", 
+            run_type="chain", 
+            tags=["store-predictions", "allocation"],
+            inputs={"base_prediction": base_prediction, "product_description": product_description, "num_stores": len(stores)}
+        )
+        def _generate_wrapper(base_pred: int, prod_desc: str, store_list: List[Dict]):
+            return _generate_store_predictions_impl(base_pred, prod_desc, store_list)
+        
+        return _generate_wrapper(base_prediction, product_description, stores)
+        
+    except ImportError:
+        return _generate_store_predictions_impl(base_prediction, product_description, stores)
+    except Exception as e:
+        logger.warning(f"LangSmith tracing failed for store predictions: {e}")
+        return _generate_store_predictions_impl(base_prediction, product_description, stores)
+
+def generate_ai_store_predictions(llm_client, product_description: str, stores: List[Dict], similar_products: List[Dict]) -> List[Dict]:
+    """Generate AI-powered store-wise predictions using LLM analysis of historical data."""
+    if not llm_client:
+        # Fallback to simple weather-based predictions if no LLM
+        return generate_store_predictions(100, product_description, stores)
+    
+    try:
+        from langsmith import traceable
+        
+        @traceable(
+            name="AI_Store_Predictions",
+            run_type="chain",
+            tags=["store-predictions", "llm-powered"],
+            inputs={
+                "product_description": product_description,
+                "num_stores": len(stores),
+                "similar_products_count": len(similar_products)
+            }
+        )
+        def _ai_store_prediction_wrapper():
+            return _generate_ai_store_predictions_impl(llm_client, product_description, stores, similar_products)
+        
+        return _ai_store_prediction_wrapper()
+    except (ImportError, Exception) as e:
+        if not isinstance(e, ImportError):
+            logger.warning(f"LangSmith tracing failed for AI store predictions: {e}")
+        return _generate_ai_store_predictions_impl(llm_client, product_description, stores, similar_products)
+
+def _generate_ai_store_predictions_impl(llm_client, product_description: str, stores: List[Dict], similar_products: List[Dict]) -> List[Dict]:
+    """Internal implementation of AI-powered store predictions."""
+    store_predictions = []
+    
+    # Prepare historical data context for LLM
+    store_historical_context = _prepare_store_historical_context(stores, similar_products)
+    
+    # Create LLM prompt with store-specific historical data
+    llm_prompt = f"""You are an expert retail analyst predicting sales for "{product_description}" across different stores in India.
+
+HISTORICAL SALES CONTEXT:
+{store_historical_context}
+
+TASK: Predict monthly sales quantity for "{product_description}" in each store below, considering:
+1. Historical performance of similar products in each city/store
+2. Local climate and weather patterns
+3. Demographics and income levels
+4. Seasonal factors
+
+STORES TO ANALYZE:
+"""
+    
+    # Add store details to prompt
+    for store in stores:
+        store_info = f"""
+Store: {store.get('StoreName', 'Unknown')} ({store.get('StoreID', 'Unknown')})
+City: {store.get('City', 'Unknown')}
+Climate: {store.get('Climate', 'Unknown')}
+Weather Pattern: {store.get('WeatherPattern', 'Unknown')}
+Demographics: {store.get('Demographics', 'Unknown')}
+Income Level: {store.get('IncomeLevel', 'Unknown')}
+Population Density: {store.get('PopulationDensity', 'Unknown')}
+"""
+        llm_prompt += store_info
+    
+    llm_prompt += """
+Respond in JSON format:
+{
+  "store_predictions": [
+    {
+      "store_id": "ST001",
+      "store_name": "Store Name",
+      "city": "City",
+      "predicted_monthly_sales": 150,
+      "confidence_score": 0.75,
+      "reasoning": "Brief explanation of prediction rationale",
+      "recommendation": "BUY|CAUTIOUS|AVOID"
+    }
+  ],
+  "summary": {
+    "total_predicted_sales": 2500,
+    "average_per_store": 100,
+    "high_potential_stores": 5,
+    "overall_recommendation": "BUY"
+  }
+}"""
+
+    try:
+        # Get LLM analysis
+        llm_result = llm_client.generate(llm_prompt, temperature=0.1, max_tokens=2000)
+        llm_response = llm_result.get('response', llm_result.get('content', str(llm_result)))
+        
+        # Parse JSON response
+        import json
+        try:
+            llm_data = json.loads(llm_response)
+            ai_predictions = llm_data.get('store_predictions', [])
+            
+            # Convert to expected format
+            for ai_pred in ai_predictions:
+                store_predictions.append({
+                    'store_id': ai_pred.get('store_id', ''),
+                    'store_name': ai_pred.get('store_name', ''),
+                    'city': ai_pred.get('city', ''),
+                    'predicted_demand': ai_pred.get('predicted_monthly_sales', 0),
+                    'confidence': ai_pred.get('confidence_score', 0.5),
+                    'reasoning': ai_pred.get('reasoning', ''),
+                    'recommendation': ai_pred.get('recommendation', 'CAUTIOUS'),
+                    'climate': _get_store_climate(stores, ai_pred.get('store_id', '')),
+                    'weather_factor': 1.0,  # LLM already considered weather
+                    'ai_generated': True
+                })
+            
+            logger.info(f"✅ Generated AI predictions for {len(store_predictions)} stores")
+            
+        except json.JSONDecodeError:
+            logger.warning("Failed to parse LLM JSON response, falling back to simple predictions")
+            return generate_store_predictions(100, product_description, stores)
+            
+    except Exception as e:
+        logger.warning(f"AI store prediction failed: {e}, falling back to simple predictions")
+        return generate_store_predictions(100, product_description, stores)
+    
+    # Sort by predicted demand (highest first)
+    store_predictions.sort(key=lambda x: x['predicted_demand'], reverse=True)
+    return store_predictions
+
+def _prepare_store_historical_context(stores: List[Dict], similar_products: List[Dict]) -> str:
+    """Prepare historical sales context for LLM analysis."""
+    context = "HISTORICAL SALES DATA FOR SIMILAR PRODUCTS:\n\n"
+    
+    # Group similar products by city/store if available
+    city_sales = {}
+    
+    for product in similar_products[:5]:  # Top 5 similar products
+        sales_data = product.get('sales', {})
+        if sales_data.get('performance_by_store'):
+            for store_perf in sales_data['performance_by_store'][:10]:  # Top 10 stores
+                city = store_perf.get('city', 'Unknown')
+                if city not in city_sales:
+                    city_sales[city] = []
+                city_sales[city].append({
+                    'product': product.get('name', 'Unknown'),
+                    'units_sold': store_perf.get('units_sold', 0),
+                    'climate': store_perf.get('climate', 'Unknown')
+                })
+    
+    # Add city-wise sales context
+    for city, sales_list in city_sales.items():
+        total_units = sum(s['units_sold'] for s in sales_list)
+        avg_units = total_units / len(sales_list) if sales_list else 0
+        context += f"{city}: {total_units} total units, {avg_units:.0f} avg per product\n"
+        for sale in sales_list[:3]:  # Top 3 products per city
+            context += f"  - {sale['product']}: {sale['units_sold']} units ({sale['climate']} climate)\n"
+        context += "\n"
+    
+    return context
+
+def _get_store_climate(stores: List[Dict], store_id: str) -> str:
+    """Get climate for a specific store."""
+    for store in stores:
+        if store.get('StoreID') == store_id:
+            return store.get('Climate', 'Unknown')
+    return 'Unknown'
+
+def _generate_store_predictions_impl(base_prediction: int, product_description: str, stores: List[Dict]) -> List[Dict]:
+    """Internal implementation of store predictions."""
     predictions = []
+    weather_factors_summary = {}  # Track weather factors for summary
     
     for store in stores:
         store_id = store.get('StoreID', '')
@@ -176,8 +415,13 @@ def generate_store_predictions(base_prediction: int, product_description: str, s
         city = store.get('City', '')
         climate = store.get('ClimateTag', '')
         
-        # Calculate weather factor
+        # Calculate weather factor (not traced individually to reduce noise)
         weather_factor = get_weather_factor(climate, product_description)
+        
+        # Track weather factors by climate for summary
+        if climate not in weather_factors_summary:
+            weather_factors_summary[climate] = []
+        weather_factors_summary[climate].append(weather_factor)
         
         # Calculate predicted demand for this store
         predicted_demand = int(base_prediction * weather_factor)
@@ -204,6 +448,10 @@ def generate_store_predictions(base_prediction: int, product_description: str, s
     
     # Sort by predicted demand (descending)
     predictions.sort(key=lambda x: x['predicted_demand'], reverse=True)
+    
+    # Log summary for LangSmith trace visibility
+    logger.info(f"Generated predictions for {len(predictions)} stores")
+    logger.info(f"Weather factors by climate: {weather_factors_summary}")
     
     return predictions
 
@@ -442,8 +690,211 @@ def extract_product_attributes(description: str, similar_products: List[Dict]) -
         'segment': desc_segment
     }
 
+def validate_product_relevance(llm_client: LLMClient, query_product: str, vector_results: List[Dict]) -> Dict[str, Any]:
+    """Validate if vector search results are actually relevant for the customer query."""
+    try:
+        from langsmith import traceable
+        
+        @traceable(
+            name="Product_Relevance_Validation",
+            run_type="chain", 
+            tags=["relevance", "product-validation"]
+        )
+        def _validate_wrapper():
+            return _validate_relevance_impl(llm_client, query_product, vector_results)
+        
+        return _validate_wrapper()
+    except ImportError:
+        return _validate_relevance_impl(llm_client, query_product, vector_results)
+    except Exception as e:
+        logger.warning(f"LangSmith tracing failed for relevance validation: {e}")
+        return _validate_relevance_impl(llm_client, query_product, vector_results)
+
+def _validate_relevance_impl(llm_client: LLMClient, query_product: str, vector_results: List[Dict]) -> Dict[str, Any]:
+    """Internal implementation of product relevance validation."""
+    import json
+    import re
+    
+    if not vector_results or not llm_client:
+        return {
+            'is_relevant': len(vector_results) > 0,
+            'relevant_products': vector_results,
+            'reason': 'No LLM available for validation' if not llm_client else 'No products to validate'
+        }
+    
+    # Prepare product summary for validation
+    products_summary = []
+    for i, product in enumerate(vector_results[:10]):  # Check top 10 products
+        attrs = product.get('attributes', {})
+        metadata = product.get('metadata', {})
+        
+        # Get product details
+        name = product.get('name', 'Unknown')
+        
+        # Get category/brick
+        category = (attrs.get('brick') or attrs.get('Brick') or 
+                   metadata.get('brick') or metadata.get('Brick') or 
+                   attrs.get('category') or 'Unknown')
+        
+        # Get color
+        color = (attrs.get('colour') or attrs.get('Colour') or attrs.get('color') or
+                metadata.get('colour') or metadata.get('Colour') or metadata.get('color') or 'Unknown')
+        
+        # Get segment
+        segment = (attrs.get('segment') or attrs.get('Segment') or
+                  metadata.get('segment') or metadata.get('Segment') or 'Unknown')
+        
+        products_summary.append(f"{i+1}. {name} - Category: {category}, Color: {color}, Segment: {segment}")
+    
+    validation_prompt = f"""You are a product categorization expert. A customer is asking for predictions about "{query_product}".
+
+The vector search returned these similar products:
+{chr(10).join(products_summary)}
+
+Your task: Determine if these products are relevant enough to make sales predictions for "{query_product}".
+
+STRICT VALIDATION RULES:
+1. Products must be in the SAME CATEGORY (e.g., don't use jeans data to predict dress sales)
+2. Different colors within same category are acceptable (e.g., use black dress data for red dress prediction)
+3. Different segments within same category are acceptable (e.g., use women's dress for girl's dress)
+4. At least 3 relevant products should be available for reliable prediction
+
+Respond in this exact JSON format:
+{{
+    "is_relevant": true/false,
+    "reason": "detailed explanation of your decision",
+    "relevant_product_indices": [list of relevant product numbers from 1-{len(products_summary)}],
+    "category_match": "exact category that matches the query",
+    "confidence": 0.0-1.0
+}}
+
+Be strict - it's better to reject and ask for manual input than give wrong predictions based on irrelevant products."""
+    
+    try:
+        response = llm_client.generate(validation_prompt)
+        logger.info(f"🤖 LLM validation response: {response[:200]}...")
+        
+        # Parse JSON response - extract JSON from response if wrapped in text
+        
+        # Try to extract JSON from the response
+        json_match = re.search(r'\{.*\}', response.strip(), re.DOTALL)
+        if json_match:
+            json_str = json_match.group()
+            logger.info(f"📄 Extracted JSON: {json_str}")
+            validation_result = json.loads(json_str)
+        else:
+            # Fallback to trying the whole response
+            validation_result = json.loads(response.strip())
+        logger.info(f"📝 Parsed validation result: {validation_result}")
+        
+        # Extract relevant products based on indices
+        relevant_indices = validation_result.get('relevant_product_indices', [])
+        relevant_products = []
+        
+        for idx in relevant_indices:
+            if 1 <= idx <= len(vector_results):
+                relevant_products.append(vector_results[idx - 1])
+        
+        logger.info(f"✅ Relevance validation: {validation_result['is_relevant']} - {validation_result['reason']}")
+        logger.info(f"   Selected {len(relevant_products)} relevant products from {len(vector_results)} total")
+        
+        return {
+            'is_relevant': validation_result['is_relevant'] and len(relevant_products) >= 2,  # Reduced from 3 to 2
+            'relevant_products': relevant_products,
+            'reason': validation_result['reason'],
+            'confidence': validation_result.get('confidence', 0.0),
+            'category_match': validation_result.get('category_match', 'Unknown')
+        }
+        
+    except json.JSONDecodeError as e:
+        logger.warning(f"Failed to parse relevance validation JSON response: {e}")
+        logger.warning(f"Raw LLM response was: {response}")
+        # Fallback to simple category matching
+        return _simple_relevance_check(query_product, vector_results)
+    except Exception as e:
+        logger.warning(f"Relevance validation failed: {e}")
+        return _simple_relevance_check(query_product, vector_results)
+
+def _simple_relevance_check(query_product: str, vector_results: List[Dict]) -> Dict[str, Any]:
+    """Simple fallback relevance check without LLM."""
+    query_lower = query_product.lower()
+    
+    # Extract expected category from query
+    expected_category = None
+    if 'dress' in query_lower:
+        expected_category = 'dress'
+    elif 'shirt' in query_lower:
+        expected_category = 'shirt'
+    elif 'jeans' in query_lower or 'pant' in query_lower:
+        expected_category = 'jeans'
+    elif 't-shirt' in query_lower or 'tee' in query_lower:
+        expected_category = 't-shirt'
+    
+    if not expected_category:
+        # If we can't determine category, allow all products
+        return {
+            'is_relevant': True,
+            'relevant_products': vector_results,
+            'reason': 'Could not determine specific category from query'
+        }
+    
+    # Filter products by category
+    relevant_products = []
+    for product in vector_results:
+        attrs = product.get('attributes', {})
+        metadata = product.get('metadata', {})
+        
+        category = (attrs.get('brick', '') or attrs.get('Brick', '') or 
+                   metadata.get('brick', '') or metadata.get('Brick', '') or
+                   attrs.get('category', '') or metadata.get('category', '')).lower()
+        
+        # More flexible category matching
+        category_match = False
+        if expected_category == 'jeans':
+            category_match = any(term in category for term in ['jeans', 'denim', 'pant', 'trouser', 'jogger'])
+        elif expected_category == 'dress':
+            category_match = any(term in category for term in ['dress', 'frock', 'gown'])
+        elif expected_category == 'shirt':
+            category_match = any(term in category for term in ['shirt', 'blouse'])
+        elif expected_category == 't-shirt':
+            category_match = any(term in category for term in ['t-shirt', 'tee', 'top'])
+        else:
+            category_match = expected_category in category
+        
+        if category_match:
+            relevant_products.append(product)
+    
+    return {
+        'is_relevant': len(relevant_products) >= 1,  # At least 1 product needed for simple check
+        'relevant_products': relevant_products,
+        'reason': f"Found {len(relevant_products)} products matching '{expected_category}' category"
+    }
+
 def analyze_product_viability(product_description: str, similar_products: List[Dict]) -> Dict[str, Any]:
     """Analyze if a product combination is viable based on actual sales data."""
+    # Wrap with LangSmith tracing
+    try:
+        from langsmith import traceable
+        
+        # Use wrapper function to ensure proper trace nesting
+        @traceable(
+            name="Analyze_Product_Viability", 
+            run_type="chain", 
+            tags=["viability", "product-analysis"]
+        )
+        def _analyze_wrapper():
+            return _analyze_viability_impl(product_description, similar_products)
+        
+        return _analyze_wrapper()
+    except ImportError:
+        # If langsmith not available, use direct call
+        return _analyze_viability_impl(product_description, similar_products)
+    except Exception as e:
+        logger.warning(f"LangSmith tracing failed for viability analysis: {e}")
+        return _analyze_viability_impl(product_description, similar_products)
+
+def _analyze_viability_impl(product_description: str, similar_products: List[Dict]) -> Dict[str, Any]:
+    """Internal implementation of viability analysis."""
     description_lower = product_description.lower()
     
     # Extract attributes from description
@@ -619,17 +1070,821 @@ def analyze_product_viability(product_description: str, similar_products: List[D
                 'market_acceptance': 'UNPROVEN'
             }
 
+def predict_product_sales_comprehensive(kb: SharedKnowledgeBase, llm_client: LLMClient, product_description: str, stores: List[Dict]) -> Dict[str, Any]:
+    """Comprehensive prediction with single LLM call including store-wise analysis."""
+    try:
+        from langsmith import traceable
+        
+        @traceable(
+            name="Comprehensive_Sales_Prediction",
+            run_type="chain",
+            tags=["sales-prediction", "comprehensive", "store-wise"],
+            inputs={
+                "product_description": product_description,
+                "num_stores": len(stores) if stores else 0
+            }
+        )
+        def _comprehensive_prediction_wrapper():
+            return _predict_comprehensive_impl(kb, llm_client, product_description, stores)
+        
+        return _comprehensive_prediction_wrapper()
+    except (ImportError, Exception) as e:
+        if not isinstance(e, ImportError):
+            logger.warning(f"LangSmith tracing failed: {e}")
+        return _predict_comprehensive_impl(kb, llm_client, product_description, stores)
+
+def _predict_comprehensive_impl(kb: SharedKnowledgeBase, llm_client: LLMClient, product_description: str, stores: List[Dict]) -> Dict[str, Any]:
+    """Single comprehensive prediction implementation."""
+    logger.info(f"🔮 Comprehensive prediction for: {product_description}")
+    
+    try:
+        # Vector search for similar products
+        try:
+            from langsmith import traceable
+            
+            @traceable(
+                name="Vector_Search",
+                run_type="retriever", 
+                tags=["vector-db", "similarity-search"]
+            )
+            def _vector_search():
+                return kb.find_similar_products(
+                    query_attributes={},
+                    query_description=product_description,
+                    top_k=15
+                )
+            
+            similar_products = _vector_search()
+        except (ImportError, Exception) as e:
+            if not isinstance(e, ImportError):
+                logger.warning(f"Vector search tracing failed: {e}")
+            similar_products = kb.find_similar_products(
+                query_attributes={},
+                query_description=product_description,
+                top_k=15
+            )
+        
+        if not similar_products:
+            return _create_fallback_prediction(product_description)
+        
+        # Validate product relevance before proceeding
+        relevance_validation = validate_product_relevance(llm_client, product_description, similar_products)
+        logger.info(f"🔍 Relevance validation result: is_relevant={relevance_validation['is_relevant']}, products={len(relevance_validation.get('relevant_products', []))}")
+        if not relevance_validation['is_relevant']:
+            logger.warning(f"⚠️ Vector search results not relevant for '{product_description}': {relevance_validation['reason']}")
+            return _create_fallback_prediction(product_description, relevance_validation['reason'])
+        
+        # Use only the validated relevant products
+        validated_products = relevance_validation['relevant_products']
+        logger.info(f"✅ Using {len(validated_products)} validated relevant products out of {len(similar_products)} found")
+        
+        # Analyze viability with validated products
+        viability = analyze_product_viability(product_description, validated_products)
+        if not viability['viable']:
+            return _create_avoid_prediction(product_description, viability, validated_products)
+        
+        # Prepare comprehensive LLM prompt with everything
+        products_with_sales = [p for p in validated_products if p.get('sales', {}).get('total_units', 0) > 0]
+        
+        if not llm_client:
+            # Fallback to statistical analysis
+            return _create_statistical_prediction(product_description, validated_products, products_with_sales, stores)
+        
+        # Create comprehensive LLM prompt
+        comprehensive_prompt = _create_comprehensive_llm_prompt(
+            product_description, validated_products, products_with_sales, stores, viability
+        )
+        
+        # Single LLM call with comprehensive analysis
+        try:
+            from langsmith import traceable
+            
+            @traceable(
+                name="Comprehensive_LLM_Analysis",
+                run_type="llm",
+                tags=["openai", "comprehensive-analysis"],
+                inputs={
+                    "product_description": product_description,
+                    "similar_products_count": len(similar_products),
+                    "stores_count": len(stores) if stores else 0
+                }
+            )
+            def _comprehensive_llm_call():
+                return llm_client.generate(comprehensive_prompt, temperature=0.1, max_tokens=3000)
+            
+            llm_result = _comprehensive_llm_call()
+        except (ImportError, Exception) as e:
+            if not isinstance(e, ImportError):
+                logger.warning(f"LLM analysis tracing failed: {e}")
+            llm_result = llm_client.generate(comprehensive_prompt, temperature=0.1, max_tokens=3000)
+        
+        # Parse comprehensive response
+        llm_response = llm_result.get('response', llm_result.get('content', str(llm_result)))
+        return _parse_comprehensive_response(llm_response, product_description, validated_products, stores)
+        
+    except Exception as e:
+        logger.error(f"❌ Comprehensive prediction failed: {e}")
+        return _create_fallback_prediction(product_description, error=str(e))
+
+def _load_historical_sales_by_city():
+    """Load historical sales performance by city from ODM dataset."""
+    try:
+        import pandas as pd
+        
+        # Load the ODM historical dataset
+        historical_file = "data/sample/odm_historical_dataset_5000.csv"
+        df = pd.read_csv(historical_file)
+        
+        # Group by city and calculate performance metrics
+        city_stats = df.groupby(['City', 'ClimateTag']).agg({
+            'QuantitySold': 'sum',
+            'TotalSales': 'sum',
+            'StyleCode': 'nunique'
+        }).reset_index()
+        
+        # Create city performance dictionary
+        city_performance = {}
+        for _, row in city_stats.iterrows():
+            city = row['City']
+            city_performance[city] = {
+                'total_units': int(row['QuantitySold']),
+                'total_revenue': float(row['TotalSales']),
+                'product_count': int(row['StyleCode']),
+                'climate': row['ClimateTag']
+            }
+        
+        logger.info(f"✅ Loaded historical performance for {len(city_performance)} cities")
+        return city_performance
+        
+    except Exception as e:
+        logger.warning(f"Failed to load city performance data: {e}")
+        return {}
+
+
+def _load_city_counts_by_similar_products(product_specific_city_data: list):
+    """
+    Take product_specific_city_data list, extract product_ids,
+    match directly with StyleCode from CSV,
+    return only city-wise counts.
+    """
+    try:
+        import pandas as pd
+        print(f"Similar data to search city wise {product_specific_city_data}")
+        
+        historical_file = "data/sample/odm_historical_dataset_5000.csv"
+        df = pd.read_csv(historical_file)
+
+        print(f"1")
+        # Extract product IDs
+        similar_ids = [
+            p["attributes"]["style_code"]
+            for p in product_specific_city_data
+            if p.get("attributes") and p["attributes"].get("style_code")]        
+        print(f"2")
+        print(f"similar_ids {similar_ids}")
+
+        if not similar_ids:
+            return {}
+
+        # Match product IDs against StyleCode
+        matched_df = df[df["StyleCode"].astype(str).isin(similar_ids)]
+
+        print(f"Similar data {matched_df}")
+
+        if matched_df.empty:
+            print(f"Similar data empty")
+            return {}
+        
+        
+
+        # Group by city, just count purchases
+        city_stats = matched_df.groupby("City").agg({
+            "QuantitySold": "sum",
+            "StyleCode": "nunique"
+        }).reset_index()
+
+        city_counts = {
+            row["City"]: {
+                "similar_average_units": int(row["QuantitySold"]/row["StyleCode"]),
+                "unique_products_sold": int(row["StyleCode"])
+            }
+            for _, row in city_stats.iterrows()
+        }
+
+        return city_counts
+
+    except Exception as e:
+        print(f"Error computing city counts: {e}")
+        return {}
+
+
+def _load_product_specific_city_performance(product_description: str):
+    """Load city performance data specifically for the requested product type."""
+    try:
+        import pandas as pd
+        
+        # Load ODM dataset
+        historical_file = "data/sample/odm_historical_dataset_5000.csv"
+        df = pd.read_csv(historical_file)
+        
+        # Extract product attributes from description
+        desc_lower = product_description.lower()
+        
+        # First, try to find exact matches with all attributes
+        product_filters = []
+        matched_attributes = []
+        
+        # Color matching - map common colors to available dataset colors
+        color_mapping = {
+            'red': ['maroon', 'coral'],
+            'blue': ['navy', 'light blue', 'sky blue', 'denim blue', 'baby blue', 'dark blue'],
+            'green': ['forest green', 'deep green', 'bottle green', 'neon green', 'olive', 'emerald'],
+            'black': ['black', 'charcoal'],
+            'white': ['white', 'ivory'],
+            'yellow': ['yellow', 'mustard'],
+            'pink': ['peach', 'fuchsia'],
+            'grey': ['grey', 'charcoal', 'stone'],
+            'brown': ['khaki', 'beige']
+        }
+        
+        matched_colors = []
+        for search_color, dataset_colors in color_mapping.items():
+            if search_color in desc_lower:
+                matched_colors.extend(dataset_colors)
+                break
+        
+        if matched_colors:
+            color_filter = df['Colour'].str.lower().str.contains('|'.join(matched_colors), na=False)
+            product_filters.append(color_filter)
+            matched_attributes.append(f"color ({', '.join(matched_colors)})")
+        
+        # Category matching
+        category_filter = None
+        if 'dress' in desc_lower:
+            category_filter = df['Brick'].str.lower().str.contains('dress|frock|gown', na=False)
+            matched_attributes.append("dress category")
+        elif 'shirt' in desc_lower:
+            category_filter = df['Brick'].str.lower().str.contains('shirt|top', na=False)
+            matched_attributes.append("shirt category")
+        elif 'jeans' in desc_lower or 'pant' in desc_lower:
+            category_filter = df['Brick'].str.lower().str.contains('jeans|pant|trouser', na=False)
+            matched_attributes.append("pants/jeans category")
+        elif 't-shirt' in desc_lower or 'tee' in desc_lower:
+            category_filter = df['Brick'].str.lower().str.contains('t-shirt|tee|top', na=False)
+            matched_attributes.append("t-shirt category")
+        
+        if category_filter is not None:
+            product_filters.append(category_filter)
+        
+        # Material matching - be more flexible
+        if 'cotton' in desc_lower:
+            # Include cotton blends
+            material_filter = df['Fabric'].str.lower().str.contains('cotton', na=False)
+            product_filters.append(material_filter)
+            matched_attributes.append("cotton fabric")
+        
+        # Try different levels of filtering
+        filtered_df = None
+        filter_description = ""
+        
+        if len(product_filters) >= 2:
+            # Try with all filters first
+            combined_filter = product_filters[0]
+            for filter_condition in product_filters[1:]:
+                combined_filter = combined_filter & filter_condition
+            filtered_df = df[combined_filter]
+            filter_description = f"all attributes ({', '.join(matched_attributes)})"
+            
+            # If no results, try with just category
+            if len(filtered_df) == 0 and category_filter is not None:
+                filtered_df = df[category_filter]
+                filter_description = f"category only ({matched_attributes[-1]})"
+                
+        elif len(product_filters) == 1:
+            filtered_df = df[product_filters[0]]
+            filter_description = matched_attributes[0] if matched_attributes else "single filter"
+        
+        if filtered_df is not None and len(filtered_df) > 0:
+            # Group by city and calculate performance
+            city_stats = filtered_df.groupby('City').agg({
+                'QuantitySold': 'sum',
+                'TotalSales': 'sum',
+                'StyleCode': 'nunique',
+                'StyleName': lambda x: list(x.unique())[:3]  # Sample product names
+            }).reset_index()
+            
+            city_performance = {}
+            sample_products = []
+            
+            for _, row in city_stats.iterrows():
+                city = row['City']
+                total_units = int(row['QuantitySold'])
+                product_count = int(row['StyleCode'])
+                
+                city_performance[city] = {
+                    'total_units': total_units,
+                    'total_revenue': float(row['TotalSales']),
+                    'product_count': product_count,
+                    'avg_units_per_product': total_units / product_count if product_count > 0 else 0,
+                    'sample_products': row['StyleName']
+                }
+                
+                # Collect sample products for logging
+                sample_products.extend(row['StyleName'])
+            
+            # Remove duplicates from sample products
+            sample_products = list(set(sample_products))[:5]
+            
+            logger.info(f"✅ Found product-specific data for {len(city_performance)} cities, {len(filtered_df)} matching products")
+            logger.info(f"   Filter used: {filter_description}")
+            logger.info(f"   Sample products: {', '.join(sample_products)}")
+            return city_performance
+        
+        logger.info(f"❌ No specific product data found for: {product_description}")
+        logger.info(f"   Tried matching: {', '.join(matched_attributes) if matched_attributes else 'no attributes matched'}")
+        return {}
+        
+    except Exception as e:
+        logger.warning(f"Failed to load product-specific city data: {e}")
+        return {}
+
+def _create_comprehensive_llm_prompt(product_description: str, similar_products: List[Dict], products_with_sales: List[Dict], stores: List[Dict], viability: Dict) -> str:
+    """Create comprehensive LLM prompt with all data."""
+    
+    # Load historical sales data directly from ODM dataset
+    city_performance = _load_historical_sales_by_city()
+    #product_specific_city_data = _load_product_specific_city_performance(product_description)
+    #print(similar_products)
+    #product_specific_city_data = similar_products
+    product_specific_city_data = _load_city_counts_by_similar_products(similar_products)
+
+
+    
+    # Prepare historical context with product-specific performance
+    historical_context = ""
+
+    
+    
+    # First show similar products found in vector DB
+    for product in products_with_sales[:5]:
+        sales = product.get('sales', {})
+        historical_context += f"Product: {product.get('name', 'Unknown')}\n"
+        historical_context += f"  Total Units: {sales.get('total_units', 0)}\n"
+        historical_context += f"  Avg Monthly: {sales.get('avg_monthly_units', 0):.1f} units\n"
+        historical_context += "\n"
+    
+    # Add product-specific city performance if available
+    # if product_specific_city_data:
+    #     historical_context += f"PRODUCT-SPECIFIC HISTORICAL SALES BY CITY ({product_description}):\n"
+    #     for city, data in product_specific_city_data:
+    #         climate = city_performance.get(city, {}).get('climate', 'Unknown')
+    #         historical_context += f"{city} ({climate} climate):\n"
+    #         historical_context += f"  - {data['total_units']} units sold across {data['product_count']} similar products\n"
+    #         #historical_context += f"  - Average {data['avg_units_per_product']:.1f} units per similar product\n"
+    #         historical_context += f"  - Revenue: ₹{data['total_revenue']:,.0f}\n\n"
+
+
+    if product_specific_city_data:
+        for city, stats in product_specific_city_data.items():
+            historical_context += (
+                f"{city}:\n"
+                f"  - {stats['similar_average_units']} units sold in last 3 months\n"
+                f"  - {stats['unique_products_sold']} similar SKUs bought\n\n"
+            )
+
+
+        historical_context += "\n"
+    
+    
+
+    
+    # Add overall city-wise performance for reference
+    if city_performance:
+        historical_context += "OVERALL CITY PERFORMANCE  in last 3 months (ALL PRODUCT CATEGORIES):\n"
+        for city, perf_data in city_performance.items():
+            total_units = perf_data.get('total_units', 0)
+            product_count = perf_data.get('product_count', 0)
+            climate = perf_data.get('climate', 'Unknown')
+            
+            avg_units_per_product = total_units / product_count if product_count > 0 else 0
+            
+            historical_context += f"{city} ({climate}): {total_units:,} total units, avg {avg_units_per_product:.0f} per product\n"
+        historical_context += "\n"
+    
+    # Prepare store information with enhanced context
+    store_context = "TARGET STORES FOR ANALYSIS:\n"
+    for store in stores:
+        city = store.get('City', 'Unknown')
+        climate = store.get('ClimateTag', 'Unknown')
+        store_id = store.get('StoreID', 'Unknown')
+        store_name = store.get('StoreName', 'Unknown')
+        
+        # Add historical performance for this city if available
+        city_history = ""
+        if city in city_performance:
+            perf = city_performance[city]
+            avg_units = perf['total_units'] / perf['product_count'] if perf['product_count'] > 0 else 0
+            city_history = f" | Historical: {perf['total_units']} units across {perf['product_count']} products (avg: {avg_units:.1f} per product)"
+        
+        store_context += f"""
+Store: {store_name} ({store_id})
+City: {city} | Climate: {climate}{city_history}
+"""
+
+    # Enhanced viability section
+    viability_details = f"""
+PRODUCT VIABILITY ASSESSMENT:
+- Viable: {viability['viable']}
+- Risk Level: {viability['risk_level']}  
+- Market Acceptance: {viability['market_acceptance']}
+- Analysis: {viability['reason']}
+- Exact Matches Found: {viability.get('exact_matches', 0)} (same color + category)
+- Category Matches: {viability.get('category_only_matches', 0)} (same category, different colors)
+- Products with Sales Data: {viability.get('products_with_sales', 0)}
+"""
+
+    prompt = f"""You are an expert retail procurement analyst. Analyze and predict sales for "{product_description}" across {len(stores)} stores in India.
+
+HISTORICAL SALES DATA FOR SIMILAR PRODUCTS:
+{historical_context}
+{viability_details}
+
+{store_context}
+
+ANALYSIS GUIDELINES:
+- Use historical city performance data shown above to inform predictions
+- Consider climate factors (e.g., cotton shirts perform better in hot climates)
+- Account for city size and market potential
+- Make realistic monthly sales predictions based on actual historical data
+- Total across all stores should align with overall market assessment
+
+TASK: Provide comprehensive analysis with:
+1. Overall monthly sales prediction (aggregate across all stores)
+2. Confidence assessment based on data quality
+3. Store-wise monthly predictions for each of the {len(stores)} stores listed
+4. Overall procurement recommendation
+
+Respond in this JSON format:
+{{
+  "overall_analysis": {{
+    "predicted_monthly_sales": <SUM_OF_ALL_STORE_PREDICTIONS>,
+    "confidence": <AVERAGE_CONFIDENCE_OF_ALL_STORES>,
+    "procurement_recommendation": "BUY",
+    "reasoning": "Your detailed analysis based on historical data and store performance...",
+    "status_color": "GREEN",
+    "status_message": "🟢 GREEN - STRONG BUY SIGNAL"
+  }},
+  "store_predictions": [
+    {{
+      "store_id": "ST01",
+      "store_name": "Store 1",
+      "city": "Delhi", 
+      "predicted_monthly_sales": <YOUR_CALCULATED_VALUE>,
+      "confidence": <0.0_TO_1.0_BASED_ON_DATA_QUALITY>,
+      "reasoning": "Your analysis for this specific store...",
+      "recommendation": "BUY"
+    }}
+  ],
+  "summary": {{
+    "total_monthly_sales": <SAME_AS_OVERALL_PREDICTED_MONTHLY_SALES>,
+    "high_potential_stores": <COUNT_OF_STORES_WITH_PREDICTION_>_50>,
+    "buy_recommendation_stores": <COUNT_OF_STORES_WITH_BUY_RECOMMENDATION>,
+    "avoid_stores": <COUNT_OF_STORES_WITH_AVOID_RECOMMENDATION>
+  }}
+}}
+
+CRITICAL CALCULATION REQUIREMENTS:
+1. overall_analysis.predicted_monthly_sales = SUM of all store_predictions[].predicted_monthly_sales
+2. overall_analysis.confidence = AVERAGE of all store_predictions[].confidence  
+3. summary.total_monthly_sales = SAME as overall_analysis.predicted_monthly_sales
+4. summary counts must match actual store predictions provided
+5. Provide predictions for ALL {len(stores)} stores listed above
+6. Use actual city names and store IDs from the store data provided
+7. Base your predictions on the historical data and climate factors provided
+8. DO NOT use hardcoded example values - calculate everything from your analysis"""
+    
+    return prompt
+
+def _clean_llm_json_response(json_text: str) -> str:
+    """Clean and fix common JSON formatting issues from LLM responses."""
+    import re
+    
+    # Remove any leading/trailing whitespace
+    json_text = json_text.strip()
+    
+    # Remove any text before the first {
+    start_brace = json_text.find('{')
+    if start_brace > 0:
+        json_text = json_text[start_brace:]
+    
+    # Remove any text after the last }
+    end_brace = json_text.rfind('}')
+    if end_brace != -1:
+        json_text = json_text[:end_brace + 1]
+    
+    # Fix common formatting issues
+    # 1. Replace single quotes with double quotes (but be careful with apostrophes in text)
+    json_text = re.sub(r"'([^']*)'(\s*:)", r'"\1"\2', json_text)  # Keys
+    json_text = re.sub(r":\s*'([^']*)'", r': "\1"', json_text)    # String values
+    
+    # 2. Fix missing quotes around property names (more comprehensive patterns)
+    # Handle property names at start of object or after comma
+    json_text = re.sub(r'([{,]\s*)([a-zA-Z_][a-zA-Z0-9_-]*)(\s*:)', r'\1"\2"\3', json_text)
+    # Handle any remaining unquoted property names
+    json_text = re.sub(r'(\s)([a-zA-Z_][a-zA-Z0-9_-]*)(\s*:)', r'\1"\2"\3', json_text)
+    
+    # 3. Fix property names that might already be partially quoted
+    json_text = re.sub(r'([{,]\s*)"?([a-zA-Z_][a-zA-Z0-9_-]*)"?(\s*:)', r'\1"\2"\3', json_text)
+    
+    # 4. Remove trailing commas
+    json_text = re.sub(r',(\s*[}\]])', r'\1', json_text)
+    
+    # 5. Fix placeholder values that might not be valid JSON
+    json_text = re.sub(r'<[^>]*>', r'0', json_text)  # Replace <PLACEHOLDER> with 0
+    
+    # 6. Ensure boolean values are lowercase
+    json_text = re.sub(r'\bTrue\b', 'true', json_text)
+    json_text = re.sub(r'\bFalse\b', 'false', json_text)
+    json_text = re.sub(r'\bNone\b', 'null', json_text)
+    
+    # 7. Handle edge case - fix double quotes around already quoted strings
+    json_text = re.sub(r'""([^"]*?)""', r'"\1"', json_text)
+    
+    return json_text
+
+def _parse_json_with_fallbacks(json_text: str) -> dict:
+    """Try parsing JSON with progressive cleaning approaches."""
+    import json
+    import re
+    
+    # Attempt 1: Try as-is
+    try:
+        return json.loads(json_text)
+    except json.JSONDecodeError as e:
+        logger.warning(f"First JSON parse failed at pos {e.pos}: {e}")
+        
+    # Attempt 2: More aggressive property name fixing
+    try:
+        # Remove all existing quotes around property names and re-add them
+        attempt2 = re.sub(r'"([a-zA-Z_][a-zA-Z0-9_-]*)"(\s*:)', r'\1\2', json_text)
+        attempt2 = re.sub(r'([{,]\s*)([a-zA-Z_][a-zA-Z0-9_-]*)(\s*:)', r'\1"\2"\3', attempt2)
+        return json.loads(attempt2)
+    except json.JSONDecodeError as e:
+        logger.warning(f"Second JSON parse failed at pos {e.pos}: {e}")
+        
+    # Attempt 3: Try to fix specific character position
+    try:
+        # If we know the position, try to fix around it
+        if hasattr(e, 'pos') and e.pos:
+            pos = e.pos
+            # Look around the error position for common issues
+            before = json_text[max(0, pos-10):pos]
+            after = json_text[pos:min(len(json_text), pos+10)]
+            logger.warning(f"Error context: ...{before}[ERROR HERE]{after}...")
+            
+            # Try replacing common issues around that position
+            attempt3 = json_text[:pos] + json_text[pos:].replace("'", '"', 1)
+            return json.loads(attempt3)
+    except (json.JSONDecodeError, AttributeError):
+        pass
+        
+    # Attempt 4: Last resort - try to extract just the basic structure
+    try:
+        # Find overall_analysis section
+        overall_match = re.search(r'"overall_analysis"\s*:\s*\{[^}]*"predicted_monthly_sales"\s*:\s*(\d+)[^}]*\}', json_text)
+        if overall_match:
+            predicted_sales = int(overall_match.group(1))
+            return {
+                "overall_analysis": {
+                    "predicted_monthly_sales": predicted_sales,
+                    "confidence": 0.5,
+                    "procurement_recommendation": "CAUTIOUS",
+                    "reasoning": "Parsed from malformed JSON",
+                    "status_color": "YELLOW",
+                    "status_message": "🟡 YELLOW - PROCEED WITH CAUTION"
+                },
+                "store_predictions": [],
+                "summary": {"total_monthly_sales": predicted_sales}
+            }
+    except:
+        pass
+        
+    # If all attempts fail, raise the original error
+    raise json.JSONDecodeError("All JSON parsing attempts failed", json_text, 0)
+
+def _parse_comprehensive_response(llm_response: str, product_description: str, similar_products: List[Dict], stores: List[Dict]) -> Dict[str, Any]:
+    """Parse comprehensive LLM response into expected format."""
+    import json
+    
+    try:
+        # Try to parse JSON response
+        if '```json' in llm_response:
+            json_start = llm_response.find('```json') + 7
+            json_end = llm_response.find('```', json_start)
+            json_text = llm_response[json_start:json_end].strip()
+        else:
+            json_text = llm_response.strip()
+        
+        # Clean and fix common JSON formatting issues
+        json_text = _clean_llm_json_response(json_text)
+        logger.info(f"🧹 Cleaned JSON (first 300 chars): {json_text[:300]}...")
+        
+        # Try parsing with progressive cleaning if needed
+        llm_data = _parse_json_with_fallbacks(json_text)
+        
+        overall = llm_data.get('overall_analysis', {})
+        store_preds = llm_data.get('store_predictions', [])
+        summary = llm_data.get('summary', {})
+        
+        # Convert store predictions to expected format
+        store_predictions = []
+        for pred in store_preds:
+            store_predictions.append({
+                'store_id': pred.get('store_id', ''),
+                'store_name': pred.get('store_name', ''),
+                'city': pred.get('city', ''),
+                'predicted_demand': pred.get('predicted_monthly_sales', 0),
+                'confidence': pred.get('confidence', 0.5),
+                'reasoning': pred.get('reasoning', ''),
+                'recommendation': pred.get('recommendation', 'CAUTIOUS'),
+                'climate': _get_store_climate(stores, pred.get('store_id', '')),
+                'weather_factor': 1.0,  # LLM already considered
+                'ai_generated': True
+            })
+        
+        # Sort by predicted demand
+        store_predictions.sort(key=lambda x: x['predicted_demand'], reverse=True)
+        
+        # Validate and recalculate overall metrics from store predictions
+        if store_predictions:
+            calculated_total = sum(p['predicted_demand'] for p in store_predictions)
+            calculated_confidence = sum(p['confidence'] for p in store_predictions) / len(store_predictions)
+            
+            # Get LLM provided values
+            llm_total = overall.get('predicted_monthly_sales', 0)
+            llm_confidence = overall.get('confidence', 0.5)
+            
+            # Check if LLM calculations are reasonable (within 10% tolerance)
+            total_diff_pct = abs(calculated_total - llm_total) / max(calculated_total, 1) if calculated_total > 0 else 0
+            confidence_diff = abs(calculated_confidence - llm_confidence)
+            
+            if total_diff_pct > 0.1:  # More than 10% difference
+                logger.warning(f"⚠️ LLM total ({llm_total}) differs significantly from calculated total ({calculated_total:.0f}). Using calculated value.")
+                overall['predicted_monthly_sales'] = calculated_total
+                
+            if confidence_diff > 0.2:  # More than 0.2 difference 
+                logger.warning(f"⚠️ LLM confidence ({llm_confidence:.2f}) differs from calculated confidence ({calculated_confidence:.2f}). Using calculated value.")
+                overall['confidence'] = calculated_confidence
+                
+            # Always ensure summary matches the corrected overall values
+            summary['total_monthly_sales'] = overall.get('predicted_monthly_sales', calculated_total)
+            
+            logger.info(f"✅ Validation: Total={overall.get('predicted_monthly_sales', 0):.0f}, Confidence={overall.get('confidence', 0):.2f}, Stores={len(store_predictions)}")
+        
+        # Create comprehensive result
+        result = {
+            'predicted_monthly_sales': overall.get('predicted_monthly_sales', 0),
+            'confidence': overall.get('confidence', 0.5),
+            'procurement_recommendation': overall.get('procurement_recommendation', 'CAUTIOUS'),
+            'status_color': overall.get('status_color', 'YELLOW'),
+            'status_message': overall.get('status_message', '🟡 YELLOW - PROCEED WITH CAUTION'),
+            'status_description': f"AI-powered comprehensive analysis",
+            'similar_products_count': len(similar_products),
+            'llm_analysis': f"STATUS: {overall.get('status_message', 'UNKNOWN')}\n\n{overall.get('reasoning', 'No detailed reasoning provided')}",
+            'similar_products': similar_products,
+            'store_predictions': store_predictions,
+            'total_store_demand': summary.get('total_monthly_sales', sum(p['predicted_demand'] for p in store_predictions)),
+            'comprehensive_analysis': True,
+            'ai_summary': {
+                'high_potential_stores': summary.get('high_potential_stores', 0),
+                'buy_stores': summary.get('buy_recommendation_stores', 0),
+                'total_predicted': summary.get('total_monthly_sales', 0)
+            }
+        }
+        
+        logger.info(f"✅ Comprehensive analysis completed: {result['predicted_monthly_sales']} units/month, {len(store_predictions)} stores")
+        return result
+        
+    except json.JSONDecodeError as e:
+        logger.error(f"❌ Failed to parse LLM JSON response: {e}")
+        logger.error(f"   Character position: {e.pos if hasattr(e, 'pos') else 'unknown'}")
+        logger.error(f"   Cleaned JSON text (first 500 chars): {json_text[:500]}...")
+        logger.error(f"   Raw LLM response (first 300 chars): {llm_response[:300]}...")
+        return _create_fallback_prediction(product_description, error=f"JSON parsing failed: {str(e)}")
+    except Exception as e:
+        logger.error(f"❌ Error parsing comprehensive response: {e}")
+        logger.error(f"   LLM response length: {len(llm_response)} characters")
+        return _create_fallback_prediction(product_description, error=str(e))
+
+def _create_fallback_prediction(product_description: str, error: str = None) -> Dict[str, Any]:
+    """Create fallback prediction when LLM fails."""
+    return {
+        'predicted_monthly_sales': 0,
+        'confidence': 0.1,
+        'procurement_recommendation': 'AVOID',
+        'status_color': 'RED',
+        'status_message': '🔴 RED - ANALYSIS FAILED',
+        'status_description': 'Unable to analyze due to technical issues',
+        'similar_products_count': 0,
+        'llm_analysis': f'ANALYSIS FAILED: {error or "Technical error occurred"}',
+        'similar_products': [],
+        'store_predictions': [],
+        'error': error or "Unknown error"
+    }
+
+def _create_avoid_prediction(product_description: str, viability: Dict, similar_products: List[Dict]) -> Dict[str, Any]:
+    """Create avoid recommendation for non-viable products."""
+    return {
+        'predicted_monthly_sales': 0,
+        'confidence': 0.05,
+        'procurement_recommendation': 'AVOID',
+        'status_color': 'RED',
+        'status_message': '🔴 RED - DO NOT PROCURE',
+        'status_description': 'Product deemed non-viable',
+        'similar_products_count': len(similar_products),
+        'llm_analysis': f"STATUS: 🔴 RED - DO NOT PROCURE\n\nREASONING: {viability['reason']}",
+        'similar_products': similar_products[:5],
+        'store_predictions': [],
+        'viability_analysis': viability
+    }
+
+def _create_statistical_prediction(product_description: str, similar_products: List[Dict], products_with_sales: List[Dict], stores: List[Dict]) -> Dict[str, Any]:
+    """Create statistical prediction when LLM not available.""" 
+    if not products_with_sales:
+        return _create_fallback_prediction(product_description, "No historical sales data")
+    
+    # Simple statistical calculation
+    total_monthly = sum(p.get('sales', {}).get('avg_monthly_units', 0) for p in products_with_sales)
+    avg_monthly = total_monthly / len(products_with_sales) if products_with_sales else 0
+    
+    return {
+        'predicted_monthly_sales': int(avg_monthly),
+        'confidence': 0.6,
+        'procurement_recommendation': 'CAUTIOUS',
+        'status_color': 'YELLOW',
+        'status_message': '🟡 YELLOW - STATISTICAL ANALYSIS',
+        'status_description': 'Based on statistical analysis only',
+        'similar_products_count': len(similar_products),
+        'llm_analysis': f"STATISTICAL ANALYSIS\n\nPredicted: {int(avg_monthly)} units/month based on {len(products_with_sales)} similar products",
+        'similar_products': similar_products,
+        'store_predictions': [],
+        'statistical_only': True
+    }
+
 def predict_product_sales(kb: SharedKnowledgeBase, llm_client: LLMClient, product_description: str) -> Dict[str, Any]:
     """Predict sales for a new product based on similar historical products."""
+    # Wrap entire prediction workflow with LangSmith tracing
+    try:
+        from langsmith import traceable
+        
+        # Use wrapper function to ensure proper trace nesting
+        @traceable(
+            name="Predict_Product_Sales", 
+            run_type="chain", 
+            tags=["sales-prediction", "procurement", "odm"],
+            inputs={"product_description": product_description}
+        )
+        def _predict_wrapper(prod_desc: str):
+            return _predict_sales_impl(kb, llm_client, prod_desc)
+        
+        return _predict_wrapper(product_description)
+    except ImportError:
+        # If langsmith not available, use direct call
+        return _predict_sales_impl(kb, llm_client, product_description)
+    except Exception as e:
+        logger.warning(f"LangSmith tracing failed for sales prediction: {e}")
+        return _predict_sales_impl(kb, llm_client, product_description)
+
+def _predict_sales_impl(kb: SharedKnowledgeBase, llm_client: LLMClient, product_description: str) -> Dict[str, Any]:
+    """Internal implementation of sales prediction."""
     logger.info(f"🔮 Predicting sales for: {product_description}")
     
     try:
-        # Find similar products
-        similar_products = kb.find_similar_products(
-            query_attributes={},
-            query_description=product_description,
-            top_k=15  # Get more products to better analyze viability
-        )
+        # Find similar products with LangSmith tracing
+        try:
+            from langsmith import traceable
+            
+            @traceable(
+                name="Vector_Search",
+                run_type="retriever",
+                tags=["vector-db", "similarity-search"]
+            )
+            def _vector_search(description: str, top_k: int):
+                return kb.find_similar_products(
+                    query_attributes={},
+                    query_description=description,
+                    top_k=top_k
+                )
+            
+            similar_products = _vector_search(product_description, 15)
+        except (ImportError, Exception) as e:
+            if not isinstance(e, ImportError):
+                logger.warning(f"LangSmith tracing failed for vector search: {e}")
+            similar_products = kb.find_similar_products(
+                query_attributes={},
+                query_description=product_description,
+                top_k=15
+            )
         
         if not similar_products:
             logger.warning("No similar products found for prediction")
@@ -807,10 +2062,37 @@ MARKET_OPPORTUNITY: [market potential assessment]"""
 
 {llm_prompt}"""
                 
-                llm_result = llm_client.generate(llm_prompt_with_metadata, temperature=0.2, max_tokens=800)
+                # Wrap LLM call with explicit tracing to capture inputs
+                try:
+                    from langsmith import traceable
+                    
+                    @traceable(
+                        name="LLM_Analysis",
+                        run_type="llm",
+                        tags=["procurement-analysis", "openai"],
+                        inputs={
+                            "product_description": product_description,
+                            "similar_products_count": len(similar_products),
+                            "products_with_sales": len(products_with_sales),
+                            "predicted_sales": predicted_sales,
+                            "confidence": confidence
+                        }
+                    )
+                    def _llm_analysis(prompt: str):
+                        return llm_client.generate(prompt, temperature=0.2, max_tokens=800)
+                    
+                    llm_result = _llm_analysis(llm_prompt_with_metadata)
+                except (ImportError, Exception) as e:
+                    if not isinstance(e, ImportError):
+                        logger.warning(f"LangSmith tracing failed for LLM analysis: {e}")
+                    # Fall back to direct call if LangSmith fails
+                    llm_result = llm_client.generate(llm_prompt_with_metadata, temperature=0.2, max_tokens=800)
+                
+                logger.info("✅ LLM prediction generated with LangSmith tracking")
+                
                 # Extract the response text from the result
                 llm_response = llm_result.get('response', llm_result.get('content', str(llm_result)))
-                logger.info("✅ LLM prediction generated with LangSmith tracking")
+                logger.info("✅ LLM prediction generated successfully")
             except Exception as e:
                 logger.warning(f"LLM prediction failed: {e}, using statistical prediction")
                 llm_response = f"PREDICTION: {predicted_sales} units per month\nCONFIDENCE: {confidence*100:.1f}%\nPROCUREMENT_RECOMMENDATION: CAUTIOUS\nREASONING: Based on statistical analysis of {len(similar_products)} similar products\nRISK_FACTORS: Limited AI analysis due to technical issues\nMARKET_OPPORTUNITY: Moderate based on similar product performance"
@@ -889,7 +2171,7 @@ def main():
     st.sidebar.title("Navigation")
     page = st.sidebar.selectbox(
         "Choose a page:",
-        ["📊 Data Summary", "🔍 Search Products", "🔮 Predict Sales"]
+        ["📊 Data Summary", "🔍 Search Products", "🔮 Predict Sales", "🔄 Reindex Database"]
     )
     
     if page == "📊 Data Summary":
@@ -951,8 +2233,10 @@ def main():
         )
         
         if st.button("🚀 Predict Sales", disabled=not new_product.strip()):
-            with st.spinner("Analyzing similar products and generating prediction..."):
-                prediction = predict_product_sales(kb, llm_client, new_product)
+            with st.spinner("🤖 Analyzing products and generating comprehensive store-wise predictions..."):
+                # Load store data for comprehensive analysis
+                stores = load_store_data()
+                prediction = predict_product_sales_comprehensive(kb, llm_client, new_product, stores)
             
             if prediction.get('predicted_monthly_sales') is not None:
                 # Show prediction results
@@ -977,15 +2261,9 @@ def main():
                 recommendation = prediction.get('procurement_recommendation', 'CAUTIOUS')
                 st.write(f"**Detailed Recommendation:** {recommendation}")
                 
-                # Calculate total store demand early for display
-                stores = load_store_data()
-                total_store_demand = 0
-                store_predictions = []
-                if stores:
-                    base_prediction = prediction.get('predicted_monthly_sales', 100)
-                    store_predictions = generate_store_predictions(base_prediction, new_product, stores)
-                    if store_predictions:
-                        total_store_demand = sum(pred['predicted_demand'] for pred in store_predictions)
+                # Store predictions are included in comprehensive analysis
+                total_store_demand = prediction.get('total_store_demand', 0)
+                store_predictions = prediction.get('store_predictions', [])
                 
                 # Key metrics
                 col1, col2, col3, col4 = st.columns(4)
@@ -1045,13 +2323,12 @@ def main():
                                 st.write(f"**Monthly Avg:** {sales.get('avg_monthly_units', 0):.1f} units")
                 
                 # Store-wise predictions
-                st.subheader("🏪 Store-wise Sales Predictions")
-                st.markdown("*Predictions for each store based on weather patterns and climate factors*")
+                st.subheader("🏪 AI-Powered Store-wise Sales Predictions")
+                st.markdown("*LLM-generated predictions for each store based on historical sales data and local factors*")
                 
-                # Use already calculated store predictions if available, otherwise calculate
-                if stores and not store_predictions:
-                    base_prediction = prediction.get('predicted_monthly_sales', 100)
-                    store_predictions = generate_store_predictions(base_prediction, new_product, stores)
+                # Store predictions are now included in comprehensive analysis
+                store_predictions = prediction.get('store_predictions', [])
+                total_store_demand = prediction.get('total_store_demand', 0)
                 
                 if store_predictions:
                         # Summary metrics (use already calculated total_store_demand or recalculate)
@@ -1146,6 +2423,73 @@ def main():
                     st.warning("⚠️ Could not load store data. Store-wise predictions unavailable.")
             else:
                 st.error("❌ Prediction failed. Please try with a different product description.")
-
+    
+    elif page == "🔄 Reindex Database":
+        st.header("🔄 Reindex Vector Database")
+        st.markdown("Clear and reindex all products and sales data in the vector database.")
+        
+        st.warning("⚠️ **Warning**: This will delete all existing data and reindex from CSV files.")
+        
+        # Get current stats
+        current_stats = kb.get_collection_stats()
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("Current Products", current_stats.get('products_count', 0))
+        with col2:
+            st.metric("Database Status", current_stats.get('status', 'unknown'))
+        
+        if st.button("🔄 Reindex Database", type="primary"):
+            with st.spinner("Reindexing vector database... This may take a few minutes."):
+                try:
+                    # Clear existing data
+                    kb.reset_collections()
+                    kb._products_collection = kb._get_or_create_collection("products")
+                    kb._performance_collection = kb._get_or_create_collection("performance")
+                    st.success("✅ Cleared existing data")
+                    
+                    # Clear cache to force reload
+                    load_odm_data.clear()
+                    
+                    # Reload and index data
+                    st.info("📦 Loading and indexing products...")
+                    odm_data = load_odm_data(kb, data_agent)
+                    
+                    if odm_data:
+                        # Get new stats
+                        new_stats = kb.get_collection_stats()
+                        st.success(f"✅ Reindexing complete!")
+                        st.balloons()
+                        
+                        col1, col2, col3 = st.columns(3)
+                        with col1:
+                            st.metric("Products Indexed", new_stats.get('products_count', 0))
+                        with col2:
+                            st.metric("Input Products", odm_data.get('summary', {}).get('dirty_input_count', 0))
+                        with col3:
+                            st.metric("Historical Products", odm_data.get('summary', {}).get('historical_products_count', 0))
+                        
+                        st.info("🔄 Please refresh the page (F5) to see updated data in other pages.")
+                    else:
+                        st.error("❌ Failed to reindex data. Check logs for details.")
+                        
+                except Exception as e:
+                    st.error(f"❌ Reindexing failed: {e}")
+                    logger.error(f"Reindexing error: {e}", exc_info=True)
+        
+        st.markdown("---")
+        st.markdown("### Alternative: Use Command Line")
+        st.code("""
+# Run from terminal:
+python3 reindex_vector_db.py
+        """, language="bash")
+        
+        st.markdown("---")
+        st.markdown("### Data Files")
+        st.info(f"""
+**Input Products:** `data/sample/dirty_odm_input.csv`  
+**Historical Data:** `data/sample/odm_historical_dataset_5000.csv`  
+**Vector DB Location:** `{settings.chromadb_persist_dir}`
+        """)
+    
 if __name__ == "__main__":
     main()

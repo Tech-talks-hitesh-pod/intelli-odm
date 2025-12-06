@@ -446,9 +446,9 @@ main() {
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         # Linux
         sleep 3 && (xdg-open http://localhost:8501 || sensible-browser http://localhost:8501) &
-    elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "win32" ]]; then
-        # Windows
-        sleep 3 && start http://localhost:8501 &
+    # elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "win32" ]]; then
+    #     # Windows
+    #     sleep 3 && start http://localhost:8501 &
     else
         # Fallback
         echo "🌐 Please open http://localhost:8501 in your browser"

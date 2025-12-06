@@ -176,6 +176,31 @@ class SharedKnowledgeBase:
         Returns:
             List of similar products with similarity scores
         """
+        # Wrap with LangSmith tracing for vector database queries
+        try:
+            from langsmith import traceable
+            
+            # Use wrapper function approach to ensure proper nesting
+            @traceable(
+                name="Vector_DB_Search",
+                run_type="retriever",
+                tags=["vector-db", "similarity-search", "chromadb"]
+            )
+            def _search_wrapper():
+                return self._find_similar_products_impl(query_attributes, query_description, top_k)
+            
+            return _search_wrapper()
+        except ImportError:
+            # If langsmith not available, use direct call
+            return self._find_similar_products_impl(query_attributes, query_description, top_k)
+        except Exception as e:
+            logger.warning(f"LangSmith tracing failed for vector search: {e}")
+            return self._find_similar_products_impl(query_attributes, query_description, top_k)
+    
+    def _find_similar_products_impl(self, query_attributes: Dict[str, Any], 
+                                    query_description: str = "", 
+                                    top_k: int = 5) -> List[Dict[str, Any]]:
+        """Internal implementation of vector similarity search."""
         try:
             # First try real vector search from the database
             logger.info("Attempting real vector search for similar products")

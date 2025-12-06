@@ -75,11 +75,14 @@ def setup_langsmith_tracking(api_key: Optional[str] = None,
         return None
     
     try:
-        # Set environment variables for LangSmith
+        # Set environment variables for LangSmith (CRITICAL - SDK-level tracking requires these)
         os.environ["LANGCHAIN_TRACING_V2"] = "true"
         os.environ["LANGCHAIN_API_KEY"] = api_key
         os.environ["LANGCHAIN_PROJECT"] = project
         os.environ["LANGCHAIN_ENDPOINT"] = endpoint
+        
+        # Also set for LangSmith SDK compatibility
+        os.environ["LANGSMITH_API_KEY"] = api_key
         
         # Try to import and setup LangChain callbacks
         try:
@@ -97,17 +100,21 @@ def setup_langsmith_tracking(api_key: Optional[str] = None,
             logger.info(f"✅ LangSmith tracking enabled for project: {project}")
             logger.info(f"   API Key: {api_key[:10]}...{api_key[-4:] if len(api_key) > 14 else '***'}")
             logger.info(f"   Endpoint: {endpoint}")
+            logger.info(f"   Environment variables set for SDK-level tracking")
             return _langsmith_callbacks
             
-        except ImportError:
-            logger.warning("LangChain not installed. LangSmith tracking may not work. Install with: pip install langchain langsmith")
-            _langsmith_initialized = False
-            _langsmith_callbacks = None
+        except ImportError as import_err:
+            logger.warning(f"LangChain not installed. LangSmith tracking may not work. Install with: pip install langchain langsmith")
+            logger.info(f"   Error: {import_err}")
+            # Still set environment variables for SDK-level tracking
+            _langsmith_initialized = True
+            logger.info("   Environment variables set - SDK-level tracking may work if langsmith SDK is installed")
             return None
         except Exception as e:
             logger.warning(f"Failed to setup LangChain callbacks: {e}")
-            # Still set environment variables for basic tracking
+            # Still set environment variables for SDK-level tracking
             _langsmith_initialized = True
+            logger.info("   Environment variables set - SDK-level tracking may work")
             return None
             
     except Exception as e:
@@ -192,15 +199,50 @@ class OllamaClient(LLMClient):
                     logger.info("Note: Direct Ollama calls may not be tracked in LangSmith. Ensure LANGCHAIN_TRACING_V2=true and LANGCHAIN_API_KEY are set for SDK-level tracking.")
             
             # Fallback to direct Ollama API call
-            # Note: Direct API calls will be tracked by LangSmith SDK if environment variables are set
-            response = self.client.generate(
-                model=self.model,
-                prompt=prompt,
-                options={
-                    'temperature': temperature,
-                    'num_predict': max_tokens
-                }
-            )
+            # Use LangSmith's traceable decorator for SDK-level tracking
+            try:
+                from langsmith import traceable
+                
+                # Create a traceable wrapper for the API call with inputs
+                @traceable(
+                    name=f"Ollama-{self.model}", 
+                    run_type="llm", 
+                    tags=["ollama", self.model],
+                    inputs={"prompt": prompt[:500], "model": self.model, "temperature": temperature}  # Truncate prompt for display
+                )
+                def _ollama_generate():
+                    return self.client.generate(
+                        model=self.model,
+                        prompt=prompt,
+                        options={
+                            'temperature': temperature,
+                            'num_predict': max_tokens
+                        }
+                    )
+                
+                response = _ollama_generate()
+                logger.debug(f"✅ Ollama call traced with LangSmith")
+            except ImportError:
+                # If langsmith not available, use direct call
+                logger.warning("LangSmith traceable decorator not available. Install: pip install langsmith")
+                response = self.client.generate(
+                    model=self.model,
+                    prompt=prompt,
+                    options={
+                        'temperature': temperature,
+                        'num_predict': max_tokens
+                    }
+                )
+            except Exception as e:
+                logger.warning(f"LangSmith tracing failed: {e}, using direct call")
+                response = self.client.generate(
+                    model=self.model,
+                    prompt=prompt,
+                    options={
+                        'temperature': temperature,
+                        'num_predict': max_tokens
+                    }
+                )
             
             return {
                 'response': response['response'].strip(),
@@ -294,15 +336,50 @@ class OpenAIClient(LLMClient):
                     logger.info("Note: Direct OpenAI calls may not be tracked in LangSmith. Ensure LANGCHAIN_TRACING_V2=true and LANGCHAIN_API_KEY are set for SDK-level tracking.")
             
             # Fallback to direct OpenAI API call
-            # Note: Direct API calls will be tracked by LangSmith SDK if environment variables are set
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=temperature,
-                max_tokens=max_tokens
-            )
+            # Use LangSmith's traceable decorator for SDK-level tracking
+            try:
+                from langsmith import traceable
+                
+                # Create a traceable wrapper for the API call with inputs
+                @traceable(
+                    name=f"OpenAI-{self.model}", 
+                    run_type="llm", 
+                    tags=["openai", self.model],
+                    inputs={"prompt": prompt[:500], "model": self.model, "temperature": temperature}  # Truncate prompt for display
+                )
+                def _openai_generate():
+                    return self.client.chat.completions.create(
+                        model=self.model,
+                        messages=[
+                            {"role": "user", "content": prompt}
+                        ],
+                        temperature=temperature,
+                        max_tokens=max_tokens
+                    )
+                
+                response = _openai_generate()
+                logger.debug(f"✅ OpenAI call traced with LangSmith")
+            except ImportError:
+                # If langsmith not available, use direct call
+                logger.warning("LangSmith traceable decorator not available. Install: pip install langsmith")
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=temperature,
+                    max_tokens=max_tokens
+                )
+            except Exception as e:
+                logger.warning(f"LangSmith tracing failed: {e}, using direct call")
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=temperature,
+                    max_tokens=max_tokens
+                )
             
             return {
                 'response': response.choices[0].message.content.strip(),
@@ -388,6 +465,11 @@ class LLMClientFactory:
                 model=config.get('model', 'gpt-4o-mini'),
                 temperature=config.get('temperature', 0.1)
             )
+        
+        elif provider == 'demo':
+            # Demo mode - return None to indicate no LLM client
+            logger.info("Demo mode enabled - no LLM client will be created")
+            return None
         
         else:
             raise LLMError(f"Unsupported LLM provider: {provider}")
