@@ -1,0 +1,9 @@
+# Ollama Python client for interacting with local Ollama server
+ollama>=0.1.0
+
+# Data processing
+pandas>=2.0.0
+
+# HTTP requests for verification
+requests>=2.31.0
+
