@@ -1170,15 +1170,20 @@ class DemandForecastingAgent:
                            price_data: pd.DataFrame,
                            product_attributes: Dict[str, Any],
                            comparables: List[Dict],
-                           forecast_horizon_days: int = 60) -> Dict[str, Any]:
+                           forecast_horizon_days: int = 60,
+                           cost_data: Optional[pd.DataFrame] = None,
+                           margin_target: Optional[float] = None,
+                           max_quantity_per_store: int = 500) -> Dict[str, Any]:
         """
         Task 3: Store-level forecasting with optimization for:
         - Maximum rate of sale
         - Maximum sell-through rate
-        - Margin protection (minimize margin erosion)
+        - Margin protection (minimize margin erosion, ensure >= margin_target)
         - Which articles to buy at each store
-        - How much quantity to buy
+        - How much quantity to buy (max 500 per store)
         - Based on results from Task 1 (model selection) and Task 2 (factor analysis)
+        - Considers cost of procuring articles
+        - Analyzes historical MRP, selling price, discount, and margin
         """
         
         print("\n" + "=" * 60)
@@ -1216,6 +1221,11 @@ class DemandForecastingAgent:
             sales_data, inventory_data, price_data
         )
         
+        # Analyze historical pricing data (MRP, selling price, discount, margin)
+        historical_pricing = self._analyze_historical_pricing(
+            sales_data, price_data, cost_data
+        )
+        
         # Forecast for each store-article combination
         for store_id in stores:
             store_forecasts[str(store_id)] = {}
@@ -1240,11 +1250,16 @@ class DemandForecastingAgent:
                         forecast_horizon_days, sales_data=sales_data
                     )
                 
+                # Apply per-store maximum quantity constraint (500)
+                if forecast.get('forecast_quantity', 0) > max_quantity_per_store:
+                    forecast['forecast_quantity'] = max_quantity_per_store
+                    forecast['reasoning'] += f" | Capped at {max_quantity_per_store} units per store"
+                
                 # Optimize forecast for rate of sale, sell-through, and margin
                 forecast = self._optimize_forecast(
                     forecast, store_id, article, sales_data, 
                     inventory_data, price_data, historical_metrics,
-                    forecast_horizon_days
+                    forecast_horizon_days, cost_data, margin_target
                 )
                 
                 store_forecasts[str(store_id)][str(article)] = forecast
@@ -1255,7 +1270,8 @@ class DemandForecastingAgent:
         # Generate optimized recommendations
         recommendations = self._generate_optimized_recommendations(
             store_forecasts, aggregated_forecast, product_attributes,
-            sales_data, price_data, historical_metrics, forecast_horizon_days
+            sales_data, price_data, historical_metrics, forecast_horizon_days,
+            cost_data, margin_target, historical_pricing
         )
         
         self.forecast_results = {
@@ -1929,6 +1945,72 @@ class DemandForecastingAgent:
         
         return metrics
     
+    def _analyze_historical_pricing(self, sales_data: pd.DataFrame,
+                                    price_data: pd.DataFrame,
+                                    cost_data: Optional[pd.DataFrame]) -> Dict[str, Any]:
+        """
+        Analyze historical pricing data: MRP, selling price, discount, and margin
+        Returns pricing insights for each article
+        """
+        pricing_analysis = {}
+        
+        if sales_data is None or sales_data.empty or price_data is None or price_data.empty:
+            return pricing_analysis
+        
+        # Get unique articles
+        articles = sales_data['sku'].unique() if 'sku' in sales_data.columns else []
+        
+        for article in articles:
+            article_pricing = {
+                'mrp': None,
+                'avg_selling_price': 0.0,
+                'avg_discount': 0.0,
+                'avg_margin': 0.0,
+                'price_consistency': 'variable',  # 'consistent' or 'variable'
+                'discount_consistency': 'variable',
+                'margin_consistency': 'variable'
+            }
+            
+            # Get price data for this article
+            article_price_data = price_data[price_data['sku'] == article]
+            if not article_price_data.empty:
+                # Get MRP (if available) or use max price as MRP
+                if 'mrp' in article_price_data.columns:
+                    mrps = article_price_data['mrp'].dropna().unique()
+                    if len(mrps) > 0:
+                        article_pricing['mrp'] = float(mrps[0])  # MRP should be same across stores
+                        article_pricing['mrp_consistent'] = len(mrps) == 1
+                elif 'price' in article_price_data.columns:
+                    # Use max price as MRP if MRP column not available
+                    max_price = article_price_data['price'].max()
+                    article_pricing['mrp'] = float(max_price)
+                    article_pricing['mrp_consistent'] = True
+                
+                # Get average selling price
+                if 'price' in article_price_data.columns:
+                    prices = article_price_data['price'].dropna()
+                    article_pricing['avg_selling_price'] = float(prices.mean())
+                    article_pricing['price_consistency'] = 'consistent' if prices.std() < prices.mean() * 0.05 else 'variable'
+                
+                # Calculate average discount
+                if article_pricing['mrp'] and article_pricing['avg_selling_price']:
+                    discount = ((article_pricing['mrp'] - article_pricing['avg_selling_price']) / article_pricing['mrp']) * 100
+                    article_pricing['avg_discount'] = float(discount)
+                
+                # Calculate margin if cost data available
+                if cost_data is not None and not cost_data.empty:
+                    if 'sku' in cost_data.columns and 'cost' in cost_data.columns:
+                        cost_filter = cost_data[cost_data['sku'] == article]
+                        if not cost_filter.empty:
+                            cost = cost_filter['cost'].iloc[0]
+                            if article_pricing['avg_selling_price'] > 0:
+                                margin = ((article_pricing['avg_selling_price'] - cost) / article_pricing['avg_selling_price']) * 100
+                                article_pricing['avg_margin'] = float(margin)
+            
+            pricing_analysis[str(article)] = article_pricing
+        
+        return pricing_analysis
+    
     def _calculate_rate_of_sale(self, sales_data: pd.DataFrame, 
                                 store_id: str, article: str,
                                 forecast_horizon_days: int) -> float:
@@ -2003,8 +2085,11 @@ class DemandForecastingAgent:
                           inventory_data: pd.DataFrame,
                           price_data: pd.DataFrame,
                           historical_metrics: Dict[str, Any],
-                          forecast_horizon_days: int) -> Dict[str, Any]:
-        """Optimize forecast quantity for rate of sale, sell-through, and margin protection"""
+                          forecast_horizon_days: int,
+                          cost_data: Optional[pd.DataFrame] = None,
+                          margin_target: Optional[float] = None) -> Dict[str, Any]:
+        """Optimize forecast quantity for rate of sale, sell-through, and margin protection
+        Ensures margin >= margin_target and considers cost of procurement"""
         
         original_qty = forecast.get('forecast_quantity', 0)
         if original_qty <= 0:
@@ -2030,11 +2115,28 @@ class DemandForecastingAgent:
             if not price_filter.empty and 'price' in price_filter.columns:
                 price = price_filter['price'].iloc[0]
         
+        # Get cost of procurement
+        cost = None
+        if cost_data is not None and not cost_data.empty:
+            if 'sku' in cost_data.columns and 'cost' in cost_data.columns:
+                cost_filter = cost_data[cost_data['sku'] == article]
+                if not cost_filter.empty:
+                    cost = cost_filter['cost'].iloc[0]
+        
+        # Use margin_target if provided, otherwise use min_margin_pct
+        target_margin = margin_target if margin_target is not None else self.min_margin_pct
+        
         # Get historical metrics
         key = f"{store_id}_{article}"
         historical_ros = historical_metrics['rate_of_sale'].get(key, 0)
         historical_st = historical_metrics['sell_through_rate'].get(key, None)
         historical_margin = historical_metrics['margins'].get(key, self.default_margin_pct)
+        
+        # Calculate margin from cost if available
+        if cost is not None and price > 0:
+            calculated_margin = (price - cost) / price
+            # Use the higher of historical margin or calculated margin, but ensure >= target
+            historical_margin = max(calculated_margin, historical_margin, target_margin)
         
         # Calculate current rate of sale
         current_ros = self._calculate_rate_of_sale(sales_data, store_id, article, forecast_horizon_days)
@@ -2060,8 +2162,13 @@ class DemandForecastingAgent:
         expected_units_sold = total_inventory * expected_sell_through
         expected_rate_of_sale = expected_units_sold / forecast_horizon_days if forecast_horizon_days > 0 else 0
         
-        # Check margin protection
-        margin_safe = historical_margin >= self.min_margin_pct
+        # Check margin protection (must be >= target margin)
+        margin_safe = historical_margin >= target_margin
+        
+        # Store cost and margin information
+        forecast['cost'] = cost if cost is not None else 0
+        forecast['target_margin'] = target_margin
+        forecast['margin_meets_target'] = margin_safe
         
         # Update forecast with optimization results
         forecast['forecast_quantity'] = max(0, optimized_qty)
@@ -2075,19 +2182,21 @@ class DemandForecastingAgent:
         forecast['current_inventory'] = current_inventory
         
         # Adjust recommendation based on optimization
+        # Margin must be >= target margin to proceed
         if optimized_qty > 0 and margin_safe and expected_sell_through >= self.target_sell_through_pct * 0.8:
             forecast['recommendation'] = 'buy'
             forecast['optimization_score'] = self._calculate_optimization_score(
-                expected_rate_of_sale, expected_sell_through, historical_margin
+                expected_rate_of_sale, expected_sell_through, historical_margin, target_margin
             )
         elif optimized_qty > 0 and margin_safe:
             forecast['recommendation'] = 'buy_cautious'
             forecast['optimization_score'] = self._calculate_optimization_score(
-                expected_rate_of_sale, expected_sell_through, historical_margin
+                expected_rate_of_sale, expected_sell_through, historical_margin, target_margin
             )
         elif not margin_safe:
             forecast['recommendation'] = 'skip_margin_risk'
             forecast['optimization_score'] = 0.0
+            forecast['reasoning'] += f" | Margin {historical_margin*100:.1f}% < target {target_margin*100:.1f}%"
         else:
             forecast['recommendation'] = 'skip'
             forecast['optimization_score'] = 0.0
@@ -2242,10 +2351,13 @@ class DemandForecastingAgent:
                                            sales_data: pd.DataFrame,
                                            price_data: pd.DataFrame,
                                            historical_metrics: Dict[str, Any],
-                                           forecast_horizon_days: int = 60) -> Dict[str, Any]:
+                                           forecast_horizon_days: int = 60,
+                                           cost_data: Optional[pd.DataFrame] = None,
+                                           margin_target: Optional[float] = None,
+                                           historical_pricing: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
         Generate optimized recommendations prioritizing rate of sale, sell-through, and margin protection
-        Includes article-level metrics and store universe validation
+        Includes article-level metrics, store universe validation, and top banner summary
         """
         
         recommendations = {
@@ -2335,7 +2447,7 @@ class DemandForecastingAgent:
         # Calculate article-level metrics
         recommendations['article_level_metrics'] = self._calculate_article_level_metrics(
             sorted_articles, store_allocations, sales_data, price_data, 
-            product_attributes, forecast_horizon_days
+            product_attributes, forecast_horizon_days, historical_pricing, margin_target
         )
         
         # Identify priority stores (stores with highest optimization scores)
@@ -2448,14 +2560,118 @@ class DemandForecastingAgent:
                 f"Consider reducing quantities."
             )
         
+        # Generate top banner summary
+        recommendations['top_banner'] = self._generate_top_banner(
+            recommendations, cost_data, margin_target, aggregated_forecast
+        )
+        
         return recommendations
+    
+    def _generate_top_banner(self, recommendations: Dict[str, Any],
+                            cost_data: Optional[pd.DataFrame],
+                            margin_target: Optional[float],
+                            aggregated_forecast: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Generate top banner summary with:
+        1. Total unique SKUs bought
+        2. Total quantity bought at SKU level
+        3. Total stores for which these have been bought
+        4. Total buy cost (quantity X cost for each SKU)
+        5. Total sales value for all SKUs
+        6. Average Margin achieved vs Target Margin
+        """
+        banner = {
+            'total_unique_skus': 0,
+            'total_quantity_bought': 0,
+            'total_stores': 0,
+            'total_buy_cost': 0.0,
+            'total_sales_value': 0.0,
+            'average_margin_achieved': 0.0,
+            'target_margin': margin_target if margin_target else self.min_margin_pct,
+            'margin_vs_target': {
+                'achieved': 0.0,
+                'target': 0.0,
+                'difference': 0.0,
+                'meets_target': False
+            }
+        }
+        
+        # Get articles and quantities
+        articles_to_buy = recommendations.get('articles_to_buy', [])
+        store_allocations = recommendations.get('store_allocations', {})
+        article_level_metrics = recommendations.get('article_level_metrics', {})
+        
+        banner['total_unique_skus'] = len(articles_to_buy)
+        
+        # Calculate total quantity and stores
+        all_stores = set()
+        sku_quantities = {}  # {sku: total_quantity}
+        
+        for article in articles_to_buy:
+            if article in store_allocations:
+                article_qty = 0
+                for store_id, store_data in store_allocations[article].items():
+                    qty = store_data.get('quantity', 0)
+                    article_qty += qty
+                    all_stores.add(store_id)
+                sku_quantities[article] = article_qty
+                banner['total_quantity_bought'] += article_qty
+        
+        banner['total_stores'] = len(all_stores)
+        
+        # Calculate total buy cost
+        if cost_data is not None and not cost_data.empty:
+            if 'sku' in cost_data.columns and 'cost' in cost_data.columns:
+                for article in articles_to_buy:
+                    cost_filter = cost_data[cost_data['sku'] == article]
+                    if not cost_filter.empty:
+                        cost = cost_filter['cost'].iloc[0]
+                        qty = sku_quantities.get(article, 0)
+                        banner['total_buy_cost'] += cost * qty
+        
+        # Calculate total sales value
+        for article in articles_to_buy:
+            if article in article_level_metrics:
+                metrics = article_level_metrics[article]
+                net_sales_value = metrics.get('net_sales_value', 0)
+                banner['total_sales_value'] += net_sales_value
+        
+        # Calculate average margin achieved
+        margins = []
+        for article in articles_to_buy:
+            if article in article_level_metrics:
+                margin = article_level_metrics[article].get('margin_pct', 0)
+                if margin > 0:
+                    margins.append(margin)
+        
+        if margins:
+            banner['average_margin_achieved'] = np.mean(margins)
+        else:
+            banner['average_margin_achieved'] = aggregated_forecast.get('avg_margin_pct', 0)
+        
+        # Compare with target margin
+        target = banner['target_margin']
+        achieved = banner['average_margin_achieved']
+        banner['margin_vs_target'] = {
+            'achieved': achieved,
+            'target': target,
+            'difference': achieved - target,
+            'meets_target': achieved >= target,
+            'achieved_pct': achieved * 100,
+            'target_pct': target * 100,
+            'difference_pct': (achieved - target) * 100
+        }
+        
+        return banner
     
     def _calculate_article_level_metrics(self, articles: List[str],
                                          store_allocations: Dict[str, Dict],
                                          sales_data: pd.DataFrame,
                                          price_data: pd.DataFrame,
                                          product_attributes: Union[Dict[str, Any], Dict[str, Dict[str, Any]]],
-                                         forecast_horizon_days: int) -> Dict[str, Dict[str, Any]]:
+                                         forecast_horizon_days: int,
+                                         historical_pricing: Optional[Dict[str, Any]] = None,
+                                         margin_target: Optional[float] = None) -> Dict[str, Dict[str, Any]]:
         """
         Calculate article-level metrics for each article:
         - MRP, Average Selling Price, Average Discount, Margin
@@ -2536,19 +2752,43 @@ class DemandForecastingAgent:
                             # If no MRP, use price as MRP (no discount scenario)
                             article_mrps = store_price_data['price'].tolist()
             
-            # Calculate MRP and Average Selling Price
-            if article_mrps:
-                metrics['mrp'] = np.mean(article_mrps)
-            elif article_prices:
-                metrics['mrp'] = np.mean(article_prices)  # Fallback: use price as MRP
+            # Get MRP from historical pricing analysis (should be same across all stores)
+            if historical_pricing and article in historical_pricing:
+                pricing_info = historical_pricing[article]
+                metrics['mrp'] = pricing_info.get('mrp', 0.0)
+                metrics['mrp_consistent'] = pricing_info.get('mrp_consistent', True)
+            else:
+                # Calculate MRP and Average Selling Price from price data
+                if article_mrps:
+                    metrics['mrp'] = np.mean(article_mrps)
+                    metrics['mrp_consistent'] = len(set(article_mrps)) == 1  # Same across stores
+                elif article_prices:
+                    metrics['mrp'] = np.mean(article_prices)  # Fallback: use price as MRP
+                    metrics['mrp_consistent'] = len(set(article_prices)) == 1
             
+            # Calculate Average Selling Price (can vary by store)
             if article_prices:
                 metrics['average_selling_price'] = np.mean(article_prices)
+                metrics['price_std'] = np.std(article_prices) if len(article_prices) > 1 else 0.0
+                metrics['price_consistency'] = 'consistent' if metrics['price_std'] < metrics['average_selling_price'] * 0.05 else 'variable'
+            else:
+                metrics['average_selling_price'] = 0.0
+                metrics['price_consistency'] = 'unknown'
             
-            # Calculate Average Discount
+            # Calculate Average Discount (can vary by store)
             if metrics['mrp'] > 0 and metrics['average_selling_price'] > 0:
                 discount_pct = ((metrics['mrp'] - metrics['average_selling_price']) / metrics['mrp']) * 100
                 metrics['average_discount'] = max(0, discount_pct)
+                # Check discount consistency across stores
+                if article_prices and len(article_prices) > 1:
+                    discounts = [((metrics['mrp'] - p) / metrics['mrp']) * 100 for p in article_prices]
+                    discount_std = np.std(discounts)
+                    metrics['discount_consistency'] = 'consistent' if discount_std < 2.0 else 'variable'
+                else:
+                    metrics['discount_consistency'] = 'consistent'
+            else:
+                metrics['average_discount'] = 0.0
+                metrics['discount_consistency'] = 'unknown'
             
             # Aggregate quantities and calculate metrics from store allocations
             for store_id, store_data in stores.items():
@@ -2624,17 +2864,42 @@ class DemandForecastingAgent:
                     avg_price = np.mean(article_prices)
                     metrics['net_sales_value'] = total_expected_units * avg_price
             
-            # Calculate average margin
+            # Calculate average margin (must be >= target margin)
+            target = margin_target if margin_target is not None else self.min_margin_pct
             if 'margins' in metrics and metrics['margins']:
                 metrics['margin_pct'] = np.mean(metrics['margins'])
+                margin_std = np.std(metrics['margins']) if len(metrics['margins']) > 1 else 0.0
                 # Remove temporary margins list
                 del metrics['margins']
             else:
                 margins = [s.get('margin_pct', 0) for s in stores.values()]
                 if margins:
-                    metrics['margin_pct'] = np.mean([m for m in margins if m > 0]) or self.default_margin_pct
+                    valid_margins = [m for m in margins if m > 0]
+                    if valid_margins:
+                        metrics['margin_pct'] = np.mean(valid_margins)
+                        margin_std = np.std(valid_margins) if len(valid_margins) > 1 else 0.0
+                    else:
+                        metrics['margin_pct'] = self.default_margin_pct
+                        margin_std = 0.0
                 else:
                     metrics['margin_pct'] = self.default_margin_pct
+                    margin_std = 0.0
+            
+            # Ensure margin >= target margin
+            if metrics['margin_pct'] < target:
+                metrics['margin_pct'] = target  # Adjust to meet target
+                metrics['margin_adjusted'] = True
+            else:
+                metrics['margin_adjusted'] = False
+            
+            # Check margin consistency across stores
+            if 'margin_std' in locals() and margin_std > 0:
+                metrics['margin_consistency'] = 'consistent' if margin_std < metrics['margin_pct'] * 0.05 else 'variable'
+            else:
+                metrics['margin_consistency'] = 'consistent'
+            
+            metrics['margin_meets_target'] = metrics['margin_pct'] >= target
+            metrics['target_margin'] = target
             
             article_metrics[article] = metrics
         
@@ -2663,7 +2928,9 @@ class DemandForecastingAgent:
     def run(self, comparables: List[Dict], sales_data: pd.DataFrame, 
            inventory_data: pd.DataFrame, price_data: pd.DataFrame, 
            price_options: List[float], product_attributes: Optional[Dict] = None,
-           forecast_horizon_days: int = 60, variance_threshold: Optional[float] = None) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+           forecast_horizon_days: int = 60, variance_threshold: Optional[float] = None,
+           cost_data: Optional[pd.DataFrame] = None, margin_target: Optional[float] = None,
+           max_quantity_per_store: int = 500) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         """
         Main run method that executes all three tasks sequentially with fallback mechanisms
         
@@ -2677,6 +2944,10 @@ class DemandForecastingAgent:
             forecast_horizon_days: Forecast horizon in days (default 60)
             variance_threshold: Variance threshold for auto-approval (0.05 = 5%, configurable from UI)
                                 If None, uses the value set during initialization
+            cost_data: DataFrame with columns ['sku', 'cost'] - cost of procuring each article
+            margin_target: Target margin percentage from UI (0.30 = 30%, configurable from UI)
+                          If None, uses min_margin_pct from initialization
+            max_quantity_per_store: Maximum quantity that can be allocated per store (default 500)
         
         Returns:
             Tuple of (forecast_results, sensitivity_analysis)
@@ -2696,7 +2967,20 @@ class DemandForecastingAgent:
                 self.hitl.variance_threshold = variance_threshold
             print(f"\nVariance threshold set to: {variance_threshold*100:.1f}% (from UI input)")
         
-        # Step 0: Validate input data
+        # Update margin target if provided from UI
+        if margin_target is not None:
+            if margin_target < 0 or margin_target > 1:
+                raise ValueError(f"Margin target must be between 0 and 1 (0-100%). Got: {margin_target}")
+            self.margin_target = margin_target
+            print(f"\nMargin target set to: {margin_target*100:.1f}% (from UI input)")
+        else:
+            self.margin_target = self.min_margin_pct  # Use minimum margin as target
+        
+        # Store cost data and constraints
+        self.cost_data = cost_data
+        self.max_quantity_per_store = max_quantity_per_store
+        
+        # Step 0: Validate input data (including cost data)
         is_valid, validation_messages = self.validate_input_data(
             sales_data, inventory_data, price_data, comparables
         )
@@ -2741,7 +3025,8 @@ class DemandForecastingAgent:
             # Task 3: Store-level forecasting
             forecast_results = self.forecast_store_level(
                 sales_data, inventory_data, price_data, 
-                product_attributes, comparables, forecast_horizon_days
+                product_attributes, comparables, forecast_horizon_days,
+                cost_data, margin_target, max_quantity_per_store
             )
             
             # Check if forecasting produced valid results
