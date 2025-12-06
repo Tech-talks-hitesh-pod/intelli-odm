@@ -1076,7 +1076,7 @@ def predict_product_sales_comprehensive(kb: SharedKnowledgeBase, llm_client: LLM
         from langsmith import traceable
         
         @traceable(
-            name="Comprehensive_Sales_Prediction",
+            name= product_description + " - Sales Prediction",
             run_type="chain",
             tags=["sales-prediction", "comprehensive", "store-wise"],
             inputs={

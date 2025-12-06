@@ -6462,3 +6462,929 @@
     "reasoning": "Based on historical sales data of similar products and the climate conditions of each city, the woolen jacket is expected to perform well, especially in ...
 2025-12-06 08:08:25,457 - __main__ - INFO - ✅ Validation: Total=38780, Confidence=0.85, Stores=10
 2025-12-06 08:08:25,458 - __main__ - INFO - ✅ Comprehensive analysis completed: 38780 units/month, 10 stores
+2025-12-06 08:11:47,349 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:11:47,349 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:11:47,349 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:11:47,349 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:11:47,349 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:11:48,032 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:11:48,038 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:11:48,038 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:11:48,038 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:11:48,038 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:11:48,038 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:11:48,125 - __main__ - INFO - 🔄 Initializing ODM system...
+2025-12-06 08:11:48,126 - __main__ - INFO - ✅ LangSmith tracking enabled (Project: intelli-odm)
+2025-12-06 08:11:48,491 - shared_knowledge_base - INFO - Connected to ChromaDB at data/chroma_db
+2025-12-06 08:11:48,553 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: mps
+2025-12-06 08:11:48,553 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-12-06 08:11:52,900 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:11:53,062 - __main__ - INFO - 🔄 Initializing ODM system...
+2025-12-06 08:11:53,062 - __main__ - INFO - ✅ LangSmith tracking enabled (Project: intelli-odm)
+2025-12-06 08:11:53,202 - shared_knowledge_base - INFO - Connected to ChromaDB at data/chroma_db
+2025-12-06 08:11:53,304 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: mps
+2025-12-06 08:11:53,305 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-12-06 08:11:53,338 - shared_knowledge_base - INFO - Loaded embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-12-06 08:11:53,429 - shared_knowledge_base - INFO - Using collection: products
+2025-12-06 08:11:53,430 - shared_knowledge_base - INFO - Using collection: performance
+2025-12-06 08:11:53,430 - __main__ - INFO - ✅ Knowledge base initialized
+2025-12-06 08:11:53,432 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:11:53,432 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:11:53,432 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:11:53,432 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:11:54,334 - utils.llm_client - INFO - Initialized OpenAI client with model gpt-4o-mini
+2025-12-06 08:11:54,464 - __main__ - INFO - ✅ LLM client initialized
+2025-12-06 08:11:54,464 - __main__ - INFO - ✅ Data ingestion agent initialized
+2025-12-06 08:11:54,467 - __main__ - INFO - 🔄 Loading ODM data...
+2025-12-06 08:11:54,467 - agents.data_ingestion_agent - INFO - Loading dirty ODM data from data/sample/dirty_odm_input.csv and data/sample/odm_historical_dataset_5000.csv
+2025-12-06 08:11:54,515 - agents.data_ingestion_agent - INFO - Loaded 15 dirty input products
+2025-12-06 08:11:54,526 - agents.data_ingestion_agent - INFO - Loaded 5000 historical records
+2025-12-06 08:11:54,530 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_1 in vector DB
+2025-12-06 08:11:54,530 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_1
+2025-12-06 08:11:54,886 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_1
+2025-12-06 08:11:54,886 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_1 in ChromaDB vector database
+2025-12-06 08:11:54,924 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_1 in vector database
+2025-12-06 08:11:54,924 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_1
+2025-12-06 08:11:54,924 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_2 in vector DB
+2025-12-06 08:11:54,924 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_2
+2025-12-06 08:11:54,935 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_2
+2025-12-06 08:11:54,936 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_2 in ChromaDB vector database
+2025-12-06 08:11:54,944 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_2 in vector database
+2025-12-06 08:11:54,944 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_2
+2025-12-06 08:11:54,945 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_3 in vector DB
+2025-12-06 08:11:54,945 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_3
+2025-12-06 08:11:54,995 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_3
+2025-12-06 08:11:54,995 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_3 in ChromaDB vector database
+2025-12-06 08:11:55,001 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_3 in vector database
+2025-12-06 08:11:55,001 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_3
+2025-12-06 08:11:55,001 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_4 in vector DB
+2025-12-06 08:11:55,001 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_4
+2025-12-06 08:11:55,034 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_4
+2025-12-06 08:11:55,035 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_4 in ChromaDB vector database
+2025-12-06 08:11:55,040 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_4 in vector database
+2025-12-06 08:11:55,041 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_4
+2025-12-06 08:11:55,041 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_5 in vector DB
+2025-12-06 08:11:55,041 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_5
+2025-12-06 08:11:55,081 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_5
+2025-12-06 08:11:55,081 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_5 in ChromaDB vector database
+2025-12-06 08:11:55,090 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_5 in vector database
+2025-12-06 08:11:55,090 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_5
+2025-12-06 08:11:55,090 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_6 in vector DB
+2025-12-06 08:11:55,091 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_6
+2025-12-06 08:11:55,136 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_6
+2025-12-06 08:11:55,136 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_6 in ChromaDB vector database
+2025-12-06 08:11:55,142 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_6 in vector database
+2025-12-06 08:11:55,142 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_6
+2025-12-06 08:11:55,142 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_7 in vector DB
+2025-12-06 08:11:55,142 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_7
+2025-12-06 08:11:55,152 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_7
+2025-12-06 08:11:55,152 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_7 in ChromaDB vector database
+2025-12-06 08:11:55,157 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_7 in vector database
+2025-12-06 08:11:55,157 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_7
+2025-12-06 08:11:55,158 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_8 in vector DB
+2025-12-06 08:11:55,158 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_8
+2025-12-06 08:11:55,195 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_8
+2025-12-06 08:11:55,195 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_8 in ChromaDB vector database
+2025-12-06 08:11:55,210 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_8 in vector database
+2025-12-06 08:11:55,211 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_8
+2025-12-06 08:11:55,211 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_9 in vector DB
+2025-12-06 08:11:55,211 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_9
+2025-12-06 08:11:55,220 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_9
+2025-12-06 08:11:55,220 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_9 in ChromaDB vector database
+2025-12-06 08:11:55,226 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_9 in vector database
+2025-12-06 08:11:55,226 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_9
+2025-12-06 08:11:55,227 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_10 in vector DB
+2025-12-06 08:11:55,227 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_10
+2025-12-06 08:11:55,237 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_10
+2025-12-06 08:11:55,237 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_10 in ChromaDB vector database
+2025-12-06 08:11:55,243 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_10 in vector database
+2025-12-06 08:11:55,243 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_10
+2025-12-06 08:11:55,243 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_11 in vector DB
+2025-12-06 08:11:55,243 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_11
+2025-12-06 08:11:55,254 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_11
+2025-12-06 08:11:55,254 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_11 in ChromaDB vector database
+2025-12-06 08:11:55,261 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_11 in vector database
+2025-12-06 08:11:55,261 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_11
+2025-12-06 08:11:55,261 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_12 in vector DB
+2025-12-06 08:11:55,261 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_12
+2025-12-06 08:11:55,270 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_12
+2025-12-06 08:11:55,270 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_12 in ChromaDB vector database
+2025-12-06 08:11:55,276 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_12 in vector database
+2025-12-06 08:11:55,276 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_12
+2025-12-06 08:11:55,276 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_13 in vector DB
+2025-12-06 08:11:55,276 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_13
+2025-12-06 08:11:55,316 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_13
+2025-12-06 08:11:55,316 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_13 in ChromaDB vector database
+2025-12-06 08:11:55,323 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_13 in vector database
+2025-12-06 08:11:55,324 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_13
+2025-12-06 08:11:55,324 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_14 in vector DB
+2025-12-06 08:11:55,324 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_14
+2025-12-06 08:11:55,335 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_14
+2025-12-06 08:11:55,335 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_14 in ChromaDB vector database
+2025-12-06 08:11:55,344 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_14 in vector database
+2025-12-06 08:11:55,345 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_14
+2025-12-06 08:11:55,345 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_15 in vector DB
+2025-12-06 08:11:55,345 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_15
+2025-12-06 08:11:55,355 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_15
+2025-12-06 08:11:55,355 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_15 in ChromaDB vector database
+2025-12-06 08:11:55,370 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_15 in vector database
+2025-12-06 08:11:55,370 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_15
+2025-12-06 08:11:55,489 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_SYL330 (SYL330) in vector DB with sales data
+2025-12-06 08:11:55,490 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_SYL330
+2025-12-06 08:11:55,536 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_SYL330
+2025-12-06 08:11:55,536 - shared_knowledge_base - INFO - 💾 Storing product HIST_SYL330 in ChromaDB vector database
+2025-12-06 08:11:55,545 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_SYL330 in vector database
+2025-12-06 08:11:55,545 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_SYL330 with 59010 total sales
+2025-12-06 08:11:55,545 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_RDW300 (RDW300) in vector DB with sales data
+2025-12-06 08:11:55,545 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_RDW300
+2025-12-06 08:11:55,623 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_RDW300
+2025-12-06 08:11:55,623 - shared_knowledge_base - INFO - 💾 Storing product HIST_RDW300 in ChromaDB vector database
+2025-12-06 08:11:55,632 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_RDW300 in vector database
+2025-12-06 08:11:55,632 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_RDW300 with 49997 total sales
+2025-12-06 08:11:55,632 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_FAK288 (FAK288) in vector DB with sales data
+2025-12-06 08:11:55,632 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_FAK288
+2025-12-06 08:11:55,671 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_FAK288
+2025-12-06 08:11:55,671 - shared_knowledge_base - INFO - 💾 Storing product HIST_FAK288 in ChromaDB vector database
+2025-12-06 08:11:55,685 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_FAK288 in vector database
+2025-12-06 08:11:55,686 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_FAK288 with 56260 total sales
+2025-12-06 08:11:55,687 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_CWS888 (CWS888) in vector DB with sales data
+2025-12-06 08:11:55,687 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_CWS888
+2025-12-06 08:11:55,748 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_CWS888
+2025-12-06 08:11:55,749 - shared_knowledge_base - INFO - 💾 Storing product HIST_CWS888 in ChromaDB vector database
+2025-12-06 08:11:55,764 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_CWS888 in vector database
+2025-12-06 08:11:55,764 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_CWS888 with 57371 total sales
+2025-12-06 08:11:55,764 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_ADJ660 (ADJ660) in vector DB with sales data
+2025-12-06 08:11:55,764 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_ADJ660
+2025-12-06 08:11:55,819 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_ADJ660
+2025-12-06 08:11:55,819 - shared_knowledge_base - INFO - 💾 Storing product HIST_ADJ660 in ChromaDB vector database
+2025-12-06 08:11:55,826 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_ADJ660 in vector database
+2025-12-06 08:11:55,826 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_ADJ660 with 46418 total sales
+2025-12-06 08:11:55,826 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_ALV310 (ALV310) in vector DB with sales data
+2025-12-06 08:11:55,826 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_ALV310
+2025-12-06 08:11:55,866 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_ALV310
+2025-12-06 08:11:55,866 - shared_knowledge_base - INFO - 💾 Storing product HIST_ALV310 in ChromaDB vector database
+2025-12-06 08:11:55,881 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_ALV310 in vector database
+2025-12-06 08:11:55,881 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_ALV310 with 60880 total sales
+2025-12-06 08:11:55,881 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_CMH215 (CMH215) in vector DB with sales data
+2025-12-06 08:11:55,881 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_CMH215
+2025-12-06 08:11:55,894 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_CMH215
+2025-12-06 08:11:55,894 - shared_knowledge_base - INFO - 💾 Storing product HIST_CMH215 in ChromaDB vector database
+2025-12-06 08:11:55,899 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_CMH215 in vector database
+2025-12-06 08:11:55,899 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_CMH215 with 52047 total sales
+2025-12-06 08:11:55,900 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_BSS260 (BSS260) in vector DB with sales data
+2025-12-06 08:11:55,900 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_BSS260
+2025-12-06 08:11:55,915 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_BSS260
+2025-12-06 08:11:55,915 - shared_knowledge_base - INFO - 💾 Storing product HIST_BSS260 in ChromaDB vector database
+2025-12-06 08:11:55,922 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_BSS260 in vector database
+2025-12-06 08:11:55,922 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_BSS260 with 63620 total sales
+2025-12-06 08:11:55,922 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_AAS711 (AAS711) in vector DB with sales data
+2025-12-06 08:11:55,922 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_AAS711
+2025-12-06 08:11:55,932 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_AAS711
+2025-12-06 08:11:55,932 - shared_knowledge_base - INFO - 💾 Storing product HIST_AAS711 in ChromaDB vector database
+2025-12-06 08:11:55,939 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_AAS711 in vector database
+2025-12-06 08:11:55,940 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_AAS711 with 60450 total sales
+2025-12-06 08:11:55,940 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_TFS522 (TFS522) in vector DB with sales data
+2025-12-06 08:11:55,940 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_TFS522
+2025-12-06 08:11:55,990 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_TFS522
+2025-12-06 08:11:55,990 - shared_knowledge_base - INFO - 💾 Storing product HIST_TFS522 in ChromaDB vector database
+2025-12-06 08:11:55,997 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_TFS522 in vector database
+2025-12-06 08:11:55,997 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_TFS522 with 50144 total sales
+2025-12-06 08:11:55,997 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_WJS555 (WJS555) in vector DB with sales data
+2025-12-06 08:11:55,997 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_WJS555
+2025-12-06 08:11:56,008 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_WJS555
+2025-12-06 08:11:56,008 - shared_knowledge_base - INFO - 💾 Storing product HIST_WJS555 in ChromaDB vector database
+2025-12-06 08:11:56,015 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_WJS555 in vector database
+2025-12-06 08:11:56,015 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_WJS555 with 61830 total sales
+2025-12-06 08:11:56,016 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_HNJ333 (HNJ333) in vector DB with sales data
+2025-12-06 08:11:56,016 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_HNJ333
+2025-12-06 08:11:56,026 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_HNJ333
+2025-12-06 08:11:56,027 - shared_knowledge_base - INFO - 💾 Storing product HIST_HNJ333 in ChromaDB vector database
+2025-12-06 08:11:56,032 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_HNJ333 in vector database
+2025-12-06 08:11:56,032 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_HNJ333 with 56149 total sales
+2025-12-06 08:11:56,032 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_ULP019 (ULP019) in vector DB with sales data
+2025-12-06 08:11:56,032 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_ULP019
+2025-12-06 08:11:56,042 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_ULP019
+2025-12-06 08:11:56,043 - shared_knowledge_base - INFO - 💾 Storing product HIST_ULP019 in ChromaDB vector database
+2025-12-06 08:11:56,052 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_ULP019 in vector database
+2025-12-06 08:11:56,052 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_ULP019 with 77972 total sales
+2025-12-06 08:11:56,052 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_MMD777 (MMD777) in vector DB with sales data
+2025-12-06 08:11:56,052 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_MMD777
+2025-12-06 08:11:56,063 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_MMD777
+2025-12-06 08:11:56,063 - shared_knowledge_base - INFO - 💾 Storing product HIST_MMD777 in ChromaDB vector database
+2025-12-06 08:11:56,068 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_MMD777 in vector database
+2025-12-06 08:11:56,068 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_MMD777 with 52829 total sales
+2025-12-06 08:11:56,068 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_CSC332 (CSC332) in vector DB with sales data
+2025-12-06 08:11:56,068 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_CSC332
+2025-12-06 08:11:56,078 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_CSC332
+2025-12-06 08:11:56,078 - shared_knowledge_base - INFO - 💾 Storing product HIST_CSC332 in ChromaDB vector database
+2025-12-06 08:11:56,087 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_CSC332 in vector database
+2025-12-06 08:11:56,087 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_CSC332 with 59418 total sales
+2025-12-06 08:11:56,087 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_UEO543 (UEO543) in vector DB with sales data
+2025-12-06 08:11:56,087 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_UEO543
+2025-12-06 08:11:56,123 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_UEO543
+2025-12-06 08:11:56,123 - shared_knowledge_base - INFO - 💾 Storing product HIST_UEO543 in ChromaDB vector database
+2025-12-06 08:11:56,129 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_UEO543 in vector database
+2025-12-06 08:11:56,129 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_UEO543 with 44949 total sales
+2025-12-06 08:11:56,129 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_CLT612 (CLT612) in vector DB with sales data
+2025-12-06 08:11:56,129 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_CLT612
+2025-12-06 08:11:56,139 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_CLT612
+2025-12-06 08:11:56,139 - shared_knowledge_base - INFO - 💾 Storing product HIST_CLT612 in ChromaDB vector database
+2025-12-06 08:11:56,145 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_CLT612 in vector database
+2025-12-06 08:11:56,145 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_CLT612 with 72416 total sales
+2025-12-06 08:11:56,145 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_BLK212 (BLK212) in vector DB with sales data
+2025-12-06 08:11:56,145 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_BLK212
+2025-12-06 08:11:56,154 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_BLK212
+2025-12-06 08:11:56,154 - shared_knowledge_base - INFO - 💾 Storing product HIST_BLK212 in ChromaDB vector database
+2025-12-06 08:11:56,160 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_BLK212 in vector database
+2025-12-06 08:11:56,160 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_BLK212 with 57003 total sales
+2025-12-06 08:11:56,160 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_APJ001 (APJ001) in vector DB with sales data
+2025-12-06 08:11:56,160 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_APJ001
+2025-12-06 08:11:56,170 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_APJ001
+2025-12-06 08:11:56,171 - shared_knowledge_base - INFO - 💾 Storing product HIST_APJ001 in ChromaDB vector database
+2025-12-06 08:11:56,177 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_APJ001 in vector database
+2025-12-06 08:11:56,177 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_APJ001 with 86152 total sales
+2025-12-06 08:11:56,177 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_SFL909 (SFL909) in vector DB with sales data
+2025-12-06 08:11:56,177 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_SFL909
+2025-12-06 08:11:56,213 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_SFL909
+2025-12-06 08:11:56,213 - shared_knowledge_base - INFO - 💾 Storing product HIST_SFL909 in ChromaDB vector database
+2025-12-06 08:11:56,223 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_SFL909 in vector database
+2025-12-06 08:11:56,223 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_SFL909 with 54761 total sales
+2025-12-06 08:11:56,223 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_SGP880 (SGP880) in vector DB with sales data
+2025-12-06 08:11:56,223 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_SGP880
+2025-12-06 08:11:56,234 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_SGP880
+2025-12-06 08:11:56,234 - shared_knowledge_base - INFO - 💾 Storing product HIST_SGP880 in ChromaDB vector database
+2025-12-06 08:11:56,240 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_SGP880 in vector database
+2025-12-06 08:11:56,240 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_SGP880 with 42818 total sales
+2025-12-06 08:11:56,240 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_MRT210 (MRT210) in vector DB with sales data
+2025-12-06 08:11:56,240 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_MRT210
+2025-12-06 08:11:56,250 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_MRT210
+2025-12-06 08:11:56,250 - shared_knowledge_base - INFO - 💾 Storing product HIST_MRT210 in ChromaDB vector database
+2025-12-06 08:11:56,256 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_MRT210 in vector database
+2025-12-06 08:11:56,256 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_MRT210 with 58895 total sales
+2025-12-06 08:11:56,256 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_FSK507 (FSK507) in vector DB with sales data
+2025-12-06 08:11:56,257 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_FSK507
+2025-12-06 08:11:56,266 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_FSK507
+2025-12-06 08:11:56,266 - shared_knowledge_base - INFO - 💾 Storing product HIST_FSK507 in ChromaDB vector database
+2025-12-06 08:11:56,274 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_FSK507 in vector database
+2025-12-06 08:11:56,274 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_FSK507 with 57221 total sales
+2025-12-06 08:11:56,274 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_MGJ720 (MGJ720) in vector DB with sales data
+2025-12-06 08:11:56,274 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_MGJ720
+2025-12-06 08:11:56,284 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_MGJ720
+2025-12-06 08:11:56,284 - shared_knowledge_base - INFO - 💾 Storing product HIST_MGJ720 in ChromaDB vector database
+2025-12-06 08:11:56,290 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_MGJ720 in vector database
+2025-12-06 08:11:56,290 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_MGJ720 with 50504 total sales
+2025-12-06 08:11:56,290 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_CLS920 (CLS920) in vector DB with sales data
+2025-12-06 08:11:56,290 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_CLS920
+2025-12-06 08:11:56,300 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_CLS920
+2025-12-06 08:11:56,300 - shared_knowledge_base - INFO - 💾 Storing product HIST_CLS920 in ChromaDB vector database
+2025-12-06 08:11:56,308 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_CLS920 in vector database
+2025-12-06 08:11:56,308 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_CLS920 with 50346 total sales
+2025-12-06 08:11:56,308 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_SBD931 (SBD931) in vector DB with sales data
+2025-12-06 08:11:56,308 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_SBD931
+2025-12-06 08:11:56,318 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_SBD931
+2025-12-06 08:11:56,318 - shared_knowledge_base - INFO - 💾 Storing product HIST_SBD931 in ChromaDB vector database
+2025-12-06 08:11:56,324 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_SBD931 in vector database
+2025-12-06 08:11:56,324 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_SBD931 with 48869 total sales
+2025-12-06 08:11:56,324 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_GSJ014 (GSJ014) in vector DB with sales data
+2025-12-06 08:11:56,324 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_GSJ014
+2025-12-06 08:11:56,333 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_GSJ014
+2025-12-06 08:11:56,333 - shared_knowledge_base - INFO - 💾 Storing product HIST_GSJ014 in ChromaDB vector database
+2025-12-06 08:11:56,341 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_GSJ014 in vector database
+2025-12-06 08:11:56,341 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_GSJ014 with 32649 total sales
+2025-12-06 08:11:56,341 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_SKT145 (SKT145) in vector DB with sales data
+2025-12-06 08:11:56,341 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_SKT145
+2025-12-06 08:11:56,352 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_SKT145
+2025-12-06 08:11:56,352 - shared_knowledge_base - INFO - 💾 Storing product HIST_SKT145 in ChromaDB vector database
+2025-12-06 08:11:56,358 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_SKT145 in vector database
+2025-12-06 08:11:56,358 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_SKT145 with 77382 total sales
+2025-12-06 08:11:56,358 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_HGH112 (HGH112) in vector DB with sales data
+2025-12-06 08:11:56,358 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_HGH112
+2025-12-06 08:11:56,368 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_HGH112
+2025-12-06 08:11:56,368 - shared_knowledge_base - INFO - 💾 Storing product HIST_HGH112 in ChromaDB vector database
+2025-12-06 08:11:56,382 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_HGH112 in vector database
+2025-12-06 08:11:56,382 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_HGH112 with 44179 total sales
+2025-12-06 08:11:56,383 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_SRS744 (SRS744) in vector DB with sales data
+2025-12-06 08:11:56,383 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_SRS744
+2025-12-06 08:11:56,395 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_SRS744
+2025-12-06 08:11:56,395 - shared_knowledge_base - INFO - 💾 Storing product HIST_SRS744 in ChromaDB vector database
+2025-12-06 08:11:56,408 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_SRS744 in vector database
+2025-12-06 08:11:56,408 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_SRS744 with 50372 total sales
+2025-12-06 08:11:56,408 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_PTD412 (PTD412) in vector DB with sales data
+2025-12-06 08:11:56,408 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_PTD412
+2025-12-06 08:11:56,419 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_PTD412
+2025-12-06 08:11:56,419 - shared_knowledge_base - INFO - 💾 Storing product HIST_PTD412 in ChromaDB vector database
+2025-12-06 08:11:56,426 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_PTD412 in vector database
+2025-12-06 08:11:56,426 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_PTD412 with 46578 total sales
+2025-12-06 08:11:56,426 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_DFJ821 (DFJ821) in vector DB with sales data
+2025-12-06 08:11:56,426 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_DFJ821
+2025-12-06 08:11:56,436 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_DFJ821
+2025-12-06 08:11:56,436 - shared_knowledge_base - INFO - 💾 Storing product HIST_DFJ821 in ChromaDB vector database
+2025-12-06 08:11:56,443 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_DFJ821 in vector database
+2025-12-06 08:11:56,443 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_DFJ821 with 59358 total sales
+2025-12-06 08:11:56,443 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_BOS120 (BOS120) in vector DB with sales data
+2025-12-06 08:11:56,443 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_BOS120
+2025-12-06 08:11:56,453 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_BOS120
+2025-12-06 08:11:56,453 - shared_knowledge_base - INFO - 💾 Storing product HIST_BOS120 in ChromaDB vector database
+2025-12-06 08:11:56,460 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_BOS120 in vector database
+2025-12-06 08:11:56,460 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_BOS120 with 45241 total sales
+2025-12-06 08:11:56,460 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_CNPS778 (CNPS778) in vector DB with sales data
+2025-12-06 08:11:56,460 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_CNPS778
+2025-12-06 08:11:56,470 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_CNPS778
+2025-12-06 08:11:56,470 - shared_knowledge_base - INFO - 💾 Storing product HIST_CNPS778 in ChromaDB vector database
+2025-12-06 08:11:56,490 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_CNPS778 in vector database
+2025-12-06 08:11:56,490 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_CNPS778 with 71992 total sales
+2025-12-06 08:11:56,490 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_LSK551 (LSK551) in vector DB with sales data
+2025-12-06 08:11:56,490 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_LSK551
+2025-12-06 08:11:56,531 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_LSK551
+2025-12-06 08:11:56,531 - shared_knowledge_base - INFO - 💾 Storing product HIST_LSK551 in ChromaDB vector database
+2025-12-06 08:11:56,538 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_LSK551 in vector database
+2025-12-06 08:11:56,538 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_LSK551 with 57964 total sales
+2025-12-06 08:11:56,538 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_TTP665 (TTP665) in vector DB with sales data
+2025-12-06 08:11:56,538 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_TTP665
+2025-12-06 08:11:56,549 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_TTP665
+2025-12-06 08:11:56,550 - shared_knowledge_base - INFO - 💾 Storing product HIST_TTP665 in ChromaDB vector database
+2025-12-06 08:11:56,558 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_TTP665 in vector database
+2025-12-06 08:11:56,558 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_TTP665 with 58474 total sales
+2025-12-06 08:11:56,558 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_TFC331 (TFC331) in vector DB with sales data
+2025-12-06 08:11:56,558 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_TFC331
+2025-12-06 08:11:56,569 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_TFC331
+2025-12-06 08:11:56,569 - shared_knowledge_base - INFO - 💾 Storing product HIST_TFC331 in ChromaDB vector database
+2025-12-06 08:11:56,576 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_TFC331 in vector database
+2025-12-06 08:11:56,576 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_TFC331 with 46319 total sales
+2025-12-06 08:11:56,576 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_WST661 (WST661) in vector DB with sales data
+2025-12-06 08:11:56,576 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_WST661
+2025-12-06 08:11:56,586 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_WST661
+2025-12-06 08:11:56,586 - shared_knowledge_base - INFO - 💾 Storing product HIST_WST661 in ChromaDB vector database
+2025-12-06 08:11:56,594 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_WST661 in vector database
+2025-12-06 08:11:56,594 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_WST661 with 44226 total sales
+2025-12-06 08:11:56,594 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_MSS441 (MSS441) in vector DB with sales data
+2025-12-06 08:11:56,594 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_MSS441
+2025-12-06 08:11:56,605 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_MSS441
+2025-12-06 08:11:56,605 - shared_knowledge_base - INFO - 💾 Storing product HIST_MSS441 in ChromaDB vector database
+2025-12-06 08:11:56,611 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_MSS441 in vector database
+2025-12-06 08:11:56,611 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_MSS441 with 44554 total sales
+2025-12-06 08:11:56,611 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_EVT040 (EVT040) in vector DB with sales data
+2025-12-06 08:11:56,611 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_EVT040
+2025-12-06 08:11:56,654 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_EVT040
+2025-12-06 08:11:56,654 - shared_knowledge_base - INFO - 💾 Storing product HIST_EVT040 in ChromaDB vector database
+2025-12-06 08:11:56,664 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_EVT040 in vector database
+2025-12-06 08:11:56,664 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_EVT040 with 61505 total sales
+2025-12-06 08:11:56,664 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_ODS901 (ODS901) in vector DB with sales data
+2025-12-06 08:11:56,664 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_ODS901
+2025-12-06 08:11:56,674 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_ODS901
+2025-12-06 08:11:56,674 - shared_knowledge_base - INFO - 💾 Storing product HIST_ODS901 in ChromaDB vector database
+2025-12-06 08:11:56,683 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_ODS901 in vector database
+2025-12-06 08:11:56,683 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_ODS901 with 46829 total sales
+2025-12-06 08:11:56,684 - agents.data_ingestion_agent - INFO - ✅ Loaded dirty ODM data: 15 input products, 41 historical products
+2025-12-06 08:11:56,687 - __main__ - INFO - ✅ ODM data loaded: {'dirty_input_count': 15, 'historical_products_count': 41, 'historical_records_count': 5000, 'data_source': 'dirty_odm_data', 'cleaning_applied': False}
+2025-12-06 08:11:58,057 - shared_knowledge_base - INFO - Loaded embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-12-06 08:11:58,100 - shared_knowledge_base - INFO - Using collection: products
+2025-12-06 08:11:58,103 - shared_knowledge_base - INFO - Using collection: performance
+2025-12-06 08:11:58,103 - __main__ - INFO - ✅ Knowledge base initialized
+2025-12-06 08:11:58,108 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:11:58,113 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:11:58,114 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:11:58,114 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:11:58,624 - utils.llm_client - INFO - Initialized OpenAI client with model gpt-4o-mini
+2025-12-06 08:11:58,625 - __main__ - INFO - ✅ LLM client initialized
+2025-12-06 08:11:58,625 - __main__ - INFO - ✅ Data ingestion agent initialized
+2025-12-06 08:11:58,628 - __main__ - INFO - 🔄 Loading ODM data...
+2025-12-06 08:11:58,629 - agents.data_ingestion_agent - INFO - Loading dirty ODM data from data/sample/dirty_odm_input.csv and data/sample/odm_historical_dataset_5000.csv
+2025-12-06 08:11:58,638 - agents.data_ingestion_agent - INFO - Loaded 15 dirty input products
+2025-12-06 08:11:58,648 - agents.data_ingestion_agent - INFO - Loaded 5000 historical records
+2025-12-06 08:11:58,652 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_1 in vector DB
+2025-12-06 08:11:58,652 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_1
+2025-12-06 08:11:58,928 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_1
+2025-12-06 08:11:58,929 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_1 in ChromaDB vector database
+2025-12-06 08:11:58,964 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_1 in vector database
+2025-12-06 08:11:58,965 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_1
+2025-12-06 08:11:58,965 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_2 in vector DB
+2025-12-06 08:11:58,965 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_2
+2025-12-06 08:11:58,976 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_2
+2025-12-06 08:11:58,976 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_2 in ChromaDB vector database
+2025-12-06 08:11:58,989 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_2 in vector database
+2025-12-06 08:11:58,989 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_2
+2025-12-06 08:11:58,990 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_3 in vector DB
+2025-12-06 08:11:58,990 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_3
+2025-12-06 08:11:59,065 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_3
+2025-12-06 08:11:59,066 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_3 in ChromaDB vector database
+2025-12-06 08:11:59,072 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_3 in vector database
+2025-12-06 08:11:59,072 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_3
+2025-12-06 08:11:59,073 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_4 in vector DB
+2025-12-06 08:11:59,073 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_4
+2025-12-06 08:11:59,111 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_4
+2025-12-06 08:11:59,112 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_4 in ChromaDB vector database
+2025-12-06 08:11:59,117 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_4 in vector database
+2025-12-06 08:11:59,118 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_4
+2025-12-06 08:11:59,118 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_5 in vector DB
+2025-12-06 08:11:59,118 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_5
+2025-12-06 08:11:59,154 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_5
+2025-12-06 08:11:59,155 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_5 in ChromaDB vector database
+2025-12-06 08:11:59,165 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_5 in vector database
+2025-12-06 08:11:59,165 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_5
+2025-12-06 08:11:59,165 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_6 in vector DB
+2025-12-06 08:11:59,165 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_6
+2025-12-06 08:11:59,199 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_6
+2025-12-06 08:11:59,199 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_6 in ChromaDB vector database
+2025-12-06 08:11:59,217 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_6 in vector database
+2025-12-06 08:11:59,217 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_6
+2025-12-06 08:11:59,217 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_7 in vector DB
+2025-12-06 08:11:59,217 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_7
+2025-12-06 08:11:59,227 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_7
+2025-12-06 08:11:59,227 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_7 in ChromaDB vector database
+2025-12-06 08:11:59,235 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_7 in vector database
+2025-12-06 08:11:59,235 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_7
+2025-12-06 08:11:59,235 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_8 in vector DB
+2025-12-06 08:11:59,235 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_8
+2025-12-06 08:11:59,273 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_8
+2025-12-06 08:11:59,273 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_8 in ChromaDB vector database
+2025-12-06 08:11:59,280 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_8 in vector database
+2025-12-06 08:11:59,280 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_8
+2025-12-06 08:11:59,280 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_9 in vector DB
+2025-12-06 08:11:59,280 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_9
+2025-12-06 08:11:59,289 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_9
+2025-12-06 08:11:59,289 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_9 in ChromaDB vector database
+2025-12-06 08:11:59,297 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_9 in vector database
+2025-12-06 08:11:59,297 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_9
+2025-12-06 08:11:59,297 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_10 in vector DB
+2025-12-06 08:11:59,297 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_10
+2025-12-06 08:11:59,307 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_10
+2025-12-06 08:11:59,307 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_10 in ChromaDB vector database
+2025-12-06 08:11:59,317 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_10 in vector database
+2025-12-06 08:11:59,317 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_10
+2025-12-06 08:11:59,317 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_11 in vector DB
+2025-12-06 08:11:59,317 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_11
+2025-12-06 08:11:59,327 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_11
+2025-12-06 08:11:59,327 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_11 in ChromaDB vector database
+2025-12-06 08:11:59,334 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_11 in vector database
+2025-12-06 08:11:59,334 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_11
+2025-12-06 08:11:59,334 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_12 in vector DB
+2025-12-06 08:11:59,334 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_12
+2025-12-06 08:11:59,343 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_12
+2025-12-06 08:11:59,343 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_12 in ChromaDB vector database
+2025-12-06 08:11:59,348 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_12 in vector database
+2025-12-06 08:11:59,348 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_12
+2025-12-06 08:11:59,348 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_13 in vector DB
+2025-12-06 08:11:59,348 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_13
+2025-12-06 08:11:59,389 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_13
+2025-12-06 08:11:59,389 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_13 in ChromaDB vector database
+2025-12-06 08:11:59,398 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_13 in vector database
+2025-12-06 08:11:59,398 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_13
+2025-12-06 08:11:59,398 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_14 in vector DB
+2025-12-06 08:11:59,398 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_14
+2025-12-06 08:11:59,412 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_14
+2025-12-06 08:11:59,412 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_14 in ChromaDB vector database
+2025-12-06 08:11:59,420 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_14 in vector database
+2025-12-06 08:11:59,420 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_14
+2025-12-06 08:11:59,420 - agents.data_ingestion_agent - INFO - 📦 Storing dirty input product ODM_INPUT_15 in vector DB
+2025-12-06 08:11:59,420 - shared_knowledge_base - INFO - 🧠 Generating embedding for product ODM_INPUT_15
+2025-12-06 08:11:59,431 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product ODM_INPUT_15
+2025-12-06 08:11:59,431 - shared_knowledge_base - INFO - 💾 Storing product ODM_INPUT_15 in ChromaDB vector database
+2025-12-06 08:11:59,438 - shared_knowledge_base - INFO - ✅ Successfully stored product ODM_INPUT_15 in vector database
+2025-12-06 08:11:59,438 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded product ODM_INPUT_15
+2025-12-06 08:11:59,554 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_SYL330 (SYL330) in vector DB with sales data
+2025-12-06 08:11:59,554 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_SYL330
+2025-12-06 08:11:59,595 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_SYL330
+2025-12-06 08:11:59,595 - shared_knowledge_base - INFO - 💾 Storing product HIST_SYL330 in ChromaDB vector database
+2025-12-06 08:11:59,608 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_SYL330 in vector database
+2025-12-06 08:11:59,608 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_SYL330 with 59010 total sales
+2025-12-06 08:11:59,608 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_RDW300 (RDW300) in vector DB with sales data
+2025-12-06 08:11:59,609 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_RDW300
+2025-12-06 08:11:59,646 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_RDW300
+2025-12-06 08:11:59,646 - shared_knowledge_base - INFO - 💾 Storing product HIST_RDW300 in ChromaDB vector database
+2025-12-06 08:11:59,654 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_RDW300 in vector database
+2025-12-06 08:11:59,654 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_RDW300 with 49997 total sales
+2025-12-06 08:11:59,654 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_FAK288 (FAK288) in vector DB with sales data
+2025-12-06 08:11:59,654 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_FAK288
+2025-12-06 08:11:59,687 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_FAK288
+2025-12-06 08:11:59,688 - shared_knowledge_base - INFO - 💾 Storing product HIST_FAK288 in ChromaDB vector database
+2025-12-06 08:11:59,701 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_FAK288 in vector database
+2025-12-06 08:11:59,701 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_FAK288 with 56260 total sales
+2025-12-06 08:11:59,701 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_CWS888 (CWS888) in vector DB with sales data
+2025-12-06 08:11:59,701 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_CWS888
+2025-12-06 08:11:59,737 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_CWS888
+2025-12-06 08:11:59,737 - shared_knowledge_base - INFO - 💾 Storing product HIST_CWS888 in ChromaDB vector database
+2025-12-06 08:11:59,749 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_CWS888 in vector database
+2025-12-06 08:11:59,749 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_CWS888 with 57371 total sales
+2025-12-06 08:11:59,749 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_ADJ660 (ADJ660) in vector DB with sales data
+2025-12-06 08:11:59,749 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_ADJ660
+2025-12-06 08:11:59,794 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_ADJ660
+2025-12-06 08:11:59,794 - shared_knowledge_base - INFO - 💾 Storing product HIST_ADJ660 in ChromaDB vector database
+2025-12-06 08:11:59,808 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_ADJ660 in vector database
+2025-12-06 08:11:59,808 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_ADJ660 with 46418 total sales
+2025-12-06 08:11:59,808 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_ALV310 (ALV310) in vector DB with sales data
+2025-12-06 08:11:59,808 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_ALV310
+2025-12-06 08:11:59,842 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_ALV310
+2025-12-06 08:11:59,842 - shared_knowledge_base - INFO - 💾 Storing product HIST_ALV310 in ChromaDB vector database
+2025-12-06 08:11:59,852 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_ALV310 in vector database
+2025-12-06 08:11:59,853 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_ALV310 with 60880 total sales
+2025-12-06 08:11:59,853 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_CMH215 (CMH215) in vector DB with sales data
+2025-12-06 08:11:59,853 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_CMH215
+2025-12-06 08:11:59,863 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_CMH215
+2025-12-06 08:11:59,863 - shared_knowledge_base - INFO - 💾 Storing product HIST_CMH215 in ChromaDB vector database
+2025-12-06 08:11:59,877 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_CMH215 in vector database
+2025-12-06 08:11:59,877 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_CMH215 with 52047 total sales
+2025-12-06 08:11:59,877 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_BSS260 (BSS260) in vector DB with sales data
+2025-12-06 08:11:59,877 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_BSS260
+2025-12-06 08:11:59,887 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_BSS260
+2025-12-06 08:11:59,887 - shared_knowledge_base - INFO - 💾 Storing product HIST_BSS260 in ChromaDB vector database
+2025-12-06 08:11:59,895 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_BSS260 in vector database
+2025-12-06 08:11:59,895 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_BSS260 with 63620 total sales
+2025-12-06 08:11:59,895 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_AAS711 (AAS711) in vector DB with sales data
+2025-12-06 08:11:59,895 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_AAS711
+2025-12-06 08:11:59,906 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_AAS711
+2025-12-06 08:11:59,906 - shared_knowledge_base - INFO - 💾 Storing product HIST_AAS711 in ChromaDB vector database
+2025-12-06 08:11:59,913 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_AAS711 in vector database
+2025-12-06 08:11:59,913 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_AAS711 with 60450 total sales
+2025-12-06 08:11:59,913 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_TFS522 (TFS522) in vector DB with sales data
+2025-12-06 08:11:59,913 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_TFS522
+2025-12-06 08:11:59,949 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_TFS522
+2025-12-06 08:11:59,949 - shared_knowledge_base - INFO - 💾 Storing product HIST_TFS522 in ChromaDB vector database
+2025-12-06 08:11:59,957 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_TFS522 in vector database
+2025-12-06 08:11:59,957 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_TFS522 with 50144 total sales
+2025-12-06 08:11:59,957 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_WJS555 (WJS555) in vector DB with sales data
+2025-12-06 08:11:59,957 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_WJS555
+2025-12-06 08:11:59,967 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_WJS555
+2025-12-06 08:11:59,967 - shared_knowledge_base - INFO - 💾 Storing product HIST_WJS555 in ChromaDB vector database
+2025-12-06 08:11:59,975 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_WJS555 in vector database
+2025-12-06 08:11:59,975 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_WJS555 with 61830 total sales
+2025-12-06 08:11:59,975 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_HNJ333 (HNJ333) in vector DB with sales data
+2025-12-06 08:11:59,975 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_HNJ333
+2025-12-06 08:11:59,984 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_HNJ333
+2025-12-06 08:11:59,984 - shared_knowledge_base - INFO - 💾 Storing product HIST_HNJ333 in ChromaDB vector database
+2025-12-06 08:11:59,996 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_HNJ333 in vector database
+2025-12-06 08:11:59,996 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_HNJ333 with 56149 total sales
+2025-12-06 08:11:59,996 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_ULP019 (ULP019) in vector DB with sales data
+2025-12-06 08:11:59,996 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_ULP019
+2025-12-06 08:12:00,006 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_ULP019
+2025-12-06 08:12:00,006 - shared_knowledge_base - INFO - 💾 Storing product HIST_ULP019 in ChromaDB vector database
+2025-12-06 08:12:00,024 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_ULP019 in vector database
+2025-12-06 08:12:00,024 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_ULP019 with 77972 total sales
+2025-12-06 08:12:00,024 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_MMD777 (MMD777) in vector DB with sales data
+2025-12-06 08:12:00,024 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_MMD777
+2025-12-06 08:12:00,036 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_MMD777
+2025-12-06 08:12:00,036 - shared_knowledge_base - INFO - 💾 Storing product HIST_MMD777 in ChromaDB vector database
+2025-12-06 08:12:00,043 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_MMD777 in vector database
+2025-12-06 08:12:00,043 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_MMD777 with 52829 total sales
+2025-12-06 08:12:00,043 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_CSC332 (CSC332) in vector DB with sales data
+2025-12-06 08:12:00,043 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_CSC332
+2025-12-06 08:12:00,054 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_CSC332
+2025-12-06 08:12:00,054 - shared_knowledge_base - INFO - 💾 Storing product HIST_CSC332 in ChromaDB vector database
+2025-12-06 08:12:00,067 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_CSC332 in vector database
+2025-12-06 08:12:00,067 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_CSC332 with 59418 total sales
+2025-12-06 08:12:00,067 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_UEO543 (UEO543) in vector DB with sales data
+2025-12-06 08:12:00,068 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_UEO543
+2025-12-06 08:12:00,104 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_UEO543
+2025-12-06 08:12:00,105 - shared_knowledge_base - INFO - 💾 Storing product HIST_UEO543 in ChromaDB vector database
+2025-12-06 08:12:00,112 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_UEO543 in vector database
+2025-12-06 08:12:00,112 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_UEO543 with 44949 total sales
+2025-12-06 08:12:00,112 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_CLT612 (CLT612) in vector DB with sales data
+2025-12-06 08:12:00,112 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_CLT612
+2025-12-06 08:12:00,121 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_CLT612
+2025-12-06 08:12:00,121 - shared_knowledge_base - INFO - 💾 Storing product HIST_CLT612 in ChromaDB vector database
+2025-12-06 08:12:00,128 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_CLT612 in vector database
+2025-12-06 08:12:00,128 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_CLT612 with 72416 total sales
+2025-12-06 08:12:00,128 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_BLK212 (BLK212) in vector DB with sales data
+2025-12-06 08:12:00,128 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_BLK212
+2025-12-06 08:12:00,136 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_BLK212
+2025-12-06 08:12:00,136 - shared_knowledge_base - INFO - 💾 Storing product HIST_BLK212 in ChromaDB vector database
+2025-12-06 08:12:00,149 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_BLK212 in vector database
+2025-12-06 08:12:00,150 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_BLK212 with 57003 total sales
+2025-12-06 08:12:00,150 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_APJ001 (APJ001) in vector DB with sales data
+2025-12-06 08:12:00,150 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_APJ001
+2025-12-06 08:12:00,159 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_APJ001
+2025-12-06 08:12:00,159 - shared_knowledge_base - INFO - 💾 Storing product HIST_APJ001 in ChromaDB vector database
+2025-12-06 08:12:00,166 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_APJ001 in vector database
+2025-12-06 08:12:00,166 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_APJ001 with 86152 total sales
+2025-12-06 08:12:00,166 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_SFL909 (SFL909) in vector DB with sales data
+2025-12-06 08:12:00,166 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_SFL909
+2025-12-06 08:12:00,205 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_SFL909
+2025-12-06 08:12:00,206 - shared_knowledge_base - INFO - 💾 Storing product HIST_SFL909 in ChromaDB vector database
+2025-12-06 08:12:00,216 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_SFL909 in vector database
+2025-12-06 08:12:00,216 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_SFL909 with 54761 total sales
+2025-12-06 08:12:00,216 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_SGP880 (SGP880) in vector DB with sales data
+2025-12-06 08:12:00,216 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_SGP880
+2025-12-06 08:12:00,227 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_SGP880
+2025-12-06 08:12:00,227 - shared_knowledge_base - INFO - 💾 Storing product HIST_SGP880 in ChromaDB vector database
+2025-12-06 08:12:00,234 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_SGP880 in vector database
+2025-12-06 08:12:00,234 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_SGP880 with 42818 total sales
+2025-12-06 08:12:00,234 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_MRT210 (MRT210) in vector DB with sales data
+2025-12-06 08:12:00,234 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_MRT210
+2025-12-06 08:12:00,246 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_MRT210
+2025-12-06 08:12:00,246 - shared_knowledge_base - INFO - 💾 Storing product HIST_MRT210 in ChromaDB vector database
+2025-12-06 08:12:00,254 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_MRT210 in vector database
+2025-12-06 08:12:00,255 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_MRT210 with 58895 total sales
+2025-12-06 08:12:00,255 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_FSK507 (FSK507) in vector DB with sales data
+2025-12-06 08:12:00,255 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_FSK507
+2025-12-06 08:12:00,265 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_FSK507
+2025-12-06 08:12:00,265 - shared_knowledge_base - INFO - 💾 Storing product HIST_FSK507 in ChromaDB vector database
+2025-12-06 08:12:00,283 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_FSK507 in vector database
+2025-12-06 08:12:00,283 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_FSK507 with 57221 total sales
+2025-12-06 08:12:00,283 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_MGJ720 (MGJ720) in vector DB with sales data
+2025-12-06 08:12:00,283 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_MGJ720
+2025-12-06 08:12:00,293 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_MGJ720
+2025-12-06 08:12:00,293 - shared_knowledge_base - INFO - 💾 Storing product HIST_MGJ720 in ChromaDB vector database
+2025-12-06 08:12:00,304 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_MGJ720 in vector database
+2025-12-06 08:12:00,305 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_MGJ720 with 50504 total sales
+2025-12-06 08:12:00,305 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_CLS920 (CLS920) in vector DB with sales data
+2025-12-06 08:12:00,305 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_CLS920
+2025-12-06 08:12:00,315 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_CLS920
+2025-12-06 08:12:00,315 - shared_knowledge_base - INFO - 💾 Storing product HIST_CLS920 in ChromaDB vector database
+2025-12-06 08:12:00,334 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_CLS920 in vector database
+2025-12-06 08:12:00,334 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_CLS920 with 50346 total sales
+2025-12-06 08:12:00,334 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_SBD931 (SBD931) in vector DB with sales data
+2025-12-06 08:12:00,334 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_SBD931
+2025-12-06 08:12:00,344 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_SBD931
+2025-12-06 08:12:00,344 - shared_knowledge_base - INFO - 💾 Storing product HIST_SBD931 in ChromaDB vector database
+2025-12-06 08:12:00,352 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_SBD931 in vector database
+2025-12-06 08:12:00,353 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_SBD931 with 48869 total sales
+2025-12-06 08:12:00,353 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_GSJ014 (GSJ014) in vector DB with sales data
+2025-12-06 08:12:00,353 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_GSJ014
+2025-12-06 08:12:00,362 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_GSJ014
+2025-12-06 08:12:00,362 - shared_knowledge_base - INFO - 💾 Storing product HIST_GSJ014 in ChromaDB vector database
+2025-12-06 08:12:00,373 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_GSJ014 in vector database
+2025-12-06 08:12:00,373 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_GSJ014 with 32649 total sales
+2025-12-06 08:12:00,373 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_SKT145 (SKT145) in vector DB with sales data
+2025-12-06 08:12:00,373 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_SKT145
+2025-12-06 08:12:00,384 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_SKT145
+2025-12-06 08:12:00,384 - shared_knowledge_base - INFO - 💾 Storing product HIST_SKT145 in ChromaDB vector database
+2025-12-06 08:12:00,401 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_SKT145 in vector database
+2025-12-06 08:12:00,401 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_SKT145 with 77382 total sales
+2025-12-06 08:12:00,401 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_HGH112 (HGH112) in vector DB with sales data
+2025-12-06 08:12:00,401 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_HGH112
+2025-12-06 08:12:00,413 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_HGH112
+2025-12-06 08:12:00,413 - shared_knowledge_base - INFO - 💾 Storing product HIST_HGH112 in ChromaDB vector database
+2025-12-06 08:12:00,421 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_HGH112 in vector database
+2025-12-06 08:12:00,421 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_HGH112 with 44179 total sales
+2025-12-06 08:12:00,421 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_SRS744 (SRS744) in vector DB with sales data
+2025-12-06 08:12:00,421 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_SRS744
+2025-12-06 08:12:00,431 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_SRS744
+2025-12-06 08:12:00,431 - shared_knowledge_base - INFO - 💾 Storing product HIST_SRS744 in ChromaDB vector database
+2025-12-06 08:12:00,443 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_SRS744 in vector database
+2025-12-06 08:12:00,443 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_SRS744 with 50372 total sales
+2025-12-06 08:12:00,443 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_PTD412 (PTD412) in vector DB with sales data
+2025-12-06 08:12:00,443 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_PTD412
+2025-12-06 08:12:00,455 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_PTD412
+2025-12-06 08:12:00,455 - shared_knowledge_base - INFO - 💾 Storing product HIST_PTD412 in ChromaDB vector database
+2025-12-06 08:12:00,467 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_PTD412 in vector database
+2025-12-06 08:12:00,468 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_PTD412 with 46578 total sales
+2025-12-06 08:12:00,468 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_DFJ821 (DFJ821) in vector DB with sales data
+2025-12-06 08:12:00,468 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_DFJ821
+2025-12-06 08:12:00,479 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_DFJ821
+2025-12-06 08:12:00,480 - shared_knowledge_base - INFO - 💾 Storing product HIST_DFJ821 in ChromaDB vector database
+2025-12-06 08:12:00,500 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_DFJ821 in vector database
+2025-12-06 08:12:00,500 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_DFJ821 with 59358 total sales
+2025-12-06 08:12:00,500 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_BOS120 (BOS120) in vector DB with sales data
+2025-12-06 08:12:00,500 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_BOS120
+2025-12-06 08:12:00,513 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_BOS120
+2025-12-06 08:12:00,513 - shared_knowledge_base - INFO - 💾 Storing product HIST_BOS120 in ChromaDB vector database
+2025-12-06 08:12:00,523 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_BOS120 in vector database
+2025-12-06 08:12:00,523 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_BOS120 with 45241 total sales
+2025-12-06 08:12:00,523 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_CNPS778 (CNPS778) in vector DB with sales data
+2025-12-06 08:12:00,523 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_CNPS778
+2025-12-06 08:12:00,533 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_CNPS778
+2025-12-06 08:12:00,533 - shared_knowledge_base - INFO - 💾 Storing product HIST_CNPS778 in ChromaDB vector database
+2025-12-06 08:12:00,542 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_CNPS778 in vector database
+2025-12-06 08:12:00,542 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_CNPS778 with 71992 total sales
+2025-12-06 08:12:00,542 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_LSK551 (LSK551) in vector DB with sales data
+2025-12-06 08:12:00,542 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_LSK551
+2025-12-06 08:12:00,580 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_LSK551
+2025-12-06 08:12:00,580 - shared_knowledge_base - INFO - 💾 Storing product HIST_LSK551 in ChromaDB vector database
+2025-12-06 08:12:00,590 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_LSK551 in vector database
+2025-12-06 08:12:00,590 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_LSK551 with 57964 total sales
+2025-12-06 08:12:00,590 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_TTP665 (TTP665) in vector DB with sales data
+2025-12-06 08:12:00,590 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_TTP665
+2025-12-06 08:12:00,600 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_TTP665
+2025-12-06 08:12:00,600 - shared_knowledge_base - INFO - 💾 Storing product HIST_TTP665 in ChromaDB vector database
+2025-12-06 08:12:00,612 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_TTP665 in vector database
+2025-12-06 08:12:00,612 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_TTP665 with 58474 total sales
+2025-12-06 08:12:00,612 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_TFC331 (TFC331) in vector DB with sales data
+2025-12-06 08:12:00,612 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_TFC331
+2025-12-06 08:12:00,622 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_TFC331
+2025-12-06 08:12:00,623 - shared_knowledge_base - INFO - 💾 Storing product HIST_TFC331 in ChromaDB vector database
+2025-12-06 08:12:00,630 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_TFC331 in vector database
+2025-12-06 08:12:00,630 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_TFC331 with 46319 total sales
+2025-12-06 08:12:00,630 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_WST661 (WST661) in vector DB with sales data
+2025-12-06 08:12:00,630 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_WST661
+2025-12-06 08:12:00,640 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_WST661
+2025-12-06 08:12:00,640 - shared_knowledge_base - INFO - 💾 Storing product HIST_WST661 in ChromaDB vector database
+2025-12-06 08:12:00,650 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_WST661 in vector database
+2025-12-06 08:12:00,650 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_WST661 with 44226 total sales
+2025-12-06 08:12:00,650 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_MSS441 (MSS441) in vector DB with sales data
+2025-12-06 08:12:00,651 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_MSS441
+2025-12-06 08:12:00,664 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_MSS441
+2025-12-06 08:12:00,664 - shared_knowledge_base - INFO - 💾 Storing product HIST_MSS441 in ChromaDB vector database
+2025-12-06 08:12:00,678 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_MSS441 in vector database
+2025-12-06 08:12:00,678 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_MSS441 with 44554 total sales
+2025-12-06 08:12:00,678 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_EVT040 (EVT040) in vector DB with sales data
+2025-12-06 08:12:00,678 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_EVT040
+2025-12-06 08:12:01,036 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_EVT040
+2025-12-06 08:12:01,036 - shared_knowledge_base - INFO - 💾 Storing product HIST_EVT040 in ChromaDB vector database
+2025-12-06 08:12:01,048 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_EVT040 in vector database
+2025-12-06 08:12:01,048 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_EVT040 with 61505 total sales
+2025-12-06 08:12:01,048 - agents.data_ingestion_agent - INFO - 📦 Storing historical product HIST_ODS901 (ODS901) in vector DB with sales data
+2025-12-06 08:12:01,049 - shared_knowledge_base - INFO - 🧠 Generating embedding for product HIST_ODS901
+2025-12-06 08:12:01,059 - shared_knowledge_base - INFO - ✅ Generated 384-dimensional embedding for product HIST_ODS901
+2025-12-06 08:12:01,059 - shared_knowledge_base - INFO - 💾 Storing product HIST_ODS901 in ChromaDB vector database
+2025-12-06 08:12:01,068 - shared_knowledge_base - INFO - ✅ Successfully stored product HIST_ODS901 in vector database
+2025-12-06 08:12:01,068 - agents.data_ingestion_agent - INFO - ✅ Successfully stored and embedded historical product HIST_ODS901 with 46829 total sales
+2025-12-06 08:12:01,068 - agents.data_ingestion_agent - INFO - ✅ Loaded dirty ODM data: 15 input products, 41 historical products
+2025-12-06 08:12:01,069 - __main__ - INFO - ✅ ODM data loaded: {'dirty_input_count': 15, 'historical_products_count': 41, 'historical_records_count': 5000, 'data_source': 'dirty_odm_data', 'cleaning_applied': False}
+2025-12-06 08:12:09,520 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:12:09,523 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:12:09,523 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:12:09,523 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:12:09,523 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:12:09,523 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:12:16,253 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:12:16,259 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:12:16,259 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:12:16,259 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:12:16,259 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:12:16,260 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:12:17,343 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:12:17,343 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:12:17,343 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:12:17,343 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:12:17,343 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:12:17,343 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:12:17,684 - __main__ - INFO - ✅ Loaded 10 unique stores
+2025-12-06 08:12:17,692 - __main__ - INFO - 🔮 Comprehensive prediction for: women leggings
+2025-12-06 08:12:17,693 - shared_knowledge_base - INFO - Attempting real vector search for similar products
+2025-12-06 08:12:17,693 - shared_knowledge_base - INFO - Searching for products similar to: women leggings
+2025-12-06 08:12:17,696 - shared_knowledge_base - INFO - Vector database has 59 products
+2025-12-06 08:12:18,079 - shared_knowledge_base - INFO - Found 45 real similar products from vector database
+2025-12-06 08:12:21,008 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-06 08:12:21,035 - __main__ - WARNING - Relevance validation failed: slice(None, 200, None)
+2025-12-06 08:12:21,038 - __main__ - INFO - 🔍 Relevance validation result: is_relevant=True, products=45
+2025-12-06 08:12:21,038 - __main__ - INFO - ✅ Using 45 validated relevant products out of 45 found
+2025-12-06 08:12:21,042 - __main__ - INFO - Viability check for 'women leggings': color=None, brick=leggings, segment=Mens
+2025-12-06 08:12:21,043 - __main__ - INFO - Matches: exact=2, similar=0, category_only=2, with_sales=35, total_products=45
+2025-12-06 08:12:21,075 - __main__ - INFO - ✅ Loaded historical performance for 10 cities
+2025-12-06 08:12:40,677 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-06 08:12:40,703 - __main__ - INFO - 🧹 Cleaned JSON (first 300 chars): {
+  "overall_analysis": {
+    "predicted_monthly_sales": 55300.0,
+    "confidence": 0.85,
+    "procurement_recommendation": "BUY",
+    "reasoning": "Based on historical sales data and city performance, women leggings have shown consistent demand across various climates. The average monthly sales acr...
+2025-12-06 08:12:40,703 - __main__ - INFO - ✅ Validation: Total=55300, Confidence=0.85, Stores=10
+2025-12-06 08:12:40,703 - __main__ - INFO - ✅ Comprehensive analysis completed: 55300.0 units/month, 10 stores
+2025-12-06 08:13:00,353 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:13:00,358 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:13:00,358 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:13:00,358 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:13:00,358 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:13:00,359 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:13:00,878 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:13:00,879 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:13:00,879 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:13:00,879 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:13:00,880 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:13:00,880 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:13:00,889 - __main__ - INFO - 🔮 Comprehensive prediction for: pink jeans
+2025-12-06 08:13:00,889 - shared_knowledge_base - INFO - Attempting real vector search for similar products
+2025-12-06 08:13:00,890 - shared_knowledge_base - INFO - Searching for products similar to: pink jeans
+2025-12-06 08:13:00,891 - shared_knowledge_base - INFO - Vector database has 59 products
+2025-12-06 08:13:01,245 - shared_knowledge_base - INFO - Found 45 real similar products from vector database
+2025-12-06 08:13:03,835 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-06 08:13:03,840 - __main__ - WARNING - Relevance validation failed: slice(None, 200, None)
+2025-12-06 08:13:03,844 - __main__ - INFO - 🔍 Relevance validation result: is_relevant=True, products=5
+2025-12-06 08:13:03,844 - __main__ - INFO - ✅ Using 5 validated relevant products out of 45 found
+2025-12-06 08:13:03,845 - __main__ - INFO - Viability check for 'pink jeans': color=pink, brick=jeans, segment=None
+2025-12-06 08:13:03,845 - __main__ - INFO - Matches: exact=0, similar=0, category_only=2, with_sales=4, total_products=5
+2025-12-06 08:13:03,846 - __main__ - WARNING - ❌ No pink jeans found. Found 2 jeans in different colors
+2025-12-06 08:13:09,982 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:13:09,983 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:13:09,983 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:13:09,983 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:13:09,984 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:13:09,984 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:13:10,334 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:13:10,334 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:13:10,334 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:13:10,334 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:13:10,334 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:13:10,335 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:13:10,343 - __main__ - INFO - 🔮 Comprehensive prediction for: green jeans
+2025-12-06 08:13:10,344 - shared_knowledge_base - INFO - Attempting real vector search for similar products
+2025-12-06 08:13:10,344 - shared_knowledge_base - INFO - Searching for products similar to: green jeans
+2025-12-06 08:13:10,353 - shared_knowledge_base - INFO - Vector database has 59 products
+2025-12-06 08:13:10,693 - shared_knowledge_base - INFO - Found 45 real similar products from vector database
+2025-12-06 08:13:13,265 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-06 08:13:13,273 - __main__ - WARNING - Relevance validation failed: slice(None, 200, None)
+2025-12-06 08:13:13,274 - __main__ - INFO - 🔍 Relevance validation result: is_relevant=True, products=5
+2025-12-06 08:13:13,274 - __main__ - INFO - ✅ Using 5 validated relevant products out of 45 found
+2025-12-06 08:13:13,276 - __main__ - INFO - Viability check for 'green jeans': color=green, brick=jeans, segment=None
+2025-12-06 08:13:13,276 - __main__ - INFO - Matches: exact=0, similar=0, category_only=2, with_sales=4, total_products=5
+2025-12-06 08:13:13,276 - __main__ - WARNING - ❌ No green jeans found. Found 2 jeans in different colors
+2025-12-06 08:13:24,833 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:13:24,834 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:13:24,837 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:13:24,837 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:13:24,838 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:13:24,838 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:13:25,557 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:13:25,557 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:13:25,558 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:13:25,558 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:13:25,558 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:13:25,558 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:13:25,563 - __main__ - INFO - 🔮 Comprehensive prediction for: black mens kurta
+2025-12-06 08:13:25,563 - shared_knowledge_base - INFO - Attempting real vector search for similar products
+2025-12-06 08:13:25,563 - shared_knowledge_base - INFO - Searching for products similar to: black mens kurta
+2025-12-06 08:13:25,567 - shared_knowledge_base - INFO - Vector database has 59 products
+2025-12-06 08:13:25,963 - shared_knowledge_base - INFO - Found 45 real similar products from vector database
+2025-12-06 08:13:28,976 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-06 08:13:28,987 - __main__ - WARNING - Relevance validation failed: slice(None, 200, None)
+2025-12-06 08:13:28,990 - __main__ - INFO - 🔍 Relevance validation result: is_relevant=True, products=45
+2025-12-06 08:13:28,990 - __main__ - INFO - ✅ Using 45 validated relevant products out of 45 found
+2025-12-06 08:13:28,996 - __main__ - INFO - Viability check for 'black mens kurta': color=black, brick=kurta, segment=Mens
+2025-12-06 08:13:28,996 - __main__ - INFO - Matches: exact=0, similar=0, category_only=5, with_sales=32, total_products=45
+2025-12-06 08:13:28,996 - __main__ - WARNING - ❌ No black kurta found. Found 5 kurta in different colors
+2025-12-06 08:13:34,278 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:13:34,278 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:13:34,278 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:13:34,278 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:13:34,278 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:13:34,278 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:13:34,621 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:13:34,621 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:13:34,621 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:13:34,621 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:13:34,621 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:13:34,621 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:13:34,625 - __main__ - INFO - 🔮 Comprehensive prediction for: black kurta
+2025-12-06 08:13:34,626 - shared_knowledge_base - INFO - Attempting real vector search for similar products
+2025-12-06 08:13:34,626 - shared_knowledge_base - INFO - Searching for products similar to: black kurta
+2025-12-06 08:13:34,626 - shared_knowledge_base - INFO - Vector database has 59 products
+2025-12-06 08:13:35,038 - shared_knowledge_base - INFO - Found 45 real similar products from vector database
+2025-12-06 08:13:39,012 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-06 08:13:39,020 - __main__ - WARNING - Relevance validation failed: slice(None, 200, None)
+2025-12-06 08:13:39,021 - __main__ - INFO - 🔍 Relevance validation result: is_relevant=True, products=45
+2025-12-06 08:13:39,022 - __main__ - INFO - ✅ Using 45 validated relevant products out of 45 found
+2025-12-06 08:13:39,028 - __main__ - INFO - Viability check for 'black kurta': color=black, brick=kurta, segment=None
+2025-12-06 08:13:39,028 - __main__ - INFO - Matches: exact=0, similar=0, category_only=5, with_sales=32, total_products=45
+2025-12-06 08:13:39,028 - __main__ - WARNING - ❌ No black kurta found. Found 5 kurta in different colors
+2025-12-06 08:15:07,309 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:15:07,312 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:15:07,312 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:15:07,312 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:15:07,312 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:15:07,312 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:15:07,843 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:15:07,847 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:15:07,847 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:15:07,847 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:15:07,847 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:15:07,847 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:15:07,855 - __main__ - INFO - 🔮 Comprehensive prediction for: maroon kurta
+2025-12-06 08:15:07,856 - shared_knowledge_base - INFO - Attempting real vector search for similar products
+2025-12-06 08:15:07,856 - shared_knowledge_base - INFO - Searching for products similar to: maroon kurta
+2025-12-06 08:15:07,857 - shared_knowledge_base - INFO - Vector database has 59 products
+2025-12-06 08:15:08,338 - shared_knowledge_base - INFO - Found 45 real similar products from vector database
+2025-12-06 08:15:10,641 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-06 08:15:10,652 - __main__ - WARNING - Relevance validation failed: slice(None, 200, None)
+2025-12-06 08:15:10,654 - __main__ - INFO - 🔍 Relevance validation result: is_relevant=True, products=45
+2025-12-06 08:15:10,654 - __main__ - INFO - ✅ Using 45 validated relevant products out of 45 found
+2025-12-06 08:15:10,657 - __main__ - INFO - Viability check for 'maroon kurta': color=maroon, brick=kurta, segment=None
+2025-12-06 08:15:10,658 - __main__ - INFO - Matches: exact=2, similar=0, category_only=5, with_sales=31, total_products=45
+2025-12-06 08:15:10,658 - __main__ - INFO - ✅ Found 2 exact matches for maroon kurta
+2025-12-06 08:15:10,681 - __main__ - INFO - ✅ Loaded historical performance for 10 cities
+2025-12-06 08:15:37,418 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-06 08:15:37,489 - __main__ - INFO - 🧹 Cleaned JSON (first 300 chars): {
+  "overall_analysis": {
+    "predicted_monthly_sales": 4875.0,
+    "confidence": 0.85,
+    "procurement_recommendation": "BUY",
+    "reasoning": "The analysis indicates strong market acceptance for maroon kurtas, particularly in cities with higher historical sales. The average monthly sales across...
+2025-12-06 08:15:37,489 - __main__ - INFO - ✅ Validation: Total=4875, Confidence=0.85, Stores=10
+2025-12-06 08:15:37,489 - __main__ - INFO - ✅ Comprehensive analysis completed: 4875.0 units/month, 10 stores
+2025-12-06 08:16:29,304 - utils.llm_client - INFO - ✅ LangSmith tracking enabled for project: intelli-odm
+2025-12-06 08:16:29,305 - utils.llm_client - INFO -    API Key: lsv2_pt_bc...8a5a
+2025-12-06 08:16:29,305 - utils.llm_client - INFO -    Endpoint: https://api.smith.langchain.com
+2025-12-06 08:16:29,305 - utils.llm_client - INFO -    Environment variables set for SDK-level tracking
+2025-12-06 08:16:29,305 - __main__ - INFO - ✅ LangSmith tracking initialized at module level
+2025-12-06 08:16:29,323 - __main__ - INFO - ✅ Successfully imported all required modules
+2025-12-06 08:16:29,328 - __main__ - INFO - 🔮 Comprehensive prediction for: teal kurta
+2025-12-06 08:16:29,329 - shared_knowledge_base - INFO - Attempting real vector search for similar products
+2025-12-06 08:16:29,329 - shared_knowledge_base - INFO - Searching for products similar to: teal kurta
+2025-12-06 08:16:29,330 - shared_knowledge_base - INFO - Vector database has 59 products
+2025-12-06 08:16:29,667 - shared_knowledge_base - INFO - Found 45 real similar products from vector database
+2025-12-06 08:16:33,271 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-06 08:16:33,286 - __main__ - WARNING - Relevance validation failed: slice(None, 200, None)
+2025-12-06 08:16:33,288 - __main__ - INFO - 🔍 Relevance validation result: is_relevant=True, products=45
+2025-12-06 08:16:33,288 - __main__ - INFO - ✅ Using 45 validated relevant products out of 45 found
+2025-12-06 08:16:33,291 - __main__ - INFO - Viability check for 'teal kurta': color=teal, brick=kurta, segment=None
+2025-12-06 08:16:33,292 - __main__ - INFO - Matches: exact=1, similar=0, category_only=5, with_sales=29, total_products=45
+2025-12-06 08:16:33,292 - __main__ - INFO - ✅ Found 1 exact matches for teal kurta
+2025-12-06 08:16:33,309 - __main__ - INFO - ✅ Loaded historical performance for 10 cities
+2025-12-06 08:16:55,544 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-06 08:16:55,564 - __main__ - INFO - 🧹 Cleaned JSON (first 300 chars): {
+  "overall_analysis": {
+    "predicted_monthly_sales": 48700,
+    "confidence": 0.85,
+    "procurement_recommendation": "BUY",
+    "reasoning": "The teal kurta has a proven market acceptance, and historical sales data from similar products indicate a strong demand across various climates. The aver...
+2025-12-06 08:16:55,564 - __main__ - INFO - ✅ Validation: Total=48700, Confidence=0.85, Stores=10
+2025-12-06 08:16:55,564 - __main__ - INFO - ✅ Comprehensive analysis completed: 48700 units/month, 10 stores
