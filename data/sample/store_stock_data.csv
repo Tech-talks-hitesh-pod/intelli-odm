@@ -1,0 +1,411 @@
+StoreID,StoreName,City,ClimateTag,StyleCode,StyleName,Colour,Brick,Segment,Fabric,CurrentStock,ReorderPoint,SafetyStock,StockStatus,LastUpdated
+ST01,Store 1,Delhi,"Winter-heavy, North",AAS711,AeroActive Shorts,Black,Shorts,Mens,Poly Knit,89,26,17,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",ADJ660,AllDay Denim Jogger,Dark Blue,Jogger,Mens,Denim,84,25,16,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",ALV310,AeroLite Vest,Black,Vest,Mens,Poly Blend,142,42,28,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",APJ001,Alpine Puffer Jacket,Navy,Jacket,Mens,Polyester,204,61,40,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",BLK212,BreezeLite Kurta,Teal,Kurta,Mens,Cotton-Linen,125,37,25,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",BOS120,Boardroom Oxford Shirt,Light Blue,Shirt,Mens,Oxford Cotton,107,32,21,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",BSS260,Bedtime Story Set,Baby Blue,Pyjama Set,Kids,Cotton,113,33,22,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",CLS920,Coastline Linen Shirt,Sand,Shirt,Mens,Linen,102,30,20,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",CLT612,CloudSoft Lounge Tee,Grey,T-Shirt,Mens,Cotton,71,21,14,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",CMH215,ChillMode Hoodie,Bottle Green,Hoodie,Mens,Fleece,86,25,17,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",CNPS778,CozyNest Pyjama Set,Lavender,Pyjama Set,Womens,Cotton,51,15,10,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",CSC332,CityStride Chinos,Stone,Trousers,Mens,Cotton,116,34,23,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",CWS888,CloudWalk Sneakers,White,Shoes,Mens,Mesh,164,49,32,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",DFJ821,Denim Force Jeans,Indigo,Jeans,Mens,Denim,175,52,35,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",EVT040,Everyday Tank,White,Vest,Mens,Cotton,176,52,35,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",FAK288,FestiveAura Kurta,Mustard,Kurta,Womens,Rayon-Silk,149,44,29,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",FSK507,FestiveSpark Kurta,Emerald,Kurta,Mens,Silk Blend,172,51,34,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",GSJ014,Glacier Shield Jacket,Olive,Jacket,Mens,Nylon Blend,203,60,40,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",HGH112,HeatGuard Hoodie,Black,Hoodie,Mens,Fleece,75,22,15,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",HNJ333,Heritage Nehru Jacket,Ivory,Jacket,Mens,Silk Blend,336,100,67,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",LSK551,LuxeSilk Kurta Set,Maroon,Kurta Set,Womens,Silk Blend,118,35,23,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",MGJ720,MonsoonGuard Jacket,Forest Green,Jacket,Womens,Waterproof Nylon,246,73,49,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",MMD777,Midnight Maxi Dress,Navy,Dress,Womens,Viscose,113,33,22,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",MRT210,MorningRun Tee,Neon Green,T-Shirt,Mens,Polyester,120,36,24,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",MSS441,MetroStretch Shirt,White,Shirt,Mens,Poplin,112,33,22,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",ODS901,OceanWash Denim Shirt,Light Blue,Shirt,Mens,Denim,90,27,18,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",PTD412,Playtime Dungaree,Denim Blue,Dungaree,Kids,Denim,120,36,24,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",RDW300,RainDance Windcheater,Yellow,Jacket,Kids,Nylon,66,19,13,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",SBD931,SummerBloom Dress,Peach,Dress,Womens,Rayon,59,17,11,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",SFL909,SparkFest Lehenga Set,Fuchsia,Lehenga Set,Girls,Silk Blend,88,26,17,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",SGP880,StormGuard Parka,Deep Green,Jacket,Mens,Polyester,156,46,31,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",SKT145,SunSafe Kids Tee,Orange,T-Shirt,Kids,Cotton,87,26,17,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",SRS744,Sunset Resort Shirt,Coral,Shirt,Mens,Rayon,93,27,18,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",SYL330,Studio Yoga Leggings,Black,Leggings,Womens,Nylon-Spandex,87,26,17,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",TFC331,TerraFlex Cargo,Khaki,Cargo,Mens,Twill,170,51,34,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",TFS522,TerraForm Shorts,Beige,Shorts,Mens,Cotton Twill,67,20,13,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",TTP665,TrailBlaze Trackpant,Charcoal,Jogger,Mens,Poly Knit,143,42,28,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",UEO543,UrbanEdge Overshirt,Charcoal,Shirt,Mens,Twill,151,45,30,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",ULP019,UltraLite Polo,Sky Blue,T-Shirt,Mens,Pique Knit,192,57,38,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",WJS555,Weekend Jog Set,Navy,Tracksuit,Mens,Cotton Blend,85,25,17,IN_STOCK,2025-12-06 08:20:41
+ST01,Store 1,Delhi,"Winter-heavy, North",WST661,WinterShield Thermal,Charcoal,Thermal,Mens,Thermal Cotton,223,66,44,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",AAS711,AeroActive Shorts,Black,Shorts,Mens,Poly Knit,67,20,13,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",ADJ660,AllDay Denim Jogger,Dark Blue,Jogger,Mens,Denim,62,18,12,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",ALV310,AeroLite Vest,Black,Vest,Mens,Poly Blend,73,21,14,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",APJ001,Alpine Puffer Jacket,Navy,Jacket,Mens,Polyester,171,51,34,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",BLK212,BreezeLite Kurta,Teal,Kurta,Mens,Cotton-Linen,147,44,29,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",BOS120,Boardroom Oxford Shirt,Light Blue,Shirt,Mens,Oxford Cotton,192,57,38,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",BSS260,Bedtime Story Set,Baby Blue,Pyjama Set,Kids,Cotton,151,45,30,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",CLS920,Coastline Linen Shirt,Sand,Shirt,Mens,Linen,83,24,16,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",CLT612,CloudSoft Lounge Tee,Grey,T-Shirt,Mens,Cotton,144,43,28,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",CMH215,ChillMode Hoodie,Bottle Green,Hoodie,Mens,Fleece,101,30,20,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",CNPS778,CozyNest Pyjama Set,Lavender,Pyjama Set,Womens,Cotton,80,24,16,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",CSC332,CityStride Chinos,Stone,Trousers,Mens,Cotton,75,22,15,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",CWS888,CloudWalk Sneakers,White,Shoes,Mens,Mesh,55,16,11,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",DFJ821,Denim Force Jeans,Indigo,Jeans,Mens,Denim,166,49,33,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",EVT040,Everyday Tank,White,Vest,Mens,Cotton,98,29,19,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",FAK288,FestiveAura Kurta,Mustard,Kurta,Womens,Rayon-Silk,144,43,28,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",FSK507,FestiveSpark Kurta,Emerald,Kurta,Mens,Silk Blend,139,41,27,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",GSJ014,Glacier Shield Jacket,Olive,Jacket,Mens,Nylon Blend,246,73,49,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",HGH112,HeatGuard Hoodie,Black,Hoodie,Mens,Fleece,104,31,20,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",HNJ333,Heritage Nehru Jacket,Ivory,Jacket,Mens,Silk Blend,107,32,21,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",LSK551,LuxeSilk Kurta Set,Maroon,Kurta Set,Womens,Silk Blend,134,40,26,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",MGJ720,MonsoonGuard Jacket,Forest Green,Jacket,Womens,Waterproof Nylon,234,70,46,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",MMD777,Midnight Maxi Dress,Navy,Dress,Womens,Viscose,131,39,26,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",MRT210,MorningRun Tee,Neon Green,T-Shirt,Mens,Polyester,92,27,18,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",MSS441,MetroStretch Shirt,White,Shirt,Mens,Poplin,161,48,32,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",ODS901,OceanWash Denim Shirt,Light Blue,Shirt,Mens,Denim,187,56,37,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",PTD412,Playtime Dungaree,Denim Blue,Dungaree,Kids,Denim,205,61,41,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",RDW300,RainDance Windcheater,Yellow,Jacket,Kids,Nylon,253,75,50,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",SBD931,SummerBloom Dress,Peach,Dress,Womens,Rayon,100,30,20,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",SFL909,SparkFest Lehenga Set,Fuchsia,Lehenga Set,Girls,Silk Blend,51,15,10,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",SGP880,StormGuard Parka,Deep Green,Jacket,Mens,Polyester,160,48,32,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",SKT145,SunSafe Kids Tee,Orange,T-Shirt,Kids,Cotton,95,28,19,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",SRS744,Sunset Resort Shirt,Coral,Shirt,Mens,Rayon,190,57,38,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",SYL330,Studio Yoga Leggings,Black,Leggings,Womens,Nylon-Spandex,72,21,14,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",TFC331,TerraFlex Cargo,Khaki,Cargo,Mens,Twill,119,35,23,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",TFS522,TerraForm Shorts,Beige,Shorts,Mens,Cotton Twill,20,6,4,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",TTP665,TrailBlaze Trackpant,Charcoal,Jogger,Mens,Poly Knit,130,39,26,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",UEO543,UrbanEdge Overshirt,Charcoal,Shirt,Mens,Twill,74,22,14,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",ULP019,UltraLite Polo,Sky Blue,T-Shirt,Mens,Pique Knit,181,54,36,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",WJS555,Weekend Jog Set,Navy,Tracksuit,Mens,Cotton Blend,149,44,29,IN_STOCK,2025-12-06 08:20:41
+ST02,Store 2,Jaipur,"Semi-winter, Festive",WST661,WinterShield Thermal,Charcoal,Thermal,Mens,Thermal Cotton,205,61,41,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",AAS711,AeroActive Shorts,Black,Shorts,Mens,Poly Knit,28,8,5,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",ADJ660,AllDay Denim Jogger,Dark Blue,Jogger,Mens,Denim,113,33,22,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",ALV310,AeroLite Vest,Black,Vest,Mens,Poly Blend,165,49,33,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",APJ001,Alpine Puffer Jacket,Navy,Jacket,Mens,Polyester,138,41,27,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",BLK212,BreezeLite Kurta,Teal,Kurta,Mens,Cotton-Linen,105,31,21,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",BOS120,Boardroom Oxford Shirt,Light Blue,Shirt,Mens,Oxford Cotton,144,43,28,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",BSS260,Bedtime Story Set,Baby Blue,Pyjama Set,Kids,Cotton,122,36,24,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",CLS920,Coastline Linen Shirt,Sand,Shirt,Mens,Linen,186,55,37,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",CLT612,CloudSoft Lounge Tee,Grey,T-Shirt,Mens,Cotton,210,63,42,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",CMH215,ChillMode Hoodie,Bottle Green,Hoodie,Mens,Fleece,231,69,46,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",CNPS778,CozyNest Pyjama Set,Lavender,Pyjama Set,Womens,Cotton,139,41,27,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",CSC332,CityStride Chinos,Stone,Trousers,Mens,Cotton,191,57,38,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",CWS888,CloudWalk Sneakers,White,Shoes,Mens,Mesh,75,22,15,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",DFJ821,Denim Force Jeans,Indigo,Jeans,Mens,Denim,144,43,28,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",EVT040,Everyday Tank,White,Vest,Mens,Cotton,117,35,23,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",FAK288,FestiveAura Kurta,Mustard,Kurta,Womens,Rayon-Silk,88,26,17,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",FSK507,FestiveSpark Kurta,Emerald,Kurta,Mens,Silk Blend,149,44,29,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",GSJ014,Glacier Shield Jacket,Olive,Jacket,Mens,Nylon Blend,128,38,25,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",HGH112,HeatGuard Hoodie,Black,Hoodie,Mens,Fleece,59,17,11,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",HNJ333,Heritage Nehru Jacket,Ivory,Jacket,Mens,Silk Blend,256,76,51,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",LSK551,LuxeSilk Kurta Set,Maroon,Kurta Set,Womens,Silk Blend,110,33,22,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",MGJ720,MonsoonGuard Jacket,Forest Green,Jacket,Womens,Waterproof Nylon,166,49,33,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",MMD777,Midnight Maxi Dress,Navy,Dress,Womens,Viscose,46,13,9,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",MRT210,MorningRun Tee,Neon Green,T-Shirt,Mens,Polyester,168,50,33,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",MSS441,MetroStretch Shirt,White,Shirt,Mens,Poplin,215,64,43,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",ODS901,OceanWash Denim Shirt,Light Blue,Shirt,Mens,Denim,226,67,45,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",PTD412,Playtime Dungaree,Denim Blue,Dungaree,Kids,Denim,196,58,39,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",RDW300,RainDance Windcheater,Yellow,Jacket,Kids,Nylon,124,37,24,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",SBD931,SummerBloom Dress,Peach,Dress,Womens,Rayon,130,39,26,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",SFL909,SparkFest Lehenga Set,Fuchsia,Lehenga Set,Girls,Silk Blend,148,44,29,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",SGP880,StormGuard Parka,Deep Green,Jacket,Mens,Polyester,157,47,31,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",SKT145,SunSafe Kids Tee,Orange,T-Shirt,Kids,Cotton,111,33,22,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",SRS744,Sunset Resort Shirt,Coral,Shirt,Mens,Rayon,158,47,31,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",SYL330,Studio Yoga Leggings,Black,Leggings,Womens,Nylon-Spandex,105,31,21,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",TFC331,TerraFlex Cargo,Khaki,Cargo,Mens,Twill,184,55,36,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",TFS522,TerraForm Shorts,Beige,Shorts,Mens,Cotton Twill,60,18,12,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",TTP665,TrailBlaze Trackpant,Charcoal,Jogger,Mens,Poly Knit,51,15,10,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",UEO543,UrbanEdge Overshirt,Charcoal,Shirt,Mens,Twill,189,56,37,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",ULP019,UltraLite Polo,Sky Blue,T-Shirt,Mens,Pique Knit,94,28,18,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",WJS555,Weekend Jog Set,Navy,Tracksuit,Mens,Cotton Blend,58,17,11,IN_STOCK,2025-12-06 08:20:41
+ST03,Store 3,Mumbai,"Humid, No winter",WST661,WinterShield Thermal,Charcoal,Thermal,Mens,Thermal Cotton,88,26,17,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,AAS711,AeroActive Shorts,Black,Shorts,Mens,Poly Knit,105,31,21,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,ADJ660,AllDay Denim Jogger,Dark Blue,Jogger,Mens,Denim,115,34,23,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,ALV310,AeroLite Vest,Black,Vest,Mens,Poly Blend,153,45,30,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,APJ001,Alpine Puffer Jacket,Navy,Jacket,Mens,Polyester,128,38,25,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,BLK212,BreezeLite Kurta,Teal,Kurta,Mens,Cotton-Linen,103,30,20,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,BOS120,Boardroom Oxford Shirt,Light Blue,Shirt,Mens,Oxford Cotton,208,62,41,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,BSS260,Bedtime Story Set,Baby Blue,Pyjama Set,Kids,Cotton,89,26,17,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,CLS920,Coastline Linen Shirt,Sand,Shirt,Mens,Linen,236,70,47,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,CLT612,CloudSoft Lounge Tee,Grey,T-Shirt,Mens,Cotton,90,27,18,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,CMH215,ChillMode Hoodie,Bottle Green,Hoodie,Mens,Fleece,192,57,38,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,CNPS778,CozyNest Pyjama Set,Lavender,Pyjama Set,Womens,Cotton,71,21,14,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,CSC332,CityStride Chinos,Stone,Trousers,Mens,Cotton,133,39,26,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,CWS888,CloudWalk Sneakers,White,Shoes,Mens,Mesh,105,31,21,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,DFJ821,Denim Force Jeans,Indigo,Jeans,Mens,Denim,80,24,16,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,EVT040,Everyday Tank,White,Vest,Mens,Cotton,60,18,12,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,FAK288,FestiveAura Kurta,Mustard,Kurta,Womens,Rayon-Silk,101,30,20,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,FSK507,FestiveSpark Kurta,Emerald,Kurta,Mens,Silk Blend,131,39,26,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,GSJ014,Glacier Shield Jacket,Olive,Jacket,Mens,Nylon Blend,103,30,20,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,HGH112,HeatGuard Hoodie,Black,Hoodie,Mens,Fleece,51,15,10,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,HNJ333,Heritage Nehru Jacket,Ivory,Jacket,Mens,Silk Blend,157,47,31,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,LSK551,LuxeSilk Kurta Set,Maroon,Kurta Set,Womens,Silk Blend,201,60,40,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,MGJ720,MonsoonGuard Jacket,Forest Green,Jacket,Womens,Waterproof Nylon,52,15,10,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,MMD777,Midnight Maxi Dress,Navy,Dress,Womens,Viscose,101,30,20,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,MRT210,MorningRun Tee,Neon Green,T-Shirt,Mens,Polyester,265,79,53,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,MSS441,MetroStretch Shirt,White,Shirt,Mens,Poplin,103,30,20,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,ODS901,OceanWash Denim Shirt,Light Blue,Shirt,Mens,Denim,204,61,40,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,PTD412,Playtime Dungaree,Denim Blue,Dungaree,Kids,Denim,171,51,34,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,RDW300,RainDance Windcheater,Yellow,Jacket,Kids,Nylon,75,22,15,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,SBD931,SummerBloom Dress,Peach,Dress,Womens,Rayon,92,27,18,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,SFL909,SparkFest Lehenga Set,Fuchsia,Lehenga Set,Girls,Silk Blend,113,33,22,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,SGP880,StormGuard Parka,Deep Green,Jacket,Mens,Polyester,91,27,18,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,SKT145,SunSafe Kids Tee,Orange,T-Shirt,Kids,Cotton,217,65,43,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,SRS744,Sunset Resort Shirt,Coral,Shirt,Mens,Rayon,162,48,32,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,SYL330,Studio Yoga Leggings,Black,Leggings,Womens,Nylon-Spandex,173,51,34,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,TFC331,TerraFlex Cargo,Khaki,Cargo,Mens,Twill,49,14,9,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,TFS522,TerraForm Shorts,Beige,Shorts,Mens,Cotton Twill,78,23,15,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,TTP665,TrailBlaze Trackpant,Charcoal,Jogger,Mens,Poly Knit,62,18,12,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,UEO543,UrbanEdge Overshirt,Charcoal,Shirt,Mens,Twill,256,76,51,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,ULP019,UltraLite Polo,Sky Blue,T-Shirt,Mens,Pique Knit,259,77,51,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,WJS555,Weekend Jog Set,Navy,Tracksuit,Mens,Cotton Blend,132,39,26,IN_STOCK,2025-12-06 08:20:41
+ST04,Store 4,Bengaluru,Mild weather,WST661,WinterShield Thermal,Charcoal,Thermal,Mens,Thermal Cotton,78,23,15,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,AAS711,AeroActive Shorts,Black,Shorts,Mens,Poly Knit,52,15,10,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,ADJ660,AllDay Denim Jogger,Dark Blue,Jogger,Mens,Denim,129,38,25,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,ALV310,AeroLite Vest,Black,Vest,Mens,Poly Blend,203,60,40,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,APJ001,Alpine Puffer Jacket,Navy,Jacket,Mens,Polyester,100,30,20,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,BLK212,BreezeLite Kurta,Teal,Kurta,Mens,Cotton-Linen,139,41,27,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,BOS120,Boardroom Oxford Shirt,Light Blue,Shirt,Mens,Oxford Cotton,138,41,27,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,BSS260,Bedtime Story Set,Baby Blue,Pyjama Set,Kids,Cotton,118,35,23,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,CLS920,Coastline Linen Shirt,Sand,Shirt,Mens,Linen,190,57,38,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,CLT612,CloudSoft Lounge Tee,Grey,T-Shirt,Mens,Cotton,321,96,64,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,CMH215,ChillMode Hoodie,Bottle Green,Hoodie,Mens,Fleece,165,49,33,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,CNPS778,CozyNest Pyjama Set,Lavender,Pyjama Set,Womens,Cotton,154,46,30,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,CSC332,CityStride Chinos,Stone,Trousers,Mens,Cotton,114,34,22,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,CWS888,CloudWalk Sneakers,White,Shoes,Mens,Mesh,167,50,33,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,DFJ821,Denim Force Jeans,Indigo,Jeans,Mens,Denim,62,18,12,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,EVT040,Everyday Tank,White,Vest,Mens,Cotton,52,15,10,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,FAK288,FestiveAura Kurta,Mustard,Kurta,Womens,Rayon-Silk,71,21,14,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,FSK507,FestiveSpark Kurta,Emerald,Kurta,Mens,Silk Blend,164,49,32,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,GSJ014,Glacier Shield Jacket,Olive,Jacket,Mens,Nylon Blend,56,16,11,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,HGH112,HeatGuard Hoodie,Black,Hoodie,Mens,Fleece,156,46,31,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,HNJ333,Heritage Nehru Jacket,Ivory,Jacket,Mens,Silk Blend,94,28,18,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,LSK551,LuxeSilk Kurta Set,Maroon,Kurta Set,Womens,Silk Blend,137,41,27,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,MGJ720,MonsoonGuard Jacket,Forest Green,Jacket,Womens,Waterproof Nylon,77,23,15,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,MMD777,Midnight Maxi Dress,Navy,Dress,Womens,Viscose,57,17,11,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,MRT210,MorningRun Tee,Neon Green,T-Shirt,Mens,Polyester,201,60,40,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,MSS441,MetroStretch Shirt,White,Shirt,Mens,Poplin,177,53,35,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,ODS901,OceanWash Denim Shirt,Light Blue,Shirt,Mens,Denim,130,39,26,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,PTD412,Playtime Dungaree,Denim Blue,Dungaree,Kids,Denim,231,69,46,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,RDW300,RainDance Windcheater,Yellow,Jacket,Kids,Nylon,61,18,12,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,SBD931,SummerBloom Dress,Peach,Dress,Womens,Rayon,111,33,22,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,SFL909,SparkFest Lehenga Set,Fuchsia,Lehenga Set,Girls,Silk Blend,50,15,10,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,SGP880,StormGuard Parka,Deep Green,Jacket,Mens,Polyester,96,28,19,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,SKT145,SunSafe Kids Tee,Orange,T-Shirt,Kids,Cotton,125,37,25,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,SRS744,Sunset Resort Shirt,Coral,Shirt,Mens,Rayon,248,74,49,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,SYL330,Studio Yoga Leggings,Black,Leggings,Womens,Nylon-Spandex,93,27,18,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,TFC331,TerraFlex Cargo,Khaki,Cargo,Mens,Twill,88,26,17,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,TFS522,TerraForm Shorts,Beige,Shorts,Mens,Cotton Twill,62,18,12,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,TTP665,TrailBlaze Trackpant,Charcoal,Jogger,Mens,Poly Knit,77,23,15,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,UEO543,UrbanEdge Overshirt,Charcoal,Shirt,Mens,Twill,82,24,16,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,ULP019,UltraLite Polo,Sky Blue,T-Shirt,Mens,Pique Knit,128,38,25,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,WJS555,Weekend Jog Set,Navy,Tracksuit,Mens,Cotton Blend,56,16,11,IN_STOCK,2025-12-06 08:20:41
+ST05,Store 5,Kochi,Hot & Humid,WST661,WinterShield Thermal,Charcoal,Thermal,Mens,Thermal Cotton,158,47,31,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",AAS711,AeroActive Shorts,Black,Shorts,Mens,Poly Knit,122,36,24,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",ADJ660,AllDay Denim Jogger,Dark Blue,Jogger,Mens,Denim,70,21,14,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",ALV310,AeroLite Vest,Black,Vest,Mens,Poly Blend,56,16,11,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",APJ001,Alpine Puffer Jacket,Navy,Jacket,Mens,Polyester,67,20,13,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",BLK212,BreezeLite Kurta,Teal,Kurta,Mens,Cotton-Linen,137,41,27,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",BOS120,Boardroom Oxford Shirt,Light Blue,Shirt,Mens,Oxford Cotton,93,27,18,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",BSS260,Bedtime Story Set,Baby Blue,Pyjama Set,Kids,Cotton,114,34,22,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",CLS920,Coastline Linen Shirt,Sand,Shirt,Mens,Linen,210,63,42,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",CLT612,CloudSoft Lounge Tee,Grey,T-Shirt,Mens,Cotton,268,80,53,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",CMH215,ChillMode Hoodie,Bottle Green,Hoodie,Mens,Fleece,187,56,37,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",CNPS778,CozyNest Pyjama Set,Lavender,Pyjama Set,Womens,Cotton,59,17,11,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",CSC332,CityStride Chinos,Stone,Trousers,Mens,Cotton,185,55,37,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",CWS888,CloudWalk Sneakers,White,Shoes,Mens,Mesh,112,33,22,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",DFJ821,Denim Force Jeans,Indigo,Jeans,Mens,Denim,171,51,34,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",EVT040,Everyday Tank,White,Vest,Mens,Cotton,72,21,14,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",FAK288,FestiveAura Kurta,Mustard,Kurta,Womens,Rayon-Silk,147,44,29,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",FSK507,FestiveSpark Kurta,Emerald,Kurta,Mens,Silk Blend,122,36,24,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",GSJ014,Glacier Shield Jacket,Olive,Jacket,Mens,Nylon Blend,92,27,18,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",HGH112,HeatGuard Hoodie,Black,Hoodie,Mens,Fleece,66,19,13,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",HNJ333,Heritage Nehru Jacket,Ivory,Jacket,Mens,Silk Blend,34,10,6,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",LSK551,LuxeSilk Kurta Set,Maroon,Kurta Set,Womens,Silk Blend,99,29,19,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",MGJ720,MonsoonGuard Jacket,Forest Green,Jacket,Womens,Waterproof Nylon,29,8,5,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",MMD777,Midnight Maxi Dress,Navy,Dress,Womens,Viscose,192,57,38,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",MRT210,MorningRun Tee,Neon Green,T-Shirt,Mens,Polyester,205,61,41,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",MSS441,MetroStretch Shirt,White,Shirt,Mens,Poplin,81,24,16,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",ODS901,OceanWash Denim Shirt,Light Blue,Shirt,Mens,Denim,256,76,51,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",PTD412,Playtime Dungaree,Denim Blue,Dungaree,Kids,Denim,87,26,17,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",RDW300,RainDance Windcheater,Yellow,Jacket,Kids,Nylon,102,30,20,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",SBD931,SummerBloom Dress,Peach,Dress,Womens,Rayon,145,43,29,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",SFL909,SparkFest Lehenga Set,Fuchsia,Lehenga Set,Girls,Silk Blend,169,50,33,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",SGP880,StormGuard Parka,Deep Green,Jacket,Mens,Polyester,56,16,11,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",SKT145,SunSafe Kids Tee,Orange,T-Shirt,Kids,Cotton,287,86,57,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",SRS744,Sunset Resort Shirt,Coral,Shirt,Mens,Rayon,183,54,36,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",SYL330,Studio Yoga Leggings,Black,Leggings,Womens,Nylon-Spandex,55,16,11,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",TFC331,TerraFlex Cargo,Khaki,Cargo,Mens,Twill,197,59,39,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",TFS522,TerraForm Shorts,Beige,Shorts,Mens,Cotton Twill,78,23,15,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",TTP665,TrailBlaze Trackpant,Charcoal,Jogger,Mens,Poly Knit,97,29,19,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",UEO543,UrbanEdge Overshirt,Charcoal,Shirt,Mens,Twill,104,31,20,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",ULP019,UltraLite Polo,Sky Blue,T-Shirt,Mens,Pique Knit,253,75,50,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",WJS555,Weekend Jog Set,Navy,Tracksuit,Mens,Cotton Blend,134,40,26,IN_STOCK,2025-12-06 08:20:41
+ST06,Store 6,Chennai,"Hot, Tropical",WST661,WinterShield Thermal,Charcoal,Thermal,Mens,Thermal Cotton,95,28,19,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,AAS711,AeroActive Shorts,Black,Shorts,Mens,Poly Knit,63,18,12,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,ADJ660,AllDay Denim Jogger,Dark Blue,Jogger,Mens,Denim,82,24,16,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,ALV310,AeroLite Vest,Black,Vest,Mens,Poly Blend,205,61,41,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,APJ001,Alpine Puffer Jacket,Navy,Jacket,Mens,Polyester,105,31,21,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,BLK212,BreezeLite Kurta,Teal,Kurta,Mens,Cotton-Linen,102,30,20,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,BOS120,Boardroom Oxford Shirt,Light Blue,Shirt,Mens,Oxford Cotton,84,25,16,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,BSS260,Bedtime Story Set,Baby Blue,Pyjama Set,Kids,Cotton,47,14,9,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,CLS920,Coastline Linen Shirt,Sand,Shirt,Mens,Linen,243,72,48,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,CLT612,CloudSoft Lounge Tee,Grey,T-Shirt,Mens,Cotton,287,86,57,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,CMH215,ChillMode Hoodie,Bottle Green,Hoodie,Mens,Fleece,70,21,14,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,CNPS778,CozyNest Pyjama Set,Lavender,Pyjama Set,Womens,Cotton,104,31,20,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,CSC332,CityStride Chinos,Stone,Trousers,Mens,Cotton,93,27,18,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,CWS888,CloudWalk Sneakers,White,Shoes,Mens,Mesh,52,15,10,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,DFJ821,Denim Force Jeans,Indigo,Jeans,Mens,Denim,159,47,31,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,EVT040,Everyday Tank,White,Vest,Mens,Cotton,139,41,27,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,FAK288,FestiveAura Kurta,Mustard,Kurta,Womens,Rayon-Silk,53,15,10,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,FSK507,FestiveSpark Kurta,Emerald,Kurta,Mens,Silk Blend,108,32,21,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,GSJ014,Glacier Shield Jacket,Olive,Jacket,Mens,Nylon Blend,155,46,31,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,HGH112,HeatGuard Hoodie,Black,Hoodie,Mens,Fleece,137,41,27,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,HNJ333,Heritage Nehru Jacket,Ivory,Jacket,Mens,Silk Blend,230,69,46,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,LSK551,LuxeSilk Kurta Set,Maroon,Kurta Set,Womens,Silk Blend,173,51,34,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,MGJ720,MonsoonGuard Jacket,Forest Green,Jacket,Womens,Waterproof Nylon,186,55,37,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,MMD777,Midnight Maxi Dress,Navy,Dress,Womens,Viscose,54,16,10,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,MRT210,MorningRun Tee,Neon Green,T-Shirt,Mens,Polyester,121,36,24,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,MSS441,MetroStretch Shirt,White,Shirt,Mens,Poplin,105,31,21,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,ODS901,OceanWash Denim Shirt,Light Blue,Shirt,Mens,Denim,100,30,20,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,PTD412,Playtime Dungaree,Denim Blue,Dungaree,Kids,Denim,144,43,28,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,RDW300,RainDance Windcheater,Yellow,Jacket,Kids,Nylon,77,23,15,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,SBD931,SummerBloom Dress,Peach,Dress,Womens,Rayon,113,33,22,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,SFL909,SparkFest Lehenga Set,Fuchsia,Lehenga Set,Girls,Silk Blend,84,25,16,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,SGP880,StormGuard Parka,Deep Green,Jacket,Mens,Polyester,174,52,34,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,SKT145,SunSafe Kids Tee,Orange,T-Shirt,Kids,Cotton,131,39,26,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,SRS744,Sunset Resort Shirt,Coral,Shirt,Mens,Rayon,157,47,31,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,SYL330,Studio Yoga Leggings,Black,Leggings,Womens,Nylon-Spandex,62,18,12,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,TFC331,TerraFlex Cargo,Khaki,Cargo,Mens,Twill,121,36,24,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,TFS522,TerraForm Shorts,Beige,Shorts,Mens,Cotton Twill,50,15,10,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,TTP665,TrailBlaze Trackpant,Charcoal,Jogger,Mens,Poly Knit,134,40,26,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,UEO543,UrbanEdge Overshirt,Charcoal,Shirt,Mens,Twill,190,57,38,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,ULP019,UltraLite Polo,Sky Blue,T-Shirt,Mens,Pique Knit,200,60,40,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,WJS555,Weekend Jog Set,Navy,Tracksuit,Mens,Cotton Blend,69,20,13,IN_STOCK,2025-12-06 08:20:41
+ST07,Store 7,Hyderabad,Warm semi-arid,WST661,WinterShield Thermal,Charcoal,Thermal,Mens,Thermal Cotton,153,45,30,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",AAS711,AeroActive Shorts,Black,Shorts,Mens,Poly Knit,92,27,18,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",ADJ660,AllDay Denim Jogger,Dark Blue,Jogger,Mens,Denim,77,23,15,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",ALV310,AeroLite Vest,Black,Vest,Mens,Poly Blend,159,47,31,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",APJ001,Alpine Puffer Jacket,Navy,Jacket,Mens,Polyester,164,49,32,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",BLK212,BreezeLite Kurta,Teal,Kurta,Mens,Cotton-Linen,100,30,20,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",BOS120,Boardroom Oxford Shirt,Light Blue,Shirt,Mens,Oxford Cotton,208,62,41,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",BSS260,Bedtime Story Set,Baby Blue,Pyjama Set,Kids,Cotton,178,53,35,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",CLS920,Coastline Linen Shirt,Sand,Shirt,Mens,Linen,171,51,34,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",CLT612,CloudSoft Lounge Tee,Grey,T-Shirt,Mens,Cotton,112,33,22,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",CMH215,ChillMode Hoodie,Bottle Green,Hoodie,Mens,Fleece,65,19,13,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",CNPS778,CozyNest Pyjama Set,Lavender,Pyjama Set,Womens,Cotton,68,20,13,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",CSC332,CityStride Chinos,Stone,Trousers,Mens,Cotton,61,18,12,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",CWS888,CloudWalk Sneakers,White,Shoes,Mens,Mesh,74,22,14,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",DFJ821,Denim Force Jeans,Indigo,Jeans,Mens,Denim,127,38,25,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",EVT040,Everyday Tank,White,Vest,Mens,Cotton,135,40,27,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",FAK288,FestiveAura Kurta,Mustard,Kurta,Womens,Rayon-Silk,132,39,26,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",FSK507,FestiveSpark Kurta,Emerald,Kurta,Mens,Silk Blend,100,30,20,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",GSJ014,Glacier Shield Jacket,Olive,Jacket,Mens,Nylon Blend,48,14,9,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",HGH112,HeatGuard Hoodie,Black,Hoodie,Mens,Fleece,80,24,16,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",HNJ333,Heritage Nehru Jacket,Ivory,Jacket,Mens,Silk Blend,141,42,28,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",LSK551,LuxeSilk Kurta Set,Maroon,Kurta Set,Womens,Silk Blend,68,20,13,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",MGJ720,MonsoonGuard Jacket,Forest Green,Jacket,Womens,Waterproof Nylon,103,30,20,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",MMD777,Midnight Maxi Dress,Navy,Dress,Womens,Viscose,133,39,26,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",MRT210,MorningRun Tee,Neon Green,T-Shirt,Mens,Polyester,150,45,30,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",MSS441,MetroStretch Shirt,White,Shirt,Mens,Poplin,135,40,27,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",ODS901,OceanWash Denim Shirt,Light Blue,Shirt,Mens,Denim,242,72,48,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",PTD412,Playtime Dungaree,Denim Blue,Dungaree,Kids,Denim,163,48,32,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",RDW300,RainDance Windcheater,Yellow,Jacket,Kids,Nylon,162,48,32,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",SBD931,SummerBloom Dress,Peach,Dress,Womens,Rayon,52,15,10,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",SFL909,SparkFest Lehenga Set,Fuchsia,Lehenga Set,Girls,Silk Blend,145,43,29,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",SGP880,StormGuard Parka,Deep Green,Jacket,Mens,Polyester,72,21,14,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",SKT145,SunSafe Kids Tee,Orange,T-Shirt,Kids,Cotton,203,60,40,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",SRS744,Sunset Resort Shirt,Coral,Shirt,Mens,Rayon,121,36,24,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",SYL330,Studio Yoga Leggings,Black,Leggings,Womens,Nylon-Spandex,135,40,27,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",TFC331,TerraFlex Cargo,Khaki,Cargo,Mens,Twill,79,23,15,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",TFS522,TerraForm Shorts,Beige,Shorts,Mens,Cotton Twill,91,27,18,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",TTP665,TrailBlaze Trackpant,Charcoal,Jogger,Mens,Poly Knit,114,34,22,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",UEO543,UrbanEdge Overshirt,Charcoal,Shirt,Mens,Twill,175,52,35,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",ULP019,UltraLite Polo,Sky Blue,T-Shirt,Mens,Pique Knit,248,74,49,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",WJS555,Weekend Jog Set,Navy,Tracksuit,Mens,Cotton Blend,141,42,28,IN_STOCK,2025-12-06 08:20:41
+ST08,Store 8,Pune,"Mild, fashion-forward",WST661,WinterShield Thermal,Charcoal,Thermal,Mens,Thermal Cotton,41,12,8,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,AAS711,AeroActive Shorts,Black,Shorts,Mens,Poly Knit,110,33,22,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,ADJ660,AllDay Denim Jogger,Dark Blue,Jogger,Mens,Denim,152,45,30,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,ALV310,AeroLite Vest,Black,Vest,Mens,Poly Blend,125,37,25,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,APJ001,Alpine Puffer Jacket,Navy,Jacket,Mens,Polyester,39,11,7,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,BLK212,BreezeLite Kurta,Teal,Kurta,Mens,Cotton-Linen,115,34,23,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,BOS120,Boardroom Oxford Shirt,Light Blue,Shirt,Mens,Oxford Cotton,153,45,30,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,BSS260,Bedtime Story Set,Baby Blue,Pyjama Set,Kids,Cotton,148,44,29,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,CLS920,Coastline Linen Shirt,Sand,Shirt,Mens,Linen,143,42,28,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,CLT612,CloudSoft Lounge Tee,Grey,T-Shirt,Mens,Cotton,243,72,48,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,CMH215,ChillMode Hoodie,Bottle Green,Hoodie,Mens,Fleece,107,32,21,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,CNPS778,CozyNest Pyjama Set,Lavender,Pyjama Set,Womens,Cotton,198,59,39,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,CSC332,CityStride Chinos,Stone,Trousers,Mens,Cotton,96,28,19,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,CWS888,CloudWalk Sneakers,White,Shoes,Mens,Mesh,182,54,36,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,DFJ821,Denim Force Jeans,Indigo,Jeans,Mens,Denim,108,32,21,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,EVT040,Everyday Tank,White,Vest,Mens,Cotton,129,38,25,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,FAK288,FestiveAura Kurta,Mustard,Kurta,Womens,Rayon-Silk,142,42,28,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,FSK507,FestiveSpark Kurta,Emerald,Kurta,Mens,Silk Blend,155,46,31,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,GSJ014,Glacier Shield Jacket,Olive,Jacket,Mens,Nylon Blend,36,10,7,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,HGH112,HeatGuard Hoodie,Black,Hoodie,Mens,Fleece,178,53,35,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,HNJ333,Heritage Nehru Jacket,Ivory,Jacket,Mens,Silk Blend,67,20,13,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,LSK551,LuxeSilk Kurta Set,Maroon,Kurta Set,Womens,Silk Blend,166,49,33,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,MGJ720,MonsoonGuard Jacket,Forest Green,Jacket,Womens,Waterproof Nylon,31,9,6,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,MMD777,Midnight Maxi Dress,Navy,Dress,Womens,Viscose,201,60,40,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,MRT210,MorningRun Tee,Neon Green,T-Shirt,Mens,Polyester,320,96,64,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,MSS441,MetroStretch Shirt,White,Shirt,Mens,Poplin,137,41,27,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,ODS901,OceanWash Denim Shirt,Light Blue,Shirt,Mens,Denim,146,43,29,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,PTD412,Playtime Dungaree,Denim Blue,Dungaree,Kids,Denim,163,48,32,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,RDW300,RainDance Windcheater,Yellow,Jacket,Kids,Nylon,69,20,13,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,SBD931,SummerBloom Dress,Peach,Dress,Womens,Rayon,74,22,14,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,SFL909,SparkFest Lehenga Set,Fuchsia,Lehenga Set,Girls,Silk Blend,150,45,30,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,SGP880,StormGuard Parka,Deep Green,Jacket,Mens,Polyester,65,19,13,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,SKT145,SunSafe Kids Tee,Orange,T-Shirt,Kids,Cotton,322,96,64,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,SRS744,Sunset Resort Shirt,Coral,Shirt,Mens,Rayon,103,30,20,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,SYL330,Studio Yoga Leggings,Black,Leggings,Womens,Nylon-Spandex,136,40,27,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,TFC331,TerraFlex Cargo,Khaki,Cargo,Mens,Twill,164,49,32,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,TFS522,TerraForm Shorts,Beige,Shorts,Mens,Cotton Twill,122,36,24,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,TTP665,TrailBlaze Trackpant,Charcoal,Jogger,Mens,Poly Knit,70,21,14,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,UEO543,UrbanEdge Overshirt,Charcoal,Shirt,Mens,Twill,95,28,19,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,ULP019,UltraLite Polo,Sky Blue,T-Shirt,Mens,Pique Knit,324,97,64,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,WJS555,Weekend Jog Set,Navy,Tracksuit,Mens,Cotton Blend,63,18,12,IN_STOCK,2025-12-06 08:20:41
+ST09,Store 9,Kolkata,Humid + festive,WST661,WinterShield Thermal,Charcoal,Thermal,Mens,Thermal Cotton,81,24,16,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,AAS711,AeroActive Shorts,Black,Shorts,Mens,Poly Knit,50,15,10,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,ADJ660,AllDay Denim Jogger,Dark Blue,Jogger,Mens,Denim,170,51,34,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,ALV310,AeroLite Vest,Black,Vest,Mens,Poly Blend,141,42,28,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,APJ001,Alpine Puffer Jacket,Navy,Jacket,Mens,Polyester,34,10,6,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,BLK212,BreezeLite Kurta,Teal,Kurta,Mens,Cotton-Linen,100,30,20,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,BOS120,Boardroom Oxford Shirt,Light Blue,Shirt,Mens,Oxford Cotton,170,51,34,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,BSS260,Bedtime Story Set,Baby Blue,Pyjama Set,Kids,Cotton,109,32,21,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,CLS920,Coastline Linen Shirt,Sand,Shirt,Mens,Linen,108,32,21,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,CLT612,CloudSoft Lounge Tee,Grey,T-Shirt,Mens,Cotton,190,57,38,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,CMH215,ChillMode Hoodie,Bottle Green,Hoodie,Mens,Fleece,190,57,38,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,CNPS778,CozyNest Pyjama Set,Lavender,Pyjama Set,Womens,Cotton,111,33,22,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,CSC332,CityStride Chinos,Stone,Trousers,Mens,Cotton,83,24,16,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,CWS888,CloudWalk Sneakers,White,Shoes,Mens,Mesh,113,33,22,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,DFJ821,Denim Force Jeans,Indigo,Jeans,Mens,Denim,124,37,24,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,EVT040,Everyday Tank,White,Vest,Mens,Cotton,110,33,22,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,FAK288,FestiveAura Kurta,Mustard,Kurta,Womens,Rayon-Silk,109,32,21,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,FSK507,FestiveSpark Kurta,Emerald,Kurta,Mens,Silk Blend,166,49,33,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,GSJ014,Glacier Shield Jacket,Olive,Jacket,Mens,Nylon Blend,58,17,11,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,HGH112,HeatGuard Hoodie,Black,Hoodie,Mens,Fleece,96,28,19,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,HNJ333,Heritage Nehru Jacket,Ivory,Jacket,Mens,Silk Blend,41,12,8,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,LSK551,LuxeSilk Kurta Set,Maroon,Kurta Set,Womens,Silk Blend,145,43,29,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,MGJ720,MonsoonGuard Jacket,Forest Green,Jacket,Womens,Waterproof Nylon,40,12,8,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,MMD777,Midnight Maxi Dress,Navy,Dress,Womens,Viscose,185,55,37,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,MRT210,MorningRun Tee,Neon Green,T-Shirt,Mens,Polyester,117,35,23,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,MSS441,MetroStretch Shirt,White,Shirt,Mens,Poplin,226,67,45,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,ODS901,OceanWash Denim Shirt,Light Blue,Shirt,Mens,Denim,127,38,25,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,PTD412,Playtime Dungaree,Denim Blue,Dungaree,Kids,Denim,67,20,13,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,RDW300,RainDance Windcheater,Yellow,Jacket,Kids,Nylon,56,16,11,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,SBD931,SummerBloom Dress,Peach,Dress,Womens,Rayon,76,22,15,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,SFL909,SparkFest Lehenga Set,Fuchsia,Lehenga Set,Girls,Silk Blend,108,32,21,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,SGP880,StormGuard Parka,Deep Green,Jacket,Mens,Polyester,58,17,11,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,SKT145,SunSafe Kids Tee,Orange,T-Shirt,Kids,Cotton,318,95,63,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,SRS744,Sunset Resort Shirt,Coral,Shirt,Mens,Rayon,224,67,44,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,SYL330,Studio Yoga Leggings,Black,Leggings,Womens,Nylon-Spandex,124,37,24,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,TFC331,TerraFlex Cargo,Khaki,Cargo,Mens,Twill,101,30,20,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,TFS522,TerraForm Shorts,Beige,Shorts,Mens,Cotton Twill,167,50,33,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,TTP665,TrailBlaze Trackpant,Charcoal,Jogger,Mens,Poly Knit,126,37,25,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,UEO543,UrbanEdge Overshirt,Charcoal,Shirt,Mens,Twill,143,42,28,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,ULP019,UltraLite Polo,Sky Blue,T-Shirt,Mens,Pique Knit,130,39,26,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,WJS555,Weekend Jog Set,Navy,Tracksuit,Mens,Cotton Blend,163,48,32,IN_STOCK,2025-12-06 08:20:41
+ST10,Store 10,Ahmedabad,Hot & dry,WST661,WinterShield Thermal,Charcoal,Thermal,Mens,Thermal Cotton,107,32,21,IN_STOCK,2025-12-06 08:20:41
