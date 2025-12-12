@@ -1,0 +1,24 @@
+{
+  "run_id": "run_20251206_145833",
+  "timestamp": "2025-12-06T15:10:28.454665",
+  "parameters": {
+    "margin_target": 0.2,
+    "variance_threshold": 0.1,
+    "forecast_horizon_days": 60,
+    "max_quantity_per_store": 500,
+    "universe_of_stores": null
+  },
+  "results": {
+    "model_selection": {},
+    "factor_analysis": {},
+    "recommendations": {},
+    "top_banner": {},
+    "article_level_metrics": {},
+    "store_allocations": {},
+    "sensitivity_analysis": {},
+    "validation_messages": [],
+    "fallback_used": false,
+    "hitl_metadata": {},
+    "run_id": "run_20251206_145833"
+  }
+}
