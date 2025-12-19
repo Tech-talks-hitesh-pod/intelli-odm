@@ -40,6 +40,7 @@ from utils.audit_logger import AuditLogger, LogStatus
 from agents.data_ingestion_agent import DataIngestionAgent
 from agents.attribute_analogy_agent import AttributeAnalogyAgent
 from agents.demand_forecasting_agent import DemandForecastingAgent
+from agents.procurement_allocation_agent import ProcurementAllocationAgent
 from agents.hitl_workflow import HITLWorkflow, ApprovalStatus
 from shared_knowledge_base import SharedKnowledgeBase
 
@@ -656,6 +657,122 @@ async def run_forecast_internal(
             
             results, sensitivity = await loop.run_in_executor(None, run_demand_agent)
             print(f"[WORKFLOW] Demand Forecasting Agent execution complete")
+            
+            # Run Procurement Allocation Agent after demand forecasting
+            print(f"\n[WORKFLOW] Starting Procurement Allocation Agent...")
+            audit_logger.log_agent_operation(
+                agent_name="ProcurementAllocationAgent",
+                description="Starting procurement allocation optimization",
+                status=LogStatus.IN_PROGRESS
+            )
+            
+            def run_procurement_agent():
+                try:
+                    # Check if results have recommendations
+                    has_recommendations = False
+                    if isinstance(results, dict):
+                        if 'recommendations' in results:
+                            recs = results.get('recommendations', {})
+                            articles = recs.get('articles_to_buy', [])
+                            has_recommendations = len(articles) > 0
+                            print(f"[WORKFLOW] Procurement Agent: Found {len(articles)} articles to optimize")
+                        elif 'forecast_results' in results:
+                            fr = results.get('forecast_results', {})
+                            recs = fr.get('recommendations', {})
+                            articles = recs.get('articles_to_buy', [])
+                            has_recommendations = len(articles) > 0
+                            print(f"[WORKFLOW] Procurement Agent: Found {len(articles)} articles to optimize in forecast_results")
+                    
+                    if not has_recommendations:
+                        print(f"[WORKFLOW] Procurement Agent: No articles to optimize, skipping procurement allocation")
+                        audit_logger.log_agent_operation(
+                            agent_name="ProcurementAllocationAgent",
+                            description="Skipped - No articles to optimize",
+                            status=LogStatus.SUCCESS,
+                            outputs={"reason": "No articles in recommendations"}
+                        )
+                        return None
+                    
+                    # Initialize procurement allocation agent
+                    procurement_agent = ProcurementAllocationAgent(
+                        ollama_client=ollama_client,
+                        audit_logger=audit_logger,
+                        budget_constraint=None,  # Can be added as parameter
+                        moq_constraints={},  # Can be added as parameter
+                        store_capacity={}  # Can be added as parameter
+                    )
+                    
+                    # Prepare demand_forecast dict - ensure it has the right structure
+                    demand_forecast_dict = results
+                    if 'forecast_results' in results and 'recommendations' not in results:
+                        # If recommendations are nested in forecast_results, use that
+                        demand_forecast_dict = results.get('forecast_results', {})
+                    
+                    # Run procurement allocation
+                    print(f"[WORKFLOW] Procurement Agent: Running optimization...")
+                    procurement_recommendations = procurement_agent.run(
+                        demand_forecast=demand_forecast_dict,
+                        inventory_data=inventory_data,
+                        price_data=price_data,
+                        cost_data=cost_data
+                    )
+                    
+                    # Update results with optimized allocations
+                    # Handle both direct recommendations and nested in forecast_results
+                    recommendations_to_update = None
+                    if results.get('recommendations'):
+                        recommendations_to_update = results['recommendations']
+                    elif results.get('forecast_results', {}).get('recommendations'):
+                        recommendations_to_update = results['forecast_results']['recommendations']
+                    
+                    if recommendations_to_update:
+                        # Update store allocations with optimized ones
+                        if procurement_recommendations.get('store_allocations'):
+                            recommendations_to_update['store_allocations'] = \
+                                procurement_recommendations.get('store_allocations', {})
+                            print(f"[WORKFLOW] Procurement Agent: Updated store allocations for {len(procurement_recommendations.get('store_allocations', {}))} articles")
+                        
+                        # Add procurement optimization metadata
+                        recommendations_to_update['procurement_optimization'] = {
+                            'articles_to_procure': procurement_recommendations.get('articles_to_procure', []),
+                            'adjustments_applied': procurement_recommendations.get('adjustments_applied', []),
+                            'optimization_summary': procurement_recommendations.get('optimization_summary', {}),
+                            'generated_at': procurement_recommendations.get('generated_at', ''),
+                            'total_procurement_quantity': procurement_recommendations.get('total_procurement_quantity', 0)
+                        }
+                        print(f"[WORKFLOW] Procurement Agent: Added optimization metadata")
+                    else:
+                        print(f"[WORKFLOW] Procurement Agent: WARNING - Could not find recommendations structure to update")
+                    
+                    print(f"[WORKFLOW] Procurement Allocation Agent completed")
+                    print(f"[WORKFLOW] Articles optimized: {len(procurement_recommendations.get('articles_to_procure', []))}")
+                    print(f"[WORKFLOW] Adjustments applied: {len(procurement_recommendations.get('adjustments_applied', []))}")
+                    
+                    return procurement_recommendations
+                except Exception as e:
+                    print(f"[WORKFLOW] ERROR in Procurement Allocation Agent: {e}")
+                    import traceback
+                    traceback.print_exc()
+                    audit_logger.log_agent_operation(
+                        agent_name="ProcurementAllocationAgent",
+                        description="Procurement allocation failed",
+                        status=LogStatus.FAIL,
+                        error=str(e)
+                    )
+                    # Continue without procurement optimization if it fails
+                    return None
+            
+            procurement_result = await loop.run_in_executor(None, run_procurement_agent)
+            if procurement_result:
+                audit_logger.log_agent_operation(
+                    agent_name="ProcurementAllocationAgent",
+                    description="Procurement allocation optimization completed",
+                    status=LogStatus.SUCCESS,
+                    outputs={
+                        "articles_optimized": len(procurement_result.get("articles_to_procure", [])),
+                        "adjustments_applied": len(procurement_result.get("adjustments_applied", []))
+                    }
+                )
         
         # Debug: Log results structure (for both workflows)
         print(f"\n[DEBUG] Results keys: {results.keys() if isinstance(results, dict) else 'Not a dict'}")
