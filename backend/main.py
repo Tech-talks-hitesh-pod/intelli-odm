@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse, FileResponse, Response, StreamingRes
 from typing import Optional, List, Dict, Any
 import pandas as pd
 import numpy as np
+import math
 import os
 import json
 from datetime import datetime, timedelta
@@ -80,20 +81,52 @@ data_handler = DataIngestionAgent(ollama_client=ollama_client, audit_logger=audi
 current_run_id: Optional[str] = None
 
 def convert_numpy_types(obj):
-    """Convert numpy types to native Python types for JSON serialization"""
+    """Convert numpy types to native Python types for JSON serialization, handling NaN values"""
     import numpy as np
-    if isinstance(obj, np.integer):
-        return int(obj)
-    elif isinstance(obj, np.floating):
-        return float(obj)
-    elif isinstance(obj, np.ndarray):
+    import math
+    
+    # Handle NaN values first (before type conversion)
+    # Check for numpy NaN
+    if isinstance(obj, (np.floating, np.number)):
+        if np.isnan(obj):
+            return None
+        if isinstance(obj, np.floating):
+            val = float(obj)
+            if math.isnan(val):
+                return None
+            return val
+        if isinstance(obj, np.integer):
+            return int(obj)
+    
+    # Check for regular float NaN
+    if isinstance(obj, float):
+        if math.isnan(obj):
+            return None
+        # Also check if it's the string representation of NaN (edge case)
+        try:
+            if str(obj).lower() == 'nan':
+                return None
+        except:
+            pass
+    
+    # Handle numpy arrays
+    if isinstance(obj, np.ndarray):
         return obj.tolist()
-    elif isinstance(obj, dict):
+    
+    # Handle pandas NaN
+    if pd.isna(obj):
+        return None
+    
+    # Handle dicts and lists recursively
+    if isinstance(obj, dict):
         return {key: convert_numpy_types(value) for key, value in obj.items()}
     elif isinstance(obj, list):
         return [convert_numpy_types(item) for item in obj]
-    elif pd.isna(obj):
+    
+    # Handle string "nan" (can happen from JSON)
+    if isinstance(obj, str) and obj.lower() == 'nan':
         return None
+    
     return obj
 
 def read_data_file(filepath: str) -> pd.DataFrame:
@@ -633,6 +666,9 @@ async def run_forecast_internal(
         print(f"\n[DEBUG] Formatted recommendations: {formatted_results.get('recommendations', {})}")
         print(f"[DEBUG] Formatted top_banner: {formatted_results.get('top_banner', {})}")
         
+        # Clean NaN values from results before saving
+        formatted_results = convert_numpy_types(formatted_results)
+        
         # Store forecast results with timestamp
         result_file = FORECAST_RESULTS_DIR / f"{current_run_id}_results.json"
         result_data = {
@@ -647,6 +683,9 @@ async def run_forecast_internal(
             },
             "results": formatted_results
         }
+        # Clean parameters as well
+        result_data = convert_numpy_types(result_data)
+        
         with open(result_file, 'w') as f:
             json.dump(result_data, f, indent=2, default=str)
         
@@ -990,6 +1029,10 @@ async def get_forecast_run(run_id: str):
         # If no timestamp from results, get it from first log
         if not timestamp and logs:
             timestamp = logs[0].get('date_time', '')
+        
+        # Clean results and parameters of NaN values before returning
+        results = convert_numpy_types(results)
+        parameters = convert_numpy_types(parameters)
         
         return {
             "success": True,
