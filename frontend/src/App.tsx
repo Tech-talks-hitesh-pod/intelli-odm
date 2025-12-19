@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import './App.css';
+import ForecastPage from './ForecastPage';
 
 const API_BASE_URL = 'http://localhost:8000';
 
@@ -23,7 +24,8 @@ interface DataState {
 }
 
 // Collapsible JSON Tile Component - Optimized with memoization and truncation
-const CollapsibleJsonTile: React.FC<{ data: any; title: string }> = React.memo(({ data, title }) => {
+// Separate component without memo to ensure expand/collapse works properly
+const CollapsibleJsonTile: React.FC<{ data: any; title: string; id?: string }> = ({ data, title, id }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   
   // Memoize JSON stringification and truncate if too large to prevent UI freezing
@@ -41,15 +43,21 @@ const CollapsibleJsonTile: React.FC<{ data: any; title: string }> = React.memo((
     }
   }, [data]);
   
+  const handleToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsExpanded(prev => !prev);
+  };
+  
   return (
-    <div className="json-tile">
+    <div className={`json-tile ${isExpanded ? 'expanded' : ''}`} data-id={id}>
       <button
         className="json-tile-header"
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={handleToggle}
         type="button"
       >
-        <span>{title}</span>
-        <span>{isExpanded ? '▼' : '▶'}</span>
+        <span className="json-tile-title">{title}</span>
+        <span className="json-tile-arrow">{isExpanded ? '▼' : '▶'}</span>
       </button>
       {isExpanded && (
         <div className="json-tile-content">
@@ -58,16 +66,7 @@ const CollapsibleJsonTile: React.FC<{ data: any; title: string }> = React.memo((
       )}
     </div>
   );
-}, (prevProps, nextProps) => {
-  // Custom comparison - only re-render if key fields change
-  return prevProps.title === nextProps.title && 
-         prevProps.data?.date_time === nextProps.data?.date_time &&
-         prevProps.data?.agent_name === nextProps.data?.agent_name &&
-         prevProps.data?.description === nextProps.data?.description;
-});
-
-// Set display name for React DevTools
-CollapsibleJsonTile.displayName = 'CollapsibleJsonTile';
+};
 
 function App() {
   const [mainTab, setMainTab] = useState<MainTab>('data');
@@ -889,55 +888,88 @@ function App() {
   const currentHistory = history[dataTab] || [];
 
   return (
-    <div className="app">
+    <div className="app-container">
+      {/* Modern Header */}
       <header className="header">
-        <h1>📊 Demand Forecasting & Allocation Engine</h1>
-        <p className="subtitle">Multi-Agent LLM System using Ollama (llama3:8b)</p>
+        <div className="header-left">
+          <div className="logo-container">
+            <div className="logo-icon">🎯</div>
+            <div>
+              <h1>Intelli-ODM</h1>
+              <p className="subtitle">Multi-Agent AI System • Ollama LLaMA3</p>
+            </div>
+          </div>
+        </div>
+        <div className="status-indicator">
+          <span className="status-dot"></span>
+          <span className="status-text">System Online</span>
+        </div>
       </header>
 
-      <div className="main-tabs">
+      {/* Main Navigation */}
+      <nav className="main-nav">
         <button
-          className={`main-tab ${mainTab === 'data' ? 'active' : ''}`}
+          className={`nav-tab ${mainTab === 'data' ? 'active' : ''}`}
           onClick={() => setMainTab('data')}
         >
-          📁 Data Management
+          <span className="tab-icon">📊</span>
+          <span>Data Hub</span>
+          <span className="tab-badge">{Object.keys(dataStates).filter(k => dataStates[k as keyof typeof dataStates]?.data?.length > 0).length}</span>
         </button>
         <button
-          className={`main-tab ${mainTab === 'forecast' ? 'active' : ''}`}
+          className={`nav-tab ${mainTab === 'forecast' ? 'active' : ''}`}
           onClick={() => setMainTab('forecast')}
         >
-          🚀 Forecast
+          <span className="tab-icon">🚀</span>
+          <span>AI Forecast</span>
+          {loading && <span className="tab-badge">Running</span>}
         </button>
         <button
-          className={`main-tab ${mainTab === 'history' ? 'active' : ''}`}
+          className={`nav-tab ${mainTab === 'history' ? 'active' : ''}`}
           onClick={() => setMainTab('history')}
         >
-          📜 History
+          <span className="tab-icon">📜</span>
+          <span>History</span>
+          <span className="tab-badge">{previousRuns.length}</span>
         </button>
-      </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="main-content">
 
       {mainTab === 'data' && (
-        <div className="data-management">
-          <div className="data-type-tabs">
-            {DATA_TYPES.map(({ key, label, icon, color }) => (
-              <button
+        <div className="data-content">
+          {/* Data Type Sidebar */}
+          <div className="data-sidebar">
+            {DATA_TYPES.map(({ key, label, icon }) => (
+              <div
                 key={key}
-                className={`data-type-tab ${dataTab === key ? 'active' : ''}`}
+                className={`data-type-card ${dataTab === key ? 'active' : ''}`}
                 onClick={() => setDataTab(key)}
-                style={{ '--tab-color': color } as React.CSSProperties}
               >
-                <span className="tab-icon">{icon}</span>
-                {label}
-                {DATA_TYPES.find(dt => dt.key === key)?.required && (
-                  <span className="required-badge">*</span>
-                )}
-              </button>
+                <div className="data-type-icon">{icon}</div>
+                <div className="data-type-info">
+                  <div className="data-type-name">
+                    {label}
+                    {DATA_TYPES.find(dt => dt.key === key)?.required && ' *'}
+                  </div>
+                  <div className="data-type-stats">
+                    {dataStates[key as keyof typeof dataStates]?.data?.length || 0} records
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
 
-          <div className="data-content">
-            <div className="data-actions">
-              <div className="upload-section">
+          {/* Data Panel */}
+          <div className="data-panel">
+            {/* Action Cards */}
+            <div className="action-grid">
+              {/* Upload Card */}
+              <div className="action-card" onClick={() => document.getElementById(`file-upload-${dataTab}`)?.click()}>
+                <span className="action-icon">📤</span>
+                <div className="action-title">Upload Data</div>
+                <div className="action-desc">Import CSV or Excel files</div>
                 <input
                   type="file"
                   accept=".csv,.xlsx,.xls"
@@ -948,16 +980,37 @@ function App() {
                   }}
                   style={{ display: 'none' }}
                 />
-                <label htmlFor={`file-upload-${dataTab}`} className="upload-button">
-                  {currentData.uploading 
-                    ? '⏳ Uploading...' 
-                    : `📤 Upload ${DATA_TYPES.find(dt => dt.key === dataTab)?.label || 'Data'}`}
-                </label>
-                {dataTab === 'new_articles_data' && (
-                  <div className="row-count-slider-container">
-                    <label className="slider-label">
-                      Number of Rows: <strong>{newArticlesRowCount}</strong>
-                    </label>
+              </div>
+              
+              {/* Generate Sample Card */}
+              <div className="action-card" onClick={() => generateSampleData(dataTab)}>
+                <span className="action-icon">✨</span>
+                <div className="action-title">Generate Sample</div>
+                <div className="action-desc">Create AI-generated test data</div>
+              </div>
+              
+              {/* Download Template Card */}
+              <div className="action-card" onClick={() => handleDownloadTemplate(dataTab)}>
+                <span className="action-icon">📥</span>
+                <div className="action-title">Download Template</div>
+                <div className="action-desc">Get CSV template file</div>
+              </div>
+              
+              {/* Refresh Card */}
+              <div className="action-card" onClick={() => loadSampleData(dataTab)}>
+                <span className="action-icon">🔄</span>
+                <div className="action-title">Reload Data</div>
+                <div className="action-desc">Refresh from server</div>
+              </div>
+            </div>
+            {dataTab === 'new_articles_data' && (
+              <div className="card">
+                <h3>🎚️ Sample Data Configuration</h3>
+                <div className="row-count-slider-container">
+                  <div className="slider-label">
+                    <span>Number of Rows</span>
+                    <span>{newArticlesRowCount}</span>
+                  </div>
                     <input
                       type="range"
                       min="5"
@@ -967,62 +1020,40 @@ function App() {
                       onChange={(e) => setNewArticlesRowCount(parseInt(e.target.value))}
                       className="slider"
                     />
-                    <div className="slider-labels">
-                      <span>5</span>
-                      <span>50</span>
-                    </div>
+                  <div className="slider-labels">
+                    <span>5</span>
+                    <span>50</span>
                   </div>
-                )}
-                <button
-                  className="action-button generate-button"
-                  onClick={() => {
-                    if (dataTab === 'new_articles_data') {
-                      generateSampleData(dataTab);
-                    } else {
-                      generateSampleData(dataTab);
-                    }
-                  }}
-                >
-                  🎲 Generate Sample Data
-                </button>
-                <button
-                  className="action-button"
-                  onClick={() => handleDownloadTemplate(dataTab)}
-                >
-                  📥 Download Template
-                </button>
-                <button
-                  className="action-button"
-                  onClick={() => loadSampleData(dataTab)}
-                >
-                  🔄 Refresh
-                </button>
+                </div>
               </div>
+            )}
 
-              {showGeneratedPreview && generatedSampleData.length > 0 && (
-                <div className="generated-preview">
-                  <div className="preview-header">
-                    <h3>✨ Generated Sample Data Preview</h3>
-                    <div className="preview-actions">
-                      <button
-                        className="use-button"
-                        onClick={dataTab === 'new_articles_data' ? handleUseGeneratedData : handleUseGeneratedDataForAll}
-                        disabled={currentData.uploading}
-                      >
-                        {currentData.uploading ? '⏳ Processing...' : '✅ Use This Data'}
-                      </button>
-                      <button
-                        className="cancel-button"
-                        onClick={() => {
-                          setShowGeneratedPreview(false);
-                          setGeneratedSampleData([]);
-                        }}
-                      >
-                        ❌ Cancel
-                      </button>
-                    </div>
+            {/* Generated Preview */}
+            {showGeneratedPreview && generatedSampleData.length > 0 && (
+              <div className="card">
+                <div className="preview-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                  <h2>✨ Generated Sample Data Preview</h2>
+                  <div className="preview-actions" style={{ display: 'flex', gap: '0.5rem' }}>
+                    <button
+                      className="btn btn-success"
+                      onClick={dataTab === 'new_articles_data' ? handleUseGeneratedData : handleUseGeneratedDataForAll}
+                      disabled={currentData.uploading}
+                    >
+                      {currentData.uploading ? '⏳ Processing...' : '✅ Use This Data'}
+                    </button>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => {
+                        setShowGeneratedPreview(false);
+                        setGeneratedSampleData([]);
+                      }}
+                    >
+                      ❌ Cancel
+                    </button>
                   </div>
-                  <div className="preview-table-container">
+                </div>
+                <div className="data-table-container">
+                  <div className="table-wrapper">
                     {generatedSampleData.length > 0 && (
                       <>
                         <table className="data-table">
@@ -1058,60 +1089,65 @@ function App() {
                             ))}
                           </tbody>
                         </table>
-                        <div className="preview-footer">
-                          <p>💡 {dataTab === 'new_articles_data' ? 'You can edit the data above before using it. ' : ''}Click "Use This Data" to validate and replace current sample data.</p>
-                        </div>
                       </>
                     )}
                   </div>
                 </div>
-              )}
-
-              {currentData.validation && (
-                <div className={`validation-result ${currentData.validation.valid ? 'valid' : 'invalid'}`}>
-                  <h3>{currentData.validation.valid ? '✅ Validation Passed' : '❌ Validation Failed'}</h3>
-                  {currentData.validation.data_quality_score && (
-                    <p>Data Quality Score: {currentData.validation.data_quality_score}/100</p>
-                  )}
-                  {currentData.validation.errors?.length > 0 && (
-                    <div>
-                      <strong>Errors:</strong>
-                      <ul>
-                        {currentData.validation.errors.map((err: string, i: number) => (
-                          <li key={i}>{err}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {currentData.validation.warnings?.length > 0 && (
-                    <div>
-                      <strong>Warnings:</strong>
-                      <ul>
-                        {currentData.validation.warnings.map((warn: string, i: number) => (
-                          <li key={i}>{warn}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {currentData.validation.recommendations?.length > 0 && (
-                    <div>
-                      <strong>Recommendations:</strong>
-                      <ul>
-                        {currentData.validation.recommendations.map((rec: string, i: number) => (
-                          <li key={i}>{rec}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                <div style={{ padding: '1rem', color: 'var(--text-muted)', fontSize: '0.85rem', borderTop: '1px solid var(--border-color)' }}>
+                  💡 {dataTab === 'new_articles_data' ? 'You can edit the data above before using it. ' : ''}Click "Use This Data" to validate and replace current sample data.
                 </div>
-              )}
-            </div>
+              </div>
+            )}
 
+            {/* Validation Messages */}
+            {currentData.validation && (
+              <div className={`validation-result ${currentData.validation.valid ? 'valid' : 'invalid'}`}>
+                <h3>{currentData.validation.valid ? '✅ Validation Passed' : '❌ Validation Failed'}</h3>
+                {currentData.validation.data_quality_score && (
+                  <p>Data Quality Score: {currentData.validation.data_quality_score}/100</p>
+                )}
+                {currentData.validation.errors?.length > 0 && (
+                  <div>
+                    <strong>Errors:</strong>
+                    <ul>
+                      {currentData.validation.errors.map((err: string, i: number) => (
+                        <li key={i}>{err}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {currentData.validation.warnings?.length > 0 && (
+                  <div>
+                    <strong>Warnings:</strong>
+                    <ul>
+                      {currentData.validation.warnings.map((warn: string, i: number) => (
+                        <li key={i}>{warn}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Data Table */}
             <div className="data-table-container">
+              <div className="data-table-header">
+                <span className="data-table-title">
+                  📋 {DATA_TYPES.find(dt => dt.key === dataTab)?.label || 'Data'} 
+                  <span style={{ marginLeft: '0.5rem', opacity: 0.6 }}>({currentData.data.length} records)</span>
+                </span>
+              </div>
               {currentData.loading ? (
-                <div className="loading">Loading data...</div>
+                <div className="empty-state">
+                  <div className="loading-spinner"></div>
+                  <p>Loading data...</p>
+                </div>
               ) : currentData.data.length === 0 ? (
-                <div className="empty-state">No data available</div>
+                <div className="empty-state">
+                  <div className="empty-state-icon">📭</div>
+                  <h3>No Data Available</h3>
+                  <p>Upload a file or generate sample data to get started</p>
+                </div>
               ) : (
                 <div className="table-wrapper">
                   <table className="data-table">
@@ -1132,11 +1168,11 @@ function App() {
                       ))}
                     </tbody>
                   </table>
-                  {currentData.data.length > 100 && (
-                    <div className="table-footer">
-                      Showing first 100 of {currentData.data.length} rows
-                    </div>
-                  )}
+                </div>
+              )}
+              {currentData.data.length > 100 && (
+                <div style={{ padding: '0.75rem 1rem', background: 'rgba(99, 102, 241, 0.1)', borderTop: '1px solid var(--border-color)', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                  Showing first 100 of {currentData.data.length} rows
                 </div>
               )}
             </div>
@@ -1145,313 +1181,27 @@ function App() {
       )}
 
       {mainTab === 'forecast' && (
-        <div className="forecast-content">
-          <div className="forecast-left">
-            <section className="card">
-              <h2>⚙️ Configure Parameters</h2>
-              <div className="form-group">
-                <label>Margin Target: {params.margin_target}%</label>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  step="1"
-                  value={params.margin_target}
-                  onChange={(e) =>
-                    setParams({ ...params, margin_target: parseFloat(e.target.value) })
-                  }
-                  className="slider"
-                />
-                <div className="slider-labels">
-                  <span>0%</span>
-                  <span>100%</span>
-                </div>
-              </div>
-              <div className="form-group">
-                <label>Variance Threshold: {params.variance_threshold}%</label>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  step="1"
-                  value={params.variance_threshold}
-                  onChange={(e) =>
-                    setParams({ ...params, variance_threshold: parseFloat(e.target.value) })
-                  }
-                  className="slider"
-                />
-                <div className="slider-labels">
-                  <span>0%</span>
-                  <span>100%</span>
-                </div>
-              </div>
-              <div className="form-group">
-                <label>Forecast Horizon: {params.forecast_horizon_days} Days</label>
-                <input
-                  type="range"
-                  min="1"
-                  max="180"
-                  step="1"
-                  value={params.forecast_horizon_days}
-                  onChange={(e) =>
-                    setParams({ ...params, forecast_horizon_days: parseInt(e.target.value) })
-                  }
-                  className="slider"
-                />
-                <div className="slider-labels">
-                  <span>1</span>
-                  <span>180</span>
-                </div>
-              </div>
-              <div className="form-group">
-                <label>Max Quantity per Store: {params.max_quantity_per_store}</label>
-                <input
-                  type="range"
-                  min="1"
-                  max="2000"
-                  step="10"
-                  value={params.max_quantity_per_store}
-                  onChange={(e) =>
-                    setParams({ ...params, max_quantity_per_store: parseInt(e.target.value) })
-                  }
-                  className="slider"
-                />
-                <div className="slider-labels">
-                  <span>1</span>
-                  <span>2000</span>
-                </div>
-              </div>
-              <div className="form-group">
-                <label>Universe of Stores (Optional)</label>
-                <input
-                  type="text"
-                  value={params.universe_of_stores}
-                  onChange={(e) =>
-                    setParams({ ...params, universe_of_stores: e.target.value })
-                  }
-                  placeholder="e.g., 20 or leave empty"
-                />
-              </div>
-              <button
-                className="btn btn-primary btn-large"
-                onClick={handleForecast}
-                disabled={loading}
-              >
-                {loading ? '⏳ Running Forecast...' : '▶️ Run Demand Forecast'}
-              </button>
-              {error && <div className="error-message">{error}</div>}
-            </section>
-          </div>
-
-          <div className="forecast-right">
-            {/* Run Selection Tabs */}
-            <div className="run-selection-tabs">
-              <button
-                className={`run-tab ${selectedRunId === null ? 'active' : ''}`}
-                onClick={() => {
-                  setSelectedRunId(null);
-                  setForecastTab('logs');
-                  // Show current run logs if available
-                  if (currentRunId) {
-                    loadForecastRun(currentRunId);
-                  } else {
-                    // Clear logs if no current run
-                    setAuditLogs([]);
-                    setStreamingLogs([]);
-                    setResults(null);
-                  }
-                }}
-              >
-                🔄 Current Run
-                {currentRunId && (
-                  <span className="tab-badge-small">{currentRunId.split('_').pop()}</span>
-                )}
-              </button>
-              <button
-                className={`run-tab ${selectedRunId !== null ? 'active' : ''}`}
-                onClick={() => {
-                  // Switch to previous runs view - select first run if none selected
-                  if (previousRuns.length > 0) {
-                    if (!selectedRunId) {
-                      loadForecastRun(previousRuns[0].run_id);
-                    }
-                  }
-                }}
-              >
-                📜 Previous Runs
-                {previousRuns.length > 0 && (
-                  <span className="tab-badge-small">{previousRuns.length}</span>
-                )}
-              </button>
-            </div>
-
-            {/* Previous Runs List - Only show when Previous Runs tab is active */}
-            {selectedRunId !== null && previousRuns.length > 0 && (
-              <section className="card previous-runs-section">
-                <h3>📜 Previous Runs</h3>
-                <div className="previous-runs-list">
-                  {previousRuns.map((run: any) => (
-                    <div
-                      key={run.run_id}
-                      className={`previous-run-item ${selectedRunId === run.run_id ? 'selected' : ''}`}
-                      onClick={() => loadForecastRun(run.run_id)}
-                    >
-                      <div className="run-header">
-                        <strong>{new Date(run.timestamp).toLocaleString()}</strong>
-                        <span className="run-id">{run.run_id}</span>
-                      </div>
-                      <div className="run-summary">
-                        <span>SKUs: {run.summary?.total_skus || 0}</span>
-                        <span>Qty: {run.summary?.total_quantity || 0}</span>
-                        <span>Stores: {run.summary?.total_stores || 0}</span>
-                        <span>Logs: {run.log_count || 0}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* Forecast Results Tabs - Always Visible */}
-            <div className="forecast-results">
-              <div className="forecast-results-tabs">
-                <button
-                  className={`forecast-tab ${forecastTab === 'logs' ? 'active' : ''}`}
-                  onClick={() => setForecastTab('logs')}
-                >
-                  📋 Audit Logs
-                  {(auditLogs.length > 0 || streamingLogs.length > 0) && (
-                    <span className="tab-badge">
-                      {auditLogs.length || streamingLogs.length}
-                    </span>
-                  )}
-                </button>
-                <button
-                  className={`forecast-tab ${forecastTab === 'summary' ? 'active' : ''}`}
-                  onClick={() => setForecastTab('summary')}
-                >
-                  📊 Summary
-                </button>
-              </div>
-
-              {forecastTab === 'logs' && (
-                <div className="forecast-tab-content">
-                  {isStreaming && (
-                    <div className="streaming-indicator">
-                      <span className="pulse">●</span> Streaming logs in real-time...
-                    </div>
-                  )}
-                  {loading && auditLogs.length === 0 && streamingLogs.length === 0 ? (
-                    <div className="empty-state">
-                      Loading logs...
-                    </div>
-                  ) : (auditLogs.length === 0 && streamingLogs.length === 0) ? (
-                    <div className="empty-state">
-                      No audit logs available. Run a forecast to see logs.
-                    </div>
-                  ) : (
-                    <div className="audit-logs-list">
-                      <div className="logs-header">
-                        <span className="logs-count">
-                          Showing {Math.min(logsDisplayLimit, (auditLogs.length > 0 ? auditLogs.length : streamingLogs.length))} of {(auditLogs.length > 0 ? auditLogs.length : streamingLogs.length)} logs
-                        </span>
-                      </div>
-                      {(() => {
-                        const logsToDisplay = (auditLogs.length > 0 ? auditLogs : streamingLogs)
-                          .slice(0, logsDisplayLimit);
-                        return logsToDisplay.map((log: any, idx: number) => (
-                          <CollapsibleJsonTile 
-                            key={`${log.date_time || idx}-${log.agent_name || 'log'}-${log.description?.substring(0, 20) || idx}`} 
-                            data={log} 
-                            title={`${log.agent_name || 'Log'} - ${new Date(log.date_time || Date.now()).toLocaleString()}`} 
-                          />
-                        ));
-                      })()}
-                      {((auditLogs.length > 0 ? auditLogs.length : streamingLogs.length) > logsDisplayLimit) && (
-                        <div className="load-more-logs">
-                          <button
-                            onClick={() => setLogsDisplayLimit(prev => Math.min(prev + 50, (auditLogs.length > 0 ? auditLogs.length : streamingLogs.length)))}
-                            className="load-more-button"
-                          >
-                            Load More Logs ({((auditLogs.length > 0 ? auditLogs.length : streamingLogs.length) - logsDisplayLimit)} remaining)
-                          </button>
-                          <button
-                            onClick={() => setLogsDisplayLimit((auditLogs.length > 0 ? auditLogs.length : streamingLogs.length))}
-                            className="load-all-button"
-                          >
-                            Load All ({auditLogs.length > 0 ? auditLogs.length : streamingLogs.length} total)
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {forecastTab === 'summary' && (
-                <div className="forecast-tab-content">
-                  {results ? (
-                    <>
-                      {results.top_banner && (
-                        <section className="card banner-card">
-                          <h2>📊 Summary</h2>
-                          <div className="banner-grid">
-                            <div className="banner-item">
-                              <div className="banner-item-label">Total Unique SKUs</div>
-                              <div className="banner-item-value">
-                                {results.top_banner.total_unique_skus || 0}
-                              </div>
-                            </div>
-                            <div className="banner-item">
-                              <div className="banner-item-label">Total Quantity</div>
-                              <div className="banner-item-value">
-                                {results.top_banner.total_quantity_bought || 0}
-                              </div>
-                            </div>
-                            <div className="banner-item">
-                              <div className="banner-item-label">Total Stores</div>
-                              <div className="banner-item-value">
-                                {results.top_banner.total_stores || 0}
-                              </div>
-                            </div>
-                            <div className="banner-item">
-                              <div className="banner-item-label">Total Buy Cost</div>
-                              <div className="banner-item-value">
-                                ₹{results.top_banner.total_buy_cost?.toLocaleString() || 0}
-                              </div>
-                            </div>
-                            <div className="banner-item">
-                              <div className="banner-item-label">Total Sales Value</div>
-                              <div className="banner-item-value">
-                                ₹{results.top_banner.total_sales_value?.toLocaleString() || 0}
-                              </div>
-                            </div>
-                            <div className="banner-item">
-                              <div className="banner-item-label">Avg Margin vs Target</div>
-                              <div className="banner-item-value">
-                                {((results.top_banner.average_margin_achieved || 0) * 100).toFixed(1)}% /{' '}
-                                {((results.top_banner.target_margin || 0) * 100).toFixed(1)}%
-                              </div>
-                            </div>
-                          </div>
-                        </section>
-                      )}
-
-                      <section className="card">
-                        <h3>Recommendations</h3>
-                        <pre>{JSON.stringify(results.recommendations, null, 2)}</pre>
-                      </section>
-                    </>
-                  ) : (
-                    <div className="empty-state">
-                      {loading ? 'Running forecast...' : 'No results yet. Run a forecast to see summary.'}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+        <ForecastPage 
+          params={params}
+          setParams={setParams}
+          loading={loading}
+          error={error}
+          isStreaming={isStreaming}
+          previousRuns={previousRuns}
+          auditLogs={auditLogs}
+          streamingLogs={streamingLogs}
+          results={results}
+          currentRunId={currentRunId}
+          selectedRunId={selectedRunId}
+          setSelectedRunId={setSelectedRunId}
+          forecastTab={forecastTab}
+          setForecastTab={setForecastTab}
+          logsDisplayLimit={logsDisplayLimit}
+          setLogsDisplayLimit={setLogsDisplayLimit}
+          handleForecast={handleForecast}
+          loadForecastRun={loadForecastRun}
+          CollapsibleJsonTile={CollapsibleJsonTile}
+        />
       )}
 
       {mainTab === 'history' && (
@@ -1474,19 +1224,23 @@ function App() {
 
           <div className="history-list">
             {currentHistory.length === 0 ? (
-              <div className="empty-state">No backup history available</div>
+              <div className="empty-state">
+                <div className="empty-state-icon">📭</div>
+                <h3>No Backup History</h3>
+                <p>Version history will appear here when data changes are made</p>
+              </div>
             ) : (
               currentHistory.map((backup, idx) => (
-                <div key={idx} className="history-item">
+                <div key={idx} className="history-item stagger-item">
                   <div className="history-item-header">
-                    <h3>Version {backup.version}</h3>
+                    <h3>📦 Version {backup.version}</h3>
                     <span className="history-date">
                       {new Date(backup.timestamp).toLocaleString()}
                     </span>
                   </div>
                   <div className="history-item-details">
-                    <p><strong>Rows:</strong> {backup.row_count}</p>
-                    <p><strong>File:</strong> {backup.original_filename}</p>
+                    <p><strong>📊 Rows:</strong> {backup.row_count}</p>
+                    <p><strong>📁 File:</strong> {backup.original_filename}</p>
                     {backup.backup_exists && (
                       <button
                         className="restore-button"
@@ -1502,6 +1256,8 @@ function App() {
           </div>
         </div>
       )}
+
+      </main>
     </div>
   );
 }

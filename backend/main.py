@@ -85,20 +85,38 @@ def convert_numpy_types(obj):
     import numpy as np
     import math
     
-    # Handle NaN values first (before type conversion)
-    # Check for numpy NaN
-    if isinstance(obj, (np.floating, np.number)):
+    # Handle numpy arrays FIRST (before checking for NaN, as pd.isna on arrays returns array)
+    if isinstance(obj, np.ndarray):
+        # Convert array to list and recursively process each element
+        return [convert_numpy_types(item) for item in obj.tolist()]
+    
+    # Handle numpy boolean types
+    if isinstance(obj, (np.bool_, bool)):
+        return bool(obj)
+    
+    # Handle numpy integer types
+    if isinstance(obj, np.integer):
+        return int(obj)
+    
+    # Handle numpy floating types and check for NaN
+    if isinstance(obj, np.floating):
         if np.isnan(obj):
             return None
-        if isinstance(obj, np.floating):
-            val = float(obj)
-            if math.isnan(val):
-                return None
-            return val
+        val = float(obj)
+        if math.isnan(val):
+            return None
+        return val
+    
+    # Handle numpy number types (generic)
+    if isinstance(obj, np.number):
+        if np.isnan(obj):
+            return None
         if isinstance(obj, np.integer):
             return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
     
-    # Check for regular float NaN
+    # Check for regular float NaN (must be after numpy checks)
     if isinstance(obj, float):
         if math.isnan(obj):
             return None
@@ -106,16 +124,17 @@ def convert_numpy_types(obj):
         try:
             if str(obj).lower() == 'nan':
                 return None
-        except:
+        except (ValueError, AttributeError):
             pass
     
-    # Handle numpy arrays
-    if isinstance(obj, np.ndarray):
-        return obj.tolist()
-    
-    # Handle pandas NaN
-    if pd.isna(obj):
-        return None
+    # Handle pandas NaN (only for scalar values, not arrays)
+    # pd.isna can return array for arrays, so we check this after array handling
+    try:
+        if not isinstance(obj, (list, dict, np.ndarray)) and pd.isna(obj):
+            return None
+    except (ValueError, TypeError):
+        # pd.isna might fail for some types, continue
+        pass
     
     # Handle dicts and lists recursively
     if isinstance(obj, dict):
@@ -667,7 +686,21 @@ async def run_forecast_internal(
         print(f"[DEBUG] Formatted top_banner: {formatted_results.get('top_banner', {})}")
         
         # Clean NaN values from results before saving
-        formatted_results = convert_numpy_types(formatted_results)
+        try:
+            formatted_results = convert_numpy_types(formatted_results)
+        except Exception as conv_err:
+            print(f"[WARNING] Error converting numpy types in formatted_results: {conv_err}")
+            print(f"[WARNING] Attempting to continue with original results...")
+            import traceback as tb_module
+            tb_module.print_exc()
+            # Try a simpler conversion approach using the already-imported json module
+            try:
+                # Use json.dumps with default handler as fallback
+                json_str = json.dumps(formatted_results, default=str, allow_nan=False)
+                formatted_results = json.loads(json_str)
+            except Exception as e2:
+                print(f"[ERROR] Failed to convert results: {e2}")
+                # Continue with original - let json.dump handle it with default=str
         
         # Store forecast results with timestamp
         result_file = FORECAST_RESULTS_DIR / f"{current_run_id}_results.json"
@@ -684,7 +717,11 @@ async def run_forecast_internal(
             "results": formatted_results
         }
         # Clean parameters as well
-        result_data = convert_numpy_types(result_data)
+        try:
+            result_data = convert_numpy_types(result_data)
+        except Exception as conv_err2:
+            print(f"[WARNING] Error converting numpy types in result_data: {conv_err2}")
+            # Continue without conversion - json.dump will handle with default=str
         
         with open(result_file, 'w') as f:
             json.dump(result_data, f, indent=2, default=str)

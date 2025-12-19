@@ -1,0 +1,1899 @@
+{
+  "run_id": "run_20251219_135057",
+  "timestamp": "2025-12-19T13:56:50.564323",
+  "parameters": {
+    "margin_target": 0.3,
+    "variance_threshold": 0.05,
+    "forecast_horizon_days": 60,
+    "max_quantity_per_store": 500,
+    "universe_of_stores": null
+  },
+  "results": {
+    "model_selection": {
+      "selected_model": "analogy_based",
+      "model_params": {
+        "model_type": "analogy_based",
+        "num_comparables": 45,
+        "avg_sales_per_store": 5.225624375624375
+      },
+      "model_scores": {
+        "time_series": {
+          "score": 0.211765045662018,
+          "params": {
+            "model_type": "prophet",
+            "mape": 78.8234954337982
+          }
+        },
+        "analogy_based": {
+          "score": 0.8712590432018096,
+          "params": {
+            "model_type": "analogy_based",
+            "num_comparables": 45,
+            "avg_sales_per_store": 5.225624375624375
+          }
+        },
+        "hybrid": {
+          "score": 0.3460837312253501,
+          "params": {
+            "model_type": "hybrid",
+            "components": [
+              "time_series",
+              "analogy"
+            ]
+          }
+        }
+      },
+      "llm_recommendation": {
+        "recommended_model": "analogy_based",
+        "reasoning": "The presence of comparable products and sufficient time series data make analogy-based modeling a strong choice. The stable decay pattern suggests that the product's demand is relatively consistent, which also supports this approach. Additionally, the lack of seasonality and moderate number of stores and SKUs further support the use of analogy-based modeling.",
+        "confidence": 0.8,
+        "llm_response": "{\n  \"recommended_model\": \"analogy_based\",\n  \"reasoning\": \"The presence of comparable products and sufficient time series data make analogy-based modeling a strong choice. The stable decay pattern sugg"
+      },
+      "data_characteristics": {
+        "has_time_series": true,
+        "time_series_length": 85,
+        "has_comparables": true,
+        "num_comparables": 45,
+        "decay_pattern": "stable",
+        "seasonality_detected": false,
+        "store_count": 5,
+        "sku_count": 9
+      },
+      "fallback_used": false
+    },
+    "factor_analysis": {
+      "correlation_matrix": {
+        "correlation_matrix": {
+          "price": {
+            "price": 1.0,
+            "price_bucket_encoded": 0.8350836371816512,
+            "is_comparable": null,
+            "avg_similarity": 0.056081023646175045,
+            "day_of_week": -0.09932045330572115,
+            "month": -0.028614464121204684,
+            "is_weekend": -0.0634958714627532,
+            "store_avg_sales": -0.1589385163764896,
+            "store_sales_std": -0.13592310619248507,
+            "units_sold": -0.052082050872996645
+          },
+          "price_bucket_encoded": {
+            "price": 0.8350836371816512,
+            "price_bucket_encoded": 1.0,
+            "is_comparable": null,
+            "avg_similarity": 0.1177820188764811,
+            "day_of_week": -0.1231414640771427,
+            "month": -0.06292066900984751,
+            "is_weekend": -0.05426401483972238,
+            "store_avg_sales": -0.0811921563554246,
+            "store_sales_std": -0.008711268790700128,
+            "units_sold": 0.018823817429773366
+          },
+          "is_comparable": {
+            "price": null,
+            "price_bucket_encoded": null,
+            "is_comparable": null,
+            "avg_similarity": null,
+            "day_of_week": null,
+            "month": null,
+            "is_weekend": null,
+            "store_avg_sales": null,
+            "store_sales_std": null,
+            "units_sold": null
+          },
+          "avg_similarity": {
+            "price": 0.056081023646175045,
+            "price_bucket_encoded": 0.1177820188764811,
+            "is_comparable": null,
+            "avg_similarity": 1.0,
+            "day_of_week": -0.07700341345626217,
+            "month": -0.08670935772566256,
+            "is_weekend": -0.17713337910340335,
+            "store_avg_sales": -0.05179157265970454,
+            "store_sales_std": -0.16380626788229793,
+            "units_sold": 0.1258525356989017
+          },
+          "day_of_week": {
+            "price": -0.09932045330572115,
+            "price_bucket_encoded": -0.1231414640771427,
+            "is_comparable": null,
+            "avg_similarity": -0.07700341345626217,
+            "day_of_week": 1.0,
+            "month": -0.2684137939598116,
+            "is_weekend": 0.8567146013425103,
+            "store_avg_sales": 0.059897295167941025,
+            "store_sales_std": -0.2380886157604154,
+            "units_sold": -0.07476269830442063
+          },
+          "month": {
+            "price": -0.028614464121204684,
+            "price_bucket_encoded": -0.06292066900984751,
+            "is_comparable": null,
+            "avg_similarity": -0.08670935772566256,
+            "day_of_week": -0.2684137939598116,
+            "month": 1.0,
+            "is_weekend": -0.25294732593296054,
+            "store_avg_sales": 0.20481768848581278,
+            "store_sales_std": -0.1058911411683518,
+            "units_sold": 0.03227625246615851
+          },
+          "is_weekend": {
+            "price": -0.0634958714627532,
+            "price_bucket_encoded": -0.05426401483972238,
+            "is_comparable": null,
+            "avg_similarity": -0.17713337910340335,
+            "day_of_week": 0.8567146013425103,
+            "month": -0.25294732593296054,
+            "is_weekend": 1.0,
+            "store_avg_sales": 0.10122355837540101,
+            "store_sales_std": -0.10911172933599794,
+            "units_sold": -0.02088906993213542
+          },
+          "store_avg_sales": {
+            "price": -0.1589385163764896,
+            "price_bucket_encoded": -0.0811921563554246,
+            "is_comparable": null,
+            "avg_similarity": -0.05179157265970454,
+            "day_of_week": 0.059897295167941025,
+            "month": 0.20481768848581278,
+            "is_weekend": 0.10122355837540101,
+            "store_avg_sales": 1.0,
+            "store_sales_std": 0.03799742073919051,
+            "units_sold": 0.1715928587281507
+          },
+          "store_sales_std": {
+            "price": -0.13592310619248507,
+            "price_bucket_encoded": -0.008711268790700128,
+            "is_comparable": null,
+            "avg_similarity": -0.16380626788229793,
+            "day_of_week": -0.2380886157604154,
+            "month": -0.1058911411683518,
+            "is_weekend": -0.10911172933599794,
+            "store_avg_sales": 0.03799742073919051,
+            "store_sales_std": 1.0,
+            "units_sold": 0.006520086048934014
+          },
+          "units_sold": {
+            "price": -0.052082050872996645,
+            "price_bucket_encoded": 0.018823817429773366,
+            "is_comparable": null,
+            "avg_similarity": 0.1258525356989017,
+            "day_of_week": -0.07476269830442063,
+            "month": 0.03227625246615851,
+            "is_weekend": -0.02088906993213542,
+            "store_avg_sales": 0.1715928587281507,
+            "store_sales_std": 0.006520086048934014,
+            "units_sold": 1.0
+          }
+        },
+        "top_correlations": {
+          "store_avg_sales": 0.1715928587281507,
+          "avg_similarity": 0.1258525356989017,
+          "day_of_week": 0.07476269830442063,
+          "price": 0.052082050872996645,
+          "month": 0.03227625246615851,
+          "is_weekend": 0.02088906993213542,
+          "price_bucket_encoded": 0.018823817429773366,
+          "store_sales_std": 0.006520086048934014,
+          "is_comparable": null
+        },
+        "strong_correlations": {}
+      },
+      "pca_results": {
+        "n_components": 5,
+        "explained_variance_ratio": [
+          0.26688010851189875,
+          0.23008703175699904,
+          0.14753475354478024,
+          0.14279607311887085,
+          0.11142084041832927
+        ],
+        "cumulative_variance": [
+          0.26688010851189875,
+          0.49696714026889777,
+          0.644501893813678,
+          0.7872979669325488,
+          0.8987188073508781
+        ],
+        "components": [
+          [
+            0.2617672872014225,
+            -1.2926701048048501,
+            -0.6028325711784166,
+            -1.146906776414968,
+            1.0795658627526252
+          ],
+          [
+            2.207990508692695,
+            -0.4894075406514248,
+            -0.22525052989089803,
+            1.8543285761439703,
+            -0.7225454608353694
+          ],
+          [
+            2.3760233498405627,
+            -1.0518076201101036,
+            0.30359456487702297,
+            -1.3306801445665273,
+            0.7375504469448314
+          ],
+          [
+            0.5941015047199798,
+            -1.6011570433858648,
+            -2.1914555503006152,
+            1.209884256719196,
+            0.2900940414649257
+          ],
+          [
+            -0.06876127476347747,
+            -1.3065828231736742,
+            0.41924886836109143,
+            2.1598872463019965,
+            0.955321739331489
+          ],
+          [
+            -2.0345543537810227,
+            0.526158275502983,
+            0.6980363205154114,
+            0.9103690857697172,
+            -0.7562989199427057
+          ],
+          [
+            0.36621277416587444,
+            1.952664744273845,
+            1.8124340078116514,
+            -0.8497008861511257,
+            -1.1879375557170302
+          ],
+          [
+            1.1799921569252558,
+            0.7463352364513283,
+            1.5743108696201353,
+            -0.3960036016798432,
+            -1.2334432248089524
+          ],
+          [
+            -1.8137659724644646,
+            1.4212853927992766,
+            0.9413596822516084,
+            0.3191816917104962,
+            0.5491667864918828
+          ],
+          [
+            -1.5195302052311175,
+            -0.942398948087331,
+            1.0670361885052781,
+            0.20852736172368005,
+            2.136082987162634
+          ],
+          [
+            -1.1891940348724674,
+            -1.018191826524212,
+            -1.3393321870420336,
+            -0.8653239080999511,
+            -0.7420456214019024
+          ],
+          [
+            -0.8694986477981309,
+            0.01801574570003745,
+            0.6587938529916181,
+            0.840079555332306,
+            0.5209076329927124
+          ],
+          [
+            -0.9999939086700229,
+            -0.35223879987769685,
+            -2.024805683876289,
+            0.5314867915149746,
+            0.6018259765671286
+          ],
+          [
+            -1.6059414644769148,
+            1.1263064966055518,
+            1.6271600563364856,
+            0.6901889367543385,
+            -0.24661702179456813
+          ],
+          [
+            -0.90835664851388,
+            -0.36058396402813897,
+            -0.4477627215383497,
+            -0.2638990089629837,
+            2.1674345997622484
+          ],
+          [
+            -1.08417263846786,
+            -1.4396389770284812,
+            0.9636629699581996,
+            -0.40548749775502374,
+            1.5589179958617563
+          ],
+          [
+            2.6213913253079335,
+            0.3490520050567284,
+            -0.8764430953070601,
+            0.5379239590485978,
+            -1.3116654641543886
+          ],
+          [
+            0.7020049446575947,
+            3.180279971417385,
+            -0.33984444500641514,
+            -0.5543655777631459,
+            -1.1061623945076131
+          ],
+          [
+            2.2995967585078456,
+            0.03313366593424792,
+            -0.10654918617524509,
+            1.2851922500193331,
+            0.7505264097898642
+          ],
+          [
+            1.3645530432006652,
+            0.973258404621107,
+            -1.7140177494014182,
+            -1.052691917670116,
+            -0.3508675870506244
+          ],
+          [
+            0.28979777662738004,
+            2.57346819099707,
+            -1.3870092290729525,
+            -1.640790360442452,
+            -0.3398549491442065
+          ],
+          [
+            -0.15757590425641546,
+            -1.6924883705934268,
+            0.26131657390807855,
+            0.5379448594475593,
+            -1.1847253136109674
+          ],
+          [
+            -0.07493488593383088,
+            -2.7607968460327212,
+            -0.7963621626152247,
+            -0.3363771128777261,
+            -1.3782191169958344
+          ],
+          [
+            1.4723842800490432,
+            0.7055153740603084,
+            1.653073287680526,
+            -0.7812931086735414,
+            -0.727420974778911
+          ],
+          [
+            1.6949666069007194,
+            0.47801507310902597,
+            0.5870523591161733,
+            -1.8738158265333809,
+            0.9220427349393552
+          ],
+          [
+            1.6949666069007194,
+            0.47801507310902597,
+            0.5870523591161733,
+            -1.8738158265333809,
+            0.9220427349393552
+          ],
+          [
+            -1.261434236237448,
+            -0.5033382086545907,
+            -2.0653413298419045,
+            0.5200309450795242,
+            0.5988892336183984
+          ],
+          [
+            -1.0364991937305832,
+            -0.5549193921382852,
+            0.5313548215092714,
+            -0.3965918775962598,
+            -0.4957726325856753
+          ],
+          [
+            -0.9569495179865393,
+            -0.5437267583242509,
+            -1.2341145010939243,
+            0.40494781440387806,
+            0.28325790197286116
+          ],
+          [
+            -0.839845712328052,
+            -0.32756491124714704,
+            -2.0045093868246933,
+            -0.7830738172684805,
+            -0.434850576502926
+          ],
+          [
+            -1.9146009789013372,
+            1.2726448751288155,
+            -1.6775008664962276,
+            -1.3711722600408165,
+            -0.4238379385965077
+          ],
+          [
+            1.2762087876546986,
+            -1.7970490270077497,
+            0.3791122104134623,
+            0.4055181492046523,
+            -0.7757613084012894
+          ],
+          [
+            0.009262116539118412,
+            0.04947824296929017,
+            0.6934974053717313,
+            -0.350768491854459,
+            -0.48402566079075326
+          ],
+          [
+            -0.21567292596774687,
+            0.10105942645298456,
+            -1.9031987459794444,
+            0.5658543308213253,
+            0.6106362054133202
+          ],
+          [
+            -0.9163011785852534,
+            -2.6226310240289816,
+            1.5665627473406043,
+            -1.5838029399255087,
+            0.10917792422617043
+          ],
+          [
+            -1.6920302458438818,
+            1.5092824134986602,
+            0.0457776907717555,
+            0.9432668909765314,
+            0.39051912739396716
+          ],
+          [
+            2.46616604273014,
+            0.008153211063404185,
+            -0.3123409337551412,
+            -1.4165248768166032,
+            1.1635488522049269
+          ],
+          [
+            1.522344249058166,
+            1.8533456999596531,
+            0.16090318150336794,
+            1.1052016319063662,
+            0.42330993290670027
+          ],
+          [
+            0.4600369604626997,
+            -1.1432592692580799,
+            -0.37624354994796994,
+            0.6810030823391366,
+            -1.7142165282009574
+          ],
+          [
+            -1.459349420187639,
+            1.687968697102576,
+            0.160355100352675,
+            -0.41128645447260714,
+            -1.5087134585541817
+          ],
+          [
+            0.05303354035173241,
+            -0.9332921028770544,
+            1.3185615801507957,
+            1.0778928404021535,
+            0.1339008588661249
+          ],
+          [
+            0.773808837252261,
+            2.9612051381438085,
+            0.3768049741606457,
+            0.6851046370103463,
+            0.4774388597949988
+          ],
+          [
+            -1.5380779136633607,
+            -1.1638390544709367,
+            -0.5447339591568083,
+            -1.0705193107970241,
+            -1.0807969545376523
+          ],
+          [
+            -2.6128331802366462,
+            0.43637073190502584,
+            -0.21772543882834275,
+            -1.6586177535693605,
+            -1.0697843166312342
+          ],
+          [
+            2.3307551870590113,
+            0.5213182557029017,
+            -0.8522967012901804,
+            1.7852839886815264,
+            -0.2922354266770859
+          ],
+          [
+            0.606636275515578,
+            2.512156325818133,
+            -0.5117831156948137,
+            0.9167406324611751,
+            -0.029306295404408666
+          ],
+          [
+            1.9863297782787728,
+            -0.48553356493693783,
+            0.39727895709599365,
+            -1.5659755467986005,
+            0.8391072917131984
+          ],
+          [
+            -1.1309389753655563,
+            -0.13308366307685657,
+            0.6182582070260032,
+            0.8286237088968557,
+            0.5179708900439822
+          ],
+          [
+            -2.707737405625141,
+            0.3132267736361146,
+            -0.26024308141417635,
+            -0.3104568552106423,
+            -0.024484505764803457
+          ],
+          [
+            0.4479457692010197,
+            -2.4585980284789333,
+            -0.7152908706839947,
+            -0.31346542000682565,
+            -1.3723456310983735
+          ],
+          [
+            -0.6080583202307056,
+            0.16911515447693118,
+            0.6993294989572333,
+            0.8515354017677561,
+            0.523844375941443
+          ],
+          [
+            -0.9591626276499856,
+            -0.6529581490552869,
+            1.261597886662623,
+            -0.09278521170294399,
+            -1.308802956464878
+          ],
+          [
+            2.1576274129566193,
+            -1.3943949873335517,
+            1.0537501016937731,
+            -1.4686749681130749,
+            0.41604562940183354
+          ],
+          [
+            -2.332460237631581,
+            0.5489989070707588,
+            0.5444229985727751,
+            -0.93424754256679,
+            1.8712521927696892
+          ],
+          [
+            1.7345516407455988,
+            0.06533239543741173,
+            1.527981925642841,
+            0.7853630471296176,
+            0.21201036242096535
+          ],
+          [
+            -1.685590937842004,
+            1.476696530774815,
+            0.923016476959334,
+            1.558751484554772,
+            -0.17032369979563722
+          ],
+          [
+            -0.04809606573680352,
+            -2.2287490987477923,
+            0.9935804312554715,
+            1.8772611694138321,
+            -0.5897318243944876
+          ],
+          [
+            1.2914634914767664,
+            1.203043675155155,
+            -1.6792905640772717,
+            1.0217405553285461,
+            1.3004037314545422
+          ]
+        ],
+        "feature_loadings": {
+          "price": [
+            -0.369578002338361,
+            0.5577890354499677,
+            0.12587401367200923,
+            -0.19033065764913698,
+            -0.048846910196589856
+          ],
+          "price_bucket_encoded": [
+            -0.3758844880836869,
+            0.5391318970842829,
+            0.07773603318667958,
+            -0.23815138370445332,
+            0.14746947731918836
+          ],
+          "is_comparable": [
+            1.1102230246251565e-16,
+            5.551115123125783e-17,
+            1.0547118733938987e-15,
+            7.771561172376096e-16,
+            -7.216449660063518e-16
+          ],
+          "avg_similarity": [
+            -0.16298823046742406,
+            0.09660660759960311,
+            0.013541254906194235,
+            0.699517290625225,
+            0.5716945555870888
+          ],
+          "day_of_week": [
+            0.5723044254270506,
+            0.3307632801987116,
+            0.08873431956545638,
+            0.025077353876593694,
+            0.006428660037027916
+          ],
+          "month": [],
+          "is_weekend": [],
+          "store_avg_sales": [],
+          "store_sales_std": []
+        },
+        "scaler": "StandardScaler()"
+      },
+      "price_analysis": {
+        "bucket_statistics": [
+          {
+            "price_bucket": "0-200",
+            "total_units": 0,
+            "avg_units": null,
+            "transaction_count": 0,
+            "total_revenue": 0
+          },
+          {
+            "price_bucket": "200-300",
+            "total_units": 21,
+            "avg_units": 3.5,
+            "transaction_count": 6,
+            "total_revenue": 16246
+          },
+          {
+            "price_bucket": "300-400",
+            "total_units": 47,
+            "avg_units": 5.875,
+            "transaction_count": 8,
+            "total_revenue": 26072
+          },
+          {
+            "price_bucket": "400-500",
+            "total_units": 29,
+            "avg_units": 4.833333333333333,
+            "transaction_count": 6,
+            "total_revenue": 13131
+          },
+          {
+            "price_bucket": "500-1000",
+            "total_units": 119,
+            "avg_units": 5.173913043478261,
+            "transaction_count": 23,
+            "total_revenue": 66136
+          },
+          {
+            "price_bucket": "1000+",
+            "total_units": 68,
+            "avg_units": 4.533333333333333,
+            "transaction_count": 15,
+            "total_revenue": 40035
+          }
+        ],
+        "price_elasticity": {
+          "200-300": {
+            "avg_price": 299.0,
+            "avg_units": 3.5,
+            "price_per_unit": 85.42857142857143
+          },
+          "300-400": {
+            "avg_price": 380.25,
+            "avg_units": 5.875,
+            "price_per_unit": 64.72340425531915
+          },
+          "400-500": {
+            "avg_price": 499.0,
+            "avg_units": 4.833333333333333,
+            "price_per_unit": 103.24137931034484
+          },
+          "500-1000": {
+            "avg_price": 816.3913043478261,
+            "avg_units": 5.173913043478261,
+            "price_per_unit": 157.78991596638656
+          },
+          "1000+": {
+            "avg_price": 1785.6666666666667,
+            "avg_units": 4.533333333333333,
+            "price_per_unit": 393.89705882352945
+          }
+        }
+      },
+      "factor_importance": [
+        [
+          "day_of_week",
+          0.2516930442682556
+        ],
+        [
+          "month",
+          0.15853180179414011
+        ],
+        [
+          "price",
+          0.15787791506777857
+        ],
+        [
+          "store_sales_std",
+          0.11240316663231179
+        ],
+        [
+          "avg_similarity",
+          0.1034062693760716
+        ],
+        [
+          "store_avg_sales",
+          0.10262127945088922
+        ],
+        [
+          "price_bucket_encoded",
+          0.0747361882634106
+        ],
+        [
+          "is_weekend",
+          0.038730335147142594
+        ],
+        [
+          "is_comparable",
+          0.0
+        ]
+      ],
+      "sensitivity_results": {
+        "price_sensitivity": {
+          "price_499": {
+            "below_threshold_avg_sales": 4.85,
+            "above_threshold_avg_sales": 4.921052631578948,
+            "sensitivity_ratio": 0.985561497326203
+          },
+          "price_799": {
+            "below_threshold_avg_sales": 5.0,
+            "above_threshold_avg_sales": 4.777777777777778,
+            "sensitivity_ratio": 1.0465116279069768
+          },
+          "price_1224": {
+            "below_threshold_avg_sales": 5.023255813953488,
+            "above_threshold_avg_sales": 4.533333333333333,
+            "sensitivity_ratio": 1.1080711354309165
+          }
+        }
+      }
+    },
+    "recommendations": {
+      "articles_to_buy": [
+        "SKU-004",
+        "VS-001"
+      ],
+      "store_allocations": {
+        "VS-001": {
+          "store_001": {
+            "quantity": 202.62857142857143,
+            "expected_sell_through": 0.29274193548387095,
+            "expected_rate_of_sale": 1.3984700460829491,
+            "margin_pct": 0.4,
+            "optimization_score": 0.39220678341013826,
+            "recommendation": "buy_cautious"
+          },
+          "store_002": {
+            "quantity": 184.32,
+            "expected_sell_through": 0.295,
+            "expected_rate_of_sale": 1.17174,
+            "margin_pct": 0.4,
+            "optimization_score": 0.3923536266666666,
+            "recommendation": "buy_cautious"
+          },
+          "store_003": {
+            "quantity": 63.449999999999996,
+            "expected_sell_through": 0.2377272727272727,
+            "expected_rate_of_sale": 0.46535113636363623,
+            "margin_pct": 0.4,
+            "optimization_score": 0.3628007984848485,
+            "recommendation": "buy_cautious"
+          },
+          "store_005": {
+            "quantity": 155.14285714285717,
+            "expected_sell_through": 0.35,
+            "expected_rate_of_sale": 1.0391666666666668,
+            "margin_pct": 0.4000000000000001,
+            "optimization_score": 0.41748999999999997,
+            "recommendation": "buy_cautious"
+          }
+        },
+        "SKU-004": {
+          "store_001": {
+            "quantity": 17.473684210526315,
+            "expected_sell_through": 0.33205882352941174,
+            "expected_rate_of_sale": 0.4951754385964912,
+            "margin_pct": 0.39999999999999997,
+            "optimization_score": 0.4069414860681114,
+            "recommendation": "buy_cautious"
+          },
+          "store_003": {
+            "quantity": 63.449999999999996,
+            "expected_sell_through": 0.519736842105263,
+            "expected_rate_of_sale": 0.6449067982456138,
+            "margin_pct": 0.4,
+            "optimization_score": 0.49512348684210516,
+            "recommendation": "buy_cautious"
+          },
+          "store_004": {
+            "quantity": 105.42857142857142,
+            "expected_sell_through": 0.45833333333333326,
+            "expected_rate_of_sale": 0.8970238095238092,
+            "margin_pct": 0.4,
+            "optimization_score": 0.4674769841269841,
+            "recommendation": "buy_cautious"
+          }
+        }
+      },
+      "total_procurement_quantity": 791.8936842105263,
+      "total_stores": 5,
+      "universe_of_stores": null,
+      "store_universe_validation": {
+        "valid": null,
+        "message": "Universe of stores not specified. Validation skipped.",
+        "total_stores": 5
+      },
+      "priority_stores": [
+        [
+          "store_004",
+          0.4674769841269841,
+          105.42857142857142
+        ],
+        [
+          "store_003",
+          0.4289621426634768,
+          126.89999999999999
+        ],
+        [
+          "store_005",
+          0.41748999999999997,
+          155.14285714285717
+        ],
+        [
+          "store_001",
+          0.39957413473912484,
+          220.10225563909773
+        ],
+        [
+          "store_002",
+          0.3923536266666666,
+          184.32
+        ]
+      ],
+      "article_level_metrics": {
+        "SKU-004": {
+          "article": "SKU-004",
+          "article_details": {
+            "style_code": "P101",
+            "color": "White",
+            "segment": "Womens wear",
+            "family": "Denim Wear",
+            "class": "Bottom Wear",
+            "brick": "JACKET"
+          },
+          "total_store_exposure": 3,
+          "mrp": 582.3333333333334,
+          "average_selling_price": 582.3333333333334,
+          "average_discount": 0,
+          "margin_pct": 0.4000000000000001,
+          "ros": 0.47368421052631576,
+          "str": 0.4673998816164855,
+          "net_sales_value": 50721.82860883827,
+          "total_quantity": 186.35225563909773,
+          "expected_units_sold": 87.10102222467933,
+          "mrp_consistent": false,
+          "price_std": 184.08935028645433,
+          "price_consistency": "variable",
+          "discount_consistency": "variable",
+          "margin_adjusted": false,
+          "margin_consistency": "consistent",
+          "margin_meets_target": true,
+          "target_margin": 0.25
+        },
+        "VS-001": {
+          "article": "VS-001",
+          "article_details": {
+            "style_code": "P100",
+            "color": "Beige",
+            "segment": "Womens wear",
+            "family": "Casual Wear",
+            "class": "Bottom Wear",
+            "brick": "BLAZER"
+          },
+          "total_store_exposure": 4,
+          "mrp": 924.0,
+          "average_selling_price": 924.0,
+          "average_discount": 0,
+          "margin_pct": 0.4000000000000001,
+          "ros": 0.3387096774193548,
+          "str": 0.30233451750903934,
+          "net_sales_value": 169162.2938903226,
+          "total_quantity": 605.5414285714286,
+          "expected_units_sold": 183.07607563887726,
+          "mrp_consistent": false,
+          "price_std": 496.8651728587948,
+          "price_consistency": "variable",
+          "discount_consistency": "variable",
+          "margin_adjusted": false,
+          "margin_consistency": "consistent",
+          "margin_meets_target": true,
+          "target_margin": 0.25
+        }
+      },
+      "optimization_summary": "Optimized recommendation: Procure 2 articles with total quantity of 792 units across 5 stores.\nExpected performance:\n  - Sell-through rate: 31.8% (target: 75.0%)\n  - Average margin: 40.0% (min: 25.0%)\n  - Expected revenue: \u20b9287,877\n  - Expected margin value: \u20b9115,151\n  - Optimization score: 0.41/1.0\n\nArticle-Level Metrics:\n\n  Article: SKU-004\n    Style Code: P101, Color: White, Segment: Womens wear\n    Family: Denim Wear, Class: Bottom Wear, Brick: JACKET\n    MRP: \u20b9582.33, Avg Selling Price: \u20b9582.33, Avg Discount: 0.0%\n    Margin: 40.0%, Store Exposure: 3, ROS: 0.47 units/day, STR: 46.7%\n    Net Sales Value: \u20b950,722\n\n  Article: VS-001\n    Style Code: P100, Color: Beige, Segment: Womens wear\n    Family: Casual Wear, Class: Bottom Wear, Brick: BLAZER\n    MRP: \u20b9924.00, Avg Selling Price: \u20b9924.00, Avg Discount: 0.0%\n    Margin: 40.0%, Store Exposure: 4, ROS: 0.34 units/day, STR: 30.2%\n    Net Sales Value: \u20b9169,162\n\n\u26a0\ufe0f  Low sell-through risk for 2 articles. Consider reducing quantities.",
+      "expected_metrics": {
+        "total_expected_units_sold": 298.3050995182237,
+        "avg_sell_through_rate": 0.31803266577632944,
+        "avg_margin_pct": 0.4,
+        "total_revenue": 287877.1614316925,
+        "total_margin_value": 115150.864572677,
+        "avg_optimization_score": 0.40646563853772744
+      },
+      "risk_assessment": {
+        "margin_risk_articles": [],
+        "low_sell_through_articles": [
+          "VS-001",
+          "SKU-004"
+        ],
+        "high_confidence_articles": []
+      },
+      "top_banner": {
+        "total_unique_skus": 2,
+        "total_quantity_bought": 791.8936842105263,
+        "total_stores": 5,
+        "total_buy_cost": 0.0,
+        "total_sales_value": 219884.12249916085,
+        "average_margin_achieved": 0.4000000000000001,
+        "target_margin": 0.25,
+        "margin_vs_target": {
+          "achieved": 0.4000000000000001,
+          "target": 0.25,
+          "difference": 0.15000000000000008,
+          "meets_target": true,
+          "achieved_pct": 40.00000000000001,
+          "target_pct": 25.0,
+          "difference_pct": 15.000000000000007
+        }
+      }
+    },
+    "top_banner": {
+      "total_unique_skus": 2,
+      "total_quantity_bought": 791.8936842105263,
+      "total_stores": 5,
+      "total_buy_cost": 0.0,
+      "total_sales_value": 219884.12249916085,
+      "average_margin_achieved": 0.4000000000000001,
+      "target_margin": 0.25,
+      "margin_vs_target": {
+        "achieved": 0.4000000000000001,
+        "target": 0.25,
+        "difference": 0.15000000000000008,
+        "meets_target": true,
+        "achieved_pct": 40.00000000000001,
+        "target_pct": 25.0,
+        "difference_pct": 15.000000000000007
+      }
+    },
+    "article_level_metrics": {
+      "SKU-004": {
+        "article": "SKU-004",
+        "article_details": {
+          "style_code": "P101",
+          "color": "White",
+          "segment": "Womens wear",
+          "family": "Denim Wear",
+          "class": "Bottom Wear",
+          "brick": "JACKET"
+        },
+        "total_store_exposure": 3,
+        "mrp": 582.3333333333334,
+        "average_selling_price": 582.3333333333334,
+        "average_discount": 0,
+        "margin_pct": 0.4000000000000001,
+        "ros": 0.47368421052631576,
+        "str": 0.4673998816164855,
+        "net_sales_value": 50721.82860883827,
+        "total_quantity": 186.35225563909773,
+        "expected_units_sold": 87.10102222467933,
+        "mrp_consistent": false,
+        "price_std": 184.08935028645433,
+        "price_consistency": "variable",
+        "discount_consistency": "variable",
+        "margin_adjusted": false,
+        "margin_consistency": "consistent",
+        "margin_meets_target": true,
+        "target_margin": 0.25
+      },
+      "VS-001": {
+        "article": "VS-001",
+        "article_details": {
+          "style_code": "P100",
+          "color": "Beige",
+          "segment": "Womens wear",
+          "family": "Casual Wear",
+          "class": "Bottom Wear",
+          "brick": "BLAZER"
+        },
+        "total_store_exposure": 4,
+        "mrp": 924.0,
+        "average_selling_price": 924.0,
+        "average_discount": 0,
+        "margin_pct": 0.4000000000000001,
+        "ros": 0.3387096774193548,
+        "str": 0.30233451750903934,
+        "net_sales_value": 169162.2938903226,
+        "total_quantity": 605.5414285714286,
+        "expected_units_sold": 183.07607563887726,
+        "mrp_consistent": false,
+        "price_std": 496.8651728587948,
+        "price_consistency": "variable",
+        "discount_consistency": "variable",
+        "margin_adjusted": false,
+        "margin_consistency": "consistent",
+        "margin_meets_target": true,
+        "target_margin": 0.25
+      }
+    },
+    "store_allocations": {
+      "VS-001": {
+        "store_001": {
+          "quantity": 202.62857142857143,
+          "expected_sell_through": 0.29274193548387095,
+          "expected_rate_of_sale": 1.3984700460829491,
+          "margin_pct": 0.4,
+          "optimization_score": 0.39220678341013826,
+          "recommendation": "buy_cautious"
+        },
+        "store_002": {
+          "quantity": 184.32,
+          "expected_sell_through": 0.295,
+          "expected_rate_of_sale": 1.17174,
+          "margin_pct": 0.4,
+          "optimization_score": 0.3923536266666666,
+          "recommendation": "buy_cautious"
+        },
+        "store_003": {
+          "quantity": 63.449999999999996,
+          "expected_sell_through": 0.2377272727272727,
+          "expected_rate_of_sale": 0.46535113636363623,
+          "margin_pct": 0.4,
+          "optimization_score": 0.3628007984848485,
+          "recommendation": "buy_cautious"
+        },
+        "store_005": {
+          "quantity": 155.14285714285717,
+          "expected_sell_through": 0.35,
+          "expected_rate_of_sale": 1.0391666666666668,
+          "margin_pct": 0.4000000000000001,
+          "optimization_score": 0.41748999999999997,
+          "recommendation": "buy_cautious"
+        }
+      },
+      "SKU-004": {
+        "store_001": {
+          "quantity": 17.473684210526315,
+          "expected_sell_through": 0.33205882352941174,
+          "expected_rate_of_sale": 0.4951754385964912,
+          "margin_pct": 0.39999999999999997,
+          "optimization_score": 0.4069414860681114,
+          "recommendation": "buy_cautious"
+        },
+        "store_003": {
+          "quantity": 63.449999999999996,
+          "expected_sell_through": 0.519736842105263,
+          "expected_rate_of_sale": 0.6449067982456138,
+          "margin_pct": 0.4,
+          "optimization_score": 0.49512348684210516,
+          "recommendation": "buy_cautious"
+        },
+        "store_004": {
+          "quantity": 105.42857142857142,
+          "expected_sell_through": 0.45833333333333326,
+          "expected_rate_of_sale": 0.8970238095238092,
+          "margin_pct": 0.4,
+          "optimization_score": 0.4674769841269841,
+          "recommendation": "buy_cautious"
+        }
+      }
+    },
+    "sensitivity_analysis": {
+      "price_sensitivity": {
+        "price_499": {
+          "below_threshold_avg_sales": 4.85,
+          "above_threshold_avg_sales": 4.921052631578948,
+          "sensitivity_ratio": 0.985561497326203
+        },
+        "price_799": {
+          "below_threshold_avg_sales": 5.0,
+          "above_threshold_avg_sales": 4.777777777777778,
+          "sensitivity_ratio": 1.0465116279069768
+        },
+        "price_1224": {
+          "below_threshold_avg_sales": 5.023255813953488,
+          "above_threshold_avg_sales": 4.533333333333333,
+          "sensitivity_ratio": 1.1080711354309165
+        }
+      }
+    },
+    "validation_messages": [
+      "WARNING: Inventory data row 32 validation failed: Input should be greater than or equal to 0",
+      "WARNING: Inventory data row 41 validation failed: Input should be greater than or equal to 0",
+      "WARNING: Price data row 1 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 4 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 6 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 8 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 12 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 13 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 14 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 15 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 16 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 22 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 23 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 24 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 25 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 28 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 29 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 30 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 31 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 32 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 34 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 35 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 37 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 39 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 40 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 41 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 42 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 45 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 49 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 52 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 56 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 58 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 59 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 60 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 61 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 62 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 63 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 64 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 67 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 70 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 71 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 72 validation failed: Input should be a valid boolean",
+      "WARNING: Price data row 73 validation failed: Input should be a valid boolean"
+    ],
+    "fallback_used": false,
+    "hitl_metadata": {
+      "enabled": true,
+      "available_stores": [
+        "store_001",
+        "store_002",
+        "store_003",
+        "store_004",
+        "store_005"
+      ],
+      "store_mappings": {},
+      "variance_threshold": 0.05,
+      "variance_threshold_pct": 5.0
+    },
+    "forecast_results": {
+      "store_level_forecasts": {
+        "store_001": {
+          "VS-001": {
+            "store_id": "store_001",
+            "article": "VS-001",
+            "forecast_quantity": 202.62857142857143,
+            "confidence_low": 118.19999999999999,
+            "confidence_high": 219.51428571428573,
+            "recommendation": "buy_cautious",
+            "reasoning": "Analogy-based forecast using 45 comparable products | Optimized: ROS=1.40/day, ST=29.3%, Margin=40.0%",
+            "price": 999,
+            "method_used": "analogy_based",
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 202.62857142857143,
+            "original_quantity": 168.85714285714286,
+            "expected_sell_through_rate": 0.29274193548387095,
+            "expected_rate_of_sale": 1.3984700460829491,
+            "expected_units_sold": 83.90820276497695,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 84,
+            "optimization_score": 0.39220678341013826
+          },
+          "SKU-004": {
+            "store_id": "store_001",
+            "article": "SKU-004",
+            "forecast_quantity": 17.473684210526315,
+            "confidence_low": 118.19999999999999,
+            "confidence_high": 219.51428571428573,
+            "recommendation": "buy_cautious",
+            "reasoning": "Analogy-based forecast using 45 comparable products | Optimized: ROS=0.50/day, ST=33.2%, Margin=40.0%",
+            "price": 349,
+            "method_used": "analogy_based",
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 17.473684210526315,
+            "original_quantity": 168.85714285714286,
+            "expected_sell_through_rate": 0.33205882352941174,
+            "expected_rate_of_sale": 0.4951754385964912,
+            "expected_units_sold": 29.710526315789473,
+            "margin_pct": 0.39999999999999997,
+            "margin_protected": true,
+            "current_inventory": 72,
+            "optimization_score": 0.4069414860681114
+          },
+          "VS-100": {
+            "store_id": "store_001",
+            "article": "VS-100",
+            "forecast_quantity": 0,
+            "confidence_low": 185.45454545454544,
+            "confidence_high": 556.3636363636363,
+            "recommendation": "skip",
+            "reasoning": "No history, using store average | Optimized: ROS=0.00/day, ST=0.0%, Margin=40.0%",
+            "price": 0,
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 0,
+            "original_quantity": 370.9090909090909,
+            "expected_sell_through_rate": 0.0,
+            "expected_rate_of_sale": 0.0,
+            "expected_units_sold": 0.0,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 0,
+            "optimization_score": 0.0
+          },
+          "VS-101": {
+            "store_id": "store_001",
+            "article": "VS-101",
+            "forecast_quantity": 0,
+            "confidence_low": 185.45454545454544,
+            "confidence_high": 556.3636363636363,
+            "recommendation": "skip",
+            "reasoning": "No history, using store average | Optimized: ROS=0.00/day, ST=0.0%, Margin=40.0%",
+            "price": 0,
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 0,
+            "original_quantity": 370.9090909090909,
+            "expected_sell_through_rate": 0.0,
+            "expected_rate_of_sale": 0.0,
+            "expected_units_sold": 0.0,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 0,
+            "optimization_score": 0.0
+          }
+        },
+        "store_002": {
+          "VS-001": {
+            "store_id": "store_002",
+            "article": "VS-001",
+            "forecast_quantity": 184.32,
+            "confidence_low": 107.52,
+            "confidence_high": 199.68,
+            "recommendation": "buy_cautious",
+            "reasoning": "Analogy-based forecast using 45 comparable products | Optimized: ROS=1.17/day, ST=29.5%, Margin=40.0%",
+            "price": 1699,
+            "method_used": "analogy_based",
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 184.32,
+            "original_quantity": 153.6,
+            "expected_sell_through_rate": 0.295,
+            "expected_rate_of_sale": 1.17174,
+            "expected_units_sold": 70.3044,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 54,
+            "optimization_score": 0.3923536266666666
+          },
+          "SKU-004": {
+            "store_id": "store_002",
+            "article": "SKU-004",
+            "forecast_quantity": 0,
+            "confidence_low": 145.7142857142857,
+            "confidence_high": 437.1428571428571,
+            "recommendation": "skip",
+            "reasoning": "No history, using store average | Optimized: ROS=0.88/day, ST=75.0%, Margin=40.0%",
+            "price": 0,
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 0,
+            "original_quantity": 291.4285714285714,
+            "expected_sell_through_rate": 0.75,
+            "expected_rate_of_sale": 0.875,
+            "expected_units_sold": 52.5,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 70,
+            "optimization_score": 0.0
+          },
+          "VS-100": {
+            "store_id": "store_002",
+            "article": "VS-100",
+            "forecast_quantity": 0,
+            "confidence_low": 145.7142857142857,
+            "confidence_high": 437.1428571428571,
+            "recommendation": "skip",
+            "reasoning": "No history, using store average | Optimized: ROS=0.00/day, ST=0.0%, Margin=40.0%",
+            "price": 0,
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 0,
+            "original_quantity": 291.4285714285714,
+            "expected_sell_through_rate": 0.0,
+            "expected_rate_of_sale": 0.0,
+            "expected_units_sold": 0.0,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 0,
+            "optimization_score": 0.0
+          },
+          "VS-101": {
+            "store_id": "store_002",
+            "article": "VS-101",
+            "forecast_quantity": 0,
+            "confidence_low": 145.7142857142857,
+            "confidence_high": 437.1428571428571,
+            "recommendation": "skip",
+            "reasoning": "No history, using store average | Optimized: ROS=0.00/day, ST=0.0%, Margin=40.0%",
+            "price": 0,
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 0,
+            "original_quantity": 291.4285714285714,
+            "expected_sell_through_rate": 0.0,
+            "expected_rate_of_sale": 0.0,
+            "expected_units_sold": 0.0,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 0,
+            "optimization_score": 0.0
+          }
+        },
+        "store_003": {
+          "VS-001": {
+            "store_id": "store_003",
+            "article": "VS-001",
+            "forecast_quantity": 63.449999999999996,
+            "confidence_low": 37.012499999999996,
+            "confidence_high": 68.7375,
+            "recommendation": "buy_cautious",
+            "reasoning": "Analogy-based forecast using 45 comparable products | Optimized: ROS=0.47/day, ST=23.8%, Margin=40.0%",
+            "price": 599,
+            "method_used": "analogy_based",
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 63.449999999999996,
+            "original_quantity": 52.875,
+            "expected_sell_through_rate": 0.2377272727272727,
+            "expected_rate_of_sale": 0.46535113636363623,
+            "expected_units_sold": 27.921068181818175,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 54,
+            "optimization_score": 0.3628007984848485
+          },
+          "SKU-004": {
+            "store_id": "store_003",
+            "article": "SKU-004",
+            "forecast_quantity": 63.449999999999996,
+            "confidence_low": 37.012499999999996,
+            "confidence_high": 68.7375,
+            "recommendation": "buy_cautious",
+            "reasoning": "Analogy-based forecast using 45 comparable products | Optimized: ROS=0.64/day, ST=52.0%, Margin=40.0%",
+            "price": 599,
+            "method_used": "analogy_based",
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 63.449999999999996,
+            "original_quantity": 52.875,
+            "expected_sell_through_rate": 0.519736842105263,
+            "expected_rate_of_sale": 0.6449067982456138,
+            "expected_units_sold": 38.69440789473683,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 11,
+            "optimization_score": 0.49512348684210516
+          },
+          "VS-100": {
+            "store_id": "store_003",
+            "article": "VS-100",
+            "forecast_quantity": 0,
+            "confidence_low": 131.53846153846155,
+            "confidence_high": 394.61538461538464,
+            "recommendation": "skip",
+            "reasoning": "No history, using store average | Optimized: ROS=0.00/day, ST=0.0%, Margin=40.0%",
+            "price": 0,
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 0,
+            "original_quantity": 263.0769230769231,
+            "expected_sell_through_rate": 0.0,
+            "expected_rate_of_sale": 0.0,
+            "expected_units_sold": 0.0,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 0,
+            "optimization_score": 0.0
+          },
+          "VS-101": {
+            "store_id": "store_003",
+            "article": "VS-101",
+            "forecast_quantity": 0,
+            "confidence_low": 131.53846153846155,
+            "confidence_high": 394.61538461538464,
+            "recommendation": "skip",
+            "reasoning": "No history, using store average | Optimized: ROS=0.00/day, ST=0.0%, Margin=40.0%",
+            "price": 0,
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 0,
+            "original_quantity": 263.0769230769231,
+            "expected_sell_through_rate": 0.0,
+            "expected_rate_of_sale": 0.0,
+            "expected_units_sold": 0.0,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 0,
+            "optimization_score": 0.0
+          }
+        },
+        "store_005": {
+          "VS-001": {
+            "store_id": "store_005",
+            "article": "VS-001",
+            "forecast_quantity": 155.14285714285717,
+            "confidence_low": 90.50000000000001,
+            "confidence_high": 168.0714285714286,
+            "recommendation": "buy_cautious",
+            "reasoning": "Analogy-based forecast using 45 comparable products | Optimized: ROS=1.04/day, ST=35.0%, Margin=40.0%",
+            "price": 399,
+            "method_used": "analogy_based",
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 155.14285714285717,
+            "original_quantity": 129.2857142857143,
+            "expected_sell_through_rate": 0.35,
+            "expected_rate_of_sale": 1.0391666666666668,
+            "expected_units_sold": 62.35,
+            "margin_pct": 0.4000000000000001,
+            "margin_protected": true,
+            "current_inventory": 23,
+            "optimization_score": 0.41748999999999997
+          },
+          "SKU-004": {
+            "store_id": "store_005",
+            "article": "SKU-004",
+            "forecast_quantity": 0,
+            "confidence_low": 163.63636363636363,
+            "confidence_high": 490.9090909090909,
+            "recommendation": "skip",
+            "reasoning": "No history, using store average | Optimized: ROS=0.80/day, ST=75.0%, Margin=40.0%",
+            "price": 0,
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 0,
+            "original_quantity": 327.27272727272725,
+            "expected_sell_through_rate": 0.75,
+            "expected_rate_of_sale": 0.8,
+            "expected_units_sold": 48.0,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 64,
+            "optimization_score": 0.0
+          },
+          "VS-100": {
+            "store_id": "store_005",
+            "article": "VS-100",
+            "forecast_quantity": 0,
+            "confidence_low": 163.63636363636363,
+            "confidence_high": 490.9090909090909,
+            "recommendation": "skip",
+            "reasoning": "No history, using store average | Optimized: ROS=0.00/day, ST=0.0%, Margin=40.0%",
+            "price": 0,
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 0,
+            "original_quantity": 327.27272727272725,
+            "expected_sell_through_rate": 0.0,
+            "expected_rate_of_sale": 0.0,
+            "expected_units_sold": 0.0,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 0,
+            "optimization_score": 0.0
+          },
+          "VS-101": {
+            "store_id": "store_005",
+            "article": "VS-101",
+            "forecast_quantity": 0,
+            "confidence_low": 163.63636363636363,
+            "confidence_high": 490.9090909090909,
+            "recommendation": "skip",
+            "reasoning": "No history, using store average | Optimized: ROS=0.00/day, ST=0.0%, Margin=40.0%",
+            "price": 0,
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 0,
+            "original_quantity": 327.27272727272725,
+            "expected_sell_through_rate": 0.0,
+            "expected_rate_of_sale": 0.0,
+            "expected_units_sold": 0.0,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 0,
+            "optimization_score": 0.0
+          }
+        },
+        "store_004": {
+          "VS-001": {
+            "store_id": "store_004",
+            "article": "VS-001",
+            "forecast_quantity": 0,
+            "confidence_low": 157.5,
+            "confidence_high": 472.5,
+            "recommendation": "skip",
+            "reasoning": "No history, using store average | Optimized: ROS=0.12/day, ST=75.0%, Margin=40.0%",
+            "price": 0,
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 0,
+            "original_quantity": 315.0,
+            "expected_sell_through_rate": 0.75,
+            "expected_rate_of_sale": 0.125,
+            "expected_units_sold": 7.5,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 10,
+            "optimization_score": 0.0
+          },
+          "SKU-004": {
+            "store_id": "store_004",
+            "article": "SKU-004",
+            "forecast_quantity": 105.42857142857142,
+            "confidence_low": 61.499999999999986,
+            "confidence_high": 114.21428571428571,
+            "recommendation": "buy_cautious",
+            "reasoning": "Analogy-based forecast using 45 comparable products | Optimized: ROS=0.90/day, ST=45.8%, Margin=40.0%",
+            "price": 799,
+            "method_used": "analogy_based",
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 105.42857142857142,
+            "original_quantity": 87.85714285714285,
+            "expected_sell_through_rate": 0.45833333333333326,
+            "expected_rate_of_sale": 0.8970238095238092,
+            "expected_units_sold": 53.821428571428555,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 12,
+            "optimization_score": 0.4674769841269841
+          },
+          "VS-100": {
+            "store_id": "store_004",
+            "article": "VS-100",
+            "forecast_quantity": 0,
+            "confidence_low": 157.5,
+            "confidence_high": 472.5,
+            "recommendation": "skip",
+            "reasoning": "No history, using store average | Optimized: ROS=0.00/day, ST=0.0%, Margin=40.0%",
+            "price": 0,
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 0,
+            "original_quantity": 315.0,
+            "expected_sell_through_rate": 0.0,
+            "expected_rate_of_sale": 0.0,
+            "expected_units_sold": 0.0,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 0,
+            "optimization_score": 0.0
+          },
+          "VS-101": {
+            "store_id": "store_004",
+            "article": "VS-101",
+            "forecast_quantity": 0,
+            "confidence_low": 157.5,
+            "confidence_high": 472.5,
+            "recommendation": "skip",
+            "reasoning": "No history, using store average | Optimized: ROS=0.00/day, ST=0.0%, Margin=40.0%",
+            "price": 0,
+            "cost": 0,
+            "target_margin": 0.3,
+            "margin_meets_target": true,
+            "optimized_quantity": 0,
+            "original_quantity": 315.0,
+            "expected_sell_through_rate": 0.0,
+            "expected_rate_of_sale": 0.0,
+            "expected_units_sold": 0.0,
+            "margin_pct": 0.4,
+            "margin_protected": true,
+            "current_inventory": 0,
+            "optimization_score": 0.0
+          }
+        }
+      },
+      "aggregated_forecast": {
+        "total_quantity": 710.97,
+        "unique_articles": [
+          "VS-001",
+          "SKU-004"
+        ],
+        "num_articles": 2,
+        "stores_with_recommendations": 5,
+        "total_stores": 5,
+        "total_expected_units_sold": 298.3050995182237,
+        "avg_sell_through_rate": 0.31803266577632944,
+        "avg_margin_pct": 0.4,
+        "total_revenue": 287877.1614316925,
+        "total_margin_value": 115150.864572677,
+        "avg_optimization_score": 0.40646563853772744
+      },
+      "recommendations": {
+        "articles_to_buy": [
+          "SKU-004",
+          "VS-001"
+        ],
+        "store_allocations": {
+          "VS-001": {
+            "store_001": {
+              "quantity": 202.62857142857143,
+              "expected_sell_through": 0.29274193548387095,
+              "expected_rate_of_sale": 1.3984700460829491,
+              "margin_pct": 0.4,
+              "optimization_score": 0.39220678341013826,
+              "recommendation": "buy_cautious"
+            },
+            "store_002": {
+              "quantity": 184.32,
+              "expected_sell_through": 0.295,
+              "expected_rate_of_sale": 1.17174,
+              "margin_pct": 0.4,
+              "optimization_score": 0.3923536266666666,
+              "recommendation": "buy_cautious"
+            },
+            "store_003": {
+              "quantity": 63.449999999999996,
+              "expected_sell_through": 0.2377272727272727,
+              "expected_rate_of_sale": 0.46535113636363623,
+              "margin_pct": 0.4,
+              "optimization_score": 0.3628007984848485,
+              "recommendation": "buy_cautious"
+            },
+            "store_005": {
+              "quantity": 155.14285714285717,
+              "expected_sell_through": 0.35,
+              "expected_rate_of_sale": 1.0391666666666668,
+              "margin_pct": 0.4000000000000001,
+              "optimization_score": 0.41748999999999997,
+              "recommendation": "buy_cautious"
+            }
+          },
+          "SKU-004": {
+            "store_001": {
+              "quantity": 17.473684210526315,
+              "expected_sell_through": 0.33205882352941174,
+              "expected_rate_of_sale": 0.4951754385964912,
+              "margin_pct": 0.39999999999999997,
+              "optimization_score": 0.4069414860681114,
+              "recommendation": "buy_cautious"
+            },
+            "store_003": {
+              "quantity": 63.449999999999996,
+              "expected_sell_through": 0.519736842105263,
+              "expected_rate_of_sale": 0.6449067982456138,
+              "margin_pct": 0.4,
+              "optimization_score": 0.49512348684210516,
+              "recommendation": "buy_cautious"
+            },
+            "store_004": {
+              "quantity": 105.42857142857142,
+              "expected_sell_through": 0.45833333333333326,
+              "expected_rate_of_sale": 0.8970238095238092,
+              "margin_pct": 0.4,
+              "optimization_score": 0.4674769841269841,
+              "recommendation": "buy_cautious"
+            }
+          }
+        },
+        "total_procurement_quantity": 791.8936842105263,
+        "total_stores": 5,
+        "universe_of_stores": null,
+        "store_universe_validation": {
+          "valid": null,
+          "message": "Universe of stores not specified. Validation skipped.",
+          "total_stores": 5
+        },
+        "priority_stores": [
+          [
+            "store_004",
+            0.4674769841269841,
+            105.42857142857142
+          ],
+          [
+            "store_003",
+            0.4289621426634768,
+            126.89999999999999
+          ],
+          [
+            "store_005",
+            0.41748999999999997,
+            155.14285714285717
+          ],
+          [
+            "store_001",
+            0.39957413473912484,
+            220.10225563909773
+          ],
+          [
+            "store_002",
+            0.3923536266666666,
+            184.32
+          ]
+        ],
+        "article_level_metrics": {
+          "SKU-004": {
+            "article": "SKU-004",
+            "article_details": {
+              "style_code": "P101",
+              "color": "White",
+              "segment": "Womens wear",
+              "family": "Denim Wear",
+              "class": "Bottom Wear",
+              "brick": "JACKET"
+            },
+            "total_store_exposure": 3,
+            "mrp": 582.3333333333334,
+            "average_selling_price": 582.3333333333334,
+            "average_discount": 0,
+            "margin_pct": 0.4000000000000001,
+            "ros": 0.47368421052631576,
+            "str": 0.4673998816164855,
+            "net_sales_value": 50721.82860883827,
+            "total_quantity": 186.35225563909773,
+            "expected_units_sold": 87.10102222467933,
+            "mrp_consistent": false,
+            "price_std": 184.08935028645433,
+            "price_consistency": "variable",
+            "discount_consistency": "variable",
+            "margin_adjusted": false,
+            "margin_consistency": "consistent",
+            "margin_meets_target": true,
+            "target_margin": 0.25
+          },
+          "VS-001": {
+            "article": "VS-001",
+            "article_details": {
+              "style_code": "P100",
+              "color": "Beige",
+              "segment": "Womens wear",
+              "family": "Casual Wear",
+              "class": "Bottom Wear",
+              "brick": "BLAZER"
+            },
+            "total_store_exposure": 4,
+            "mrp": 924.0,
+            "average_selling_price": 924.0,
+            "average_discount": 0,
+            "margin_pct": 0.4000000000000001,
+            "ros": 0.3387096774193548,
+            "str": 0.30233451750903934,
+            "net_sales_value": 169162.2938903226,
+            "total_quantity": 605.5414285714286,
+            "expected_units_sold": 183.07607563887726,
+            "mrp_consistent": false,
+            "price_std": 496.8651728587948,
+            "price_consistency": "variable",
+            "discount_consistency": "variable",
+            "margin_adjusted": false,
+            "margin_consistency": "consistent",
+            "margin_meets_target": true,
+            "target_margin": 0.25
+          }
+        },
+        "optimization_summary": "Optimized recommendation: Procure 2 articles with total quantity of 792 units across 5 stores.\nExpected performance:\n  - Sell-through rate: 31.8% (target: 75.0%)\n  - Average margin: 40.0% (min: 25.0%)\n  - Expected revenue: \u20b9287,877\n  - Expected margin value: \u20b9115,151\n  - Optimization score: 0.41/1.0\n\nArticle-Level Metrics:\n\n  Article: SKU-004\n    Style Code: P101, Color: White, Segment: Womens wear\n    Family: Denim Wear, Class: Bottom Wear, Brick: JACKET\n    MRP: \u20b9582.33, Avg Selling Price: \u20b9582.33, Avg Discount: 0.0%\n    Margin: 40.0%, Store Exposure: 3, ROS: 0.47 units/day, STR: 46.7%\n    Net Sales Value: \u20b950,722\n\n  Article: VS-001\n    Style Code: P100, Color: Beige, Segment: Womens wear\n    Family: Casual Wear, Class: Bottom Wear, Brick: BLAZER\n    MRP: \u20b9924.00, Avg Selling Price: \u20b9924.00, Avg Discount: 0.0%\n    Margin: 40.0%, Store Exposure: 4, ROS: 0.34 units/day, STR: 30.2%\n    Net Sales Value: \u20b9169,162\n\n\u26a0\ufe0f  Low sell-through risk for 2 articles. Consider reducing quantities.",
+        "expected_metrics": {
+          "total_expected_units_sold": 298.3050995182237,
+          "avg_sell_through_rate": 0.31803266577632944,
+          "avg_margin_pct": 0.4,
+          "total_revenue": 287877.1614316925,
+          "total_margin_value": 115150.864572677,
+          "avg_optimization_score": 0.40646563853772744
+        },
+        "risk_assessment": {
+          "margin_risk_articles": [],
+          "low_sell_through_articles": [
+            "VS-001",
+            "SKU-004"
+          ],
+          "high_confidence_articles": []
+        },
+        "top_banner": {
+          "total_unique_skus": 2,
+          "total_quantity_bought": 791.8936842105263,
+          "total_stores": 5,
+          "total_buy_cost": 0.0,
+          "total_sales_value": 219884.12249916085,
+          "average_margin_achieved": 0.4000000000000001,
+          "target_margin": 0.25,
+          "margin_vs_target": {
+            "achieved": 0.4000000000000001,
+            "target": 0.25,
+            "difference": 0.15000000000000008,
+            "meets_target": true,
+            "achieved_pct": 40.00000000000001,
+            "target_pct": 25.0,
+            "difference_pct": 15.000000000000007
+          }
+        }
+      },
+      "forecast_horizon_days": 60,
+      "model_used": "analogy_based",
+      "optimization_metrics": {
+        "target_sell_through_pct": 0.75,
+        "min_margin_pct": 0.25,
+        "default_margin_pct": 0.4
+      }
+    },
+    "run_id": "run_20251219_135057"
+  }
+}
