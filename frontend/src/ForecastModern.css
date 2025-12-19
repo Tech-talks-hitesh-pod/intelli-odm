@@ -673,6 +673,76 @@
   gap: 1.5rem;
 }
 
+/* HITL Workflow Banner */
+.hitl-workflow-banner {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  animation: slideIn 0.5s ease;
+}
+
+.hitl-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.hitl-icon {
+  font-size: 2rem;
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hitl-banner-content > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.hitl-banner-content strong {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.hitl-banner-content p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.hitl-open-btn {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.hitl-open-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
 /* Executive Summary Card */
 .exec-summary-card {
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
@@ -736,6 +806,55 @@
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.8rem;
   padding: 0.2rem 0 0.2rem 1rem;
+}
+
+.exec-line-good {
+  color: rgba(52, 211, 153, 0.9);
+  font-weight: 500;
+}
+
+.exec-line-bad {
+  color: rgba(239, 68, 68, 0.9);
+  font-weight: 500;
+}
+
+.exec-metric {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  padding: 0.25rem 0;
+}
+
+.exec-metric.exec-good {
+  background: rgba(16, 185, 129, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border-left: 3px solid #10b981;
+}
+
+.exec-metric.exec-bad {
+  background: rgba(239, 68, 68, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border-left: 3px solid #ef4444;
+}
+
+.exec-label {
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.exec-value {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.exec-value-good {
+  color: #34d399;
+  font-weight: 600;
+}
+
+.exec-value-bad {
+  color: #f87171;
+  font-weight: 600;
 }
 
 /* Risk Assessment Card */
@@ -1301,6 +1420,17 @@
   animation: slideIn 0.6s ease-out;
 }
 
+/* Compact timeline for history view */
+.history-view .timeline-item {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.history-view .ai-timeline {
+  padding: 1rem 0;
+  margin: 1rem 0;
+}
+
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -1364,14 +1494,64 @@
   font-size: 1.5rem;
 }
 
+/* Compact markers for history view */
+.history-view .timeline-marker {
+  width: 40px;
+  height: 40px;
+  border-width: 2px;
+  top: 15px;
+}
+
+.history-view .timeline-item.left .timeline-marker {
+  right: -24px;
+}
+
+.history-view .timeline-item.right .timeline-marker {
+  left: -24px;
+}
+
+.history-view .marker-icon {
+  font-size: 1.1rem;
+}
+
 .timeline-content {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 1.5rem;
+  border-radius: 12px;
+  padding: 1rem;
   transition: all 0.3s;
   position: relative;
+}
+
+/* Compact timeline for history view */
+.history-view .timeline-content {
+  padding: 0.75rem;
+  border-radius: 10px;
+}
+
+.history-view .timeline-header {
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.history-view .timeline-description {
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.history-view .insight-card {
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.history-view .insight-label {
+  font-size: 0.7rem;
+}
+
+.history-view .insight-details {
+  gap: 0.25rem;
+  margin-top: 0.25rem;
 }
 
 .timeline-content:hover {
@@ -1428,6 +1608,16 @@
   border-radius: 8px;
 }
 
+/* Compact timeline header for history view */
+.history-view .timeline-agent {
+  font-size: 0.85rem;
+}
+
+.history-view .timeline-time {
+  font-size: 0.65rem;
+  padding: 2px 8px;
+}
+
 .timeline-body {
   text-align: left;
 }
@@ -1475,11 +1665,13 @@
 
 .detail-chip {
   background: rgba(255, 255, 255, 0.08);
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.65rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.8);
+  display: inline-block;
+  margin: 2px;
 }
 
 .decision-highlight {

@@ -19,6 +19,7 @@ except ImportError:
 from agents.attribute_analogy_agent import AttributeAnalogyAgent
 from agents.demand_forecasting_agent import DemandForecastingAgent
 from agents.data_ingestion_agent import DataIngestionAgent
+from agents.procurement_allocation_agent import ProcurementAllocationAgent
 from utils.ollama_client import OllamaClient
 from utils.audit_logger import AuditLogger, LogStatus
 from shared_knowledge_base import SharedKnowledgeBase
@@ -52,6 +53,7 @@ class ForecastState(TypedDict, total=False):
     forecast_results: Optional[Dict[str, Any]]
     recommendations: Optional[Dict[str, Any]]
     sensitivity_analysis: Optional[Dict[str, Any]]
+    procurement_recommendations: Optional[Dict[str, Any]]
     
     # Metadata
     run_id: str
@@ -119,6 +121,7 @@ class DemandForecastingOrchestrator:
         workflow.add_node("select_model", self._select_forecasting_model)
         workflow.add_node("sensitivity_analysis", self._run_sensitivity_analysis)
         workflow.add_node("store_forecasting", self._run_store_forecasting)
+        workflow.add_node("procurement_allocation", self._run_procurement_allocation)
         workflow.add_node("generate_recommendations", self._generate_recommendations)
         
         # Define the flow
@@ -127,7 +130,8 @@ class DemandForecastingOrchestrator:
         workflow.add_edge("find_comparables", "select_model")
         workflow.add_edge("select_model", "sensitivity_analysis")
         workflow.add_edge("sensitivity_analysis", "store_forecasting")
-        workflow.add_edge("store_forecasting", "generate_recommendations")
+        workflow.add_edge("store_forecasting", "procurement_allocation")
+        workflow.add_edge("procurement_allocation", "generate_recommendations")
         workflow.add_edge("generate_recommendations", END)
         
         return workflow.compile()
@@ -447,6 +451,65 @@ class DemandForecastingOrchestrator:
         
         return state
     
+    def _run_procurement_allocation(self, state: ForecastState) -> ForecastState:
+        """Run procurement allocation optimization"""
+        try:
+            if self.audit_logger:
+                self.audit_logger.log_agent_operation(
+                    agent_name="Orchestrator",
+                    description="Running procurement allocation optimization",
+                    status=LogStatus.IN_PROGRESS
+                )
+            
+            # Initialize procurement allocation agent
+            procurement_agent = ProcurementAllocationAgent(
+                ollama_client=self.ollama_client,
+                audit_logger=state["audit_logger"],
+                budget_constraint=None,  # Can be added as parameter
+                moq_constraints={},  # Can be added as parameter
+                store_capacity={}  # Can be added as parameter
+            )
+            
+            # Run procurement allocation
+            procurement_recommendations = procurement_agent.run(
+                demand_forecast=state["forecast_results"],
+                inventory_data=state["inventory_data"],
+                price_data=state["price_data"],
+                cost_data=state.get("cost_data")
+            )
+            
+            state["procurement_recommendations"] = procurement_recommendations
+            
+            # Update recommendations with optimized allocations
+            if state.get("forecast_results") and state["forecast_results"].get("recommendations"):
+                state["forecast_results"]["recommendations"]["store_allocations"] = \
+                    procurement_recommendations.get("store_allocations", {})
+                state["forecast_results"]["recommendations"]["procurement_optimization"] = \
+                    procurement_recommendations
+            
+            if self.audit_logger:
+                self.audit_logger.log_agent_operation(
+                    agent_name="Orchestrator",
+                    description="Procurement allocation optimization completed",
+                    status=LogStatus.SUCCESS,
+                    outputs={
+                        "articles_optimized": len(procurement_recommendations.get("articles_to_procure", [])),
+                        "adjustments_applied": len(procurement_recommendations.get("adjustments_applied", []))
+                    }
+                )
+            
+        except Exception as e:
+            state["errors"].append(f"Error in procurement allocation: {str(e)}")
+            if self.audit_logger:
+                self.audit_logger.log_agent_operation(
+                    agent_name="Orchestrator",
+                    description="Failed procurement allocation",
+                    status=LogStatus.FAIL,
+                    error=str(e)
+                )
+        
+        return state
+    
     def _generate_recommendations(self, state: ForecastState) -> ForecastState:
         """Generate final recommendations (already done in forecast_store_level, but extract here)"""
         try:
@@ -520,6 +583,7 @@ class DemandForecastingOrchestrator:
             "forecast_results": None,
             "recommendations": None,
             "sensitivity_analysis": None,
+            "procurement_recommendations": None,
             "run_id": run_id or "unknown",
             "audit_logger": self.audit_logger,
             "errors": [],
@@ -536,6 +600,7 @@ class DemandForecastingOrchestrator:
                 "factor_analysis": final_state.get("factor_analysis", {}),
                 "forecast_results": final_state.get("forecast_results", {}),
                 "recommendations": final_state.get("recommendations", {}),
+                "procurement_recommendations": final_state.get("procurement_recommendations", {}),
                 "validation_messages": final_state.get("errors", []),
                 "fallback_used": False
             }

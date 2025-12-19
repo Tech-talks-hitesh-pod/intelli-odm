@@ -40,6 +40,7 @@ from utils.audit_logger import AuditLogger, LogStatus
 from agents.data_ingestion_agent import DataIngestionAgent
 from agents.attribute_analogy_agent import AttributeAnalogyAgent
 from agents.demand_forecasting_agent import DemandForecastingAgent
+from agents.hitl_workflow import HITLWorkflow, ApprovalStatus
 from shared_knowledge_base import SharedKnowledgeBase
 
 # Try to import LangGraph orchestrator (optional)
@@ -79,6 +80,7 @@ data_handler = DataIngestionAgent(ollama_client=ollama_client, audit_logger=audi
 
 # Global state
 current_run_id: Optional[str] = None
+hitl_workflows: Dict[str, HITLWorkflow] = {}  # Store HITL workflows per run_id
 
 def convert_numpy_types(obj):
     """Convert numpy types to native Python types for JSON serialization, handling NaN values"""
@@ -342,6 +344,12 @@ async def run_forecast_internal(
         # Start new run if not already started
         if not current_run_id:
             current_run_id = audit_logger.start_run()
+        
+        # Initialize HITL workflow for this run
+        run_id = current_run_id
+        variance_threshold_decimal = variance_threshold / 100
+        if run_id not in hitl_workflows:
+            hitl_workflows[run_id] = HITLWorkflow(variance_threshold=variance_threshold_decimal)
         
         # Load data from files - prioritize direct uploads over file paths
         sales_data = None
@@ -1154,6 +1162,253 @@ async def stream_audit_logs(run_id: str):
             "X-Accel-Buffering": "no"
         }
     )
+
+# HITL Workflow Endpoints
+@app.get("/api/hitl/{run_id}")
+async def get_hitl_workflow(run_id: str):
+    """Get HITL workflow state for a run"""
+    if run_id not in hitl_workflows:
+        # Initialize HITL workflow if it doesn't exist
+        # Try to get variance threshold from forecast results
+        variance_threshold = 0.05  # default
+        try:
+            result_file = FORECAST_RESULTS_DIR / f"{run_id}_results.json"
+            if result_file.exists():
+                with open(result_file, 'r') as f:
+                    result_data = json.load(f)
+                    params = result_data.get('parameters', {})
+                    variance_threshold = params.get('variance_threshold', 0.05)
+        except:
+            pass
+        
+        hitl_workflows[run_id] = HITLWorkflow(variance_threshold=variance_threshold)
+    
+    workflow = hitl_workflows[run_id]
+    
+    # Get approval queue
+    approval_queue = workflow.get_approval_queue()
+    
+    # Get available stores from forecast results
+    available_stores = []
+    try:
+        result_file = FORECAST_RESULTS_DIR / f"{run_id}_results.json"
+        if result_file.exists():
+            with open(result_file, 'r') as f:
+                result_data = json.load(f)
+                results = result_data.get('results', {})
+                recommendations = results.get('recommendations', {})
+                store_allocations = recommendations.get('store_allocations', {})
+                # Extract unique store IDs
+                for article_stores in store_allocations.values():
+                    available_stores.extend(article_stores.keys())
+                available_stores = sorted(list(set(available_stores)))
+    except:
+        pass
+    
+    return {
+        "success": True,
+        "run_id": run_id,
+        "variance_threshold": workflow.variance_threshold,
+        "variance_threshold_pct": workflow.variance_threshold * 100,
+        "available_stores": available_stores,
+        "store_mappings": workflow.store_mappings,
+        "approval_queue": approval_queue,
+        "aggregate_edits": workflow.aggregate_edits,
+        "store_level_edits": workflow.store_level_edits,
+        "audit_trail": workflow.audit_trail[-50:]  # Last 50 entries
+    }
+
+@app.post("/api/hitl/{run_id}/edit-aggregate")
+async def edit_aggregate_quantity(
+    run_id: str,
+    article: str = Form(...),
+    edited_quantity: float = Form(...),
+    original_quantity: float = Form(...),
+    user_id: str = Form("user")
+):
+    """Edit aggregate quantity for an article"""
+    if run_id not in hitl_workflows:
+        raise HTTPException(status_code=404, detail="HITL workflow not found for this run")
+    
+    workflow = hitl_workflows[run_id]
+    
+    try:
+        edit_record = workflow.edit_aggregate_quantity(
+            article=article,
+            edited_quantity=edited_quantity,
+            original_quantity=original_quantity,
+            user_id=user_id
+        )
+        
+        return {
+            "success": True,
+            "edit_record": edit_record
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/api/hitl/{run_id}/edit-store")
+async def edit_store_level_quantity(
+    run_id: str,
+    article: str = Form(...),
+    store_id: str = Form(...),
+    edited_quantity: float = Form(...),
+    original_quantity: float = Form(...),
+    total_forecasted_quantity: float = Form(...),
+    user_id: str = Form("user")
+):
+    """Edit store-level quantity"""
+    if run_id not in hitl_workflows:
+        raise HTTPException(status_code=404, detail="HITL workflow not found for this run")
+    
+    workflow = hitl_workflows[run_id]
+    
+    try:
+        edit_record = workflow.edit_store_level_quantity(
+            article=article,
+            store_id=store_id,
+            edited_quantity=edited_quantity,
+            original_quantity=original_quantity,
+            total_forecasted_quantity=total_forecasted_quantity,
+            user_id=user_id
+        )
+        
+        return {
+            "success": True,
+            "edit_record": edit_record
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/api/hitl/{run_id}/approve")
+async def approve_hitl_item(
+    run_id: str,
+    article: str = Form(...),
+    store_id: Optional[str] = Form(None),
+    approver_id: str = Form("category_head")
+):
+    """Approve an HITL item"""
+    if run_id not in hitl_workflows:
+        raise HTTPException(status_code=404, detail="HITL workflow not found for this run")
+    
+    workflow = hitl_workflows[run_id]
+    
+    try:
+        approval_record = workflow.approve_item(
+            article=article,
+            store_id=store_id,
+            approver_id=approver_id
+        )
+        
+        return {
+            "success": True,
+            "approval_record": approval_record
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/api/hitl/{run_id}/reject")
+async def reject_hitl_item(
+    run_id: str,
+    article: str = Form(...),
+    store_id: Optional[str] = Form(None),
+    reason: str = Form(""),
+    user_id: str = Form("user")
+):
+    """Reject an HITL item (revert to original)"""
+    if run_id not in hitl_workflows:
+        raise HTTPException(status_code=404, detail="HITL workflow not found for this run")
+    
+    workflow = hitl_workflows[run_id]
+    
+    try:
+        # Revert the edit by removing it
+        if store_id is None:
+            # Aggregate level
+            if article in workflow.aggregate_edits:
+                original_qty = workflow.aggregate_edits[article]['original_quantity']
+                # Update to original
+                workflow.aggregate_edits[article]['edited_quantity'] = original_qty
+                workflow.aggregate_edits[article]['approval_status'] = ApprovalStatus.REJECTED.value
+                workflow.aggregate_edits[article]['rejected_by'] = user_id
+                workflow.aggregate_edits[article]['rejected_at'] = datetime.now().isoformat()
+                workflow.aggregate_edits[article]['rejection_reason'] = reason
+        else:
+            # Store level
+            if article in workflow.store_level_edits and store_id in workflow.store_level_edits[article]:
+                original_qty = workflow.store_level_edits[article][store_id]['original_quantity']
+                workflow.store_level_edits[article][store_id]['edited_quantity'] = original_qty
+                workflow.store_level_edits[article][store_id]['approval_status'] = ApprovalStatus.REJECTED.value
+                workflow.store_level_edits[article][store_id]['rejected_by'] = user_id
+                workflow.store_level_edits[article][store_id]['rejected_at'] = datetime.now().isoformat()
+                workflow.store_level_edits[article][store_id]['rejection_reason'] = reason
+        
+        # Add to audit trail
+        workflow._add_audit_entry(
+            action='item_rejected',
+            details={
+                'article': article,
+                'store_id': store_id,
+                'reason': reason,
+                'user_id': user_id
+            },
+            user_id=user_id
+        )
+        
+        return {
+            "success": True,
+            "message": "Item rejected and reverted to original"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/api/hitl/{run_id}/finalize")
+async def finalize_hitl_workflow(run_id: str):
+    """Generate final output with approved allocations"""
+    if run_id not in hitl_workflows:
+        raise HTTPException(status_code=404, detail="HITL workflow not found for this run")
+    
+    workflow = hitl_workflows[run_id]
+    
+    # Load forecast results
+    result_file = FORECAST_RESULTS_DIR / f"{run_id}_results.json"
+    if not result_file.exists():
+        raise HTTPException(status_code=404, detail="Forecast results not found")
+    
+    with open(result_file, 'r') as f:
+        result_data = json.load(f)
+    
+    results = result_data.get('results', {})
+    recommendations = results.get('recommendations', {})
+    store_allocations = recommendations.get('store_allocations', {})
+    article_level_metrics = recommendations.get('article_level_metrics', {})
+    
+    # Generate final output
+    final_output = workflow.generate_final_output(
+        store_allocations=store_allocations,
+        article_level_metrics=article_level_metrics
+    )
+    
+    # Update forecast results with final allocations
+    recommendations['store_allocations'] = final_output['approved_allocations']
+    recommendations['hitl_metadata'] = {
+        'enabled': True,
+        'pending_approvals': final_output['pending_approvals'],
+        'variances': final_output['variances'],
+        'summary': final_output['summary'],
+        'finalized_at': final_output['generated_at']
+    }
+    
+    # Save updated results
+    result_data['results']['recommendations'] = recommendations
+    with open(result_file, 'w') as f:
+        json.dump(result_data, f, default=str, indent=2)
+    
+    return {
+        "success": True,
+        "final_output": final_output,
+        "updated_recommendations": recommendations
+    }
 
 # Data Management Endpoints
 @app.get("/api/data/{data_type}")

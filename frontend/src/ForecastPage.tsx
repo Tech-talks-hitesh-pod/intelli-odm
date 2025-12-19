@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ForecastModern.css';
+import HITLWorkflowModal from './HITLWorkflowModal';
 
 interface ForecastPageProps {
   params: any;
@@ -60,6 +61,101 @@ const ForecastPage: React.FC<ForecastPageProps> = ({
 
   const currentLogs = auditLogs.length > 0 ? auditLogs : streamingLogs;
   const totalLogs = currentLogs.length;
+  const [hitlModalOpen, setHitlModalOpen] = useState(false);
+  const [hitlRunId, setHitlRunId] = useState<string | null>(null);
+
+  // Helper function to parse executive summary lines with good/bad highlighting
+  const parseExecutiveSummaryLine = (line: string, idx: number) => {
+    if (line.includes('Article:')) {
+      return <div key={idx} className="exec-article-header">{line}</div>;
+    } else if (line.includes('⚠️')) {
+      return <div key={idx} className="exec-warning">{line}</div>;
+    } else if (line.includes(':') && !line.startsWith(' ')) {
+      // Parse metric line to highlight good/bad values
+      const parts = line.split(':');
+      if (parts.length === 2) {
+        const label = parts[0].trim();
+        const value = parts[1].trim();
+        
+        // Determine if value is good or bad
+        let valueClass = 'exec-value';
+        let metricClass = 'exec-metric';
+        
+        // Check for percentage values
+        const percentMatch = value.match(/(\d+\.?\d*)%/);
+        if (percentMatch) {
+          const percent = parseFloat(percentMatch[1]);
+          if (label.toLowerCase().includes('sell-through') || label.toLowerCase().includes('target')) {
+            if (percent < 50) {
+              valueClass = 'exec-value-bad';
+              metricClass = 'exec-metric exec-bad';
+            } else if (percent >= 60) {
+              valueClass = 'exec-value-good';
+              metricClass = 'exec-metric exec-good';
+            }
+          } else if (label.toLowerCase().includes('margin')) {
+            if (percent >= 30) {
+              valueClass = 'exec-value-good';
+              metricClass = 'exec-metric exec-good';
+            } else if (percent < 20) {
+              valueClass = 'exec-value-bad';
+              metricClass = 'exec-metric exec-bad';
+            }
+          } else if (label.toLowerCase().includes('optimization')) {
+            if (percent >= 40) {
+              valueClass = 'exec-value-good';
+              metricClass = 'exec-metric exec-good';
+            } else if (percent < 30) {
+              valueClass = 'exec-value-bad';
+              metricClass = 'exec-metric exec-bad';
+            }
+          }
+        }
+        
+        // Check for currency values
+        const currencyMatch = value.match(/₹([\d,]+)/);
+        if (currencyMatch) {
+          const amount = parseFloat(currencyMatch[1].replace(/,/g, ''));
+          if (amount > 50000) {
+            valueClass = 'exec-value-good';
+            metricClass = 'exec-metric exec-good';
+          }
+        }
+        
+        // Check for keywords
+        if (value.toLowerCase().includes('low') || value.toLowerCase().includes('risk') || value.toLowerCase().includes('below')) {
+          valueClass = 'exec-value-bad';
+          metricClass = 'exec-metric exec-bad';
+        } else if (value.toLowerCase().includes('high') || value.toLowerCase().includes('exceeds') || value.toLowerCase().includes('above')) {
+          valueClass = 'exec-value-good';
+          metricClass = 'exec-metric exec-good';
+        }
+        
+        return (
+          <div key={idx} className={metricClass}>
+            <span className="exec-label">{label}:</span>
+            <span className={valueClass}>{value}</span>
+          </div>
+        );
+      }
+      
+      return <div key={idx} className="exec-metric">{line}</div>;
+    } else if (line.trim()) {
+      // Check for good/bad indicators in regular lines
+      const isGood = line.match(/(exceeds|above|high|good|success|meets|optimized)/i);
+      const isBad = line.match(/(low|below|risk|warning|fail|poor|consider reducing)/i);
+      
+      let className = 'exec-line';
+      if (isGood && !isBad) {
+        className += ' exec-line-good';
+      } else if (isBad) {
+        className += ' exec-line-bad';
+      }
+      
+      return <div key={idx} className={className}>{line}</div>;
+    }
+    return null;
+  };
 
   return (
     <div className="forecast-modern">
@@ -379,6 +475,28 @@ const ForecastPage: React.FC<ForecastPageProps> = ({
 
                       {/* Recommendations - User Friendly View */}
                       <div className="recommendations-section">
+                        {/* HITL Workflow Button */}
+                        {results.recommendations && (
+                          <div className="hitl-workflow-banner">
+                            <div className="hitl-banner-content">
+                              <span className="hitl-icon">🔄</span>
+                              <div>
+                                <strong>Human-in-the-Loop Workflow Available</strong>
+                                <p>Review, edit, and approve forecast recommendations</p>
+                              </div>
+                            </div>
+                            <button
+                              className="hitl-open-btn"
+                              onClick={() => {
+                                setHitlRunId(currentRunId || selectedRunId);
+                                setHitlModalOpen(true);
+                              }}
+                            >
+                              Open HITL Workflow →
+                            </button>
+                          </div>
+                        )}
+                        
                         {results.recommendations && typeof results.recommendations === 'object' && (
                           <>
                             {/* Executive Summary */}
@@ -389,18 +507,7 @@ const ForecastPage: React.FC<ForecastPageProps> = ({
                                   <h3>Executive Summary</h3>
                                 </div>
                                 <div className="exec-body">
-                                  {results.recommendations.optimization_summary.split('\n').map((line: string, idx: number) => {
-                                    if (line.includes('Article:')) {
-                                      return <div key={idx} className="exec-article-header">{line}</div>;
-                                    } else if (line.includes('⚠️')) {
-                                      return <div key={idx} className="exec-warning">{line}</div>;
-                                    } else if (line.includes(':') && !line.startsWith(' ')) {
-                                      return <div key={idx} className="exec-metric">{line}</div>;
-                                    } else if (line.trim()) {
-                                      return <div key={idx} className="exec-line">{line}</div>;
-                                    }
-                                    return null;
-                                  })}
+                                  {results.recommendations.optimization_summary.split('\n').map((line: string, idx: number) => parseExecutiveSummaryLine(line, idx))}
                                 </div>
                               </div>
                             )}
@@ -955,6 +1062,28 @@ const ForecastPage: React.FC<ForecastPageProps> = ({
 
                       {/* Recommendations - User Friendly View */}
                       <div className="recommendations-section">
+                        {/* HITL Workflow Button */}
+                        {results.recommendations && (
+                          <div className="hitl-workflow-banner">
+                            <div className="hitl-banner-content">
+                              <span className="hitl-icon">🔄</span>
+                              <div>
+                                <strong>Human-in-the-Loop Workflow Available</strong>
+                                <p>Review, edit, and approve forecast recommendations</p>
+                              </div>
+                            </div>
+                            <button
+                              className="hitl-open-btn"
+                              onClick={() => {
+                                setHitlRunId(currentRunId || selectedRunId);
+                                setHitlModalOpen(true);
+                              }}
+                            >
+                              Open HITL Workflow →
+                            </button>
+                          </div>
+                        )}
+                        
                         {results.recommendations && typeof results.recommendations === 'object' && (
                           <>
                             {/* Executive Summary */}
@@ -965,18 +1094,7 @@ const ForecastPage: React.FC<ForecastPageProps> = ({
                                   <h3>Executive Summary</h3>
                                 </div>
                                 <div className="exec-body">
-                                  {results.recommendations.optimization_summary.split('\n').map((line: string, idx: number) => {
-                                    if (line.includes('Article:')) {
-                                      return <div key={idx} className="exec-article-header">{line}</div>;
-                                    } else if (line.includes('⚠️')) {
-                                      return <div key={idx} className="exec-warning">{line}</div>;
-                                    } else if (line.includes(':') && !line.startsWith(' ')) {
-                                      return <div key={idx} className="exec-metric">{line}</div>;
-                                    } else if (line.trim()) {
-                                      return <div key={idx} className="exec-line">{line}</div>;
-                                    }
-                                    return null;
-                                  })}
+                                  {results.recommendations.optimization_summary.split('\n').map((line: string, idx: number) => parseExecutiveSummaryLine(line, idx))}
                                 </div>
                               </div>
                             )}
@@ -1244,7 +1362,7 @@ const ForecastPage: React.FC<ForecastPageProps> = ({
                       </div>
 
                       {/* Historical Timeline - Similar structure but styled differently */}
-                      <div className="ai-timeline historical">
+                      <div className="ai-timeline historical history-view">
                         {currentLogs.slice(0, logsDisplayLimit).map((log: any, idx: number) => {
                           const agentName = log.agent_name || 'System';
                           const isAttributeAgent = agentName.includes('Attribute');
@@ -1375,6 +1493,24 @@ const ForecastPage: React.FC<ForecastPageProps> = ({
           )}
         </div>
       </div>
+
+      {/* HITL Workflow Modal */}
+      <HITLWorkflowModal
+        isOpen={hitlModalOpen}
+        onClose={() => {
+          setHitlModalOpen(false);
+          setHitlRunId(null);
+        }}
+        runId={hitlRunId}
+        onFinalize={() => {
+          // Reload forecast results after finalization
+          if (selectedRunId) {
+            loadForecastRun(selectedRunId);
+          } else if (currentRunId) {
+            loadForecastRun(currentRunId);
+          }
+        }}
+      />
     </div>
   );
 };
