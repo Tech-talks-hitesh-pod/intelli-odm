@@ -1299,6 +1299,203 @@
   letter-spacing: 0.5px;
 }
 
+/* Procurement Optimization Card */
+.procurement-optimization-card {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(14, 165, 233, 0.05) 100%);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.procurement-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: rgba(6, 182, 212, 0.1);
+  border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+.procurement-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.procurement-icon {
+  font-size: 1.3rem;
+  animation: rotate 3s linear infinite;
+}
+
+.procurement-content {
+  padding: 1.25rem;
+}
+
+.procurement-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.procurement-stat {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+.procurement-stat:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-2px);
+}
+
+.procurement-stat-label {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.procurement-stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.procurement-details {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.procurement-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.procurement-detail-row:last-child {
+  border-bottom: none;
+}
+
+.procurement-detail-row .detail-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.procurement-detail-row .detail-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #06b6d4;
+}
+
+.procurement-adjustments {
+  margin-top: 1.5rem;
+}
+
+.procurement-adjustments h4 {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.adjustments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.adjustment-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 1rem;
+  transition: all 0.3s;
+}
+
+.adjustment-item:hover {
+  border-color: rgba(6, 182, 212, 0.3);
+  background: rgba(6, 182, 212, 0.05);
+}
+
+.adjustment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.adjustment-type {
+  background: rgba(6, 182, 212, 0.2);
+  color: #06b6d4;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.adjustment-article {
+  background: rgba(139, 92, 246, 0.2);
+  color: #a78bfa;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: 'Monaco', 'Menlo', monospace;
+}
+
+.adjustment-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.adjustment-details span {
+  display: flex;
+  align-items: center;
+}
+
+.adjustment-factor {
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+.procurement-timestamp {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive adjustments for procurement section */
+@media (max-width: 768px) {
+  .procurement-summary {
+    grid-template-columns: 1fr;
+  }
+  
+  .adjustment-details {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .article-details {

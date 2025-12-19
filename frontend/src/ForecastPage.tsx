@@ -745,6 +745,103 @@ const ForecastPage: React.FC<ForecastPageProps> = ({
                                 </div>
                               </div>
                             )}
+
+                            {/* Procurement Allocation Optimization */}
+                            {results.recommendations.procurement_optimization && (
+                              <div className="procurement-optimization-card">
+                                <div className="procurement-header">
+                                  <span className="procurement-icon">⚙️</span>
+                                  <h3>Procurement Allocation Optimization</h3>
+                                </div>
+                                <div className="procurement-content">
+                                  <div className="procurement-summary">
+                                    <div className="procurement-stat">
+                                      <span className="procurement-stat-label">Articles Optimized</span>
+                                      <span className="procurement-stat-value">
+                                        {results.recommendations.procurement_optimization.articles_to_procure?.length || 0}
+                                      </span>
+                                    </div>
+                                    <div className="procurement-stat">
+                                      <span className="procurement-stat-label">Total Procurement Qty</span>
+                                      <span className="procurement-stat-value">
+                                        {results.recommendations.procurement_optimization.total_procurement_quantity?.toFixed(0) || 0}
+                                      </span>
+                                    </div>
+                                    <div className="procurement-stat">
+                                      <span className="procurement-stat-label">Adjustments Applied</span>
+                                      <span className="procurement-stat-value">
+                                        {results.recommendations.procurement_optimization.adjustments_applied?.length || 0}
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  {/* Optimization Summary Details */}
+                                  {results.recommendations.procurement_optimization.optimization_summary && (
+                                    <div className="procurement-details">
+                                      <div className="procurement-detail-row">
+                                        <span className="detail-label">Total Articles:</span>
+                                        <span className="detail-value">
+                                          {results.recommendations.procurement_optimization.optimization_summary.total_articles || 0}
+                                        </span>
+                                      </div>
+                                      <div className="procurement-detail-row">
+                                        <span className="detail-label">Total Stores:</span>
+                                        <span className="detail-value">
+                                          {results.recommendations.procurement_optimization.optimization_summary.total_stores || 0}
+                                        </span>
+                                      </div>
+                                      <div className="procurement-detail-row">
+                                        <span className="detail-label">Adjustments Count:</span>
+                                        <span className="detail-value">
+                                          {results.recommendations.procurement_optimization.optimization_summary.adjustments_count || 0}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {/* Adjustments Applied */}
+                                  {results.recommendations.procurement_optimization.adjustments_applied && 
+                                   results.recommendations.procurement_optimization.adjustments_applied.length > 0 && (
+                                    <div className="procurement-adjustments">
+                                      <h4>Adjustments Applied</h4>
+                                      <div className="adjustments-list">
+                                        {results.recommendations.procurement_optimization.adjustments_applied.map((adjustment: any, idx: number) => (
+                                          <div key={idx} className="adjustment-item">
+                                            <div className="adjustment-header">
+                                              <span className="adjustment-type">{adjustment.type?.replace('_', ' ').toUpperCase() || 'ADJUSTMENT'}</span>
+                                              {adjustment.article && (
+                                                <span className="adjustment-article">{adjustment.article}</span>
+                                              )}
+                                            </div>
+                                            <div className="adjustment-details">
+                                              {adjustment.original_qty !== undefined && (
+                                                <span>Original: {adjustment.original_qty.toFixed(0)}</span>
+                                              )}
+                                              {adjustment.adjusted_qty !== undefined && (
+                                                <span>→ Adjusted: {adjustment.adjusted_qty.toFixed(0)}</span>
+                                              )}
+                                              {adjustment.scale_factor !== undefined && (
+                                                <span className="adjustment-factor">Scale: {adjustment.scale_factor.toFixed(2)}x</span>
+                                              )}
+                                              {adjustment.original_cost !== undefined && (
+                                                <span>Cost: ₹{adjustment.original_cost.toFixed(0)} → ₹{adjustment.adjusted_cost?.toFixed(0) || 0}</span>
+                                              )}
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {/* Generated Timestamp */}
+                                  {results.recommendations.procurement_optimization.generated_at && (
+                                    <div className="procurement-timestamp">
+                                      <span>Optimized at: {new Date(results.recommendations.procurement_optimization.generated_at).toLocaleString()}</span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            )}
                           </>
                         )}
                       </div>
@@ -1329,6 +1426,103 @@ const ForecastPage: React.FC<ForecastPageProps> = ({
                                     </div>
                                     <div className="metric-box-label">Optimization Score</div>
                                   </div>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Procurement Allocation Optimization */}
+                            {results.recommendations.procurement_optimization && (
+                              <div className="procurement-optimization-card">
+                                <div className="procurement-header">
+                                  <span className="procurement-icon">⚙️</span>
+                                  <h3>Procurement Allocation Optimization</h3>
+                                </div>
+                                <div className="procurement-content">
+                                  <div className="procurement-summary">
+                                    <div className="procurement-stat">
+                                      <span className="procurement-stat-label">Articles Optimized</span>
+                                      <span className="procurement-stat-value">
+                                        {results.recommendations.procurement_optimization.articles_to_procure?.length || 0}
+                                      </span>
+                                    </div>
+                                    <div className="procurement-stat">
+                                      <span className="procurement-stat-label">Total Procurement Qty</span>
+                                      <span className="procurement-stat-value">
+                                        {results.recommendations.procurement_optimization.total_procurement_quantity?.toFixed(0) || 0}
+                                      </span>
+                                    </div>
+                                    <div className="procurement-stat">
+                                      <span className="procurement-stat-label">Adjustments Applied</span>
+                                      <span className="procurement-stat-value">
+                                        {results.recommendations.procurement_optimization.adjustments_applied?.length || 0}
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  {/* Optimization Summary Details */}
+                                  {results.recommendations.procurement_optimization.optimization_summary && (
+                                    <div className="procurement-details">
+                                      <div className="procurement-detail-row">
+                                        <span className="detail-label">Total Articles:</span>
+                                        <span className="detail-value">
+                                          {results.recommendations.procurement_optimization.optimization_summary.total_articles || 0}
+                                        </span>
+                                      </div>
+                                      <div className="procurement-detail-row">
+                                        <span className="detail-label">Total Stores:</span>
+                                        <span className="detail-value">
+                                          {results.recommendations.procurement_optimization.optimization_summary.total_stores || 0}
+                                        </span>
+                                      </div>
+                                      <div className="procurement-detail-row">
+                                        <span className="detail-label">Adjustments Count:</span>
+                                        <span className="detail-value">
+                                          {results.recommendations.procurement_optimization.optimization_summary.adjustments_count || 0}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {/* Adjustments Applied */}
+                                  {results.recommendations.procurement_optimization.adjustments_applied && 
+                                   results.recommendations.procurement_optimization.adjustments_applied.length > 0 && (
+                                    <div className="procurement-adjustments">
+                                      <h4>Adjustments Applied</h4>
+                                      <div className="adjustments-list">
+                                        {results.recommendations.procurement_optimization.adjustments_applied.map((adjustment: any, idx: number) => (
+                                          <div key={idx} className="adjustment-item">
+                                            <div className="adjustment-header">
+                                              <span className="adjustment-type">{adjustment.type?.replace('_', ' ').toUpperCase() || 'ADJUSTMENT'}</span>
+                                              {adjustment.article && (
+                                                <span className="adjustment-article">{adjustment.article}</span>
+                                              )}
+                                            </div>
+                                            <div className="adjustment-details">
+                                              {adjustment.original_qty !== undefined && (
+                                                <span>Original: {adjustment.original_qty.toFixed(0)}</span>
+                                              )}
+                                              {adjustment.adjusted_qty !== undefined && (
+                                                <span>→ Adjusted: {adjustment.adjusted_qty.toFixed(0)}</span>
+                                              )}
+                                              {adjustment.scale_factor !== undefined && (
+                                                <span className="adjustment-factor">Scale: {adjustment.scale_factor.toFixed(2)}x</span>
+                                              )}
+                                              {adjustment.original_cost !== undefined && (
+                                                <span>Cost: ₹{adjustment.original_cost.toFixed(0)} → ₹{adjustment.adjusted_cost?.toFixed(0) || 0}</span>
+                                              )}
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {/* Generated Timestamp */}
+                                  {results.recommendations.procurement_optimization.generated_at && (
+                                    <div className="procurement-timestamp">
+                                      <span>Optimized at: {new Date(results.recommendations.procurement_optimization.generated_at).toLocaleString()}</span>
+                                    </div>
+                                  )}
                                 </div>
                               </div>
                             )}
