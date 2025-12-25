@@ -160,6 +160,195 @@ class ChromeDevToolsMCP:
             "format": "png"
         })
         return result.get("result", {}).get("data", "")
+    
+    async def get_performance_metrics(self) -> dict:
+        """Get performance metrics from the page"""
+        # Enable Performance domain
+        await self.send_cdp_command("Performance.enable")
+        
+        # Get metrics
+        result = await self.send_cdp_command("Performance.getMetrics", {})
+        metrics = result.get("result", {}).get("metrics", [])
+        
+        # Convert to dict
+        metrics_dict = {}
+        for metric in metrics:
+            metrics_dict[metric.get("name")] = metric.get("value")
+        
+        return metrics_dict
+    
+    async def get_core_web_vitals(self) -> dict:
+        """Get Core Web Vitals (LCP, FID, CLS)"""
+        # Execute JavaScript to get Web Vitals
+        vitals_code = """
+        (async () => {
+            const vitals = {};
+            
+            // Largest Contentful Paint (LCP)
+            try {
+                const lcpEntries = performance.getEntriesByType('largest-contentful-paint');
+                if (lcpEntries.length > 0) {
+                    vitals.LCP = lcpEntries[lcpEntries.length - 1].renderTime || lcpEntries[lcpEntries.length - 1].loadTime;
+                }
+            } catch(e) {}
+            
+            // First Input Delay (FID) - requires user interaction, so we'll get it if available
+            try {
+                const fidEntries = performance.getEntriesByType('first-input');
+                if (fidEntries.length > 0) {
+                    vitals.FID = fidEntries[0].processingStart - fidEntries[0].startTime;
+                }
+            } catch(e) {}
+            
+            // Cumulative Layout Shift (CLS)
+            try {
+                let clsValue = 0;
+                const clsEntries = performance.getEntriesByType('layout-shift');
+                clsEntries.forEach(entry => {
+                    if (!entry.hadRecentInput) {
+                        clsValue += entry.value;
+                    }
+                });
+                vitals.CLS = clsValue;
+            } catch(e) {}
+            
+            // Additional metrics
+            vitals.FCP = performance.getEntriesByType('paint').find(entry => entry.name === 'first-contentful-paint')?.startTime;
+            vitals.TTFB = performance.timing.responseStart - performance.timing.requestStart;
+            vitals.DOMContentLoaded = performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart;
+            vitals.Load = performance.timing.loadEventEnd - performance.timing.navigationStart;
+            
+            return vitals;
+        })()
+        """
+        result = await self.execute_javascript(vitals_code)
+        return result.get("result", {}).get("value", {})
+    
+    async def get_network_metrics(self) -> dict:
+        """Get detailed network metrics"""
+        # Enable Network domain
+        await self.send_cdp_command("Network.enable")
+        
+        # Get resource timing
+        timing_code = """
+        (() => {
+            const resources = performance.getEntriesByType('resource');
+            const metrics = {
+                totalRequests: resources.length,
+                totalSize: 0,
+                totalTime: 0,
+                byType: {},
+                slowest: [],
+                largest: []
+            };
+            
+            resources.forEach(resource => {
+                const size = resource.transferSize || 0;
+                const time = resource.responseEnd - resource.startTime;
+                
+                metrics.totalSize += size;
+                metrics.totalTime += time;
+                
+                const type = resource.initiatorType || 'other';
+                if (!metrics.byType[type]) {
+                    metrics.byType[type] = { count: 0, size: 0, time: 0 };
+                }
+                metrics.byType[type].count++;
+                metrics.byType[type].size += size;
+                metrics.byType[type].time += time;
+                
+                metrics.slowest.push({
+                    name: resource.name,
+                    time: time,
+                    size: size
+                });
+                
+                metrics.largest.push({
+                    name: resource.name,
+                    size: size,
+                    time: time
+                });
+            });
+            
+            // Sort and get top 5
+            metrics.slowest.sort((a, b) => b.time - a.time).splice(5);
+            metrics.largest.sort((a, b) => b.size - a.size).splice(5);
+            
+            return metrics;
+        })()
+        """
+        result = await self.execute_javascript(timing_code)
+        return result.get("result", {}).get("value", {})
+    
+    async def run_lighthouse_audit(self, categories: list = None) -> dict:
+        """Run Lighthouse audit using CDP (simplified version)"""
+        if categories is None:
+            categories = ["performance", "accessibility", "best-practices", "seo"]
+        
+        # Get comprehensive performance data
+        performance_data = {
+            "metrics": await self.get_performance_metrics(),
+            "webVitals": await self.get_core_web_vitals(),
+            "network": await self.get_network_metrics(),
+            "pageInfo": {}
+        }
+        
+        # Get page info
+        title_result = await self.execute_javascript("document.title")
+        url_result = await self.execute_javascript("window.location.href")
+        performance_data["pageInfo"] = {
+            "title": title_result.get("result", {}).get("value", ""),
+            "url": url_result.get("result", {}).get("value", "")
+        }
+        
+        # Calculate scores (simplified)
+        scores = {}
+        vitals = performance_data["webVitals"]
+        
+        # Performance score (simplified calculation)
+        lcp = vitals.get("LCP", 0) / 1000  # Convert to seconds
+        fcp = vitals.get("FCP", 0) / 1000
+        cls = vitals.get("CLS", 0)
+        
+        perf_score = 100
+        if lcp > 4: perf_score -= 25
+        elif lcp > 2.5: perf_score -= 15
+        if fcp > 3: perf_score -= 20
+        elif fcp > 1.8: perf_score -= 10
+        if cls > 0.25: perf_score -= 25
+        elif cls > 0.1: perf_score -= 15
+        
+        scores["performance"] = max(0, perf_score)
+        
+        return {
+            "scores": scores,
+            "metrics": performance_data,
+            "recommendations": self._generate_recommendations(performance_data)
+        }
+    
+    def _generate_recommendations(self, data: dict) -> list:
+        """Generate performance recommendations"""
+        recommendations = []
+        vitals = data.get("webVitals", {})
+        network = data.get("network", {})
+        
+        lcp = vitals.get("LCP", 0) / 1000
+        if lcp > 2.5:
+            recommendations.append(f"LCP is {lcp:.2f}s (target: <2.5s). Optimize largest content element loading.")
+        
+        fcp = vitals.get("FCP", 0) / 1000
+        if fcp > 1.8:
+            recommendations.append(f"FCP is {fcp:.2f}s (target: <1.8s). Reduce render-blocking resources.")
+        
+        cls = vitals.get("CLS", 0)
+        if cls > 0.1:
+            recommendations.append(f"CLS is {cls:.3f} (target: <0.1). Fix layout shifts by setting dimensions on images/videos.")
+        
+        total_size = network.get("totalSize", 0) / (1024 * 1024)  # MB
+        if total_size > 5:
+            recommendations.append(f"Total page size is {total_size:.2f}MB. Consider code splitting and lazy loading.")
+        
+        return recommendations
 
 
 # Initialize the Chrome DevTools client
@@ -279,6 +468,59 @@ async def list_tools() -> list[Tool]:
                 "type": "object",
                 "properties": {}
             }
+        ),
+        Tool(
+            name="get_performance_metrics",
+            description="Get performance metrics from the page (timing, memory, etc.)",
+            inputSchema={
+                "type": "object",
+                "properties": {}
+            }
+        ),
+        Tool(
+            name="get_core_web_vitals",
+            description="Get Core Web Vitals (LCP, FID, CLS, FCP, TTFB) and page load metrics",
+            inputSchema={
+                "type": "object",
+                "properties": {}
+            }
+        ),
+        Tool(
+            name="get_network_metrics",
+            description="Get detailed network metrics including request counts, sizes, and timing",
+            inputSchema={
+                "type": "object",
+                "properties": {}
+            }
+        ),
+        Tool(
+            name="run_performance_audit",
+            description="Run a comprehensive performance audit including Lighthouse-style analysis",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "categories": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": "Categories to audit (performance, accessibility, best-practices, seo)",
+                        "default": ["performance"]
+                    }
+                }
+            }
+        ),
+        Tool(
+            name="analyze_page_performance",
+            description="Complete performance analysis of the current page with recommendations",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "include_screenshot": {
+                        "type": "boolean",
+                        "description": "Include screenshot in analysis",
+                        "default": False
+                    }
+                }
+            }
         )
     ]
 
@@ -361,6 +603,71 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
                     "title": title_result.get("result", {}).get("value", ""),
                     "url": url_result.get("result", {}).get("value", "")
                 }, indent=2)
+            )]
+        
+        elif name == "get_performance_metrics":
+            metrics = await chrome_client.get_performance_metrics()
+            return [TextContent(
+                type="text",
+                text=json.dumps(metrics, indent=2)
+            )]
+        
+        elif name == "get_core_web_vitals":
+            vitals = await chrome_client.get_core_web_vitals()
+            return [TextContent(
+                type="text",
+                text=json.dumps(vitals, indent=2)
+            )]
+        
+        elif name == "get_network_metrics":
+            metrics = await chrome_client.get_network_metrics()
+            return [TextContent(
+                type="text",
+                text=json.dumps(metrics, indent=2)
+            )]
+        
+        elif name == "run_performance_audit":
+            categories = arguments.get("categories", ["performance"])
+            audit_result = await chrome_client.run_lighthouse_audit(categories)
+            return [TextContent(
+                type="text",
+                text=json.dumps(audit_result, indent=2)
+            )]
+        
+        elif name == "analyze_page_performance":
+            include_screenshot = arguments.get("include_screenshot", False)
+            
+            # Get comprehensive analysis
+            analysis = {
+                "pageInfo": {},
+                "webVitals": {},
+                "networkMetrics": {},
+                "performanceMetrics": {},
+                "audit": {},
+                "screenshot": None
+            }
+            
+            # Get page info
+            title_result = await chrome_client.execute_javascript("document.title")
+            url_result = await chrome_client.execute_javascript("window.location.href")
+            analysis["pageInfo"] = {
+                "title": title_result.get("result", {}).get("value", ""),
+                "url": url_result.get("result", {}).get("value", "")
+            }
+            
+            # Get all metrics
+            analysis["webVitals"] = await chrome_client.get_core_web_vitals()
+            analysis["networkMetrics"] = await chrome_client.get_network_metrics()
+            analysis["performanceMetrics"] = await chrome_client.get_performance_metrics()
+            analysis["audit"] = await chrome_client.run_lighthouse_audit()
+            
+            if include_screenshot:
+                screenshot_data = await chrome_client.take_screenshot()
+                analysis["screenshot"] = f"data:image/png;base64,{screenshot_data}"
+            
+            return [TextContent(
+                type="text",
+                text=json.dumps(analysis, indent=2)
             )]
         
         else:
