@@ -37,12 +37,19 @@ class PerformanceAnalyzer:
         except Exception as e:
             raise Exception(f"Failed to connect to Chrome: {e}. Make sure Chrome is running with --remote-debugging-port={self.chrome_debug_port}")
     
+    async def create_new_tab(self, url: str = "about:blank") -> dict:
+        """Create a new tab and navigate to URL"""
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.get(f"{self.chrome_url}/json/new?{url}")
+                response.raise_for_status()
+                return response.json()
+        except Exception as e:
+            raise Exception(f"Failed to create new tab: {e}")
+    
     async def connect_to_target(self, target_url: str = None) -> str:
-        """Connect to a Chrome target"""
+        """Connect to a Chrome target, creating one if needed"""
         targets = await self.get_chrome_targets()
-        
-        if not targets:
-            raise Exception("No Chrome targets available")
         
         target = None
         if target_url:
@@ -52,7 +59,14 @@ class PerformanceAnalyzer:
                     break
         
         if not target:
-            target = targets[0]
+            if targets:
+                target = targets[0]
+            else:
+                # Create a new tab if no targets exist
+                if target_url:
+                    target = await self.create_new_tab(target_url)
+                else:
+                    target = await self.create_new_tab()
         
         self.target_id = target.get("id")
         self.ws_url = target.get("webSocketDebuggerUrl")
@@ -221,16 +235,18 @@ class PerformanceAnalyzer:
         """Run complete performance analysis"""
         print("🔍 Starting performance analysis...")
         
-        # Connect to Chrome
-        await self.connect_to_target(url)
-        print("✅ Connected to Chrome")
-        
-        # Navigate if URL provided
+        # Connect to Chrome (will create tab if needed)
         if url:
             print(f"🌐 Navigating to {url}...")
+            await self.connect_to_target(url)
+            print("✅ Connected to Chrome")
             await self.navigate(url)
-            await asyncio.sleep(3)  # Wait for page to fully load
+            await asyncio.sleep(5)  # Wait for page to fully load
             print("✅ Page loaded")
+        else:
+            await self.connect_to_target()
+            print("✅ Connected to Chrome")
+            await asyncio.sleep(2)  # Wait for current page
         
         # Get page info
         print("📄 Gathering page information...")
