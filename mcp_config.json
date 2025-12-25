@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "python",
+      "args": [
+        "/Users/ankit41.gupta/Documents/JIO/AI Workshop/Intelli ODM/intelli-odm/mcp_chrome_devtools_server.py"
+      ],
+      "env": {
+        "CHROME_DEBUG_PORT": "9222"
+      }
+    }
+  }
+}
+
