@@ -7,3 +7,11 @@ pandas>=2.0.0
 # HTTP requests for verification
 requests>=2.31.0
 
+# MCP Server dependencies
+# Note: MCP package may need to be installed separately
+# Try: pip install mcp
+# Or: pip install @modelcontextprotocol/sdk-python
+# Or check: https://github.com/modelcontextprotocol/python-sdk
+websockets>=12.0
+httpx>=0.27.0
+
